@@ -1,4 +1,3 @@
-# curriculum for learning for developers
 
 # The project is in development now and is open for contributions
 
