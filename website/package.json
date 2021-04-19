@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
-    "monaco-editor": "^0.23.0",
     "postcss": "^8.2.10",
     "tailwindcss": "^2.1.1",
     "webpack": "^5.33.2"
