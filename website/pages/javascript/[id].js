@@ -48,12 +48,12 @@ export default function Javascript({ postData }) {
                 <div></div>
             </div>
             <div className="flex justify-around space-x-52 h-12 bg-gray-900 items-center py-6 sticky bottom-0">
-                <Link href={`/Javascript/${postData.prev}`}>
-                    <a className="text-white"><ArrowCircleLeftIcon className={`h-12 w-12 inline-block ${postData.prev ? "text-yellow-500" : "text-white"}`} />Previous</a>
-                </Link>
-                <Link href={`/Javascript/${postData.next}`}>
-                    <a className="text-white">Next<ArrowCircleRightIcon className={`h-12 w-12 inline-block ${postData.next ? "text-yellow-500" : "text-white"}`} /></a>
-                </Link>
+                {postData.prev ? <Link href={`/javascript/${postData.prev}`}>
+                    <a className="text-white"><ArrowCircleLeftIcon className="h-12 w-12 inline-block text-yellow-500" />Previous</a>
+                </Link> : ''}
+                {postData.next ? <Link href={`/javascript/${postData.next}`}>
+                    <a className="text-white">Next<ArrowCircleRightIcon className="h-12 w-12 inline-block text-yellow-500" /></a>
+                </Link> : ''}
             </div>
         </Layout>
     )
