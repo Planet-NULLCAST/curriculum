@@ -8,6 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@codemirror/basic-setup": "^0.18.0",
+    "@codemirror/lang-javascript": "^0.18.0",
+    "@codemirror/lang-markdown": "^0.18.1",
+    "@codemirror/next": "^0.16.0",
+    "@codemirror/theme-one-dark": "^0.18.0",
+    "@codemirror/view": "^0.18.7",
     "@heroicons/react": "^1.0.1",
     "fs": "0.0.1-security",
     "gray-matter": "^4.0.2",
@@ -19,7 +25,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
+    "monaco-editor": "^0.23.0",
     "postcss": "^8.2.10",
-    "tailwindcss": "^2.1.1"
+    "tailwindcss": "^2.1.1",
+    "webpack": "^5.33.2"
   }
 }

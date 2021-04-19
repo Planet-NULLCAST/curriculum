@@ -1,7 +1,7 @@
 import { BeakerIcon, MenuIcon } from '@heroicons/react/solid';
 export default function NavBar(){
     return(
-        <nav className="sticky top-0 bg-white">
+        <nav className="sticky top-0 bg-white z-50">
             <div className="flex justify-between p-4">
                 <div>
                     <MenuIcon className="h-6 w-6 text-gray-900 inline-block"/>
