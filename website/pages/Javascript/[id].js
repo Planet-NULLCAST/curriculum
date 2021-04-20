@@ -5,6 +5,7 @@ import Layout from '../../component/layout/Layout'
 import { getAllPostIds, getPostData } from '../../lib/jslist'
 
 import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from '@heroicons/react/solid';
+import Editor from '../../component/editor/Editor'
 
 export async function getStaticPaths() {
     const paths = await getAllPostIds();
@@ -43,7 +44,7 @@ export default function Javascript({ postData }) {
                     </div>
                     <div className="text-sm font-light codeClass" dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
                 </div>
-                <div></div>
+                <div><Editor /></div>
                 <div></div>
             </div>
             <div className="flex justify-around space-x-52 h-12 bg-gray-900 items-center py-6 sticky bottom-0">
