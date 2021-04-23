@@ -10,7 +10,7 @@ export default function Layout({ children }) {
 	return (
 		<>
 			<NavBar onToggle={handleToggle} />
-			{toggle && <SideBar onToggle={handleToggle} />}
+			<SideBar onToggle={handleToggle} toggle={toggle}/>
 			{children}
 		</>
 	);
