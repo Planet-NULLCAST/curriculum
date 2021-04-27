@@ -3,7 +3,7 @@ import UserContext from "./userContext";
 import UserReducer from "./userReducer";
 import { SET_PROGRESS } from "./types";
 
-const UserState = props => {
+const UserState = ({ children }) => {
 	const initialState = {
 		user: {},
 		test: [
@@ -24,11 +24,10 @@ const UserState = props => {
 		<UserContext.Provider
 			value={{
 				user: state.user,
-				test: state.test,
-				setProgress
+				test: state.test
 			}}
 		>
-			{props.children}
+			{children}
 		</UserContext.Provider>
 	);
 };
