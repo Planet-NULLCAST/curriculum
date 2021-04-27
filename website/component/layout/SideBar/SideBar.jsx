@@ -1,6 +1,11 @@
 import Link from "next/link";
 
-export default function SideBar({ onToggle }) {
+export default function SideBar({ onToggle, toggle }) {
+	
+	function handleClick(e) {
+		onToggle();
+	}
+
 	//TODO: Should be made dynamic later
 	let titles = [
 		{
@@ -20,16 +25,12 @@ export default function SideBar({ onToggle }) {
 		}
 	];
 
-	function handleClick(e) {
-		onToggle();
-	}
-
 	return (
-		<aside className="transform top-0 left-0 w-64 bg-gray-100 fixed h-full overflow-auto ease-in-out transition-all duration-3000 z-30 translate-x-0">
+		<aside className={`transform top-0 ${toggle ? "left-0" : "-left-64"} w-64 bg-gray-100 fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}>
 			<svg
 				aria-hidden="true"
 				focusable="false"
-				className="h-4 absolute top-6 right-6 cursor-pointer hover:text-purple-700"
+				className="h-4 absolute top-20 right-6 cursor-pointer hover:text-purple-700"
 				role="img"
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 352 512"
@@ -41,11 +42,11 @@ export default function SideBar({ onToggle }) {
 				></path>
 			</svg>
 
-			<ul className="text-black flex flex-col mt-20 h-80">
+			<ul className="text-black flex flex-col mt-28 h-80">
 				{titles.map(title => (
 					<li
 						key={title.id}
-						className="text-center text-gray-700 hover:text-black border-l-8 border-gray-700 hover:border-purple-700 focus:border-purple-700 p-4"
+						className={`text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-200 p-4`}
 					>
 						<Link href={`/javascript/${title.url}`}>
 							<a onClick={handleClick}>{title.linkTitle}</a>
