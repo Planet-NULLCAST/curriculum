@@ -1,7 +1,7 @@
 ---
 title: 'Introduction To Javascript'
 subheading: 'Data types'
-next: 'Intraction'
+next: 'Interaction'
 prev: 'Introduction'
 ---
 
