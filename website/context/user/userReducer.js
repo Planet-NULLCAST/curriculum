@@ -1,4 +1,4 @@
-import { SET_PROGRESS } from "..types/";
+import { SET_PROGRESS } from "./types";
 
 export default function ur(state, action) {
 	switch (action.type) {
