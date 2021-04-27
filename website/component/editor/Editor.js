@@ -6,11 +6,16 @@ import { basicSetup } from "@codemirror/basic-setup";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 
+<<<<<<< HEAD
 const Codemirror = ({ initialValue, testCase }) => {
+=======
+const Codemirror = ({ initialValue }) => {
+>>>>>>> dfccce42245ba06f2c43c17c3a3bb2af5cb8038a
   // Local state
   const [editorValue, setEditorValue] = useState("");
   const [editorTreeValue, setEditorTreeValue] = useState([]);
 
+<<<<<<< HEAD
   useEffect(() => {
     let testre = {};
     console.log(JSON.parse(testCase));
@@ -37,6 +42,8 @@ const Codemirror = ({ initialValue, testCase }) => {
     console.log(testre);
   }, [editorTreeValue]);
 
+=======
+>>>>>>> dfccce42245ba06f2c43c17c3a3bb2af5cb8038a
   // Ref of the editor
   const editor = useRef();
 
@@ -72,6 +79,7 @@ const Codemirror = ({ initialValue, testCase }) => {
 
       if (treeArray !== editorTreeValue) setEditorTreeValue(treeArray);
     });
+<<<<<<< HEAD
 
   let baseTheme = EditorView.baseTheme({
     ".cm-scroller": {
@@ -84,6 +92,20 @@ const Codemirror = ({ initialValue, testCase }) => {
       backgroundColor: "#5bf",
     },
   });
+=======
+  
+    let baseTheme = EditorView.baseTheme({
+    ".cm-scroller": {
+      height: "600px"
+    },
+    "&light .cm-o-replacement": {
+      backgroundColor: "#04c"
+    },
+    "&dark .cm-o-replacement": {
+      backgroundColor: "#5bf"
+    }
+  })
+>>>>>>> dfccce42245ba06f2c43c17c3a3bb2af5cb8038a
 
   // Initilize view
   useEffect(function initEditorView() {
@@ -95,6 +117,7 @@ const Codemirror = ({ initialValue, testCase }) => {
         extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme],
       }),
       parent: el,
+<<<<<<< HEAD
       baseTheme,
     });
   }, []);
@@ -125,3 +148,33 @@ const Codemirror = ({ initialValue, testCase }) => {
 };
 
 export default Codemirror;
+=======
+      baseTheme
+    });
+  }, []);
+
+  // Component for display text
+  // const OutputText = () => (
+  //   <div className="border rounded p-5">
+  //     <pre>
+  //       <code>{editorValue}</code>
+  //     </pre>
+  //   </div>
+  // );
+
+  // // Component for display array from editor
+  // const OutputArray = () => (
+  //   <div className="border rounded p-5">
+  //     <pre>
+  //       <code>{JSON.stringify(editorTreeValue, null, 2)}</code>
+  //     </pre>
+  //   </div>
+  // );
+
+  return (
+    <div id="codemirror-editor-wrapper" />
+  );
+};
+
+export default Codemirror;
+>>>>>>> dfccce42245ba06f2c43c17c3a3bb2af5cb8038a
