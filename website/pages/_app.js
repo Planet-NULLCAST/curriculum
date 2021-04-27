@@ -1,11 +1,11 @@
-import { UserContext } from "../context/user/userContext";
+import UserState from "../context/user/UserState";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
 	return (
-		<UserContext>
+		<UserState>
 			<Component {...pageProps} />
-		</UserContext>
+		</UserState>
 	);
 }
 
