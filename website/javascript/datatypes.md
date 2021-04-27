@@ -1,8 +1,8 @@
 ---
-title: 'Introduction To Javascript'
-subheading: 'Data types'
-next: 'Interaction'
-prev: 'Introduction'
+title: "Introduction To Javascript"
+subheading: "Data types"
+next: "interaction"
+prev: "introduction"
 ---
 
 **A value in JavaScript is always of a certain type. For example, a string or a number**.
