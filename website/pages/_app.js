@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import UserState from "../context/user/UserState";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+	return (
+		<UserState>
+			<Component {...pageProps} />
+		</UserState>
+	);
 }
 
-export default MyApp
+export default MyApp;
