@@ -1,4 +1,5 @@
-import { BeakerIcon, MenuIcon } from '@heroicons/react/solid';
+
+import { MenuIcon } from '@heroicons/react/solid';
 import { useEffect, useState } from "react";
 import Profile from '../../Profile';
 
@@ -26,3 +27,4 @@ export default function NavBar(){
         </nav>
     );
 }
+
