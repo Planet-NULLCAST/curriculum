@@ -5,6 +5,7 @@ import { EditorState } from "@codemirror/state";
 import { basicSetup } from "@codemirror/basic-setup";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
+import Runbutton from "./RunButton";
 
 const Codemirror = ({ initialValue }) => {
   // Local state
@@ -46,18 +47,18 @@ const Codemirror = ({ initialValue }) => {
 
       if (treeArray !== editorTreeValue) setEditorTreeValue(treeArray);
     });
-  
-    let baseTheme = EditorView.baseTheme({
+
+  let baseTheme = EditorView.baseTheme({
     ".cm-scroller": {
-      height: "600px"
+      height: "566px",
     },
     "&light .cm-o-replacement": {
-      backgroundColor: "#04c"
+      backgroundColor: "#04c",
     },
     "&dark .cm-o-replacement": {
-      backgroundColor: "#5bf"
-    }
-  })
+      backgroundColor: "#5bf",
+    },
+  });
 
   // Initilize view
   useEffect(function initEditorView() {
@@ -69,7 +70,7 @@ const Codemirror = ({ initialValue }) => {
         extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme],
       }),
       parent: el,
-      baseTheme
+      baseTheme,
     });
   }, []);
 
@@ -92,7 +93,10 @@ const Codemirror = ({ initialValue }) => {
   // );
 
   return (
-    <div id="codemirror-editor-wrapper" />
+    <div>
+      <div id="codemirror-editor-wrapper" />
+      <Runbutton editorVal={editorTreeValue} />
+    </div>
   );
 };
 
