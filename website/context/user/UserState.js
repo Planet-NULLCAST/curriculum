@@ -46,10 +46,13 @@ const UserState = ({ children }) => {
 
 	return (
 		<UserContext.Provider
-			value={{
-				user: state.user,
-				test: state.test
-			}}
+			value={[
+				{
+					user: state.user,
+					test: state.test
+				},
+				dispatch
+			]}
 		>
 			{children}
 		</UserContext.Provider>
