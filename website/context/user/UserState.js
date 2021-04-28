@@ -8,11 +8,35 @@ const UserState = ({ children }) => {
 		user: {},
 		test: [
 			{
-				case: ["b=5", "b=5;"],
+				id: 1,
+				case: ["a=5;", "a=5"],
 				hint: "b should have value of 5",
 				isCorrect: false
 			},
-			{}
+			{
+				id: 2,
+				case: ["b=6;", "b=6"],
+				hint: "a should have value of 3",
+				isCorrect: false
+			},
+			{
+				id: 3,
+				case: ["if(a===b){", "if(a===b)"],
+				hint: "use operator +",
+				isCorrect: false
+			},
+			{
+				id: 4,
+				case: ["console.log('log');", "console.log('log')"],
+				hint: "use operator +",
+				isCorrect: false
+			},
+			{
+				id: 5,
+				case: ["}"],
+				hint: "use operator +",
+				isCorrect: false
+			}
 		]
 	};
 
