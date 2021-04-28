@@ -3,6 +3,7 @@ import UserContext from "../../../context/user/userContext";
 
 function Output() {
 	const userState = useContext(UserContext);
+	// console.log(userState);
 	const { test } = userState;
 	// console.log(test);
 
