@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.codeClass code{
-    display: block;
-    margin-top: 1rem;
-    color: gray;
-    margin-bottom: 1rem;
+.codeClass code {
+	display: block;
+	margin-top: 1rem;
+	color: gray;
+	margin-bottom: 1rem;
+	overflow: auto;
 }
