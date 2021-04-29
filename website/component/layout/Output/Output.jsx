@@ -3,9 +3,11 @@ import UserContext from "../../../context/user/userContext";
 
 function Output({ testC }) {
   const userState = useContext(UserContext);
-  useEffect(() => {
-    userState.setTest(testC);
-  }, []);
+  if (testC) {
+    useEffect(() => {
+      userState.setTest(testC);
+    }, []);
+  }
   // console.log(userState);
   let { test } = userState;
   // console.log(test);
