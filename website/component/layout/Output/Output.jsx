@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import UserContext from "../../../context/user/userContext";
 
 function Output() {
-  const [userState, dispatcher] = useContext(UserContext);
+  const userState = useContext(UserContext);
+  // console.log(userState);
   const { test } = userState;
-  console.log(test);
+  // console.log(test);
 
   return (
     <div className="flex flex-col items-center m-2">
