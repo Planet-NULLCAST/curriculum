@@ -1,23 +1,20 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
-
 import Layout from "../../component/layout/Layout";
 import { getAllPostIds, getPostData } from "../../lib/jslist";
+import Editor from "../../component/editor/Editor";
+import Output from "../../component/layout/Output/Output";
 
 import {
   ArrowCircleLeftIcon,
-  ArrowCircleRightIcon,
+  ArrowCircleRightIcon
 } from "@heroicons/react/solid";
-import Editor from "../../component/editor/Editor";
-import Output from "../../component/layout/Output/Output";
-import userContext from "../../context/user/userContext";
 
 export async function getStaticPaths() {
   const paths = await getAllPostIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -26,8 +23,8 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      postData,
-    },
+      postData
+    }
   };
 }
 export default function Javascript({ postData }) {
@@ -37,7 +34,7 @@ export default function Javascript({ postData }) {
         <title>{postData.title}</title>
       </Head>
       <div className="grid grid-cols-3 h-screen">
-        <div className="bg-gray-50 px-4 py-4">
+        <div className="bg-gray-50 px-4 py-4 overflow-auto">
           <div className="py-3">
             <a
               href="#"
@@ -51,7 +48,7 @@ export default function Javascript({ postData }) {
           </div>
           <div className="text-md mt-5 mb-3">{postData.subheading}</div>
           <div
-            className="text-sm font-light codeClass"
+            className="codeClass"
             dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
           />
         </div>
@@ -62,7 +59,7 @@ export default function Javascript({ postData }) {
           <Output testC={postData.testCase} />
         </div>
       </div>
-      <div className="flex justify-around space-x-52 h-12 bg-gray-900 items-center py-6 sticky bottom-0">
+      <div className="flex justify-around space-x-52 h-12 bg-gray-900 items-center py-6 sticky bottom-0 z-50">
         {postData.prev ? (
           <Link href={`/javascript/${postData.prev}`}>
             <a className="text-white">

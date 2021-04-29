@@ -6,31 +6,17 @@ export default function Runbutton({ editorVal }) {
   const testCase = globalState.test;
   // console.log(testCase);
 
+  let clicked = false;
+
   const clickHandle = () => {
+    clicked = true;
+    globalState.setRun(clicked);
+
     let i = 0;
-    // for (let i = 0; i < editorVal.length; i++) {
-    //   editorVal[i] = editorVal[i].replace(/\s+/g, "");
-    //   console.log(editorVal[i]);
-    //   editorVal[i] = editorVal[i].replace(/"+/g, "'");
-    //   console.log(editorVal[i]);
-    //   if (editorVal[i] === "{") {
-    //     editorVal[i - 1] = editorVal[i - 1] + "{";
-    //     editorVal.splice(i, 1);
-    //     console.log(i);
-    //     continue;
-    //   }
-    //   console.log(editorVal[i]);
-    //   if (i <= testCase.length) {
-    //     if (testCase[i].case.includes(editorVal[i])) {
-    //       testCase[i].isCorrect = true;
-    //     } else {
-    //       testCase[i].isCorrect = false;
-    //     }
-    //   }
-    // }
+
     while (i < editorVal.length) {
       // console.log(i);
-      editorVal[i] = editorVal[i].replace(/\s+/g, "");
+      editorVal[i] = editorVal[i].replace(/\s\s+/g, "");
       // console.log(editorVal[i]);
 
       editorVal[i] = editorVal[i].replace(/"+/g, "'");
@@ -52,7 +38,7 @@ export default function Runbutton({ editorVal }) {
       }
       i = i + 1;
     }
-    // console.log(testCase);
+    console.log(editorVal);
     globalState.setTest(testCase);
   };
   return (

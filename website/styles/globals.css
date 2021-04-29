@@ -1,4 +1,6 @@
 @tailwind base;
+@layer base {
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -7,4 +9,5 @@
   margin-top: 1rem;
   color: gray;
   margin-bottom: 1rem;
+  overflow: auto;
 }
