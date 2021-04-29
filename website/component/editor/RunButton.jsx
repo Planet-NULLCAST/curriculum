@@ -4,7 +4,6 @@ import UserContext from "../../context/user/userContext";
 export default function Runbutton({ editorVal }) {
   const [globalState, dispatch] = useContext(UserContext);
   const testCase = globalState.test;
-  console.log(testCase);
   const clickHandle = () => {
     let i = 0;
     // for (let i = 0; i < editorVal.length; i++) {
@@ -28,7 +27,6 @@ export default function Runbutton({ editorVal }) {
     //   }
     // }
     while (i < editorVal.length) {
-      console.log(i);
       editorVal[i] = editorVal[i].replace(/\s+/g, "");
       console.log(editorVal[i]);
       editorVal[i] = editorVal[i].replace(/"+/g, "'");
@@ -40,7 +38,7 @@ export default function Runbutton({ editorVal }) {
         continue;
       }
       console.log(editorVal[i]);
-      if (i <= testCase.length) {
+      if (i < testCase.length) {
         if (testCase[i].case.includes(editorVal[i])) {
           testCase[i].isCorrect = true;
         } else {
@@ -49,13 +47,12 @@ export default function Runbutton({ editorVal }) {
       }
       i = i + 1;
     }
-    console.log(testCase);
-    console.log(editorVal);
+    console.log(globalState.test);
   };
   return (
     <div className="absolute top-3/4">
       <button
-        class="bg-green-600  text-white font-medium py-1 px-3 ml-2 mt-20 rounded-sm"
+        className="bg-green-600  text-white font-medium py-1 px-3 ml-2 mt-20 rounded-sm"
         onClick={clickHandle}
       >
         Run
