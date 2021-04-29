@@ -1,8 +1,8 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Variables"
-next: "interaction"
-prev: "introduction"
+next: "datatypes"
+prev: "hello-world"
 ---
 
 ## A Variable
@@ -43,8 +43,8 @@ We can also declare multiple variables in one line:
 
 ```javascript
 let user = "John",
-  age = 25,
-  message = "Hello";
+	age = 25,
+	message = "Hello";
 ```
 
 That might seem shorter, but we don’t recommend it. For the sake of better readability, please use a single line per variable.
