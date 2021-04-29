@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Interaction: alert, prompt, confirm"
-next: ""
+next: "ifcondition"
 prev: "datatypes"
 ---
 

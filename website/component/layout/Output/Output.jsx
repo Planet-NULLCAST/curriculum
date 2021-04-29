@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserContext from "../../../context/user/userContext";
 
-function Output() {
+function Output({ testC }) {
   const userState = useContext(UserContext);
+  useEffect(() => {
+    userState.setTest(testC);
+  }, []);
   // console.log(userState);
-  const { test } = userState;
+  let { test } = userState;
   // console.log(test);
 
   return (
