@@ -14,19 +14,19 @@ export default function NavBar({ onToggle }) {
 		onToggle();
 	}
 	return (
-		<nav className="sticky top-0 bg-white z-50 shadow-md">
-			<div className="flex p-2 items-center">
-				<div className="flex-1">
+		<nav className="sticky top-0 bg-white z-50 shadow-md h-14 flex flex-row items-center justify-between">
+			<div className="flex p-2 items-center w-full justify-between">
+				<div className="">
 					<MenuIcon
 						onClick={handleClick}
 						className="h-6 w-6 text-gray-900 inline-block cursor-pointer"
 					/>
-					<span className="pl-3 uppercase">js title</span>
+					<span className="pl-3 uppercase">Basic JavaScript</span>
 				</div>
-				<div className="flex-1 ml-36">
-					<img src="/images/logo.png" alt="Logo" />
+				<div className="flex flex-row justify-center">
+					<img className="" src="/images/logo.png" alt="Logo" />
 				</div>
-				<div className="flex-none">
+				<div className="">
 					{cookies ? (
 						<Profile
 							fName={cookies.fName}
@@ -35,7 +35,7 @@ export default function NavBar({ onToggle }) {
 						/>
 					) : (
 						<a
-							className="py-3 px-6 bg-gray-700 text-white rounded-full"
+							className="py-3 px-11 bg-gray-700 text-white rounded-full"
 							href="/login"
 						>
 							Login
