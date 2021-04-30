@@ -35,7 +35,7 @@ export default function NavBar({ onToggle }) {
 						/>
 					) : (
 						<a
-							className="py-3 px-11 bg-gray-700 text-white rounded-full"
+							className="py-3 px-11 bg-gray-800 text-white rounded-full"
 							href="/login"
 						>
 							Login
