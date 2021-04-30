@@ -69,27 +69,29 @@ export default function Javascript({ postData }) {
 					<Output testC={postData.testCase} />
 				</div>
 			</div>
-			<div className="flex justify-around space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12">
-				{postData.prev ? (
-					<Link href={`/javascript/${postData.prev}`}>
-						<a className="text-white">
-							<ArrowCircleLeftIcon className="h-10 w-10 inline-block text-yellow-500" />
-							Previous
-						</a>
-					</Link>
-				) : (
-					""
-				)}
-				{postData.next ? (
-					<Link href={`/javascript/${postData.next}`}>
-						<a className="text-white">
-							Next
-							<ArrowCircleRightIcon className="h-10 w-10 inline-block text-yellow-500" />
-						</a>
-					</Link>
-				) : (
-					""
-				)}
+			<div className="flex flex-row justify-center space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12">
+				<div className="w-1/3 flex flex-row justify-around">
+					{postData.prev ? (
+						<Link href={`/javascript/${postData.prev}`}>
+							<a className="text-white">
+								<ArrowCircleLeftIcon className="h-10 w-10 inline-block text-yellow-500" />
+								Previous
+							</a>
+						</Link>
+					) : (
+						""
+					)}
+					{postData.next ? (
+						<Link href={`/javascript/${postData.next}`}>
+							<a className="text-white">
+								Next
+								<ArrowCircleRightIcon className="h-10 w-10 inline-block text-yellow-500" />
+							</a>
+						</Link>
+					) : (
+						""
+					)}
+				</div>
 			</div>
 		</Layout>
 	);
