@@ -4,6 +4,11 @@ import Layout from "../../component/layout/Layout";
 import { getAllPostIds, getPostData } from "../../lib/jslist";
 import Editor from "../../component/editor/Editor";
 import Output from "../../component/layout/Output/Output";
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+import { useEffect } from "react";
+
+hljs.registerLanguage("javascript", javascript);
 
 import {
   ArrowCircleLeftIcon,
@@ -28,6 +33,9 @@ export async function getStaticProps({ params }) {
   };
 }
 export default function Javascript({ postData }) {
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
   return (
     <Layout>
       <Head>
@@ -48,12 +56,12 @@ export default function Javascript({ postData }) {
           </div>
           <div className="text-md mt-5 mb-3">{postData.subheading}</div>
           <div
-            className="codeClass"
+            className="codeClass font-light font-sans js"
             dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
           />
         </div>
         <div>
-          <Editor />
+          <Editor initialValue={postData} />
         </div>
         <div>
           <Output testC={postData.testCase} />

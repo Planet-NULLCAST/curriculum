@@ -7,7 +7,20 @@
 .codeClass code {
   display: block;
   margin-top: 1rem;
-  color: gray;
   margin-bottom: 1rem;
   overflow: auto;
+}
+
+.codeClass h2 {
+  margin-top: 25px;
+  margin-bottom: 13px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.codeClass h1 {
+  margin-bottom: 13px;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: 600;
 }

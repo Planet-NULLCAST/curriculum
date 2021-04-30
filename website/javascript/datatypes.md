@@ -36,8 +36,6 @@ message = 123456;
 
 Programming languages that allow such things, such as JavaScript, are called **“dynamically typed”**, meaning that there exist data types, but variables are not bound to any of them.
 
-<br />
-
 ## Number
 
 The _number_ type represents both integer and floating point numbers.
@@ -46,8 +44,6 @@ The _number_ type represents both integer and floating point numbers.
 let n = 123;
 n = 12.345;
 ```
-
-<br />
 
 ## String
 
@@ -60,8 +56,6 @@ let phrase = `can embed another ${str}`; // can embed another Hello
 let result = `the result is ${1 + 2}`; // the result is 3
 ```
 
-<br />
-
 ## Boolean
 
 The boolean type has only two values: true and false. This type is commonly used to store yes/no values: true means “yes, correct”, and false means “no, incorrect”.
@@ -72,11 +66,7 @@ let ageFieldChecked = false; // no, age field is not checked
 
 ```
 
-<br />
-
 ---
-
-<br />
 
 # Complete the task below
 
