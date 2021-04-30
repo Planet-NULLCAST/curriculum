@@ -69,11 +69,11 @@ export default function Javascript({ postData }) {
 					<Output testC={postData.testCase} />
 				</div>
 			</div>
-			<div className="flex justify-around space-x-52 h-12 bg-gray-900 items-center py-6 sticky bottom-0 z-50">
+			<div className="flex justify-around space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12">
 				{postData.prev ? (
 					<Link href={`/javascript/${postData.prev}`}>
 						<a className="text-white">
-							<ArrowCircleLeftIcon className="h-12 w-12 inline-block text-yellow-500" />
+							<ArrowCircleLeftIcon className="h-10 w-10 inline-block text-yellow-500" />
 							Previous
 						</a>
 					</Link>
@@ -84,7 +84,7 @@ export default function Javascript({ postData }) {
 					<Link href={`/javascript/${postData.next}`}>
 						<a className="text-white">
 							Next
-							<ArrowCircleRightIcon className="h-12 w-12 inline-block text-yellow-500" />
+							<ArrowCircleRightIcon className="h-10 w-10 inline-block text-yellow-500" />
 						</a>
 					</Link>
 				) : (
