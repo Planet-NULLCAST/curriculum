@@ -3,6 +3,14 @@ title: "Introduction To Javascript"
 subheading: "Hello World!"
 next: "variables"
 prev: "introduction"
+testCase: [
+			{
+				id: 1,
+				case: ["console.log('Hello World!');", "console.log('Hello World!')"],
+				hint: "add console.log() to with 'Hello World!' in it.",
+				isCorrect: false
+			}
+		]
 ---
 
 In this section we are going to see how you can execute **javascript** code on browser.
@@ -73,3 +81,11 @@ The attributes that discussed above is also applicable to this.
 ...
 </body>
 ```
+
+---
+
+<br />
+
+# Complete the task below
+
+Add console.log("Hello World!") to code editor.

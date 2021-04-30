@@ -2,7 +2,25 @@
 title: "Introduction To Javascript"
 subheading: "Variables"
 next: "interaction"
-prev: "introduction"
+prev: "variables"
+testCase: [
+			{
+				id: 1,
+				case: ["let a;", "let a"],
+				hint: "Create a variable a using let.",
+				isCorrect: false
+			},{
+				id: 2,
+				case: ["a = 5;", "a = 5"],
+				hint: "Assign 5 to a using =.",
+				isCorrect: false
+			},{
+				id: 3,
+				case: ["a = 'Message';", "a = 'Message'"],
+				hint: "Assign 'Message' to a using =.",
+				isCorrect: false
+			}
+		]
 ---
 
 ## A Variable
@@ -56,3 +74,15 @@ let user = "John";
 let age = 25;
 let message = "Hello";
 ```
+
+---
+
+<br />
+
+# Complete the task below
+
+Create a variable using let with variable name a.
+
+Assign the varable value 5.
+
+Then change the value to "Message".
