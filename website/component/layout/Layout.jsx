@@ -8,10 +8,10 @@ export default function Layout({ children }) {
 		setToggle(!toggle);
 	}
 	return (
-		<>
+		<div>
 			<NavBar onToggle={handleToggle} />
-			<SideBar onToggle={handleToggle} toggle={toggle}/>
+			<SideBar onToggle={handleToggle} toggle={toggle} />
 			{children}
-		</>
+		</div>
 	);
 }
