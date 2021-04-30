@@ -12,7 +12,7 @@ testCase: [
 			},
 			{
                 id: 2,
-                case: ["if (a === 5) {","if (a === 5)"],
+                case: ["if (a === 5) {"],
                 hint: "use if syntax to check a's value as 5",
                 isCorrect: false
             },
@@ -56,10 +56,10 @@ if (year == 2015) {
 
 ## Complete the tasks below:
 
-- Create a let variable a of type 5
+- Create a variable "a" of type let with value 5
 
 - Check whether a equals 5
 
-- Print true in console
+- If a eqauls 5, print true in console
 
 - Use closing curly braces
