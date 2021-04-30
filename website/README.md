@@ -1,34 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Writing test cases to the chapter
 
-## Getting Started
+General structure of a course chapter md file is as follows:
 
-First, run the development server:
+```
+title: "Course Title"
+subheading: "Section Title"
+next: "File name of the next chapter"
+prev: "File name of the previous chapter"
+testCase: [
+			{
+				id: 1,
+				case: ["case"],
+				hint: "hint message",
+				isCorrect: false // leave this as false
+			},
+		 ]
+---
 
-```bash
-npm run dev
-# or
-yarn dev
+// chapter content
+
+---
+Complete the tasks below:
+- task 1
+- task 2 etc
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For each chapter there will be a set of tasks. Test cases are written according to these set of tasks.
+For example, in the if condition chapter, you might have a set of tasks that's needed to be coded by the user such as below:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Create a variable "a" of type let with value 5
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Check whether a equals 5
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- If a equals 5, print true in console
 
-## Learn More
+- Use closing curly braces
 
-To learn more about Next.js, take a look at the following resources:
+For the above example, the solution shall be:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```javascript
+let a = 5;
+if (a === 5) {
+	console.log(true);
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+For each of these lines a test case object should be written in the testCase array specified at beginning of the document. So for the above solution the test cases shall be written as follows.
 
-## Deploy on Vercel
+```
+testCase: [
+			{
+				id: 1,
+				case: ["let a = 5;", "let a = 5"],
+				hint: "a should have a value of 5",
+				isCorrect: false
+			},
+			{
+                id: 2,
+                case: ["if (a === 5) {"],
+                hint: "use if syntax to check a's value as 5",
+                isCorrect: false
+            },
+			{
+                id: 3,
+                case: ["console.log(true);","console.log(true)"],
+                hint: "use console.log to print true",
+                isCorrect: false
+            },
+            {
+                id: 3,
+                case: ["}"],
+                hint: "use closing curly braces } ",
+                isCorrect: false
+            }
+		]
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Each object has an `id` which corresponds to the line number. The `case` array holds different variations of that particular line which can be accepted as valid JavaScript. For example, if a line ends in semi-colon, a variant with the semi-colon and one without can be added as JavaScript can handle both.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Proper spacing should be given between variables and symbols as given (`let a = 5`). The `hint` value is what's shown to the user when the test case fails. So add a statement accordingly. The `isCorrect` value can be left as `false`, because the initial state of all the test cases are false.
