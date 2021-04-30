@@ -52,17 +52,14 @@ if (year == 2015) {
 }
 ```
 
-<br />
-
 ---
 
-<br />
-Complete the below tasks
+## Complete the tasks below:
 
-Create a let variable a of type 5
+- Create a let variable a of type 5
 
-Check whether a equals 5
+- Check whether a equals 5
 
-Print true in console
+- Print true in console
 
-Use closing curly braces
+- Use closing curly braces

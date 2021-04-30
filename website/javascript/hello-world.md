@@ -15,7 +15,9 @@ testCase: [
 
 In this section we are going to see how you can execute **javascript** code on browser.
 
-## There are Three main ways to execute javscript on browser.
+<br />
+
+**There are Three main ways to execute JavaScript on browser.**
 
 ### 1. script Tag
 
@@ -84,8 +86,6 @@ The attributes that discussed above is also applicable to this.
 
 ---
 
-<br />
+## Complete the task below:
 
-# Complete the task below
-
-Add console.log("Hello World!") to code editor.
+- Add console.log("Hello World!") to code editor.

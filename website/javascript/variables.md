@@ -9,12 +9,14 @@ testCase: [
 				case: ["let a;", "let a"],
 				hint: "Create a variable a using let.",
 				isCorrect: false
-			},{
+			},
+			{
 				id: 2,
 				case: ["a = 5;", "a = 5"],
 				hint: "Assign 5 to a using =.",
 				isCorrect: false
-			},{
+			},
+			{
 				id: 3,
 				case: ["a = 'Message';", "a = 'Message'"],
 				hint: "Assign 'Message' to a using =.",
@@ -61,8 +63,8 @@ We can also declare multiple variables in one line:
 
 ```javascript
 let user = "John",
-  age = 25,
-  message = "Hello";
+	age = 25,
+	message = "Hello";
 ```
 
 That might seem shorter, but we don’t recommend it. For the sake of better readability, please use a single line per variable.
@@ -77,12 +79,10 @@ let message = "Hello";
 
 ---
 
-<br />
+## Complete the tasks below:
 
-# Complete the task below
+- Create a variable using let with variable name a.
 
-Create a variable using let with variable name a.
+- Assign the varable value 5.
 
-Assign the varable value 5.
-
-Then change the value to "Message".
+- Then change the value to "Message".

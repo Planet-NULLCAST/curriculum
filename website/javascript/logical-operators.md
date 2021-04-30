@@ -102,18 +102,14 @@ console.log(!true); // false
 console.log(!0); // true
 ```
 
-<br />
-
 ---
 
-<br />
+## Complete the tasks below:
 
-Complete the below tasks:
+- Create two variables a and b and assign values true and false respectively.
 
-Create two variables a and b and assign values true and false respectively.
+- Perform an AND operation on a and b and assign the value to a variable result.
 
-Perform an AND operation on a and b and assign the value to a variable result.
+- Perform an OR operation on a and b and assign the value to result.
 
-Perform an OR operation on a and b and assign the value to result.
-
-Perform a NOT operation on a and assign the value to result.
+- Perform a NOT operation on a and assign the value to result.

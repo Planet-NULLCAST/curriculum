@@ -29,7 +29,7 @@ A value in JavaScript is always of a certain type. It can be a string or a numbe
 
 There are **eight basic data types** in JavaScript. A varaible can store any such value. It can store a string at one moment and then store a number later.
 
-```
+```javascript
 let message = "hello";
 message = 123456;
 ```
@@ -40,7 +40,7 @@ Programming languages that allow such things, such as JavaScript, are called **�
 
 The _number_ type represents both integer and floating point numbers.
 
-```
+```javascript
 let n = 123;
 n = 12.345;
 ```
@@ -60,18 +60,17 @@ let result = `the result is ${1 + 2}`; // the result is 3
 
 The boolean type has only two values: true and false. This type is commonly used to store yes/no values: true means “yes, correct”, and false means “no, incorrect”.
 
-```
+```javascript
 let nameFieldChecked = true; // yes, name field is checked
 let ageFieldChecked = false; // no, age field is not checked
-
 ```
 
 ---
 
-# Complete the task below
+## Complete the tasks below:
 
-Create a variable num of type let and value 101
+- Create a variable num of type let and value 101
 
-Create variable str of type let and value "hello"
+- Create variable str of type let and value "hello"
 
-Create a variable flag of type let and value true
+- Create a variable flag of type let and value true
