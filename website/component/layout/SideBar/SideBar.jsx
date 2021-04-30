@@ -1,32 +1,18 @@
 import Link from "next/link";
+import titles from "../../../lib/meta";
 
 export default function SideBar({ onToggle, toggle }) {
-	
 	function handleClick(e) {
 		onToggle();
 	}
-
-	//TODO: Should be made dynamic later
-	let titles = [
-		{
-			id: 1,
-			url: "introduction",
-			linkTitle: "Introduction"
-		},
-		{
-			id: 2,
-			url: "datatypes",
-			linkTitle: "Datatypes"
-		},
-		{
-			id: 3,
-			url: "interaction",
-			linkTitle: "Interaction"
-		}
-	];
+	console.log(titles);
 
 	return (
-		<aside className={`transform top-0 ${toggle ? "left-0" : "-left-64"} w-64 bg-gray-100 fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}>
+		<aside
+			className={`transform top-0 ${
+				toggle ? "left-0" : "-left-64"
+			} w-64 bg-gray-100 fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}
+		>
 			<svg
 				aria-hidden="true"
 				focusable="false"
