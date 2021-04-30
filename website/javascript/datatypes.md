@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Data types"
-next: "logical operators"
+next: "logical-operators"
 prev: "variables"
 testCase: [
 			{

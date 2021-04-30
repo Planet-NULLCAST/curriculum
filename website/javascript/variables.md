@@ -1,8 +1,8 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Variables"
-next: "interaction"
-prev: "variables"
+next: "datatypes"
+prev: "hello-world"
 testCase: [
 			{
 				id: 1,
