@@ -8,9 +8,15 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import Runbutton from "./RunButton";
 
 const Codemirror = ({ initialValue }) => {
-  //   useEffect(() => {
-  //     if (editor.current) console.log(editor.current);
-  //   }, [initialValue]);
+  useEffect(() => {
+    if (editor.current)
+      editor.current.setState(
+        EditorState.create({
+          doc: "",
+          extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme]
+        })
+      );
+  }, [initialValue]);
   // Local state
   const [editorValue, setEditorValue] = useState("");
   const [editorTreeValue, setEditorTreeValue] = useState([]);
