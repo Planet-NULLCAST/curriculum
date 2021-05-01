@@ -42,9 +42,9 @@ export default function Runbutton({ editorVal }) {
     globalState.setTest(testCase);
   };
   return (
-    <div className="absolute -bottom-12">
+    <div className="absolute bottom-14">
       <button
-        className="bg-green-600  text-white font-medium py-1 px-3 ml-2 mt-20 rounded-sm"
+        className="bg-green-600  text-white font-medium py-1 px-3 ml-4 mt-20 rounded-sm"
         onClick={clickHandle}
       >
         Run

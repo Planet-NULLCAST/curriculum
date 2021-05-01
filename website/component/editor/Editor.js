@@ -34,7 +34,7 @@ const Codemirror = ({ initialValue }) => {
 
   let baseTheme = EditorView.baseTheme({
     ".cm-scroller": {
-      height: "100vh"
+      height: "85vh"
     },
     "&light .cm-o-replacement": {
       backgroundColor: "#04c"
