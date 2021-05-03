@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.codeClass {
+	color: rgba(55, 65, 81, 1);
+}
 .codeClass code {
 	display: block;
 	margin-top: 1rem;

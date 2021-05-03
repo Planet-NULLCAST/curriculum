@@ -50,11 +50,11 @@ export default function Javascript({ postData }) {
 				<title>{postData.title}</title>
 			</Head>
 			<div className="grid grid-cols-3" style={{ height: "84.5vh" }}>
-				<div className="bg-gray-50 px-4 py-4 overflow-auto">
+				<div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
 					<div className="py-3">
 						<a
 							href="#"
-							className=" text-sm py-1 px-2 uppercase rounded-full border border-gray-500 tracking-wider font-medium"
+							className="text-sm py-1 px-2 uppercase rounded-full border border-gray-500 tracking-wider font-medium"
 						>
 							Learn
 						</a>
@@ -66,7 +66,7 @@ export default function Javascript({ postData }) {
 						{postData.subheading}
 					</div>
 					<div
-						className="codeClass font-light js"
+						className="codeClass font-light js text-gray-900"
 						dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
 					/>
 				</div>
