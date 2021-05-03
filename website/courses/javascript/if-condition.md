@@ -23,7 +23,7 @@ testCase: [
                 isCorrect: false
             },
             {
-                id: 3,
+                id: 4,
                 case: ["}"],
                 hint: "use closing curly braces } ",
                 isCorrect: false
@@ -60,6 +60,6 @@ if (year == 2015) {
 
 - Check whether a equals 5
 
-- If a eqauls 5, print true in console
+- If a equals 5, print true in console
 
 - Use closing curly braces
