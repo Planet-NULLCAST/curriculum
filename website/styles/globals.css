@@ -32,3 +32,10 @@
 	font-size: 1rem;
 	font-weight: 500;
 }
+
+.codeClass li {
+	list-style: circle;
+	margin-left: 2rem;
+	margin-top: 1rem;
+	font-weight: 400;
+}
