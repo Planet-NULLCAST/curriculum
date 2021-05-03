@@ -1,35 +1,55 @@
 import React, { useReducer } from "react";
 import UserContext from "./userContext";
 import UserReducer from "./userReducer";
-import { SET_PROGRESS } from "./types";
+import { SET_TESTS, SET_RUN, SET_PROGRESS } from "./types";
 
 const UserState = ({ children }) => {
-	const initialState = {
-		user: {},
-		test: [
-			{
-				case: ["b=5", "b=5;"],
-				hint: "b should have value of 5",
-				isCorrect: false
-			},
-			{}
-		]
-	};
+  const initialState = {
+    user: {},
+    run: false,
+    test: [
+      {
+        id: 1,
+        case: ["", ""],
+        hint: "Go forward",
+        isCorrect: true
+      }
+    ]
+  };
 
-	const [state, dispatch] = useReducer(UserReducer, initialState);
+  const [state, dispatch] = useReducer(UserReducer, initialState);
 
-	//set user progress - complete function
+  //set test
+  const setTest = (testCase) => {
+    dispatch({
+      type: SET_TESTS,
+      payload: testCase
+    });
+  };
 
-	return (
-		<UserContext.Provider
-			value={{
-				user: state.user,
-				test: state.test
-			}}
-		>
-			{children}
-		</UserContext.Provider>
-	);
+  //set run
+  const setRun = (value) => {
+    dispatch({
+      type: SET_RUN,
+      payload: value
+    });
+  };
+
+  //set user progress - complete function
+
+  return (
+    <UserContext.Provider
+      value={{
+        user: state.user,
+        run: state.run,
+        test: state.test,
+        setTest,
+        setRun
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export default UserState;

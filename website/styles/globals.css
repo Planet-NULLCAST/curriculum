@@ -1,10 +1,44 @@
 @tailwind base;
+@layer base {
+}
 @tailwind components;
 @tailwind utilities;
 
-.codeClass code{
-    display: block;
-    margin-top: 1rem;
-    color: gray;
-    margin-bottom: 1rem;
+.codeClass {
+	color: rgba(55, 65, 81, 1);
+}
+.codeClass code {
+	display: block;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	overflow: auto;
+}
+
+.codeClass h1,
+.codeClass h2,
+.codeClass h3 {
+	margin-bottom: 13px;
+	margin-top: 25px;
+}
+
+.codeClass h1 {
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+.codeClass h2 {
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+.codeClass h3 {
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+.codeClass li {
+	list-style: circle;
+	margin-left: 2rem;
+	margin-top: 1rem;
+	font-weight: 400;
 }

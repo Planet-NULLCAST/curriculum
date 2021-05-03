@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "What Is Javascript ?"
-next: "datatypes"
+next: "hello-world"
 prev: ""
 ---
 
