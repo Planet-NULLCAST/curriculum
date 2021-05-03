@@ -5,7 +5,7 @@ export default function SideBar({ onToggle, toggle }) {
 	function handleClick(e) {
 		onToggle();
 	}
-	console.log(titles);
+	// console.log(titles);
 
 	return (
 		<aside
