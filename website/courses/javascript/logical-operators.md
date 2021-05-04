@@ -18,7 +18,7 @@ testCase: [
             },
             {
                 id: 3,
-                case: ["result = a || b;", "let result = a && b"],
+                case: ["result = a || b;", "result = a || b"],
                 hint: "result should have the value after performing OR on a and b",
                 isCorrect: false
             },
