@@ -11,6 +11,9 @@
 # 🙌 Contributing to Curriculum
 From opening a bug report to creating a pull request: every contribution is appreciated and welcomed. If you're planning to implement a new feature or change the API please create an issue first. This way we can ensure your work is not in vain.
 
+# Where to add content and how it works?
+There is a website [readme](https://github.com/Planet-NULLCAST/curriculum/blob/main/website/README.md) file which lists out how the curriculum is structured and which files need to be updated for adding content
+
 # Steps for contributing
 1. Create or pick an issue from the [issues](https://github.com/Planet-NULLCAST/curriculum/issues)
 2. If adding a new feature create an issue with  lots of details to support. You can even start a discussion [here](https://github.com/Planet-NULLCAST/curriculum/discussions) to gain upvotes or ask for improvising the idea.
