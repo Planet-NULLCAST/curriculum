@@ -15,12 +15,12 @@ function Output() {
 			<h1 className="text-sm tracking-wider font-medium uppercase py-3">
 				Results
 			</h1>
-			<div className="py-2 px-3">
+			<div className="py-2 px-3 w-full">
 				{run &&
 					test.map(t => (
 						<div
 							key={t.id}
-							className="bg-white border border-gray-200 m-1 shadow-lg flex flex-row items-center"
+							className="bg-white border border-gray-200 my-1 shadow-lg flex flex-row items-center w-full"
 							style={{ minHeight: "4rem" }}
 						>
 							{t.isCorrect ? (

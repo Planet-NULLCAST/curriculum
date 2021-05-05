@@ -1,10 +1,41 @@
-# Writing test cases to the chapter
+## Writing a Chapter
 
-General structure of a course chapter md file is as follows:
+Each course folder should be added under `/website/courses/`. Chapter content is written as an md file under the corresponding course folder. For eg, the list of chapters under the JavaScript course will be under `/website/courses/javascript/` as md files. File name should be the chapter name. For eg, if the chapter's name is "If Condition", the file name should be `if-condition.md`. Few example chapters are present.  
+**Note** that, once you add the chapter, you have to update the details in `/website/courses/meta.js`.
 
 ```
+//meta.js
+
+let courses = [
+	{
+		name: "javascript",
+		chapters: [
+			{
+				id: 1,
+				url: "introduction",
+				linkTitle: "Introduction"
+			},
+			{
+				id: 2,
+				url: "hello-world",
+				linkTitle: "Hello World"
+			},
+			{...}
+		]
+	}
+];
+
+```
+
+`name` is the name of that particular course. `id` specifies the order of the chapters, `url` should be the file name and `linkTitle` the chapter name.
+
+**General structure of a chapter md file is as follows:**
+
+```
+//chapter-name.md
+---
 title: "Course Title"
-subheading: "Section Title"
+subheading: "Chapter Title"
 next: "File name of the next chapter"
 prev: "File name of the previous chapter"
 testCase: [
@@ -18,12 +49,20 @@ testCase: [
 ---
 
 // chapter content
+Eg: The if(...) statement evaluates a condition in parentheses and, if the result is true, executes a block of code.
 
 ---
+
 Complete the tasks below:
+
 - task 1
 - task 2 etc
+
 ```
+
+The chapter content can be placed between the line breaks of front matter and tasks as given above.
+
+## Writing test cases for the chapter
 
 For each chapter there will be a set of tasks. Test cases are written according to these set of tasks.
 For example, in the if condition chapter, you might have a set of tasks that's needed to be coded by the user such as below:
