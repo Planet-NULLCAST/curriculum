@@ -1,11 +1,13 @@
 import Link from "next/link";
-import titles from "../../../lib/meta";
+import { courses } from "../../../courses/meta";
 
 export default function SideBar({ onToggle, toggle }) {
+	const titles = courses[0].chapters;
+	// console.log(titles);
+
 	function handleClick(e) {
 		onToggle();
 	}
-	// console.log(titles);
 
 	return (
 		<aside
@@ -29,13 +31,13 @@ export default function SideBar({ onToggle, toggle }) {
 			</svg>
 
 			<ul className="text-black flex flex-col mt-28 h-80">
-				{titles.map(title => (
+				{titles.map((title) => (
 					<li
-						key={title.id}
+						key={title.chapterId}
 						className={`text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-200 p-4`}
 					>
-						<Link href={`/javascript/${title.url}`}>
-							<a onClick={handleClick}>{title.linkTitle}</a>
+						<Link href={`/javascript/${title.chapterUrl}`}>
+							<a onClick={handleClick}>{title.chapterName}</a>
 						</Link>
 					</li>
 				))}
