@@ -6,6 +6,7 @@ prev: "logical-operators"
 testCase: [
 			{
 				id: 1,
+        chapterName: "if-condition",
 				case: ["let a = 5;", "let a = 5"],
 				hint: "a should have value of 5",
 				isCorrect: false
@@ -35,8 +36,8 @@ The if(...) statement evaluates a condition in parentheses and, if the result is
 
 ```javascript
 if (year == 2015) {
-	console.log("That's correct!");
-	console.log("You're so smart!");
+  console.log("That's correct!");
+  console.log("You're so smart!");
 }
 ```
 
@@ -46,9 +47,9 @@ The if statement may contain an optional “else” block. It executes when the 
 
 ```javascript
 if (year == 2015) {
-	console.log("You guessed it right!");
+  console.log("You guessed it right!");
 } else {
-	console.log("How can you be so wrong?"); // any value except 2015
+  console.log("How can you be so wrong?"); // any value except 2015
 }
 ```
 

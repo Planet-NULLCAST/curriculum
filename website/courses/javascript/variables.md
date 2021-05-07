@@ -6,6 +6,7 @@ prev: "hello-world"
 testCase: [
 			{
 				id: 1,
+				chapterName: "variables",
 				case: ["let a;", "let a"],
 				hint: "Create a variable a using let.",
 				isCorrect: false
@@ -63,8 +64,8 @@ We can also declare multiple variables in one line:
 
 ```javascript
 let user = "John",
-	age = 25,
-	message = "Hello";
+  age = 25,
+  message = "Hello";
 ```
 
 That might seem shorter, but we don’t recommend it. For the sake of better readability, please use a single line per variable.

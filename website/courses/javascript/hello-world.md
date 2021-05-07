@@ -6,6 +6,7 @@ prev: "introduction"
 testCase: [
 			{
 				id: 1,
+				chapterName: "hello-world",
 				case: ["console.log('Hello World!');", "console.log('Hello World!')"],
 				hint: "add console.log() to with 'Hello World!' in it.",
 				isCorrect: false

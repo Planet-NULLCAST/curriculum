@@ -6,6 +6,7 @@ prev: "variables"
 testCase: [
 			{
 				id: 1,
+                chapterName: "logical-operators",
 				case: ["let a = true, b = false;", "let a = true, b = false"],
 				hint: "a should have a value of true and b should have a value of false",
 				isCorrect: false
@@ -78,7 +79,7 @@ let hour = 12;
 let minute = 30;
 
 if (hour == 12 && minute == 30) {
-	console.log("The time is 12:30");
+  console.log("The time is 12:30");
 }
 ```
 
