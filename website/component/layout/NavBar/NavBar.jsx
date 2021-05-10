@@ -2,7 +2,7 @@ import { MenuIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import Profile from "../../Profile";
 
-export default function NavBar({ onToggle }) {
+export default function NavBar({ showMenuIcon, showTitle, onToggle }) {
 	const [cookies, setCookies] = useState("");
 	useEffect(() => {
 		let cook = document.cookie;
@@ -17,11 +17,15 @@ export default function NavBar({ onToggle }) {
 		<nav className="sticky top-0 bg-white z-50 shadow-md h-14 flex flex-row items-center justify-between">
 			<div className="flex p-2 items-center w-full justify-between">
 				<div>
-					<MenuIcon
-						onClick={handleClick}
-						className="h-6 w-6 text-gray-900 inline-block cursor-pointer"
-					/>
-					<span className="pl-3 uppercase">Basic JavaScript</span>
+					{showMenuIcon && (
+						<MenuIcon
+							onClick={handleClick}
+							className="h-6 w-6 text-gray-900 inline-block cursor-pointer"
+						/>
+					)}
+					{showTitle && (
+						<span className="pl-3 uppercase">Basic JavaScript</span>
+					)}
 				</div>
 				<div className="flex flex-row justify-center">
 					<img src="/images/logo.png" alt="Logo" />
