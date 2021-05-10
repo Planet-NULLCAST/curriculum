@@ -18,7 +18,7 @@ import {
 } from "@heroicons/react/solid";
 
 export async function getStaticPaths() {
-	const paths = await getAllPostIds();
+	const paths = await getAllChapterIds();
 	return {
 		paths,
 		fallback: false
@@ -26,16 +26,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const postData = await getPostData(params.id);
-
+	const chapterData = await getChapterData(params.chapterName);
+	// console.log(chapterData);
 	return {
 		props: {
-			postData
+			chapterData
 		}
 	};
 }
-export default function Javascript({ postData }) {
-	const { testCase } = postData;
+export default function Chapter({ chapterData }) {
+	const { testCase } = chapterData;
 	const userState = useContext(UserState);
 	const [progress, setProgress] = useState(0);
 	const [courseList, seCourseList] = useState([]);
@@ -78,7 +78,7 @@ export default function Javascript({ postData }) {
 	return (
 		<Layout>
 			<Head>
-				<title>{postData.title}</title>
+				<title>{chapterData.title}</title>
 			</Head>
 			<div className="grid grid-cols-3" style={{ height: "84.5vh" }}>
 				<div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
@@ -91,18 +91,18 @@ export default function Javascript({ postData }) {
 						</a>
 					</div>
 					<div className="font-bold my-3 uppercase">
-						<h1 className="text-2xl">{postData.title}</h1>
+						<h1 className="text-2xl">{chapterData.title}</h1>
 					</div>
 					<div className="text-xl font-semibold mt-5 mb-3">
-						{postData.subheading}
+						{chapterData.subheading}
 					</div>
 					<div
 						className="codeClass font-light js text-gray-900"
-						dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+						dangerouslySetInnerHTML={{ __html: chapterData.contentHtml }}
 					/>
 				</div>
 				<div>
-					<Editor initialValue={postData} />
+					<Editor initialValue={chapterData} />
 				</div>
 				<div>
 					<Output />
@@ -110,17 +110,17 @@ export default function Javascript({ postData }) {
 			</div>
 			<div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12">
 				<div
-					class="rounded-md bg-gray-600"
+					className="rounded-md bg-gray-600"
 					style={{ width: "382px", marginLeft: "10px" }}
 				>
 					<div
-						class="mt-0 bg-purple-500 py-1 rounded-full"
+						className="mt-0 bg-purple-500 py-1 rounded-full"
 						style={{ width: `${progress}%` }}
 					></div>
 				</div>
 				<div className="flex flex-row" style={{ marginLeft: "142px" }}>
-					{postData.prev ? (
-						<Link href={`/javascript/${postData.prev}`}>
+					{chapterData.prev ? (
+						<Link href={`/javascript/${chapterData.prev}`}>
 							<a className="text-white" style={{ marginRight: "93px" }}>
 								<ArrowCircleLeftIcon className="h-10 w-10 inline-block text-yellow-500" />
 								Previous
@@ -129,8 +129,8 @@ export default function Javascript({ postData }) {
 					) : (
 						""
 					)}
-					{postData.next ? (
-						<Link href={`/javascript/${postData.next}`}>
+					{chapterData.next ? (
+						<Link href={`/javascript/${chapterData.next}`}>
 							<a className="text-white">
 								Next
 								<ArrowCircleRightIcon className="h-10 w-10 inline-block text-yellow-500" />
