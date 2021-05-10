@@ -2,7 +2,8 @@ import axios from "axios";
 let courses = [
 	{
 		courseId: 1,
-		courseName: "javascript",
+		courseName: "JavaScript",
+		courseUrl: "javascript",
 		chapters: [
 			{
 				chapterId: 1,

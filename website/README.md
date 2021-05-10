@@ -3,7 +3,7 @@
 Each course folder should be added under `/website/courses/`. Chapter content is written as an md file under the corresponding course folder. For eg, the list of chapters under the JavaScript course will be under `/website/courses/javascript/` as md files. File name should be the chapter name. For eg, if the chapter's name is "If Condition", the file name should be `if-condition.md`. Few example chapters are present.  
 **Note** that, once you add the chapter, you have to update the details in `/website/courses/meta.js`.
 
-```
+```javascript
 //meta.js
 
 let courses = [
@@ -44,8 +44,8 @@ testCase: [
 				case: ["case"],
 				hint: "hint message",
 				isCorrect: false // leave this as false
-			},
-		 ]
+			}
+		]
 ---
 
 // chapter content
@@ -95,23 +95,23 @@ testCase: [
 				isCorrect: false
 			},
 			{
-                id: 2,
-                case: ["if (a === 5) {"],
-                hint: "use if syntax to check a's value as 5",
-                isCorrect: false
-            },
+				id: 2,
+				case: ["if (a === 5) {"],
+				hint: "use if syntax to check a's value as 5",
+				isCorrect: false
+			},
 			{
-                id: 3,
-                case: ["console.log(true);","console.log(true)"],
-                hint: "use console.log to print true",
-                isCorrect: false
-            },
-            {
-                id: 3,
-                case: ["}"],
-                hint: "use closing curly braces } ",
-                isCorrect: false
-            }
+				id: 3,
+				case: ["console.log(true);","console.log(true)"],
+				hint: "use console.log to print true",
+				isCorrect: false
+			},
+			{
+				id: 3,
+				case: ["}"],
+				hint: "use closing curly braces } ",
+				isCorrect: false
+			}
 		]
 ```
 

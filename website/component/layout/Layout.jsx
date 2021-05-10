@@ -9,7 +9,7 @@ export default function Layout({ children }) {
 	}
 	return (
 		<div>
-			<NavBar onToggle={handleToggle} />
+			<NavBar onToggle={handleToggle} showMenuIcon={true} showTitle={true} />
 			<SideBar onToggle={handleToggle} toggle={toggle} />
 			{children}
 		</div>
