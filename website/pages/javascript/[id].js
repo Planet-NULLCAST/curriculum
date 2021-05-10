@@ -38,9 +38,11 @@ export default function Javascript({ postData }) {
   const { testCase } = postData;
   const userState = useContext(UserState);
   const [progress, setProgress] = useState(0);
+  const [courseList, seCourseList] = useState([]);
 
   useEffect(() => {
     hljs.highlightAll();
+    seCourseList(JSON.parse(window.localStorage.getItem("courses")));
   }, []);
   useEffect(() => {
     userState.setTest(testCase);
@@ -48,17 +50,30 @@ export default function Javascript({ postData }) {
     console.log(progress);
   }, [testCase]);
   useEffect(() => {
-    axios({
-      method: "post",
-      mode: "no-cors",
-      url: `http://localhost:8080/api/progress/javascript`,
-      headers: {
-        "x-access-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJiZTI1Mzc3MGVhMzI1M2U4ZjljNyIsImlhdCI6MTYyMDI4MTc3MCwiZXhwIjoxNjIwMzY4MTcwfQ._fpb9tDWNfGvrXUjV94Q58YJPCGg7Pzu8Xmuaav5qrg"
-      }
-    }).then((response) => {
-      setProgress((response.data.length / 6) * 100);
-    });
+    let cook = document.cookie;
+    cook = cook.split("=");
+    cook[0] !== "" ? (cook = JSON.parse(cook[1]).accessToken) : (cook = false);
+    if (cook) {
+      axios({
+        method: "post",
+        mode: "no-cors",
+        url: `http://localhost:8080/api/progress/javascript`,
+        headers: {
+          "x-access-token": `${cook}`
+        }
+      })
+        .then((response) => {
+          console.log(response.data);
+          setProgress(
+            (response.data.length / courseList[0].chapters.length) * 100
+          );
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } else {
+      console.log("Not logged in");
+    }
   }, [userState]);
   return (
     <Layout>

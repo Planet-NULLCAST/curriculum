@@ -6,7 +6,7 @@ const axios = require("axios");
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Runbutton({ editorVal }) {
+export default function Runbutton({ editorVal, courseName, chapterName }) {
   const globalState = useContext(UserContext);
   const testCase = globalState.test;
 
@@ -65,21 +65,41 @@ export default function Runbutton({ editorVal }) {
       }
     }
     if (flag) {
-      axios({
-        method: "post",
-        mode: "no-cors",
-        url: `http://localhost:8080/api/enrol/${courses[0].courseName}/${testCase[0].chapterName}`,
-        headers: {
-          "x-access-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJiZTI1Mzc3MGVhMzI1M2U4ZjljNyIsImlhdCI6MTYyMDI4MTc3MCwiZXhwIjoxNjIwMzY4MTcwfQ._fpb9tDWNfGvrXUjV94Q58YJPCGg7Pzu8Xmuaav5qrg"
-        }
-      }).then((response) => {
-        if (response.data.entryAdded) {
-          notify("Chapter Is Completed!");
-        } else {
-          notify(response.data);
-        }
-      });
+      let cook = document.cookie;
+      cook = cook.split("=");
+      cook[0] !== ""
+        ? (cook = JSON.parse(cook[1]).accessToken)
+        : (cook = false);
+      if (cook) {
+        axios({
+          method: "post",
+          mode: "no-cors",
+          url: `http://localhost:8080/api/enrol/${courseName}/${chapterName}`,
+          headers: {
+            "x-access-token": `${cook}`
+          }
+        }).then((response) => {
+          if (response.data.entryAdded) {
+            notify("Chapter Is Completed!");
+          } else {
+            notify(response.data);
+          }
+        });
+      }
+      let index = 0;
+      let progress = JSON.parse(window.localStorage.getItem("progress")) || [
+        { courseName: "", completedChapter: [] }
+      ];
+      console.log(progress);
+      let chapterList = new Set(progress[index].completedChapter);
+      chapterList.add(chapterName);
+      chapterList = [...chapterList];
+      let progressItem = {
+        courseName: courseName,
+        completedChapter: chapterList
+      };
+      progress[index] = progressItem;
+      window.localStorage.setItem("progress", JSON.stringify(progress));
     }
     globalState.setTest(testCase);
   };

@@ -13,7 +13,7 @@ testCase: [
 			},
 			{
                 id: 2,
-                case: ['let str="hello";',"let str='hello'"],
+                case: ["let str='hello';","let str='hello'"],
                 hint: 'str should have a value of "hello"',
                 isCorrect: false
             },
