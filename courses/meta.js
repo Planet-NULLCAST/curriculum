@@ -36,6 +36,23 @@ let courses = [
 				chapterName: "If Condition"
 			}
 		]
+	},
+	{
+		courseId: 2,
+		courseName: "Python",
+		courseUrl: "python",
+		chapters: [
+			{
+				chapterId: 1,
+				chapterUrl: "introduction",
+				chapterName: "Introduction"
+			},
+			{
+				chapterId: 2,
+				chapterUrl: "hello-world",
+				chapterName: "Hello World"
+			}
+		]
 	}
 ];
 
