@@ -2,7 +2,8 @@ import { MenuIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import Profile from "../../Profile";
 
-export default function NavBar({ showMenuIcon, showTitle, onToggle }) {
+export default function NavBar({ onToggle, title, showMenuIcon, showTitle }) {
+	// console.log(title);
 	const [cookies, setCookies] = useState("");
 	useEffect(() => {
 		let cook = document.cookie;
@@ -24,11 +25,8 @@ export default function NavBar({ showMenuIcon, showTitle, onToggle }) {
 						/>
 					)}
 					{showTitle && (
-						<span className="pl-3 uppercase">Basic JavaScript</span>
+						<span className="pl-3 uppercase tracking-wider">{title}</span>
 					)}
-				</div>
-				<div className="flex flex-row justify-center">
-					<img src="/images/logo.png" alt="Logo" />
 				</div>
 				<div>
 					{cookies ? (
