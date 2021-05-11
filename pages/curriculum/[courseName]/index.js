@@ -1,12 +1,11 @@
 import { getAllCourseIds, getCourseData } from "../../../lib/jslist";
-import { courses } from "../../../courses/meta";
+import { getCourse } from "../../../lib/getCourse";
 import Navbar from "../../../component/layout/NavBar/NavBar";
 import Head from "next/head";
 import Link from "next/link";
 
 export async function getStaticPaths() {
 	const paths = await getAllCourseIds();
-	// console.log(paths);
 	return {
 		paths,
 		fallback: false
@@ -24,15 +23,15 @@ export async function getStaticProps({ params }) {
 	};
 }
 
-function courseName({ courseData, params }) {
+export default function CourseName({ courseData, params }) {
 	// console.log(courseData, params);
 	const currentCourseName = params.courseName;
-	let currentCourse = courses.filter((course) => {
-		return course.courseUrl === currentCourseName;
-	});
-	// console.log(currentCourse[0].chapters);
-	let { courseName, courseUrl } = currentCourse[0];
-	let currentChapters = currentCourse[0].chapters;
+
+	let currentCourse = getCourse(currentCourseName);
+	// console.log(currentCourse);
+
+	let { courseName, courseUrl } = currentCourse;
+	let currentChapters = currentCourse.chapters;
 	// console.log(courseName, currentChapters);
 
 	return (
@@ -51,7 +50,7 @@ function courseName({ courseData, params }) {
 							key={chapter.chapterUrl + courseUrl}
 							className="bg-white m-2 px-12 h-14 w-2/4 flex flex-row items-center shadow-md text-xl tracking-wider hover:shadow-lg"
 						>
-							<Link href={`/${courseUrl}/${chapter.chapterUrl}`}>
+							<Link href={`/curriculum/${courseUrl}/${chapter.chapterUrl}`}>
 								<a className="text-gray-700 font-medium hover:text-purple-800">
 									{chapter.chapterName}
 								</a>
@@ -63,5 +62,3 @@ function courseName({ courseData, params }) {
 		</div>
 	);
 }
-
-export default courseName;
