@@ -1,0 +1,24 @@
+.header {
+    @apply absolute left-0 top-0 w-full z-50 text-white flex items-center justify-end
+    p-5 md:px-20 md:py-8;
+    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, .15);
+}
+
+.mainMenu {
+    @apply flex items-center;
+
+    li {
+        @apply mx-3;
+    }
+
+}
+
+.wrapBtn {
+    @apply flex;
+}
+
+.btn {
+    @apply inline-block relative bg-white text-black;
+    border-radius: 1px;
+}

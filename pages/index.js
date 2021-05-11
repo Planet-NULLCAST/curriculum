@@ -1,3 +1,12 @@
+import HomeSpotlight from "../component/layout/HomeSpotlight/HomeSpotlight";
+import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
+import "../styles/Home.module.scss";
+
 export default function Home() {
-  return <div> Test home</div>;
+  return (
+    <div className="wrap">
+      <SiteHeader />
+      <HomeSpotlight />
+    </div>
+  );
 }

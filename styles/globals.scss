@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './partials/fonts';
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
 .codeClass {
 	color: rgba(55, 65, 81, 1);
 }
