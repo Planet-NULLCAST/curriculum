@@ -1,5 +1,5 @@
 .spotlight {
-    @apply bg-black min-h-screen flex items-center justify-center text-white;
+    @apply bg-black min-h-screen flex items-center justify-center text-white md:py-20;
 
     &__title {
 
@@ -48,24 +48,7 @@
     to {background-position:-10000px 5000px;}
 }
 
-@keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-webkit-keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-moz-keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-}
-@-ms-keyframes move-clouds-back {
-    from {background-position: 0;}
-    to {background-position:10000px 0;}
-}
-
-.stars, .twinkling, .clouds {
+.stars, .twinkling {
   @apply absolute top-0 left-0 right-0 bottom-0 w-full h-full;
 }
 
