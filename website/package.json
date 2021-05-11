@@ -25,7 +25,8 @@
     "react-toastify": "^7.0.4",
     "remark": "^13.0.0",
     "remark-highlight.js": "^6.0.0",
-    "remark-html": "^13.0.1"
+    "remark-html": "^13.0.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
