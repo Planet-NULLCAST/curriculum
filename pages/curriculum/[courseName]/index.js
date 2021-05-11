@@ -1,11 +1,11 @@
-import { getAllCourseIds, getCourseData } from "../lib/jslist";
+import { getAllCourseIds, getCourseData } from "../../../lib/jslist";
 
 export async function getStaticPaths() {
   const paths = await getAllCourseIds();
   // console.log(paths);
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 }
 
@@ -14,8 +14,8 @@ export async function getStaticProps({ params }) {
   // console.log(courseData);
   return {
     props: {
-      courseData
-    }
+      courseData,
+    },
   };
 }
 

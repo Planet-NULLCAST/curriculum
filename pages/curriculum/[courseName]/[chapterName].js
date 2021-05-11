@@ -1,13 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../component/layout/Layout";
-import { getAllChapterIds, getChapterData } from "../../lib/jslist";
-import Editor from "../../component/editor/Editor";
-import Output from "../../component/layout/Output/Output";
+import Layout from "../../../component/layout/Layout";
+import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
+import Editor from "../../../component/editor/Editor";
+import Output from "../../../component/layout/Output/Output";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
-import UserState from "../../context/user/userContext";
+import UserState from "../../../context/user/userContext";
 const axios = require("axios");
 import { useRouter } from "next/router";
 
@@ -15,14 +15,14 @@ hljs.registerLanguage("javascript", javascript);
 
 import {
   ArrowCircleLeftIcon,
-  ArrowCircleRightIcon
+  ArrowCircleRightIcon,
 } from "@heroicons/react/solid";
 
 export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
     paths,
-    fallback: false
+    fallback: false,
   };
 }
 
@@ -30,8 +30,8 @@ export async function getStaticProps({ params }) {
   const chapterData = await getChapterData(params);
   return {
     props: {
-      chapterData
-    }
+      chapterData,
+    },
   };
 }
 export default function Chapter({ chapterData }) {
@@ -59,8 +59,8 @@ export default function Chapter({ chapterData }) {
         mode: "no-cors",
         url: `http://localhost:8080/api/progress/javascript`,
         headers: {
-          "x-access-token": `${cook}`
-        }
+          "x-access-token": `${cook}`,
+        },
       })
         .then((response) => {
           console.log(response.data);
