@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { courses } from "../../../courses/meta";
 
-export default function SideBar({ onToggle, toggle }) {
-	const titles = courses[0].chapters;
-	// console.log(titles);
+export default function SideBar({ onToggle, toggle, course }) {
+	const titles = course.chapters;
+	// console.log({ titles });
+	// console.log(course.courseUrl);
 
 	function handleClick(e) {
 		onToggle();
@@ -36,7 +36,7 @@ export default function SideBar({ onToggle, toggle }) {
 						key={title.chapterId}
 						className={`text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-200 p-4`}
 					>
-						<Link href={`/courses/javascript/${title.chapterUrl}`}>
+						<Link href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}>
 							<a onClick={handleClick}>{title.chapterName}</a>
 						</Link>
 					</li>
