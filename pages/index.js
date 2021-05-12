@@ -1,6 +1,12 @@
+
 import HomeSpotlight from "../component/layout/HomeSpotlight/HomeSpotlight";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import SectioBlogs from "../component/layout/SectionBlogs/SectionBlogs";
+import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
+import SectionVideos from "../component/layout/SectionVideos/SectionVideos";
+import SectionEvents from "../component/layout/SectionEvents/SectionEvents";
+import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
+
 import "../styles/Home.module.scss";
 
 export default function Home() {
@@ -9,6 +15,10 @@ export default function Home() {
       <SiteHeader />
       <HomeSpotlight />
       <SectioBlogs />
+      <SectionVideos />
+      <SectionEvents />
+      <SectionSwag />
+      <SiteFooter />
     </div>
   );
 }

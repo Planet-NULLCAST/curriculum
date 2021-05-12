@@ -5,10 +5,15 @@
 @tailwind utilities;
 
 @import './partials/fonts';
+@import './partials/common';
 
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1em;
+}
+
+h2, h3 {
+	line-height: 1;
 }
 
 .codeClass {

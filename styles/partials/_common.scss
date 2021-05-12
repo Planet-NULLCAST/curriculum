@@ -1,0 +1,61 @@
+
+.btn {
+    --shadowcolor: #202020;
+    @apply inline-block bg-pink rounded-10 text-white px-10 lg:px-20 py-5 lg:py-7 text-lg md:text-xl xl:text-3xl font-extrabold uppercase relative overflow-hidden;
+    border: 1px solid #1C1C1D;
+    box-shadow: 0px 4px 0px var(--shadowcolor);
+
+    &:before {
+        @apply absolute top-0 h-full;
+        transition: all ease .5s;
+        background: linear-gradient(100deg,  #FDB500 60%, transparent);
+        content: '';
+        left: -200%;
+        width: 200%;
+    }
+
+    &:hover {
+        &:before {
+            @apply left-0;
+        }
+    }
+
+    &--subscribe {
+        @apply py-4 px-14;
+    }
+
+    &__text {
+        @apply relative;
+    }
+
+    &--white, &--whiteborder {
+        --shadowcolor:transparent;
+        @apply inline-block relative bg-white text-black px-7 py-4 mx-3 border border-white flex items-center justify-center capitalize text-base font-semibold;
+        border-radius: 1px;
+    }
+
+    &--whiteborder {
+        @apply text-white;
+        background: transparent;
+
+    }
+
+    &__arrow {
+        @apply ml-2 relative;
+    }
+
+}
+
+.sectionHeader {
+    
+    @apply md:flex justify-between items-center text-center md:text-right;
+
+    &__title {
+        @apply font-darker text-gray-01 font-extrabold leading-none  text-64;
+    }
+
+    &__description {
+        @apply font-bold text-18 lg:w-1/2;
+    }
+
+}

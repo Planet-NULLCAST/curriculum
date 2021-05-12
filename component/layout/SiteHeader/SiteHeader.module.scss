@@ -25,18 +25,3 @@
 .wrapBtn {
     @apply flex;
 }
-
-.btn {
-    @apply inline-block relative bg-white text-black px-8 py-4 mx-3 border border-white flex items-center justify-center;
-    border-radius: 1px;
-
-    &.btnBorder {
-        @apply text-white;
-        background: transparent;
-    }
-
-    & svg {
-        @apply ml-2;
-    }
-
-}

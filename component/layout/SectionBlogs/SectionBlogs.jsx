@@ -2,18 +2,142 @@ import styles from './SectionBlogs.module.scss';
 
 export default function SectionBlogs() {
     return (
-        <section className='py-10 lg:py-20'>
-            <div className='container mx-auto'>
-                <div className="sectionHeader md:flex justify-between items-center">
-                    <h2 className='font-darker text-gray-01 font-extrabold leading-none text-64 lg:w-3/12 text-right'>Series of Blogs</h2>
-                    <p className="description font-bold text-18 lg:w-1/2 text-right">Get the latest scoop from the world of development with the latest news, hacks, tricks, and more on javascript, machine learning, enterprise architecture and more.</p>
+        <section className='pt-10 lg:pt-20'>
+            <div className='container mx-auto px-3 md:px-4'>
+                <div className="sectionHeader">
+                    <h2 className='sectionHeader__title md:w-56'>Series of Blogs</h2>
+                    <p className="sectionHeader__description">Get the latest scoop from the world of development with the latest news, hacks, tricks, and more on javascript, machine learning, enterprise architecture and more.</p>
                 </div>
-                <div className={styles.blogGrid}>
-                    <div className={styles.blogGrid__item}>
-                        <figure>
-                            <img src="/public/images/temp/blog1.png" alt=""/>
+                <div className={styles.blogList}>
+
+                    <div className={styles.blogItem}>
+                        <figure className={styles.blogImage}>
+                            <img src="/images/temp/blog1.png" className="w-full" alt=""/>
                         </figure>
+                        <h3>
+                            <a href="">All you need to know about Supabase</a>
+                        </h3>
+                        <div className={styles.author}>
+                            <div className={styles.icon}>
+                                <a href="">
+                                    <img src="/images/temp/avatar1.png" className="w-full" alt=""/>
+                                </a>
+                            </div>
+                            <div className={styles.details}>
+                                <h4>
+                                    <a href="">Allie Grater</a>
+                                </h4>
+                                <div className="flex">
+                                    <h5>Master Ninja</h5>
+                                    <div className={styles.points}>
+                                        <div>
+
+                                        </div>
+                                        <span>1000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+                    <div className={styles.blogItem}>
+                        <figure className={styles.blogImage}>
+                            <img src="/images/temp/blog2.png" className="w-full" alt=""/>
+                        </figure>
+                        <h3>
+                            <a href="">Creative Search Bar and Input Field Design Inspiration</a>
+                        </h3>
+                        <div className={styles.author}>
+                            <div className={styles.icon}>
+                                <a href="">
+                                    <img src="/images/temp/avatar1.png" className="w-full" alt=""/>
+                                </a>
+                            </div>
+                            <div className={styles.details}>
+                                <h4>
+                                <a href="">Paige Turner</a>
+                                </h4>
+                                <div className="flex">
+                                    <h5>Master Ninja</h5>
+                                    <div className={styles.points}>
+                                        <div>
+                                            
+                                        </div>
+                                        <span>750</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className={styles.blogItem}>
+                        <figure className={styles.blogImage}>
+                            <img src="/images/temp/blog3.png" className="w-full" alt=""/>
+                        </figure>
+                        <h3>
+                            <a href="">All you need to know about Supabase</a>
+                        </h3>
+                        <div className={styles.author}>
+                            <div className={styles.icon}>
+                                <a href="">
+                                    <img src="/images/temp/avatar1.png" className="w-full" alt=""/>
+                                </a>
+                            </div>
+                            <div className={styles.details}>
+                                <h4>
+                                    <a href="">Allie Grater</a>
+                                </h4>
+                                <div className="flex">
+                                    <h5>Master Ninja</h5>
+                                    <div className={styles.points}>
+                                        <div>
+
+                                        </div>
+                                        <span>1000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className={styles.blogItem}>
+                        <figure className={styles.blogImage}>
+                            <img src="/images/temp/blog4.png" className="w-full" alt=""/>
+                        </figure>
+                        <h3>
+                            <a href="">All you need to know about Supabase</a>
+                        </h3>
+                        <div className={styles.author}>
+                            <div className={styles.icon}>
+                                <a href="">
+                                    <img src="/images/temp/avatar1.png" className="w-full" alt=""/>
+                                </a>
+                            </div>
+                            <div className={styles.details}>
+                                <h4>
+                                <a href="">Paige Turner</a>
+                                </h4>
+                                <div className="flex">
+                                    <h5>Master Ninja</h5>
+                                    <div className={styles.points}>
+                                        <div>
+                                            
+                                        </div>
+                                        <span>750</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className="cta text-center">
+                    <a href="" className="btn">
+                        <span className="btn__text">View all our Latest Blogs</span>
+                    </a>
                 </div>
             </div>
         </section>

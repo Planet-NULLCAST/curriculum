@@ -1,0 +1,88 @@
+
+.footer {
+    @apply bg-footerBg text-white relative pt-10 lg:pt-28 mt-16;
+
+    &:before, &:after {
+        @apply bg-footerBg absolute w-1/2 -top-14 h-28;
+        content: '';
+        box-shadow: 0 -14px 0 #fef793;
+    }
+    
+    &:before {
+        @apply left-0;
+        transform: skewY(-5deg);
+    }
+
+    &:after {
+        @apply right-0;
+        transform: skewY(5deg);
+    }
+
+    .footerBottom {
+        @apply py-8 text-center;
+        border-top: 1px solid #194E50;
+        color: #8DA1A1;
+        font-size: 12px;
+    }
+}
+
+.socialWrap {
+
+    @apply overflow-auto px-12 py-10 md:p-0 lg:pl-5 lg:pb-10;
+
+    a {
+        @apply inline-block;
+    }
+
+    .twitter {
+        @apply float-right mr-1;
+        width: 43.1%;
+    }
+
+    .linkedin {
+        width: 45.45%;
+        margin-top: 20.36%;
+    }
+
+    .discord {
+        @apply float-right;
+        width: 49.37%;
+    }
+
+}
+
+.form {
+    @apply p-2 flex mb-10;
+    border: 3px solid #626262;
+    max-width: 602px;
+    border-radius: 5px;
+}
+
+.email {
+    @apply flex-1 bg-transparent pl-2;
+
+    &::placeholder {
+        @apply text-white;
+    }
+
+    &:focus {
+        @apply outline-none;
+    }
+}
+
+.nevFooter {
+
+    li {
+        @apply py-2 mb-1;
+    }
+
+    a {
+        @apply underline text-lg uppercase;
+        color: #8DA1A1;
+
+        &:hover {
+            @apply text-white;
+        }
+    }
+    
+}
