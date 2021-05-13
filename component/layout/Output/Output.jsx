@@ -10,7 +10,7 @@ function Output() {
 	return (
 		<div
 			className="flex flex-col items-center p-2 bg-gray-50 text-gray-700"
-			style={{ height: "calc(100vh - 104px)" }}
+			style={{ height: "calc(100vh - 104px)", overflowY: 'scroll' }}
 		>
 			<h1 className="text-sm tracking-wider font-medium uppercase py-3">
 				Results
