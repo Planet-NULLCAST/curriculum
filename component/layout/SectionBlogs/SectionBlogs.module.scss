@@ -17,6 +17,11 @@
         top: -7.85%;
         width: 115.34%;
     }
+
+    img {
+        transform-origin: bottom left;
+        transition: all ease .3s;
+    }
     
 }
 
@@ -39,6 +44,14 @@
             @apply text-gray-01;
         }
 
+    }
+
+    &:hover {
+        .blogImage {
+            img {
+                transform: rotate(-3deg);
+            }
+        }
     }
 }
 

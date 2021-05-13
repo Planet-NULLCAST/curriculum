@@ -46,6 +46,11 @@
 
 }
 
+.cta {
+    position: relative;
+    z-index: 9;
+}
+
 .sectionHeader {
     
     @apply md:flex justify-between items-center text-center md:text-right;

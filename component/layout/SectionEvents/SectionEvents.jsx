@@ -12,7 +12,9 @@ export default function SectionEvents()  {
                     <figure>
                         <img src="/images/temp/event1.png" alt=""/>
                         <figcaption>
-                            <h3>Google I/O Extended 2019 Watch Party - Trivandrum</h3>
+                            <h3>
+                                <span>Google I/O Extended 2019 Watch Party - Trivandrum</span>
+                            </h3>
                             <p>May 11/2021, 10.00am - 01.00pm</p>
                         </figcaption>
                     </figure>

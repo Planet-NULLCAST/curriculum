@@ -1,6 +1,24 @@
 .section {
     
-    @apply py-10 lg:py-32 relative;
-    background: #f7e750;
+    @apply py-10 lg:py-20 lg:pb-24 relative;
+    background: #F7DA5B;
 
+    h2 {
+        @apply font-black font-darker text-black text-75 uppercase mb-10;
+        color: #F33C5C;
+    }
+
+    .subtitle {
+        @apply mb-10;
+        background: url('../../../public/images/tape.png') no-repeat center;
+        transform: rotate(-4.6deg);
+
+        h3 {
+            @apply font-black font-darker uppercase text-50 text-center py-10;
+        }
+    }
+
+}
+.pinktext {
+    color: #F43C5C;
 }

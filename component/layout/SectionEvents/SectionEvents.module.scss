@@ -33,4 +33,21 @@
         }
     }
 
+    span {
+        background-image: linear-gradient(#F7DA5B, #F7DA5B);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 0px;
+        transition: all ease .2s;
+        padding: 5px;
+        display: inline-block;
+    }
+
+    &:hover {
+        h3 span {
+            background-size: 100% 100%;
+            color: #F33C5C;
+        }
+    }
+
 }
