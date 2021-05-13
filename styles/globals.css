@@ -14,6 +14,14 @@
 	overflow: auto;
 }
 
+.codeClass :not(pre) code {
+	display: unset;
+	border: 1px solid grey;
+	/* color: #880000; */
+	padding: 1px 5px;
+	border-radius: 5px;
+}
+
 .codeClass h1,
 .codeClass h2,
 .codeClass h3 {
