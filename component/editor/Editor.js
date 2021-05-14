@@ -69,7 +69,7 @@ const Codemirror = ({ initialValue }) => {
       <Runbutton
         editorVal={editorTreeValue}
         courseName={initialValue.courseName}
-        chapterName={initialValue.id}
+        chapterName={initialValue.chapterName}
       />
     </div>
   );
