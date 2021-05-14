@@ -35,6 +35,11 @@ let courses = [
 				chapterUrl: "if-condition",
 				chapterName: "If Condition"
 			}
+			{
+				chapterId: 7,
+				chapterUrl: "arithmetic-operators",
+				chapterName: "Arithmetic Operators"
+			}
 		]
 	},
 	{
