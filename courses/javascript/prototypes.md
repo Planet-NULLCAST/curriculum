@@ -2,7 +2,7 @@
 title: "Introduction To Javascript"
 subheading: "Prototypes"
 prev: "arithmetic-operators"
-next: ""
+next: "function"
 testCase: [
 			{
 				id: 1,
