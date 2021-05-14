@@ -5,6 +5,12 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list"
 
 export default {
-    header: Header,
-    list: List
+    header: {
+        class: Header,
+        inlineToolbar : true
+    },
+    list: {
+        class: List,
+        inlineToolbar : true
+    }
 }

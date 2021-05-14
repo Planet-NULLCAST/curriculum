@@ -1,13 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import EditorJs from "@editorjs/editorjs";
 
-import editorjsTools from './tools'
+import editorjsTools from "./tools";
 
 export default function RTE_Component(props) {
   const { setEditorRef } = props;
   useEffect(() => {
-    setEditorRef(editor)
-  }, [])
+    setEditorRef(editor);
+  }, []);
+
+  const onChange = async () => {
+    console.log("Now I know that Editor's content changed!");
+    const data = await editor.save();
+
+    console.log(data);
+
+    // TODO: Make api call to save data
+  };
 
   const editor = new EditorJs({
     /**
@@ -19,8 +28,22 @@ export default function RTE_Component(props) {
      * Available Tools list.
      * Pass Tool's class or Settings object for each Tool you want to use
      */
-    tools: {...editorjsTools},
-    
+    tools: { ...editorjsTools },
+
+    inlineToolbar: true,
+
+    /**
+     * onReady callback
+     */
+    onReady: () => {
+      console.log("Editor.js is ready to work!");
+    },
+
+    /**
+     * onChange callback
+     */
+    onChange,
+
     /**
      * Previously saved data that should be rendered
      */
@@ -75,7 +98,6 @@ export default function RTE_Component(props) {
       version: "2.8.1",
     },
   });
-  // setEditorRef(editor);
 
   return <div id="editorjs">Editor</div>;
 }
