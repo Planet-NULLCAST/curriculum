@@ -13,11 +13,6 @@ import { useRouter } from "next/router";
 
 hljs.registerLanguage("javascript", javascript);
 
-import {
-  ArrowCircleLeftIcon,
-  ArrowCircleRightIcon
-} from "@heroicons/react/solid";
-
 export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
@@ -38,43 +33,60 @@ export default function Chapter({ chapterData }) {
   const { testCase } = chapterData;
   const userState = useContext(UserState);
   const [progress, setProgress] = useState(0);
-  const [courseList, seCourseList] = useState([]);
+  const [courseList, setCourseList] = useState([]);
+  const findCourseIndex = (chapterName, courseName) => {
+    if (courseList.length > 0) {
+      const courseId = courseList.indexOf(
+        courseList.find((post, index) => {
+          if (post.courseName === courseName) {
+            return true;
+          }
+        })
+      );
+      const chapterId = courseList[courseId].chapters.indexOf(
+        courseList[courseId].chapters.find((post, index) => {
+          if (post.chapterUrl === chapterName) {
+            return true;
+          }
+        })
+      );
+      return chapterId;
+    }
+  };
 
   useEffect(() => {
     hljs.highlightAll();
-    seCourseList(JSON.parse(window.localStorage.getItem("courses")));
+    setCourseList(JSON.parse(window.localStorage.getItem("courses")));
   }, []);
   useEffect(() => {
     userState.setTest(testCase);
     userState.setRun(false);
-    console.log(progress);
   }, [testCase]);
   useEffect(() => {
-    let cook = document.cookie;
-    cook = cook.split("=");
-    cook[0] !== "" ? (cook = JSON.parse(cook[1]).accessToken) : (cook = false);
-    if (cook) {
-      axios({
-        method: "post",
-        mode: "no-cors",
-        url: `http://localhost:8080/api/progress/javascript`,
-        headers: {
-          "x-access-token": `${cook}`
+    let progress = JSON.parse(window.localStorage.getItem("progress"));
+    if (progress && courseList.length > 0) {
+      const Course = progress.find((post, index) => {
+        if (post.courseName === chapterData.courseName) {
+          return true;
         }
-      })
-        .then((response) => {
-          console.log(response.data);
-          setProgress(
-            (response.data.length / courseList[0].chapters.length) * 100
-          );
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    } else {
-      console.log("Not logged in");
+      });
+      const indexC = progress.indexOf(Course);
+      setProgress(
+        (progress[indexC].completedChapter.length /
+          courseList[indexC].chapters.length) *
+          100
+      );
     }
   }, [userState]);
+
+  const routerClick = (courseName, chapterName) => {
+    e.preventDefault();
+    if (chapterName) {
+      router.push(`/${courseName}/${chapterName}`);
+    }
+    return;
+  };
+
   return (
     <Layout>
       <Head>
@@ -108,37 +120,58 @@ export default function Chapter({ chapterData }) {
           <Output />
         </div>
       </div>
-      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12">
+      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
           style={{ width: "382px", marginLeft: "10px" }}
         >
           <div
-            className="mt-0 bg-purple-500 py-1 rounded-full"
+            className="mt-0 bg-green-600 py-1 rounded-full"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
-        <div className="flex flex-row" style={{ marginLeft: "142px" }}>
-          {chapterData.prev ? (
-            <Link href={`/javascript/${chapterData.prev}`}>
-              <a className="text-white" style={{ marginRight: "93px" }}>
-                <ArrowCircleLeftIcon className="h-10 w-10 inline-block text-yellow-500" />
-                Previous
-              </a>
-            </Link>
+        <div className="pr-6">
+          <Link href={`/${chapterData.courseName}/${chapterData.prev}`}>
+            <a className="text-white">
+              {chapterData.prev ? (
+                <img
+                  src="/images/svgs/leftarrawo.svg"
+                  className="h-12 inline-block"
+                />
+              ) : (
+                <img
+                  src="/images/svgs/leftdull.svg"
+                  className="h-12 inline-block"
+                />
+              )}
+            </a>
+          </Link>
+          {courseList.length > 0 ? (
+            <p className="text-white inline-block">
+              {findCourseIndex(
+                chapterData.chapterName,
+                chapterData.courseName
+              ) + 1}
+              /{courseList[0].chapters.length}
+            </p>
           ) : (
             ""
           )}
-          {chapterData.next ? (
-            <Link href={`/javascript/${chapterData.next}`}>
-              <a className="text-white">
-                Next
-                <ArrowCircleRightIcon className="h-10 w-10 inline-block text-yellow-500" />
-              </a>
-            </Link>
-          ) : (
-            ""
-          )}
+          <Link href={`/${chapterData.courseName}/${chapterData.next}`}>
+            <a className="text-white">
+              {chapterData.next ? (
+                <img
+                  src="/images/svgs/rightarrow.svg"
+                  className="h-12 inline-block"
+                />
+              ) : (
+                <img
+                  src="/images/svgs/rightdull.svg"
+                  className="h-12 inline-block"
+                />
+              )}
+            </a>
+          </Link>
         </div>
       </div>
     </Layout>
