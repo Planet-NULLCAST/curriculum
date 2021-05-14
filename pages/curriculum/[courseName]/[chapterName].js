@@ -11,6 +11,7 @@ import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
+import { useRouter } from "next/router";
 const axios = require("axios");
 
 hljs.registerLanguage("javascript", javascript);
@@ -98,7 +99,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   const routerClick = (courseName, chapterName, e) => {
     e.preventDefault();
     if (chapterName) {
-      router.push(`/${courseName}/${chapterName}`);
+      router.push(`/curriculum/${courseName}/${chapterName}`);
     }
     return;
   };
@@ -177,13 +178,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               />
             )}
           </a>
-          {courseList.length > 0 ? (
+          {courses.length > 0 ? (
             <p className="text-white inline-block px-2">
               {findCourseIndex(
+                courses,
                 chapterData.chapterName,
                 chapterData.courseName
               ) + 1}
-              /{courseList[0].chapters.length}
+              /{courses[0].chapters.length}
             </p>
           ) : (
             ""
