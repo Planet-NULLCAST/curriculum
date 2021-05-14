@@ -15,9 +15,9 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
 
   const notify = (err) => {
     console.log(err);
-    toast.error(err, {
+    toast.success(err, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -80,9 +80,9 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
           }
         }).then((response) => {
           if (response.data.entryAdded) {
-            notify("Chapter Is Completed!");
+            notify("👍 Chapter Is Completed!");
           } else {
-            notify(response.data);
+            notify(`👍 ${response.data}`);
           }
         });
       }
@@ -107,7 +107,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
     <div className="absolute bottom-14">
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
