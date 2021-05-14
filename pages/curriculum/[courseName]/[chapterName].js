@@ -99,7 +99,7 @@ export default function Chapter({ chapterData, courseName }) {
 				showTitle={true}
 			/>
 			<Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
-			<div className="grid grid-cols-3" style={{ height: "84.5vh" }}>
+			<div className="grid grid-cols-3" style={{ height: "calc(100vh - 104px)" }}>
 				<div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
 					<div className="py-3">
 						<a
