@@ -40,6 +40,11 @@ let courses = [
         chapterUrl: "arithmetic-operators",
         chapterName: "Arithmetic Operators",
       },
+      {
+        chapterId: 8,
+        chapterUrl: "prototypes",
+        chapterName: "Prototypes",
+      },
     ],
   },
   {
