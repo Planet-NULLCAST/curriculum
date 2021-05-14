@@ -1,8 +1,8 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Prototypes"
+prev: "arithmetic-operators"
 next: ""
-prev: ""
 testCase: [
 			{
 				id: 1,
@@ -64,17 +64,17 @@ I assume you've already learned about Javascript Objects. Technically speaking, 
 
 ```js
 const obj1 = {
-    a: 1,
-    b: 2
-}
+  a: 1,
+  b: 2,
+};
 ```
 
-For this object, the visible properties are `a` and `b`. But behind the scenes, Javascript attaches a `prototype` property. The properties inside this `prototype` object is shared accross every object. Let's quickly declare another object. 
+For this object, the visible properties are `a` and `b`. But behind the scenes, Javascript attaches a `prototype` property. The properties inside this `prototype` object is shared accross every object. Let's quickly declare another object.
 
 ```js
 const obj2 = {
-    a: 3
-}
+  a: 3,
+};
 console.log(obj1.a); // 1
 console.log(obj2.a); // 3
 console.log(obj1.b); // 2
@@ -96,19 +96,19 @@ The most powerful use of prototypes is defining functions as prototypes. Yes! De
 
 ```js
 function Human(fName, lName) {
-    this.firstName = fName;
-    this.lastName = lName;
+  this.firstName = fName;
+  this.lastName = lName;
 }
-const human1 = new Human('Bob', 'Smith');
-const human2 = new Human('Daisy', 'Johnson');
+const human1 = new Human("Bob", "Smith");
+const human2 = new Human("Daisy", "Johnson");
 ```
 
 Here, we declared a `constructor`, which can be used to create variables of type `Human`, and defined two variables, `human1` and `human2`. Getting the full name of a human is really simple right? `human1.firstName + ' ' + human1.lastName` seems really easy. But wait. There's an even more easier way!.
 
 ```js
 Human.prototype.fullName = function () {
-    return this.firstName + ' ' + this.lastName;
-}
+  return this.firstName + " " + this.lastName;
+};
 console.log(human1.fullName()); // Bob Smith
 console.log(human2.fullName()); // Daisy Johnson
 ```
@@ -122,7 +122,7 @@ Well, to make life more easier, Javascript have provided us many life saver prot
 - **`Array.prototype.push()`** - Takes 1 or more arguments, which will be pushed to the end of the array.
 
 ```js
-let a = [ 1 ];
+let a = [1];
 a.push(2, 3);
 console.log(a); // [ 2, 3 ]
 ```
@@ -130,7 +130,7 @@ console.log(a); // [ 2, 3 ]
 - **`Array.prototype.sort()`** - Takes an optional compare function as argument, and returns a sorted array, where sorting order is determined by the compare function. Default comparison will be string comparison.
 
 ```js
-a.sort((a, b) => b - a) // compare function compares each elements with the given function, 
+a.sort((a, b) => b - a); // compare function compares each elements with the given function,
 console.log(a); // [ 3, 2, 1 ]
 ```
 
@@ -144,9 +144,9 @@ console.log(a.slice(0, 2)); // [ 3, 2 ]
 - **`Array.prototype.forEach()`** - Loops through the elements of the array, execute the callback function, which is provided as the argument, for the entire items of the array, one by one.
 
 ```js
-a.forEach(item => {
-    console.log(item);
-})
+a.forEach((item) => {
+  console.log(item);
+});
 /*
 Output- 
 3

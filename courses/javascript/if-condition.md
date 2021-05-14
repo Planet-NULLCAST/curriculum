@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "If Condition"
-next: ""
+next: "arithmetic-operators"
 prev: "logical-operators"
 testCase: [
 			{

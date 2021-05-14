@@ -1,8 +1,8 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Arithmetic Operators"
-next: ""
-prev: ""
+next: "prototypes"
+prev: "if-condition"
 testCase: [
 			{
 				id: 1,
@@ -48,12 +48,14 @@ The following math operations are supported:
 The first four are straightforward, while % and \*\* need a few words about them.
 
 ---
+
 ## Addition +
 
 The “ADD” operator is represented with a plus sign :
 
 ```javascript
-let a = 5,  b = 3;
+let a = 5,
+  b = 3;
 console.log(a + b); //8
 ```
 
