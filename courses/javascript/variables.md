@@ -6,84 +6,153 @@ prev: "hello-world"
 testCase: [
 			{
 				id: 1,
-				chapterName: "variables",
-				case: ["let a;", "let a"],
-				hint: "Create a variable a using let.",
+				case: ["const a = 9;", "const a = 9"],
+				hint: "Create a variable a using const.",
 				isCorrect: false
 			},
 			{
 				id: 2,
-				case: ["a = 5;", "a = 5"],
-				hint: "Assign 5 to a using =.",
+				case: ["let b;", "let b"],
+				hint: "Create a variable a using let.",
 				isCorrect: false
 			},
 			{
 				id: 3,
-				case: ["a = 'Message';", "a = 'Message'"],
-				hint: "Assign 'Message' to a using =.",
+				case: ["b = 5;", "b = 5"],
+				hint: "Assign 5 to b using =.",
+				isCorrect: false
+			},
+			{
+				id: 4,
+				case: ["b = 'Message';", "b = 'Message'"],
+				hint: "Assign 'Message' to b using =.",
+				isCorrect: false
+			},
+			{
+				id: 5,
+				case: ["var c;", "var c"],
+				hint: "Create a variable a using var.",
+				isCorrect: false
+			},
+			{
+				id: 6,
+				case: ["c = 7;", "c = 7"],
+				hint: "Assign 7 to c using =.",
+				isCorrect: false
+			},
+			{
+				id: 7,
+				case: ["c = 'Something';", "c = 'Something'"],
+				hint: "Assign 'Something' to c using =.",
 				isCorrect: false
 			}
 		]
 ---
 
-## A Variable
-
 A variable is a “named storage” for data. We can use variables to store goodies, visitors, and other data.
 
-To create a variable in JavaScript, use the let keyword.
+To create a variable in JavaScript, we can use `var`, `let` and `const`.
 
-The statement below creates (in other words: declares) a variable with the name “message”:
+It's easy to get confused about the difference between `var`, `let` and `const`. No worries fellow developers, we got your back.
 
-```javascript
-let message;
+It is important we understand the difference betweeen various scopes in `js`.
+
+## Scopes
+- Global Scope
+- Local Scope
+
+### Global Scope
+- A variable can be defined outside a function and can be used inside a function.
+
+### Local Scope
+- The variable defined inside a function cannot be used outside it.
+
+
+## Var
+
+### Syntax
+```js
+var varname1 = 'some value'
 ```
 
-Now, we can put some data into it by using the assignment operator =:
+The variable declared using `var` can be scoped globally and locally. It is said to have functional scope.
 
-```javascript
-let message;
-message = "Hello"; // store the string
+We can also `alter` / `redeclare` the value of `var` variable if needed.
+
+It is first initialized with the value of undefined while `hoisting`.
+
+`Hoisting` is a JS way to call a variable/function on top of the scope before the code is executed.
+
+Global vars becomes properties of the window object
+
+### Example
+```js
+function varTest() {
+  var a = 1;
+  {
+    var a = 2;  // redeclare the same variable!
+    console.log(a);  // 2
+  }
+  console.log(a);  // 2
+}
 ```
 
-The string is now saved into the memory area associated with the variable. We can access it using the variable name:
-
-```javascript
-let message;
-message = "Hello!";
-alert(message); // shows the variable content
+## Let
+### Syntax
+```js
+let varname1 = 'some value'
 ```
 
-To be concise, we can combine the variable declaration and assignment into a single line:
+The variable declared using `let` has block scope. It means that the variable is valid only inside the block and the sub-blocks / `{}` in which it is declared.
 
-```javascript
-let message = "Hello!"; // define the variable and assign the value
-alert(message); // Hello!
+### Example
+```js
+function letTest() {
+  let a = 1;
+  {
+    let a = 2;  // different variable
+    console.log(a);  // 2
+  }
+  console.log(a);  // 1
+}
 ```
 
-We can also declare multiple variables in one line:
-
-```javascript
-let user = "John",
-  age = 25,
-  message = "Hello";
+## Const
+### Syntax
+```js
+const varname1 = 'some value';
 ```
 
-That might seem shorter, but we don’t recommend it. For the sake of better readability, please use a single line per variable.
+Variables declared using `const` is just like let. The only difference is that constants cannot be re-assigned. 
 
-The multiline variant is a bit longer, but easier to read:
+`const` cannot be redeclared in the same block too. But can be redeclared inside sub-blocks.
 
-```javascript
-let user = "John";
-let age = 25;
-let message = "Hello";
-```
+Also they must be assigned at the time of declaration.
 
----
+### Examples
+```js
+const a = 'something';
+
+a = 'something else' // This will give an error
+{
+    const a = 'something else' 
+    console.log(a); // 'something else'
+}
+console.log(a); // 'something'
+````
 
 ## Complete the tasks below:
 
-- Create a variable using let with variable name a.
+- Create a variable named a using const and initialize it with a value of 9
 
-- Assign the varable value 5.
+- Create b variable using let with variable name a.
 
-- Then change the value to "Message".
+- Assign the variable b a value of 5.
+
+- Then change the value of b to "Message".
+
+- Create c variable using let with variable name a.
+
+- Assign the variable c a value of 7.
+
+- Then change the value of c to "Something".
