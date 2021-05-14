@@ -1,6 +1,7 @@
 .section {
 
     @apply py-10 lg:py-20 bg-black text-white;
+    padding-top: 14vw;
 
     h2 {
         @apply text-white;
@@ -21,7 +22,7 @@
         }
 
         figcaption {
-            @apply absolute bottom-0 left-0 w-full px-7 pb-9;
+            @apply absolute bottom-0 left-0 w-full p-3 md:px-7 md:pb-9;
         }
 
         h3 {
@@ -37,16 +38,15 @@
         background-image: linear-gradient(#F7DA5B, #F7DA5B);
         background-position: 0 100%;
         background-repeat: no-repeat;
-        background-size: 100% 0px;
+        background-size: 0px 2px;
+        padding-bottom: 10px;
         transition: all ease .2s;
-        padding: 5px;
         display: inline-block;
     }
 
     &:hover {
         h3 span {
-            background-size: 100% 100%;
-            color: #F33C5C;
+            background-size: 150px 2px;
         }
     }
 

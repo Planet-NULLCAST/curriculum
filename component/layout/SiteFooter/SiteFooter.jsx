@@ -4,9 +4,9 @@ export default function HomeSpotlight() {
     return (
         <footer className={styles.footer}>
             <div className="container mx-auto px-2 md:px-0">
-                <div className="md:flex">
-                    <div className="md:w-1/2">
-                        <h2 className="font-darker font-black text-64 leading-none mb-12">Subscribe Our Newsletter </h2>
+                <div className="md:flex items-center">
+                    <div className="md:w-7/12 lg:w-1/2">
+                        <h2 className="font-darker font-black text-3xl lg:text-44 xl:text-64 leading-none mb-12">Subscribe Our Newsletter </h2>
                         <form className={styles.form}>
                             <input type="text" className={styles.email} placeholder="Enter your mail" />
                             <button className="btn btn--subscribe">
@@ -28,7 +28,7 @@ export default function HomeSpotlight() {
                             </li>
                         </ul>
                     </div>
-                    <div className="md:w-1/2">
+                    <div className="md:w-5/12 md:pl-4 lg:w-1/2">
                         <div className={styles.socialWrap}>
                             <a href="" className={styles.twitter}>
                                 <img src="/images/twitter-large.svg" alt=""/>

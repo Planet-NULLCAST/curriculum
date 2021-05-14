@@ -21,9 +21,9 @@ module.exports = {
 				gray: {
 					'01': '#0B2A2B'
 				},
-				footerBg: "#0B2A2B",
 				pink: "#F13E5D",
-				yellowBg: "#F7DA5B"
+				yellowBg: "#F7DA5B",
+				orange: "#FF590F",
 			},
 			fontFamily:{
 				'darker': ['Darker Grotesque', 'Open Sans', 'sans-serif']

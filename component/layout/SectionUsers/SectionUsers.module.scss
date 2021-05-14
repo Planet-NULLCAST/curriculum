@@ -57,7 +57,7 @@ $animationSpeed: 15s;
     min-width: fit-content;
 
     h4 {
-        @apply text-50 text-orange whitespace-nowrap;
+        @apply text-25 lg:text-34 xl:text-50 font-extrabold text-orange whitespace-nowrap;
     }
 
 }
@@ -65,7 +65,6 @@ $animationSpeed: 15s;
 .icon {
     @apply mr-3 flex-shrink-0;
 }
-
 
 @screen xl {
 

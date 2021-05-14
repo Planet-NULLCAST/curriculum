@@ -1,6 +1,6 @@
 
 .blogList {
-    @apply md:grid pt-24 lg:pt-36 gap-32 grid-cols-2 grid-rows-2;
+    @apply md:grid pt-24 lg:pt-36 gap-20 lg:gap-28 xl:gap-32 grid-cols-2 grid-rows-2;
 
 }
 
@@ -27,7 +27,7 @@
 
 .blogItem {
 
-    @apply mb-16;
+    @apply mb-20 md:mb-10 xl:mb-16;
     
     &:nth-child(even) {
         figure {
@@ -63,7 +63,21 @@
     }
 
     h4 {
-        @apply md:text-lg lg:text-25 font-extrabold mb-1;
+        @apply text-xl lg:text-25 font-extrabold mb-1;
+    }
+
+    h5 {
+        @apply text-xl;
+        color: #717171;
+    }
+
+    .points {
+        @apply font-bold text-18 ml-3 flex items-center;
+        color: #F92304;
+    }
+
+    svg {
+        @apply mr-2;
     }
 }
 

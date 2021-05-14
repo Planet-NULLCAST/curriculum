@@ -6,7 +6,7 @@ import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import SectionVideos from "../component/layout/SectionVideos/SectionVideos";
 import SectionEvents from "../component/layout/SectionEvents/SectionEvents";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
-import SectionLeaderboard from "../component/layout/SectionLeaderboard/SectionLeaderboard";
+import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 
 import "../styles/Home.module.scss";
 
@@ -17,7 +17,7 @@ export default function Home() {
       <HomeSpotlight />
       <SectioBlogs />
       <SectionVideos />
-      <SectionLeaderboard />
+      <SectionUsers />
       <SectionEvents />
       <SectionSwag />
       <SiteFooter />
