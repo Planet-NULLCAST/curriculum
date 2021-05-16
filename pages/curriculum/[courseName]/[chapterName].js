@@ -36,19 +36,17 @@ export async function getStaticProps({ params }) {
   };
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
-  // console.log(courses);
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
     setToggle(!toggle);
   }
-  // console.log(courseName, "from chapter component");
   const router = useRouter();
   const { testCase } = chapterData;
   const userState = useContext(UserState);
-  const [progress, setProgress] = useState(0);
+  const [progressBar, setProgressBar] = useState(0);
+  const [progress, setProgress] = useState();
 
-  const findCourseIndex = (courses, chapterName, courseName) => {
-    // console.log(courses, "here");
+  const findCourseIndex = (courses, chapterName, courseName, chaporcourse) => {
     if (courses.length > 0) {
       const courseId = courses.indexOf(
         courses.find((post, index) => {
@@ -57,7 +55,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           }
         })
       );
-      // console.log(courseId, " - courseId");
+      if (chaporcourse) {
+        return courseId;
+      }
       const chapterId = courses[courseId].chapters.indexOf(
         courses[courseId].chapters.find((post, index) => {
           if (post.chapterUrl === chapterName) {
@@ -76,24 +76,46 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   useEffect(() => {
     userState.setTest(testCase);
     userState.setRun(false);
-    // console.log(progress);
   }, [testCase]);
   useEffect(() => {
-    let progress = JSON.parse(window.localStorage.getItem("progress"));
-    if (progress && courses.length > 0) {
-      const Course = progress.find((post, index) => {
-        if (post.courseName === chapterData.courseName) {
+    let progressTem = JSON.parse(window.localStorage.getItem("progress"));
+    console.log(progressTem);
+    if (progressTem) {
+      let progressData = progressTem.find((post, index) => {
+        if (post.courseName === courseName) {
           return true;
         }
       });
-      const indexC = progress.indexOf(Course);
-      setProgress(
-        (progress[indexC].completedChapter.length /
+      if (progressData) {
+        setProgress(progressTem);
+      } else {
+        progressTem.push({ courseName: courseName, completedChapter: [] });
+        setProgress(progressTem);
+      }
+    }
+  }, [userState.testCase]);
+
+  useEffect(() => {
+    if (progress && courses.length > 0) {
+      const Course = progress.find((post, index) => {
+        if (post.courseName === courseName) {
+          return true;
+        }
+      });
+      const Courses = courses.find((post, index) => {
+        if (post.courseUrl === courseName) {
+          return true;
+        }
+      });
+      const indexP = progress.indexOf(Course);
+      const indexC = courses.indexOf(Courses);
+      setProgressBar(
+        (progress[indexP].completedChapter.length /
           courses[indexC].chapters.length) *
           100
       );
     }
-  }, [userState]);
+  }, [progress]);
 
   let currentCourse = getCourse(courseName);
   const routerClick = (courseName, chapterName, e) => {
@@ -147,14 +169,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           <Output />
         </div>
       </div>
-      <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
+      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
           style={{ width: "382px", marginLeft: "10px" }}
         >
           <div
             className="mt-0 bg-green-600 py-1 rounded-full"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${progressBar}%` }}
           ></div>
         </div>
         <div className="pr-6">
@@ -180,12 +202,11 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           </a>
           {courses.length > 0 ? (
             <p className="text-white inline-block px-2">
-              {findCourseIndex(
-                courses,
-                chapterData.chapterName,
-                chapterData.courseName
-              ) + 1}
-              /{courses[0].chapters.length}
+              {findCourseIndex(courses, chapterName, courseName, false) + 1}/
+              {
+                courses[findCourseIndex(courses, chapterName, courseName, true)]
+                  .chapters.length
+              }
             </p>
           ) : (
             ""
@@ -194,9 +215,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             className={`text-white ${
               chapterData.next ? `cursor-pointer` : `cursor-not-allowed`
             }`}
-            onClick={(e) =>
-              routerClick(chapterData.courseName, chapterData.next, e)
-            }
+            onClick={(e) => routerClick(courseName, chapterData.next, e)}
           >
             {chapterData.next ? (
               <img

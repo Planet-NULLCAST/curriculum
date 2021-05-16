@@ -2,9 +2,11 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
+import { useRouter } from "next/router";
 const axios = require("axios");
 
 export default function Login() {
+  const router = useRouter();
   const notify = (err) =>
     toast.error(err.message, {
       position: "top-right",
@@ -13,7 +15,7 @@ export default function Login() {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,15 +23,15 @@ export default function Login() {
     const user = document.querySelector("#username").value;
     const bod = {
       username: user,
-      password: pass
+      password: pass,
     };
     const err = axios({
       method: "POST",
       url: `${baseUrl}${authUrl}/signin`,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      data: bod
+      data: bod,
     })
       .then((response) => {
         return response.data;
@@ -46,9 +48,9 @@ export default function Login() {
             method: "post",
             url: `${baseUrl}${enrolUrl}/progress`,
             headers: {
-              "x-access-token": `${data.accessToken}`
+              "x-access-token": `${data.accessToken}`,
             },
-            data: progress
+            data: progress,
           }).then((response) => {
             console.log(response);
           });
@@ -56,8 +58,8 @@ export default function Login() {
             method: "post",
             url: `http://localhost:8080/api/progress/all`,
             headers: {
-              "x-access-token": `${data.accessToken}`
-            }
+              "x-access-token": `${data.accessToken}`,
+            },
           })
             .then((response) => {
               window.localStorage.setItem(
@@ -68,7 +70,7 @@ export default function Login() {
             .catch((err) => {
               console.log(err.message);
             });
-          window.location.replace(`localhost:3000`);
+          router.push("/");
         } else {
           notify(data);
         }

@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Hello World!"
-next: "variables"
+next: "datatypes"
 prev: "introduction"
 testCase: [
 			{

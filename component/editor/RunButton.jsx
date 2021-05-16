@@ -22,7 +22,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined
+      progress: undefined,
     });
   };
 
@@ -76,8 +76,8 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
           mode: "no-cors",
           url: `http://localhost:8080/api/enrol/${courseName}/${chapterName}`,
           headers: {
-            "x-access-token": `${cook}`
-          }
+            "x-access-token": `${cook}`,
+          },
         }).then((response) => {
           if (response.data.entryAdded) {
             notify("👍 Chapter Is Completed!");
@@ -88,15 +88,23 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       }
       let index = 0;
       let progress = JSON.parse(window.localStorage.getItem("progress")) || [
-        { courseName: "", completedChapter: [] }
+        { courseName: "", completedChapter: [] },
       ];
-      console.log(progress);
+      const Course = progress.find((post, index) => {
+        if (post.courseName === courseName) {
+          return true;
+        }
+      });
+      if (Course) {
+        console.log(Course);
+        const index = progress.indexOf(Course);
+      }
       let chapterList = new Set(progress[index].completedChapter);
       chapterList.add(chapterName);
       chapterList = [...chapterList];
       let progressItem = {
         courseName: courseName,
-        completedChapter: chapterList
+        completedChapter: chapterList,
       };
       progress[index] = progressItem;
       window.localStorage.setItem("progress", JSON.stringify(progress));
