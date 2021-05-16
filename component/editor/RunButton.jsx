@@ -90,7 +90,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       let progress = JSON.parse(window.localStorage.getItem("progress")) || [
         { courseName: "", completedChapter: [] }
       ];
-      console.log(progress);
+      // console.log(progress);
       let chapterList = new Set(progress[index].completedChapter);
       chapterList.add(chapterName);
       chapterList = [...chapterList];

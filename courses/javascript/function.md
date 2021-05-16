@@ -7,7 +7,6 @@ testCase:
   [
     {
       id: 1,
-      chapterName: "function",
       case: ["function addTwoNumbers(num1, num2) {"],
       hint: "Please re check the function syntax and code formatting.",
       isCorrect: false,
