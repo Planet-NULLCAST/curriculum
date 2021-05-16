@@ -10,7 +10,7 @@ export default function SideBar({ onToggle, toggle, course }) {
 
   useEffect(() => {
     const progress = JSON.parse(localStorage.getItem("progress"));
-    const completedChapters = progress.find(
+    const completedChapters = progress?.find(
       (item) => item.courseName === course.courseUrl
     ).completedChapter;
     setChapters(completedChapters);
@@ -43,7 +43,7 @@ export default function SideBar({ onToggle, toggle, course }) {
             <Link href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}>
               <a onClick={handleClick}>{title.chapterName}</a>
             </Link>
-            {chapters.includes(title.chapterUrl) && (
+            {chapters?.includes(title.chapterUrl) && (
               <img
                 src="/images/checkmark.svg"
                 alt="check mark progress"
