@@ -6,23 +6,22 @@ prev: "variables"
 testCase: [
 			{
 				id: 1,
-				chapterName: "datatypes",
 				case: ["let num = 101;", "let num = 101"],
 				hint: "num should have value of 101",
 				isCorrect: false
 			},
 			{
-                id: 2,
-                case: ["let str='hello';","let str='hello'"],
-                hint: 'str should have a value of "hello"',
-                isCorrect: false
-            },
-            {
-                id: 3,
-                case: ["let flag=true;", "let flag=true"],
-                hint: "flag should have a value of true",
-                isCorrect: false
-            }
+				id: 2,
+				case: ["let str='hello';","let str='hello'"],
+				hint: 'str should have a value of "hello"',
+				isCorrect: false
+			},
+			{
+				id: 3,
+				case: ["let flag=true;", "let flag=true"],
+				hint: "flag should have a value of true",
+				isCorrect: false
+			}
 		]
 ---
 

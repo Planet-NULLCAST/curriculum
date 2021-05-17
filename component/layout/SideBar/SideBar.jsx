@@ -1,47 +1,58 @@
 import Link from "next/link";
-import { courses } from "../../../courses/meta";
+import { useState, useEffect } from "react";
 
-export default function SideBar({ onToggle, toggle }) {
-	const titles = courses[0].chapters;
-	// console.log(titles);
+export default function SideBar({ onToggle, toggle, course }) {
+  const titles = course.chapters;
+  // console.log({ titles });
+  // console.log(course.courseUrl);
 
-	function handleClick(e) {
-		onToggle();
-	}
+  const [chapters, setChapters] = useState([]);
 
-	return (
-		<aside
-			className={`transform top-0 ${
-				toggle ? "left-0" : "-left-64"
-			} w-64 bg-gray-100 fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}
-		>
-			<svg
-				aria-hidden="true"
-				focusable="false"
-				className="h-4 absolute top-20 right-6 cursor-pointer hover:text-purple-700"
-				role="img"
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 352 512"
-				onClick={handleClick}
-			>
-				<path
-					fill="#33475b"
-					d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-				></path>
-			</svg>
+  useEffect(() => {
+    const progress = JSON.parse(localStorage.getItem("progress"));
+    const completedChapters = progress?.find(
+      (item) => item.courseName === course.courseUrl
+    ).completedChapter;
+    setChapters(completedChapters);
+  }, []);
 
-			<ul className="text-black flex flex-col mt-28 h-80">
-				{titles.map((title) => (
-					<li
-						key={title.chapterId}
-						className={`text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-200 p-4`}
-					>
-						<Link href={`/courses/javascript/${title.chapterUrl}`}>
-							<a onClick={handleClick}>{title.chapterName}</a>
-						</Link>
-					</li>
-				))}
-			</ul>
-		</aside>
-	);
+  // console.log({ chapters });
+
+  function handleClick(e) {
+    onToggle();
+  }
+
+  return (
+    <aside
+      className={`transform top-0 ${
+        toggle ? "left-0" : "-left-64"
+      } w-64 bg-white border-r fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}
+    >
+      <img
+        className="h-5 w-5 absolute top-5 right-6 cursor-pointer close-icon"
+        src="/images/close.svg"
+        onClick={handleClick}
+      />
+
+      <ul className="text-gray-900 flex flex-col mt-14 h-80">
+        {titles.map((title) => (
+          <li
+            key={title.chapterId}
+            className={`flex flex-row justify-between items-center text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
+          >
+            <Link href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}>
+              <a onClick={handleClick}>{title.chapterName}</a>
+            </Link>
+            {chapters?.includes(title.chapterUrl) && (
+              <img
+                src="/images/checkmark.svg"
+                alt="check mark progress"
+                className="h-4 w-4 mr-2"
+              />
+            )}
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
 }
