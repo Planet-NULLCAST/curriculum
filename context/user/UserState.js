@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import UserContext from "./userContext";
 import UserReducer from "./userReducer";
-import { SET_TESTS, SET_RUN, SET_PROGRESS } from "./types";
+import { SET_TESTS, SET_RUN } from "./types";
 
 const UserState = ({ children }) => {
   const initialState = {
@@ -34,8 +34,6 @@ const UserState = ({ children }) => {
       payload: value
     });
   };
-
-  //set user progress - complete function
 
   return (
     <UserContext.Provider

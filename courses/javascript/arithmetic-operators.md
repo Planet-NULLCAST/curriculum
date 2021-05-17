@@ -6,29 +6,28 @@ prev: "if-condition"
 testCase: [
 			{
 				id: 1,
-                chapterName: "arithmetic-operators",
 				case: ["let a = 5, b = 2;", "let a = 5, b = 2",let a = 5; let b = 2;],
 				hint: "a should have a value of 5 and b should have a value of 2",
 				isCorrect: false
 			},
 			{
-                id: 2,
-                case: ['let result = a + b;',"let result = a + b"],
-                hint: "result should have the value after performing ADD on a and b",
-                isCorrect: false
-            },
-            {
-                id: 3,
-                case: ["result = a * b;", "result = a * b"],
-                hint: "result should have the value after performing Multiplication on a and b",
-                isCorrect: false
-            },
+				id: 2,
+				case: ['let result = a + b;',"let result = a + b"],
+				hint: "result should have the value after performing ADD on a and b",
+				isCorrect: false
+			},
 			{
-                id: 4,
-                case: ["result = a % b;", "result = a % b"],
-                hint: "result should have the value after performing Remainder on a and b",
-                isCorrect: false
-            }
+				id: 3,
+				case: ["result = a * b;", "result = a * b"],
+				hint: "result should have the value after performing Multiplication on a and b",
+				isCorrect: false
+			},
+			{
+				id: 4,
+				case: ["result = a % b;", "result = a % b"],
+				hint: "result should have the value after performing Remainder on a and b",
+				isCorrect: false
+			}
 		]
 ---
 
