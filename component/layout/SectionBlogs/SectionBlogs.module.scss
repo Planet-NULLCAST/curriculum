@@ -5,8 +5,8 @@
 }
 
 .blogImage {
-
-    @apply relative mb-4;
+    max-width: 250px;
+    @apply relative mb-4 mx-10 mx-auto sm:max-w-sm md:max-w-full;
 
     &:before {
         @apply h-full absolute;

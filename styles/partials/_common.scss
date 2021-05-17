@@ -4,6 +4,8 @@ a, button {
     transition: all ease .3s;
 }
 
+// Button component with style variations
+
 .btn {
     --shadowcolor: #202020;
     @apply inline-block bg-pink rounded-10 text-white px-10 lg:px-20 py-5 lg:py-7 text-lg md:text-xl xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
@@ -33,16 +35,25 @@ a, button {
         @apply relative;
     }
 
-    &--white, &--whiteborder {
+    &--black, &--blackborder {
         --shadowcolor:transparent;
-        @apply inline-block relative bg-white text-black px-7 py-4 mx-3 border border-white flex items-center justify-center capitalize text-base font-semibold;
+        @apply inline-block relative bg-black text-white px-7 py-4 mx-3 border border-black flex items-center justify-center capitalize text-base font-semibold;
         border-radius: 1px;
     }
 
-    &--whiteborder {
-        @apply text-white;
+    &--blackborder {
+        @apply text-black;
         background: transparent;
 
+    }
+
+    &--purple {
+        background: #8032ED;
+        @apply px-7 py-4 text-18;
+    }
+
+    &--small {
+        @apply text-xl px-10 py-3;
     }
 
     &__arrow {
@@ -54,6 +65,16 @@ a, button {
 .cta {
     position: relative;
     z-index: 9;
+}
+
+.container {
+    
+    @apply mx-auto px-3 md:px-4;
+    
+    &--small {
+        max-width: 1150px;
+    }
+    
 }
 
 .sectionHeader {

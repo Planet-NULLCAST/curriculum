@@ -26,12 +26,13 @@
         content: '';
     }
 
-    .footerBottom {
-        @apply py-8 text-center;
-        border-top: 1px solid #194E50;
-        color: #8DA1A1;
-        font-size: 12px;
-    }
+}
+
+.footerBottom {
+    font-size: 15px;
+    @apply py-8 text-center uppercase;
+    border-top: 1px solid #194E50;
+    color: #8DA1A1;
 }
 
 .socialWrap {
@@ -114,6 +115,13 @@
     
 }
 
+@screen md {
+
+    .footerBottom {
+        font-size: 12px;
+    }
+}
+
 @media (min-width: 992px) {
 
     .footer {
@@ -123,5 +131,15 @@
             height: 170px;
         }
 
+    }
+}
+
+@media (max-width: 420px) {
+    .email {
+        max-width: 60%;
+    }
+
+    .btn--subscribe {
+        font-size: 16px;
     }
 }

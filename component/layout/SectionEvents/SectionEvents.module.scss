@@ -10,8 +10,7 @@
 }
 
 .event {
-    @apply m-auto relative;
-    max-width: 985px;
+    @apply m-auto relative max-w-sm md:max-w-md;
 
     figure {
 
@@ -50,4 +49,10 @@
         }
     }
 
+}
+
+@screen xl {
+    .event {
+        max-width: 985px;
+    }
 }

@@ -3,7 +3,7 @@ import styles from './SiteFooter.module.scss';
 export default function HomeSpotlight() {
     return (
         <footer className={styles.footer}>
-            <div className="container mx-auto px-2 md:px-0">
+            <div className="container">
                 <div className="md:flex items-center">
                     <div className="md:w-7/12 lg:w-1/2">
                         <h2 className="font-darker font-black text-3xl lg:text-44 xl:text-64 leading-none mb-12">Subscribe Our Newsletter </h2>
@@ -18,7 +18,7 @@ export default function HomeSpotlight() {
                                 <a href="">What the Ducks?</a>
                             </li>
                             <li>
-                                <a href="">Curriculum</a>
+                                <a href="">School of Ducks</a>
                             </li>
                             <li>
                                 <a href="">Leaderboard</a>

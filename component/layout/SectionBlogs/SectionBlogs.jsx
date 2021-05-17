@@ -3,10 +3,10 @@ import styles from './SectionBlogs.module.scss';
 export default function SectionBlogs() {
     return (
         <section className='pt-10 lg:pt-20'>
-            <div className='container mx-auto px-3 md:px-4'>
+            <div className='container'>
                 <div className="sectionHeader">
                     <h2 className='sectionHeader__title md:w-36 lg:w-44 xl:w-56'>Series of Blogs</h2>
-                    <p className="sectionHeader__description">Get the latest scoop from the world of development with the latest news, hacks, tricks, and more on javascript, machine learning, enterprise architecture and more.</p>
+                    <p className="sectionHeader__description">Get the latest scoop from the world of tech ranging from javascript to AI and other crazy hacks from dev ducks across the globe.</p>
                 </div>
                 <div className={styles.blogList}>
 

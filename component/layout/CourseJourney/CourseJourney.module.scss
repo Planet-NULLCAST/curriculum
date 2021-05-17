@@ -1,0 +1,54 @@
+.path {
+
+    @apply py-48 text-white relative;
+    background: #0E181E url("../../../public/images/bgarrow.svg") repeat-y center top;
+
+    &:before {
+
+        @apply absolute left-0 top-0 h-1/2 w-full;
+        background: #0E181E;
+        content: '';
+        transform-origin: 0 100%;
+        transform: skewY(-4deg);
+        z-index: -1;
+    }
+
+    .row:nth-child(even) {
+        @apply flex-row-reverse text-right;
+        .image {
+            @apply justify-start;
+        }
+        .svgpath {
+            transform: scaleX(-1);
+        }
+    }
+
+
+}
+
+.row {
+
+    @apply flex items-center flex-wrap;
+
+    img {
+
+        @apply ml-auto;
+    }
+
+    .svgpath {
+        width: 100%;
+        @apply w-full;
+    }
+}
+
+.image {
+
+    @apply w-6/12 flex justify-end;
+
+}
+
+@screen xl {
+    .container {
+        max-width: 1100px;
+    }
+}

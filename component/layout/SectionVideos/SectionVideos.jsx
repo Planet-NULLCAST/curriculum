@@ -3,7 +3,7 @@ import styles from './SectionVideos.module.scss';
 export default function SectionVideos()  {
     return (
         <section className={styles.section}>
-            <div className='container mx-auto px-3 md:px-4'>
+            <div className='container'>
                 <div className={styles.videoList}>
 
                     <div className={styles.videoItem}>
