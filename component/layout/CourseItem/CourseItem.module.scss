@@ -1,6 +1,6 @@
 .CourseItem {
 
-    @apply text-white flex flex-col items-center w-full p-5 lg:p-10 text-center text-18;
+    @apply text-white flex flex-col items-center w-full p-5 lg:p-10 text-center text-18 mb-5 md:mb-0;
     border-radius: 20px;
         --bg1: #f00;
         --bg2: #fb703e;
@@ -28,12 +28,11 @@
     }
 
     p {
-        @apply mb-16
+        @apply mb-5 lg:mb-16;
     }
 
     &:hover {
 
-        transform: translateY(-2px);
         box-shadow: 0 3px 6px rgba(0,0,0,.4);
 
         h3 {
@@ -55,13 +54,13 @@
     img, svg {
         max-width: 76px;
         max-height: 85px;
-
+        position: relative;
     }
 
 }
 
 .tempLabel{
-    @apply py-4 inline-block text-xl px-10 w-full;
+    @apply py-4 inline-block text-xl px-10 w-full mt-auto;
     background: rgba(200,255,255,.07);
     opacity: 0.8;
 }

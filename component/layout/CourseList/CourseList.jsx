@@ -38,7 +38,7 @@ export default function CourseList() {
                     <h2 className="font-darker font-extrabold text-64 mb-10 text-gray-01">The Best Way to Start Kids’ Coding Journey</h2>
                     <p className="font-bold text-18 text-gray-800">Our online program is an amazing way for children to learn coding from the comfort of your home. The convenience and attentiveness you love about drop-in programs is combined with the extensive coding curriculum of Mighty Coders.</p>
                 </div>
-                <div className="md:grid gap-8 grid-cols-3 py-20">
+                <div className="md:grid gap-3 lg:gap-8 grid-cols-3 py-20">
 
                     <CourseItem content={content[0]} />
                     <CourseItem content={content[1]} />

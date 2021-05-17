@@ -14,7 +14,7 @@ export default function CourseItem({ content }) {
             </div>
             <h3>{content.title}</h3>
             <p>{content.description}</p>
-            {content.linktext ? (<a href="" className="btn btn--small">
+            {content.linktext ? (<a href="" className="btn btn--small mt-auto">
             <span className="btn__text">Learn more</span></a>) : (<span className={styles.tempLabel}>Coming soon</span>)}
         </div>
     );

@@ -14,7 +14,7 @@
     }
 
     .row:nth-child(even) {
-        @apply flex-row-reverse text-right;
+        @apply md:flex-row-reverse md:text-right;
         .image {
             @apply justify-start;
         }
@@ -23,12 +23,24 @@
         }
     }
 
+    h3 {
+
+        @apply font-darker font-extrabold text-5xl xl:text-64 mb-8;
+
+    }
+
+    p {
+
+        @apply text-18 leading-loose;
+
+    }
+
 
 }
 
 .row {
 
-    @apply flex items-center flex-wrap;
+    @apply md:flex items-center flex-wrap md:-my-4;
 
     img {
 
@@ -43,12 +55,6 @@
 
 .image {
 
-    @apply w-6/12 flex justify-end;
+    @apply w-4/12 flex justify-end;
 
-}
-
-@screen xl {
-    .container {
-        max-width: 1100px;
-    }
 }

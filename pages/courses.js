@@ -20,7 +20,6 @@ export default function Courses() {
         };
     });
 
-    // anim();
     const contents = {
         "title": "Want to be Web Ninja?",
         "buttonText": "Get Started for free",
@@ -48,16 +47,15 @@ const anim = () => {
         const mask1 = document.getElementById('box_1');
         const pathLength = svg1.getTotalLength();
 
-
         const svg2 = document.getElementById('path_2');
         const mask2 = document.getElementById('box_2');
 
         const svg3 = document.getElementById('path_3');
         const mask3 = document.getElementById('box_3');
 
-        animatepath(svg1, mask1, pathLength, screen_height, 50, 400);
-        animatepath(svg2, mask2, pathLength, screen_height, 50, 400);
-        animatepath(svg3, mask3, pathLength, screen_height, 50, 400);
+        animatepath(svg1, mask1, pathLength, screen_height, 80, 550);
+        animatepath(svg2, mask2, pathLength, screen_height, 80, 550);
+        animatepath(svg3, mask3, pathLength, screen_height, 80, 550);
         
 
 }
