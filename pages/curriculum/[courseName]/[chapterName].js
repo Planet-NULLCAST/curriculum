@@ -11,6 +11,7 @@ import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
+import { useRouter } from "next/router";
 const axios = require("axios");
 
 hljs.registerLanguage("javascript", javascript);
@@ -41,6 +42,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     setToggle(!toggle);
   }
   // console.log(courseName, "from chapter component");
+  const router = useRouter();
   const { testCase } = chapterData;
   const userState = useContext(UserState);
   const [progress, setProgress] = useState(0);
@@ -94,6 +96,13 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   }, [userState]);
 
   let currentCourse = getCourse(courseName);
+  const routerClick = (courseName, chapterName, e) => {
+    e.preventDefault();
+    if (chapterName) {
+      router.push(`/curriculum/${courseName}/${chapterName}`);
+    }
+    return;
+  };
 
   return (
     <div>
@@ -138,7 +147,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           <Output />
         </div>
       </div>
-      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
+      <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
           style={{ width: "382px", marginLeft: "10px" }}
@@ -149,44 +158,58 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           ></div>
         </div>
         <div className="pr-6">
-          <Link href={`/curriculum/${courseName}/${chapterData.prev}`}>
-            <a className="text-white">
-              {chapterData.prev ? (
-                <img
-                  src="/images/svgs/leftarrawo.svg"
-                  className="h-12 inline-block"
-                />
-              ) : (
-                <img
-                  src="/images/svgs/leftdull.svg"
-                  className="h-12 inline-block"
-                />
-              )}
-            </a>
-          </Link>
+          <a
+            className={`text-white ${
+              chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
+            }`}
+            onClick={(e) =>
+              routerClick(chapterData.courseName, chapterData.prev, e)
+            }
+          >
+            {chapterData.prev ? (
+              <img
+                src="/images/svgs/leftarrawo.svg"
+                className="h-12 inline-block"
+              />
+            ) : (
+              <img
+                src="/images/svgs/leftdull.svg"
+                className="h-12 inline-block"
+              />
+            )}
+          </a>
           {courses.length > 0 ? (
-            <p className="text-white inline-block">
-              {findCourseIndex(courses, chapterName, courseName) + 1}/
-              {courses[0].chapters.length}
+            <p className="text-white inline-block px-2">
+              {findCourseIndex(
+                courses,
+                chapterData.chapterName,
+                chapterData.courseName
+              ) + 1}
+              /{courses[0].chapters.length}
             </p>
           ) : (
             ""
           )}
-          <Link href={`/curriculum/${courseName}/${chapterData.next}`}>
-            <a className="text-white">
-              {chapterData.next ? (
-                <img
-                  src="/images/svgs/rightarrow.svg"
-                  className="h-12 inline-block"
-                />
-              ) : (
-                <img
-                  src="/images/svgs/rightdull.svg"
-                  className="h-12 inline-block"
-                />
-              )}
-            </a>
-          </Link>
+          <a
+            className={`text-white ${
+              chapterData.next ? `cursor-pointer` : `cursor-not-allowed`
+            }`}
+            onClick={(e) =>
+              routerClick(chapterData.courseName, chapterData.next, e)
+            }
+          >
+            {chapterData.next ? (
+              <img
+                src="/images/svgs/rightarrow.svg"
+                className="h-12 inline-block"
+              />
+            ) : (
+              <img
+                src="/images/svgs/rightdull.svg"
+                className="h-12 inline-block"
+              />
+            )}
+          </a>
         </div>
       </div>
     </div>
