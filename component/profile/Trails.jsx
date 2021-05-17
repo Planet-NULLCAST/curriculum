@@ -1,4 +1,5 @@
 import React from "react";
+import Profilestyles from "../../styles/Profile.module.css";
 
 export default function Trails() {
 	const trailItems = [
@@ -29,9 +30,9 @@ export default function Trails() {
 			{trailItems.map((trail) => (
 				<div
 					className={`w-1/3 ml-3 p-4 ${
-						trail.trailName === "Contributor" && "bg-green-100"
-					} ${trail.trailName === "Competitor" && "bg-blue-100"} ${
-						trail.trailName === "Learner" && "bg-yellow-100"
+						trail.trailName === "Contributor" && Profilestyles?.bg_green_110
+					} ${trail.trailName === "Competitor" && Profilestyles?.bg_blue_110} ${
+						trail.trailName === "Learner" && Profilestyles?.bg_cyan_110
 					}`}
 				>
 					<h3 className="font-semibold text-gray-900 mb-2">

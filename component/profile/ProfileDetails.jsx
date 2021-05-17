@@ -1,10 +1,11 @@
 import React from "react";
 import Trails from "../profile/Trails";
+import Profilestyles from "../../styles/Profile.module.css";
 
 export default function ProfileDetails() {
 	return (
 		<div className="bg-white shadow-sm rounded h-64 px-4 py-6 flex flex-row">
-			<div className="bg-red-100 rounded w-80 p-4 h-full grid grid-cols-3 grid-rows-3 text-gray-700 relative">
+			<div className={`rounded w-80 p-4 h-full grid grid-cols-3 grid-rows-3 text-gray-700 relative ${Profilestyles?.bg_red_110}`}>
 				<img
 					className="absolute top-4 right-4"
 					src="/images/profileedit.svg"

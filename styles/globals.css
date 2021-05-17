@@ -84,3 +84,44 @@ body {
 .h-fit {
 	height: fit-content;
 }
+
+.multi-line-truncate {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	/* background-color: yellow; */
+	width: 100%;
+}
+
+/* heatmap styling */
+.react-calendar-heatmap {
+	width: 100%;
+}
+@media only screen and (max-width: 1024px) {
+	.react-calendar-heatmap {
+		width: 50rem !important;
+	}
+}
+.color-empty {
+	fill: #e7e7e7;
+}
+.react-calendar-heatmap .color-scale-1 {
+	fill: #effd5f;
+}
+.react-calendar-heatmap .color-scale-2 {
+	fill: #fee227;
+}
+.react-calendar-heatmap .color-scale-3 {
+	fill: #e4cd05;
+}
+.react-calendar-heatmap .color-scale-4 {
+	fill: #fda50f;
+}
+.react-calendar-heatmap .color-scale-5 {
+	fill: #c29200;
+}
+.react-calendar-heatmap-month-label {
+	font-weight: 600;
+	fill: rgba(55, 65, 81, 1);
+}

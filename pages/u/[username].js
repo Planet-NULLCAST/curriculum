@@ -3,6 +3,10 @@ import Navbar from "../../component/profile/Navbar";
 import ProfileDetails from "../../component/profile/ProfileDetails";
 import Head from "next/head";
 import Activity from "../../component/profile/Activity";
+import Count from "../../component/profile/Count";
+import FollowersList from "../../component/profile/FollowersList";
+import BlogList from "../../component/profile/BlogList";
+import Profilestyles from "../../styles/Profile.module.css";
 
 export default function Username() {
   return (
@@ -10,17 +14,19 @@ export default function Username() {
       <Head>
         <title>Profile | Nullcast</title>
       </Head>
-      <div className="bg-gray-200 py-2 px-16">
+      <div className="bg-gray-100 py-2 pb-6 px-6">
         <Navbar />
         <div className="flex flex-row">
           <div className="flex flex-col w-3/4">
             <ProfileDetails />
             <Activity />
-            {/* <div className="bg-white shadow-sm rounded p-4 my-4 h-80">dd</div> */}
-            <div className="bg-white shadow-sm rounded p-4 mb-4 h-80">dd</div>
+            <BlogList />
           </div>
-          <div className="bg-white shadow-sm rounded h-auto w-1/4 ml-4 mb-4">
-            side
+          <div
+            className={`bg-white shadow-sm rounded w-1/4 ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
+          >
+            <Count />
+            <FollowersList />
           </div>
         </div>
       </div>
