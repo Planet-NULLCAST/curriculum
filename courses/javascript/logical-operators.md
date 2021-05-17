@@ -6,29 +6,28 @@ prev: "variables"
 testCase: [
 			{
 				id: 1,
-                chapterName: "logical-operators",
 				case: ["let a = true, b = false;", "let a = true, b = false"],
 				hint: "a should have a value of true and b should have a value of false",
 				isCorrect: false
 			},
 			{
-                id: 2,
-                case: ['let result = a && b;',"let result = a && b"],
-                hint: "result should have the value after performing AND on a and b",
-                isCorrect: false
-            },
-            {
-                id: 3,
-                case: ["result = a || b;", "result = a || b"],
-                hint: "result should have the value after performing OR on a and b",
-                isCorrect: false
-            },
+				id: 2,
+				case: ['let result = a && b;',"let result = a && b"],
+				hint: "result should have the value after performing AND on a and b",
+				isCorrect: false
+			},
 			{
-                id: 4,
-                case: ["result = !a;", "result = !a"],
-                hint: "result should have the value after performing NOT on a",
-                isCorrect: false
-            }
+				id: 3,
+				case: ["result = a || b;", "result = a || b"],
+				hint: "result should have the value after performing OR on a and b",
+				isCorrect: false
+			},
+			{
+				id: 4,
+				case: ["result = !a;", "result = !a"],
+				hint: "result should have the value after performing NOT on a",
+				isCorrect: false
+			}
 		]
 ---
 
