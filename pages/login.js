@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Loading from "../component/layout/common/Loading";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +7,8 @@ import SideLogin from "../component/login/side/SideLogin";
 
 // import LoginSide from "../images/svg/login_side.svg";
 // import LoginSide from "../images/png/login_side.png";
+
+import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
 
 const axios = require("axios");
 
@@ -30,67 +31,52 @@ export default function Login() {
       username: user,
       password: pass,
     };
-    const err = fetch("http://localhost:8080/api/auth/signin", {
+    const err = axios({
       method: "POST",
+      url: `${baseUrl}${authUrl}/signin`,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(bod),
+      data: bod
     })
       .then((response) => {
-        return response.json();
+        return response.data;
       })
       .then((data) => {
+        console.log(data);
         if (data.accessToken) {
           document.cookie = `user=${JSON.stringify(data)}`;
-          // axios({
-          //   method: "post",
-          //   mode: "no-cors",
-          //   url: `http://localhost:8080/api/progress/javascript`,
-          //   headers: {
-          //     "x-access-token": `${data.accessToken}`
-          //   }
-          // })
-          //   .then((response) => {
-          //     let onChapter = response.data;
+
           let progress = JSON.parse(
             window.localStorage.getItem("progress")
           ) || [{ courseName: "", completedChapter: [] }];
-          let offChapter = progress[0].completedChapter;
-          offChapter.forEach((element) => {
-            axios({
-              method: "post",
-              mode: "no-cors",
-              url: `http://localhost:8080/api/enrol/javascript/${element}`,
-              headers: {
-                "x-access-token": `${data.accessToken}`,
-              },
-            }).then((response) => {
-              if (response.data.entryAdded) {
-                console.log("Chapter Is Completed!");
-              } else {
-                console.log(response.data);
-              }
-            });
+          axios({
+            method: "post",
+            url: `${baseUrl}${enrolUrl}/progress`,
+            headers: {
+              "x-access-token": `${data.accessToken}`
+            },
+            data: progress
+          }).then((response) => {
+            console.log(response);
           });
           axios({
             method: "post",
-            mode: "no-cors",
-            url: `http://localhost:8080/api/progress/javascript`,
+            url: `http://localhost:8080/api/progress/all`,
             headers: {
               "x-access-token": `${data.accessToken}`,
             },
           })
             .then((response) => {
-              let progress = [
-                { courseName: "javascript", completedChapter: response.data },
-              ];
-              window.localStorage.setItem("progress", JSON.stringify(progress));
+              window.localStorage.setItem(
+                "progress",
+                JSON.stringify(response.data)
+              );
             })
             .catch((err) => {
               console.log(err.message);
             });
-          window.location.replace("http://localhost:3000/");
+          window.location.replace(`localhost:3000`);
         } else {
           notify(data);
         }

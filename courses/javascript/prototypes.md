@@ -6,53 +6,52 @@ next: "function"
 testCase: [
 			{
 				id: 1,
-				chapterName: "prototypes",
 				case: ["function Student(name, department) {"],
 				hint: "Define constructor Student",
 				isCorrect: false
 			},
 			{
-                id: 2,
-                case: ["this.name = name","this.name = name;"],
-                hint: 'Assign parameter name to property name',
-                isCorrect: false
-            },
-            {
-                id: 3,
-                case: ["this.department = department","this.department = department;"],
-                hint: "Assign parameter name to property name",
-                isCorrect: false
-            },
-            {
-                id: 4,
-                case: ["}"],
-                hint: "Closing curly braces",
-                isCorrect: false
-            },
-            {
-                id: 5,
-                case: ["let student = new Student('Elon', 'ME')", "let student = new Student('Elon', 'ME');", "const student = new Student('Elon', 'ME')", "const student = new Student('Elon', 'ME');"],
-                hint: "Create new variable student of type Student",
-                isCorrect: false
-            },
-            {
-                id: 6,
-                case: ["Student.prototype.isCSEstudent = function () {"],
-                hint: "Prototype declaring",
-                isCorrect: false
-            },
-            {
-                id: 7,
-                case: ["return this.department === 'CSE'", "return this.department === 'CSE';"],
-                hint: "Prototype definition",
-                isCorrect: false
-            },
-            {
-                id: 8,
-                case: ["}"],
-                hint: "Closing curly braces",
-                isCorrect: false
-            },
+				id: 2,
+				case: ["this.name = name","this.name = name;"],
+				hint: 'Assign parameter name to property name',
+				isCorrect: false
+			},
+			{
+				id: 3,
+				case: ["this.department = department","this.department = department;"],
+				hint: "Assign parameter name to property name",
+				isCorrect: false
+			},
+			{
+				id: 4,
+				case: ["}"],
+				hint: "Closing curly braces",
+				isCorrect: false
+			},
+			{
+				id: 5,
+				case: ["let student = new Student('Elon', 'ME')", "let student = new Student('Elon', 'ME');", "const student = new Student('Elon', 'ME')", "const student = new Student('Elon', 'ME');"],
+				hint: "Create new variable student of type Student",
+				isCorrect: false
+			},
+			{
+				id: 6,
+				case: ["Student.prototype.isCSEstudent = function () {"],
+				hint: "Prototype declaring",
+				isCorrect: false
+			},
+			{
+				id: 7,
+				case: ["return this.department === 'CSE'", "return this.department === 'CSE';"],
+				hint: "Prototype definition",
+				isCorrect: false
+			},
+			{
+				id: 8,
+				case: ["}"],
+				hint: "Closing curly braces",
+				isCorrect: false
+			},
 		]
 ---
 
