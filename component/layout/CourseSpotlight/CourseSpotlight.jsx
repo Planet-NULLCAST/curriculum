@@ -2,8 +2,10 @@ import styles from './CourseSpotlight.module.scss';
 import Image from 'next/image'
 
 export default function CourseSpotlight({contents}) {
+    let bg = contents.bgimage;
+    console.log(bg);
     return (
-        <section className={styles.spotlight} style={{ "--bgcolor": `${contents.bgcolor}` }}>
+        <section className={`${styles.spotlight} ${contents.bgimage}`} style={{ "--bgcolor": `${contents.bgcolor}` }}>
             <div className="container container--small">
                 <div className="md:flex items-center justify-between">
                     <div className="md:w-5/12">

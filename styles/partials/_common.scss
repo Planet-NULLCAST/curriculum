@@ -37,7 +37,8 @@ a, button {
 
     &--black, &--blackborder {
         --shadowcolor:transparent;
-        @apply inline-block relative bg-black text-white px-7 py-4 mx-3 border border-black flex items-center justify-center capitalize text-base font-semibold;
+        @apply inline-block relative bg-black text-white px-6 py-2 mx-3 border border-black flex items-center justify-center capitalize font-semibold;
+        font-size: 14px;
         border-radius: 1px;
     }
 

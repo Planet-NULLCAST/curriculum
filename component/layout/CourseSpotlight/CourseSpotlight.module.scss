@@ -7,7 +7,9 @@
     &:before {
         @apply absolute left-0 bottom-0 w-full;
         content: '';
-        background: url('../../../public/images/bg-coursespotlight.svg') no-repeat center top;
+        background: url('../../../public/images/bg-coursespotlight.svg');
+        background-repeat: no-repeat;
+        background-position: center top;
         height: 125px;
     }
 
