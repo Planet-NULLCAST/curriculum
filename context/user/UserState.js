@@ -7,14 +7,7 @@ const UserState = ({ children }) => {
   const initialState = {
     user: {},
     run: false,
-    test: [
-      {
-        id: 1,
-        case: ["", ""],
-        hint: "Go forward",
-        isCorrect: true
-      }
-    ]
+    test: [],
   };
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
@@ -23,7 +16,7 @@ const UserState = ({ children }) => {
   const setTest = (testCase) => {
     dispatch({
       type: SET_TESTS,
-      payload: testCase
+      payload: testCase,
     });
   };
 
@@ -31,7 +24,7 @@ const UserState = ({ children }) => {
   const setRun = (value) => {
     dispatch({
       type: SET_RUN,
-      payload: value
+      payload: value,
     });
   };
 
@@ -44,7 +37,7 @@ const UserState = ({ children }) => {
         run: state.run,
         test: state.test,
         setTest,
-        setRun
+        setRun,
       }}
     >
       {children}

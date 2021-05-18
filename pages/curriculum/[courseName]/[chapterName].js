@@ -79,7 +79,6 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   }, [testCase]);
   useEffect(() => {
     let progressTem = JSON.parse(window.localStorage.getItem("progress"));
-    console.log(progressTem);
     if (progressTem) {
       let progressData = progressTem.find((post, index) => {
         if (post.courseName === courseName) {
@@ -118,9 +117,10 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   }, [progress]);
 
   let currentCourse = getCourse(courseName);
-  const routerClick = (courseName, chapterName, e) => {
+  const routerClick = (courseName, chapterEntry, e) => {
     e.preventDefault();
-    if (chapterName) {
+    if (chapterEntry !== undefined) {
+      let chapterName = chapterEntry.chapterUrl;
       router.push(`/curriculum/${courseName}/${chapterName}`);
     }
     return;
@@ -163,7 +163,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           />
         </div>
         <div>
-          <Editor initialValue={chapterData} />
+          <Editor courseName={courseName} chapterName={chapterName} />
         </div>
         <div>
           <Output />
@@ -185,10 +185,16 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
             }`}
             onClick={(e) =>
-              routerClick(chapterData.courseName, chapterData.prev, e)
+              routerClick(
+                courseName,
+                currentCourse.chapters[
+                  findCourseIndex(courses, chapterName, courseName, false) - 1
+                ],
+                e
+              )
             }
           >
-            {chapterData.prev ? (
+            {findCourseIndex(courses, chapterName, courseName, false) > 0 ? (
               <img
                 src="/images/svgs/leftarrawo.svg"
                 className="h-12 inline-block"
@@ -215,9 +221,18 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             className={`text-white ${
               chapterData.next ? `cursor-pointer` : `cursor-not-allowed`
             }`}
-            onClick={(e) => routerClick(courseName, chapterData.next, e)}
+            onClick={(e) =>
+              routerClick(
+                courseName,
+                currentCourse.chapters[
+                  findCourseIndex(courses, chapterName, courseName, false) + 1
+                ],
+                e
+              )
+            }
           >
-            {chapterData.next ? (
+            {findCourseIndex(courses, chapterName, courseName, false) + 1 <
+            currentCourse.chapters.length ? (
               <img
                 src="/images/svgs/rightarrow.svg"
                 className="h-12 inline-block"

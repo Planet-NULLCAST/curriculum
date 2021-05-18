@@ -8,10 +8,10 @@ testCase:
     {
       id: 1,
       chapterName: "introduction",
-      case: ["", ""],
+      case: [],
       hint: "Go forward",
-      isCorrect: true
-    }
+      isCorrect: true,
+    },
   ]
 ---
 
