@@ -1,20 +1,14 @@
 import React, { useReducer } from "react";
 import UserContext from "./userContext";
 import UserReducer from "./userReducer";
-import { SET_TESTS, SET_RUN } from "./types";
+import { SET_TESTS, SET_RUN, SET_PROGRESS } from "./types";
 
 const UserState = ({ children }) => {
   const initialState = {
     user: {},
     run: false,
-    test: [
-      {
-        id: 1,
-        case: ["", ""],
-        hint: "Go forward",
-        isCorrect: true
-      }
-    ]
+    test: "",
+    progress: ""
   };
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
@@ -35,14 +29,24 @@ const UserState = ({ children }) => {
     });
   };
 
+  //set progress
+  const setProgress = (value) => {
+    dispatch({
+      type: SET_PROGRESS,
+      payload: value
+    });
+  };
+
   return (
     <UserContext.Provider
       value={{
         user: state.user,
         run: state.run,
         test: state.test,
+        progress: state.progress,
         setTest,
-        setRun
+        setRun,
+        setProgress
       }}
     >
       {children}

@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -31,20 +31,23 @@ export async function getStaticProps({ params }) {
     props: {
       chapterData,
       courseName,
-      chapterName,
-    },
+      chapterName
+    }
   };
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
+  const userState = useContext(UserState);
+
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
     setToggle(!toggle);
   }
   const router = useRouter();
   const { testCase } = chapterData;
-  const userState = useContext(UserState);
+
   const [progressBar, setProgressBar] = useState(0);
-  const [progress, setProgress] = useState();
+
+  let currentCourse = getCourse(courseName);
 
   const findCourseIndex = (courses, chapterName, courseName, chaporcourse) => {
     if (courses.length > 0) {
@@ -77,9 +80,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     userState.setTest(testCase);
     userState.setRun(false);
   }, [testCase]);
+
   useEffect(() => {
     let progressTem = JSON.parse(window.localStorage.getItem("progress"));
-    console.log(progressTem);
     if (progressTem) {
       let progressData = progressTem.find((post, index) => {
         if (post.courseName === courseName) {
@@ -87,37 +90,31 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         }
       });
       if (progressData) {
-        setProgress(progressTem);
+        userState.setProgress(progressTem);
       } else {
         progressTem.push({ courseName: courseName, completedChapter: [] });
-        setProgress(progressTem);
+        userState.setProgress(progressTem);
       }
     }
   }, [userState.testCase]);
 
   useEffect(() => {
-    if (progress && courses.length > 0) {
-      const Course = progress.find((post, index) => {
+    if (userState.progress && currentCourse) {
+      const Course = userState.progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
         }
       });
-      const Courses = courses.find((post, index) => {
-        if (post.courseUrl === courseName) {
-          return true;
-        }
-      });
-      const indexP = progress.indexOf(Course);
-      const indexC = courses.indexOf(Courses);
+
+      const indexP = userState.progress.indexOf(Course);
       setProgressBar(
-        (progress[indexP].completedChapter.length /
-          courses[indexC].chapters.length) *
+        (userState.progress[indexP].completedChapter.length /
+          currentCourse.chapters.length) *
           100
       );
     }
-  }, [progress]);
+  }, [userState.progress]);
 
-  let currentCourse = getCourse(courseName);
   const routerClick = (courseName, chapterName, e) => {
     e.preventDefault();
     if (chapterName) {
