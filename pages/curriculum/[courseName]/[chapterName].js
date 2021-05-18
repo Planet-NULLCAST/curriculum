@@ -115,7 +115,6 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     }
   }, [userState.progress]);
 
-  let currentCourse = getCourse(courseName);
   const routerClick = (courseName, chapterEntry, e) => {
     e.preventDefault();
     if (chapterEntry !== undefined) {
@@ -166,12 +165,16 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             dangerouslySetInnerHTML={{ __html: chapterData.contentHtml }}
           />
         </div>
-        <div>
-          <Editor courseName={courseName} chapterName={chapterName} />
-        </div>
-        <div>
-          <Output />
-        </div>
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Editor courseName={courseName} chapterName={chapterName} />
+          </div>
+        )}
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Output />
+          </div>
+        )}
       </div>
       <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
