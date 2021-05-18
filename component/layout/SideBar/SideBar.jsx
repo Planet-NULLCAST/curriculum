@@ -1,20 +1,26 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserState from "../../../context/user/userContext";
 
 export default function SideBar({ onToggle, toggle, course }) {
   const titles = course.chapters;
   // console.log({ titles });
   // console.log(course.courseUrl);
 
+  const userState = useContext(UserState);
+  const { progress } = userState;
+  // console.log({ progress });
+
   const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem("progress"));
-    const completedChapters = progress?.find(
-      (item) => item.courseName === course.courseUrl
-    ).completedChapter;
-    setChapters(completedChapters);
-  }, []);
+    if (progress !== "") {
+      const completedChapters = progress?.find(
+        (item) => item.courseName === course.courseUrl
+      )?.completedChapter;
+      setChapters(completedChapters);
+    }
+  }, [progress]);
 
   // console.log({ chapters });
 

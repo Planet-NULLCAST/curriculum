@@ -1,16 +1,22 @@
-import { SET_TESTS, SET_RUN } from "./types";
+import { SET_TESTS, SET_RUN, SET_PROGRESS } from "./types";
 
 export default function ur(state, action) {
   switch (action.type) {
     case SET_TESTS:
       return {
         ...state,
-        test: action.payload,
+        test: action.payload
       };
     case SET_RUN:
       return {
         ...state,
-        run: action.payload,
+        run: action.payload
+      };
+
+    case SET_PROGRESS:
+      return {
+        ...state,
+        progress: action.payload
       };
 
     default:

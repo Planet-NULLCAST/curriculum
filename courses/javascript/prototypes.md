@@ -3,6 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Prototypes"
 prev: "arithmetic-operators"
 next: "function"
+contentOnly: false
 testCase: [
 			{
 				id: 1,
@@ -64,7 +65,7 @@ I assume you've already learned about Javascript Objects. Technically speaking, 
 ```js
 const obj1 = {
   a: 1,
-  b: 2,
+  b: 2
 };
 ```
 
@@ -72,7 +73,7 @@ For this object, the visible properties are `a` and `b`. But behind the scenes, 
 
 ```js
 const obj2 = {
-  a: 3,
+  a: 3
 };
 console.log(obj1.a); // 1
 console.log(obj2.a); // 3

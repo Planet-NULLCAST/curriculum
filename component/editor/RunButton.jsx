@@ -7,8 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Runbutton({ editorVal, courseName, chapterName }) {
-  const globalState = useContext(UserContext);
-  const testCase = globalState.test;
+  const userState = useContext(UserContext);
+  const testCase = userState.test;
 
   let clicked = false;
   let flag = false;
@@ -28,7 +28,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
 
   const clickHandle = () => {
     clicked = true;
-    globalState.setRun(clicked);
+    userState.setRun(clicked);
 
     let i = 0;
 
@@ -96,7 +96,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         }
       });
       if (Course) {
-        console.log(Course);
+        // console.log(Course);
         const index = progress.indexOf(Course);
       }
       let chapterList = new Set(progress[index].completedChapter);
@@ -107,9 +107,10 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         completedChapter: chapterList
       };
       progress[index] = progressItem;
+      userState.setProgress(progress);
       window.localStorage.setItem("progress", JSON.stringify(progress));
     }
-    globalState.setTest(testCase);
+    userState.setTest(testCase);
   };
   return (
     <div className="absolute bottom-14">
