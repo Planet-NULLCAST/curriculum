@@ -1,0 +1,55 @@
+.section {
+
+    @apply py-10 lg:py-20 bg-dark text-white;
+
+}
+
+.list {
+
+    @apply pb-10;
+    counter-reset: chapternumber;
+
+    li {
+
+        @apply mb-12 flex items-center p-5 md:py-16;
+        background: #030B1B;
+
+        &:before {
+
+            @apply flex items-center justify-center text-64 font-darker font-black mr-5 lg:mr-10 w-16 h-16 lg:w-32 lg:w-32 flex-shrink-0;
+            counter-increment: chapternumber;
+            content: counter(chapternumber);
+            border: 1px solid #1C2525;
+            border-radius: 10px;
+
+        }
+
+    }
+
+    .text {
+
+        @apply relative pl-5 lg:pl-10 text-18 font-semibold;
+
+        &:before {
+
+            @apply absolute left-0 h-full;
+            content: '';
+            background-image: linear-gradient(rgba(93, 24, 240, 0), rgba(93, 24, 240, 1), rgba(93, 24, 240, 0));
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+
+        }
+
+    }
+
+    h3 {
+
+        @apply text-25 font-extrabold mb-5;
+    }
+
+    p {
+        @apply mb-6;
+    }
+
+}

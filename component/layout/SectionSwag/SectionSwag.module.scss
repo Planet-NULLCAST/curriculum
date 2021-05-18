@@ -1,0 +1,40 @@
+.section {
+    
+    @apply py-10 lg:py-20 lg:pb-24 relative;
+    background: #F7DA5B;
+
+    h2 {
+        @apply font-black font-darker text-black text-5xl xl:text-75 uppercase mb-10;
+        color: #F33C5C;
+    }
+
+    .subtitle {
+        @apply mb-10 xl:mb-16;
+        background: url('../../../public/images/tape.png') no-repeat center;
+        background-size: 100% 100%;
+        transform: rotate(-4.6deg);
+
+        h3 {
+            @apply font-black font-darker uppercase text-4xl md:text-50 text-center py-10;
+        }
+    }
+
+}
+.pinktext {
+    color: #F43C5C;
+}
+
+.duck {
+    max-width: 220px;
+    @apply ml-auto xl:max-w-full;
+}
+
+@screen md {
+    .section {
+    
+        .subtitle {
+            background-size: auto;
+        }
+    
+    }
+}

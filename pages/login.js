@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
@@ -9,10 +10,10 @@ import SideLogin from "../component/login/side/SideLogin";
 // import LoginSide from "../images/png/login_side.png";
 
 import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
-
 const axios = require("axios");
 
 export default function Login() {
+  const router = useRouter();
   const notify = (err) =>
     toast.error(err.message, {
       position: "top-right",
@@ -21,7 +22,7 @@ export default function Login() {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: undefined
     });
   const handleClick = (e) => {
     e.preventDefault();
@@ -29,13 +30,13 @@ export default function Login() {
     const user = document.querySelector("#username").value;
     const bod = {
       username: user,
-      password: pass,
+      password: pass
     };
     const err = axios({
       method: "POST",
       url: `${baseUrl}${authUrl}/signin`,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       data: bod
     })
@@ -64,8 +65,8 @@ export default function Login() {
             method: "post",
             url: `http://localhost:8080/api/progress/all`,
             headers: {
-              "x-access-token": `${data.accessToken}`,
-            },
+              "x-access-token": `${data.accessToken}`
+            }
           })
             .then((response) => {
               window.localStorage.setItem(
@@ -76,7 +77,7 @@ export default function Login() {
             .catch((err) => {
               console.log(err.message);
             });
-          window.location.replace(`localhost:3000`);
+          router.push("/");
         } else {
           notify(data);
         }
