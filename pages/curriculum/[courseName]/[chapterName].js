@@ -43,7 +43,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     setToggle(!toggle);
   }
   const router = useRouter();
-  const { testCase } = chapterData;
+  const { testCase, contentOnly } = chapterData;
 
   const [progressBar, setProgressBar] = useState(0);
 
@@ -122,6 +122,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     }
     return;
   };
+  // console.log(contentOnly, "- content only");
 
   return (
     <div>
@@ -136,10 +137,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       />
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
-        className="grid grid-cols-3"
+        className={`bg-gray-50 flex flex-row justify-center`}
         style={{ height: "calc(100vh - 104px)" }}
       >
-        <div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
+        <div
+          className={`px-4 py-4 overflow-auto text-gray-700 ${
+            contentOnly ? "w-1/2" : "w-1/3"
+          }`}
+        >
           <div className="py-3">
             <a
               href="#"
@@ -159,26 +164,30 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             dangerouslySetInnerHTML={{ __html: chapterData.contentHtml }}
           />
         </div>
-        <div>
-          <Editor initialValue={chapterData} />
-        </div>
-        <div>
-          <Output />
-        </div>
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Editor initialValue={chapterData} />
+          </div>
+        )}
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Output />
+          </div>
+        )}
       </div>
-      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
+      <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
-          style={{ width: "382px", marginLeft: "10px" }}
+          style={{ width: "24rem", margin: "0 1rem" }}
         >
           <div
             className="mt-0 bg-green-600 py-1 rounded-full"
             style={{ width: `${progressBar}%` }}
           ></div>
         </div>
-        <div className="pr-6">
+        <div className="flex flex-row w-1/3 justify-center items-center">
           <a
-            className={`text-white ${
+            className={`text-white${
               chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
             }`}
             onClick={(e) =>
@@ -198,7 +207,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             )}
           </a>
           {courses.length > 0 ? (
-            <p className="text-white inline-block px-2">
+            <p className="text-white px-2">
               {findCourseIndex(courses, chapterName, courseName, false) + 1}/
               {
                 courses[findCourseIndex(courses, chapterName, courseName, true)]

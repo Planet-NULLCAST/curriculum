@@ -3,6 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Logical Operators"
 next: "if-condition"
 prev: "variables"
+contentOnly: false
 testCase: [
 			{
 				id: 1,

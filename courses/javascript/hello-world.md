@@ -3,6 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Hello World!"
 next: "variables"
 prev: "introduction"
+contentOnly: false
 testCase: [
 			{
 				id: 1,
