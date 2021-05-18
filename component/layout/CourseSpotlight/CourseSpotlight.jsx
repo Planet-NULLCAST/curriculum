@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function CourseSpotlight({contents}) {
     return (
-        <section className={styles.spotlight}>
+        <section className={styles.spotlight} style={{ "--bgcolor": `${contents.bgcolor}` }}>
             <div className="container container--small">
                 <div className="md:flex items-center justify-between">
                     <div className="md:w-5/12">
@@ -18,6 +18,7 @@ export default function CourseSpotlight({contents}) {
                             alt={contents.alt}
                             width={contents.imageWidth}
                             height={contents.imageHeight}
+                            layout = "fixed"
                         />
                     </div>
                 </div>

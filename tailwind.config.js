@@ -26,6 +26,7 @@ module.exports = {
 				pink: "#F13E5D",
 				yellowBg: "#F7DA5B",
 				orange: "#FF590F",
+				dark: "#0E181E"
 			},
 			fontFamily:{
 				'darker': ['Darker Grotesque', 'Open Sans', 'sans-serif']

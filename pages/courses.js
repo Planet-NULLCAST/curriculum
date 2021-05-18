@@ -27,6 +27,7 @@ export default function Courses() {
         "alt": "Want to be Web Ninja?",
         "imageWidth": 482,
         "imageHeight": 377,
+        "bgcolor": "#1B0A33"
     }
     return (
         <>

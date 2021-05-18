@@ -136,7 +136,7 @@ export default function SectionBlogs() {
                 </div>
                 <div className="cta text-center">
                     <a href="" className="btn">
-                        <span className="btn__text">View all our Latest Blogs</span>
+                        <span className="btn__text">VIEW ALL OUR LATEST POSTS</span>
                     </a>
                 </div>
             </div>

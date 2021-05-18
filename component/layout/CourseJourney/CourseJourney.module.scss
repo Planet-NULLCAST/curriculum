@@ -1,12 +1,13 @@
 .path {
 
-    @apply py-48 text-white relative;
-    background: #0E181E url("../../../public/images/bgarrow.svg") repeat-y center top;
+    @apply py-48 bg-dark text-white relative;
+    background-image: url("../../../public/images/bgarrow.svg");
+    background-repeat: repeat-y;
+    background-position: center top;
 
     &:before {
 
-        @apply absolute left-0 top-0 h-1/2 w-full;
-        background: #0E181E;
+        @apply absolute bg-dark left-0 top-0 h-1/2 w-full;
         content: '';
         transform-origin: 0 100%;
         transform: skewY(-4deg);

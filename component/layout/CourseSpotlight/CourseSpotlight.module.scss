@@ -2,7 +2,7 @@
 
     @apply text-white pt-10 xl:pt-16 relative;
     padding-bottom: 170px;
-    background: #1B0A33;
+    background: var(--bgcolor);
 
     &:before {
         @apply absolute left-0 bottom-0 w-full;
@@ -14,6 +14,13 @@
     h2 {
 
         @apply pb-14 font-darker font-black text-4xl md:text-5xl xl:text-64;
+
+    }
+
+    img {
+
+        @apply m-auto;
+        max-width: 200px;
 
     }
 }
