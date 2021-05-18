@@ -14,23 +14,29 @@
   max-height: 41rem;
 }
 .a_green_210 {
-  color: #0B2A2B;
+  color: #0b2a2b;
 }
 .a_green_210:hover {
   color: #2e8a8d;
 }
 .color_scale_1 {
-	background-color: #effd5f;
+  background-color: #effd5f;
 }
 .color_scale_2 {
-	background-color: #fee227;
+  background-color: #fee227;
 }
 .color_scale_3 {
-	background-color: #e4cd05;
+  background-color: #e4cd05;
 }
 .color_scale_4 {
-	background-color: #fda50f;
+  background-color: #fda50f;
 }
 .color_scale_5 {
-	background-color: #c29200;
+  background-color: #c29200;
+}
+.min_w_18 {
+  min-width: 18rem;
+}
+.min_w_9 {
+  min-width: 9rem;
 }

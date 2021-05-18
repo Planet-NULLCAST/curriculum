@@ -38,9 +38,9 @@ export default function Activity() {
           View All
         </a>
       </div>
-      <div className="flex items-start">
+      <div className="flex items-start w-full overflow-x-auto pb-2">
         {blogs?.map((data) => (
-          <div className="flex items-start w-1/5 mt-3 justify-between pr-6">
+          <div className={`flex items-start w-1/5 mt-3 justify-between pr-6 ${Profilestyles.min_w_9}`}>
             <div className="flex flex-col w-full">
               {data?.image ? (
                 <div className="w-full h-32 overflow-hidden rounded-md flex items-center justify-center text-white">

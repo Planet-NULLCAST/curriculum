@@ -13,7 +13,7 @@ export default function Activity() {
           <img src="/images/arrowDown.svg" className="ml-2"></img>
         </div>
       </div>
-      <div className="overflow-auto pb-3">
+      <div className="overflow-x-auto pb-3">
         <CalendarHeatmap
           startDate={new Date("2020-12-31")}
           endDate={new Date("2021-12-31")}
