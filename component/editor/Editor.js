@@ -7,16 +7,22 @@ import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import Runbutton from "./RunButton";
 
-const Codemirror = ({ initialValue }) => {
+const Codemirror = ({ courseName, chapterName }) => {
   useEffect(() => {
     if (editor.current)
       editor.current.setState(
         EditorState.create({
           doc: "",
-          extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme]
+          extensions: [
+            basicSetup,
+            javascript(),
+            oneDark,
+            onUpdate(),
+            baseTheme,
+          ],
         })
       );
-  }, [initialValue]);
+  }, [chapterName]);
   // Local state
   const [editorValue, setEditorValue] = useState("");
   const [editorTreeValue, setEditorTreeValue] = useState([]);
@@ -40,14 +46,14 @@ const Codemirror = ({ initialValue }) => {
 
   let baseTheme = EditorView.baseTheme({
     ".cm-scroller": {
-      height: "85vh"
+      height: "85vh",
     },
     "&light .cm-o-replacement": {
-      backgroundColor: "#04c"
+      backgroundColor: "#04c",
     },
     "&dark .cm-o-replacement": {
-      backgroundColor: "#5bf"
-    }
+      backgroundColor: "#5bf",
+    },
   });
 
   // Initialize view
@@ -56,10 +62,10 @@ const Codemirror = ({ initialValue }) => {
     editor.current = new EditorView({
       state: EditorState.create({
         doc: "",
-        extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme]
+        extensions: [basicSetup, javascript(), oneDark, onUpdate(), baseTheme],
       }),
       parent: el,
-      baseTheme
+      baseTheme,
     });
   }, []);
 
@@ -68,8 +74,8 @@ const Codemirror = ({ initialValue }) => {
       <div id="codemirror-editor-wrapper" />
       <Runbutton
         editorVal={editorTreeValue}
-        courseName={initialValue.courseName}
-        chapterName={initialValue.chapterName}
+        courseName={courseName}
+        chapterName={chapterName}
       />
     </div>
   );
