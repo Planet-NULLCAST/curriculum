@@ -3,7 +3,8 @@ title: "Introduction To Javascript"
 subheading: "What Is Javascript ?"
 next: "hello-world"
 prev: ""
-testCase: [{ id: 1, case: ["", ""], hint: "Go forward", isCorrect: true }]
+contentOnly: true
+testCase: [{ id: 1, case: "", hint: "Go forward", isCorrect: true }]
 ---
 
 Last year, millions of learners from our community started with JavaScript.
