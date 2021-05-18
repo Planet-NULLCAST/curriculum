@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -31,8 +31,8 @@ export async function getStaticProps({ params }) {
     props: {
       chapterData,
       courseName,
-      chapterName,
-    },
+      chapterName
+    }
   };
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
@@ -181,9 +181,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         </div>
         <div className="pr-6">
           <a
-            className={`text-white ${
-              chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
-            }`}
+            className={`text-white cursor-pointer`}
             onClick={(e) =>
               routerClick(
                 courseName,
@@ -194,17 +192,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               )
             }
           >
-            {findCourseIndex(courses, chapterName, courseName, false) > 0 ? (
-              <img
-                src="/images/svgs/leftarrawo.svg"
-                className="h-12 inline-block"
-              />
-            ) : (
-              <img
-                src="/images/svgs/leftdull.svg"
-                className="h-12 inline-block"
-              />
-            )}
+            <img
+              src="/images/svgs/leftarrawo.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) > 0
+                  ? ""
+                  : "invisible"
+              }`}
+            />
           </a>
           {courses.length > 0 ? (
             <p className="text-white inline-block px-2">
@@ -218,9 +213,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             ""
           )}
           <a
-            className={`text-white ${
-              chapterData.next ? `cursor-pointer` : `cursor-not-allowed`
-            }`}
+            className={`text-white cursor-pointer`}
             onClick={(e) =>
               routerClick(
                 courseName,
@@ -231,18 +224,15 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               )
             }
           >
-            {findCourseIndex(courses, chapterName, courseName, false) + 1 <
-            currentCourse.chapters.length ? (
-              <img
-                src="/images/svgs/rightarrow.svg"
-                className="h-12 inline-block"
-              />
-            ) : (
-              <img
-                src="/images/svgs/rightdull.svg"
-                className="h-12 inline-block"
-              />
-            )}
+            <img
+              src="/images/svgs/rightarrow.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) + 1 <
+                currentCourse.chapters.length
+                  ? ""
+                  : "invisible"
+              }`}
+            />
           </a>
         </div>
       </div>
