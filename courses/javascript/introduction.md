@@ -10,8 +10,8 @@ testCase:
       chapterName: "introduction",
       case: [],
       hint: "Go forward",
-      isCorrect: true,
-    },
+      isCorrect: true
+    }
   ]
 ---
 
