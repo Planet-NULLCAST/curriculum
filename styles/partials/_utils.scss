@@ -1,0 +1,5 @@
+
+// Mixin to convert px to rem
+@mixin toRem($property, $value) {
+    #{$property}: ($value / 16) + rem;
+}
