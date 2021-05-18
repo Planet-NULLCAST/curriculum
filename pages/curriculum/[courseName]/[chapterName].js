@@ -187,7 +187,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         </div>
         <div className="flex flex-row w-1/3 justify-center items-center">
           <a
-            className={`text-white${
+            className={`text-white ${
               chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
             }`}
             onClick={(e) =>
