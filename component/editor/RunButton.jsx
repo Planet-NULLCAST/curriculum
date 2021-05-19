@@ -15,7 +15,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
 
   const notify = (err) => {
     console.log(err);
-    toast.success(err, {
+    toast.dark(err, {
       position: "top-right",
       autoClose: 2000,
       hideProgressBar: false,

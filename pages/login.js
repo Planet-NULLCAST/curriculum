@@ -10,6 +10,7 @@ import SideLogin from "../component/login/side/SideLogin";
 // import LoginSide from "../images/png/login_side.png";
 
 import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
+import { useRouter } from "next/router";
 const axios = require("axios");
 
 export default function Login() {
