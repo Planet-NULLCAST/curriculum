@@ -6,19 +6,19 @@ prev: ""
 testCase: [
     {
         id: 1,
-        case: ["let a = '45', b = '32';", "let a = '45', b = '32'","let a = '45'; let b = '32';", "let a = \"45\", b = \"32\";", "let a = \"45\", b = \"32\"","let a = \"45\"; let b = \"32\";"],
+        case: ["const a = '45', b = '32';", "const a = '45', b = '32'","const a = '45'; const b = '32';", "const a = \"45\", b = \"32\";", "const a = \"45\", b = \"32\"","const a = \"45\"; const b = \"32\";"],
         hint: "a should have a value of \"45\" or '45' and b should have a value of \"32\" or '32'",
         isCorrect: false
     },
     {
         id: 2,
-        case: ['const sum = a + b;',"let sum = a + b;"],
+        case: ['const sum = a + b;'],
         hint: "sum should store the result of performing an ADD operation on the numb",
         isCorrect: false
     },
     {
         id: 3,
-        case: ["const result = Number(sum);", "let result = Number(sum);"],
+        case: ["const result = Number(sum);"],
         hint: "Please re check the code and formatting.",
         isCorrect: false
     }
