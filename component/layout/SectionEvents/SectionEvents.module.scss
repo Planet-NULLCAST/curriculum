@@ -1,0 +1,58 @@
+.section {
+
+    @apply py-10 lg:py-20 bg-black text-white;
+    padding-top: 14vw;
+
+    h2 {
+        @apply text-white;
+    }
+
+}
+
+.event {
+    @apply m-auto relative max-w-sm md:max-w-md;
+
+    figure {
+
+        &:before {
+            @apply absolute left-0 top-0 w-full h-full pointer-events-none;
+            content: '';
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+        }
+
+        figcaption {
+            @apply absolute bottom-0 left-0 w-full p-3 md:px-7 md:pb-9;
+        }
+
+        h3 {
+            @apply font-bold text-lg md:text-2xl lg:text-32 mb-3;
+        }
+
+        p {
+            @apply text-18;
+        }
+    }
+
+    span {
+        background-image: linear-gradient(#F7DA5B, #F7DA5B);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 0px 2px;
+        padding-bottom: 10px;
+        transition: all ease .2s;
+        display: inline-block;
+    }
+
+    &:hover {
+        h3 span {
+            background-size: 150px 2px;
+        }
+    }
+
+}
+
+@screen xl {
+    .event {
+        max-width: 985px;
+    }
+}

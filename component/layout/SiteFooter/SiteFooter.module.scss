@@ -1,0 +1,145 @@
+
+.footer {
+    @apply bg-gray-01 text-white relative pt-10 lg:pt-28;
+
+    // &:before, &:after {
+    //     @apply bg-gray-01 absolute w-1/2 -top-14 h-28;
+    //     content: '';
+    //     box-shadow: 0 -14px 0 #fef793;
+    // }
+    
+    // &:before {
+    //     @apply left-0;
+    //     transform: skewY(-5deg);
+    // }
+
+    // &:after {
+    //     @apply right-0;
+    //     transform: skewY(5deg);
+    // }
+
+    &:before {
+        @apply absolute left-0 w-full;
+        background: url(../../../public/images/footerbg.svg) no-repeat center top;
+        top: -79px;
+        height: 80px;
+        content: '';
+    }
+
+}
+
+.footerBottom {
+    font-size: 15px;
+    @apply py-8 text-center uppercase;
+    border-top: 1px solid #194E50;
+    color: #8DA1A1;
+}
+
+.socialWrap {
+
+    @apply overflow-hidden px-12 py-10 md:p-0 lg:pl-5 lg:pb-10;
+
+    a {
+        @apply inline-block;
+
+        img {
+            transition: all ease .3s;
+        }
+
+        &:hover {
+
+            img {
+                transform: scale(.95) rotate(-5deg);
+            }
+
+        }
+    }
+
+    .twitter {
+        @apply float-right mr-1;
+        width: 43.1%;
+    }
+
+    .linkedin {
+        width: 45.45%;
+        margin-top: 20.36%;
+    }
+
+    .discord {
+        @apply float-right;
+        width: 49.37%;
+    }
+
+}
+
+.form {
+    @apply p-1 md:p-2 flex mb-10;
+    border: 3px solid #626262;
+    max-width: 602px;
+    border-radius: 5px;
+}
+
+.email {
+    max-width: 75%;
+    @apply flex-1 bg-transparent pl-2 md:max-w-full;
+
+    &::placeholder {
+        @apply text-white;
+    }
+
+    &:focus {
+        @apply outline-none;
+    }
+}
+
+.nevFooter {
+
+    li {
+        @apply py-2 mb-1;
+    }
+
+    a {
+        @apply text-lg uppercase;
+        background-image: linear-gradient(#8DA1A1, #8DA1A1);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 1px;
+        padding-bottom: 3px;
+        color: #8DA1A1;
+
+        &:hover {
+            @apply text-white;
+            background-size: 80px 1px;
+        }
+    }
+    
+}
+
+@screen md {
+
+    .footerBottom {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .footer {
+
+        &:before {
+            top: -169px;
+            height: 170px;
+        }
+
+    }
+}
+
+@media (max-width: 420px) {
+    .email {
+        max-width: 60%;
+    }
+
+    .btn--subscribe {
+        font-size: 16px;
+    }
+}

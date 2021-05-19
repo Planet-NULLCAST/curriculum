@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -31,20 +31,23 @@ export async function getStaticProps({ params }) {
     props: {
       chapterData,
       courseName,
-      chapterName,
-    },
+      chapterName
+    }
   };
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
+  const userState = useContext(UserState);
+
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
     setToggle(!toggle);
   }
   const router = useRouter();
-  const { testCase } = chapterData;
-  const userState = useContext(UserState);
+  const { testCase, contentOnly } = chapterData;
+
   const [progressBar, setProgressBar] = useState(0);
-  const [progress, setProgress] = useState();
+
+  let currentCourse = getCourse(courseName);
 
   const findCourseIndex = (courses, chapterName, courseName, chaporcourse) => {
     if (courses.length > 0) {
@@ -77,6 +80,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     userState.setTest(testCase);
     userState.setRun(false);
   }, [testCase]);
+
   useEffect(() => {
     let progressTem = JSON.parse(window.localStorage.getItem("progress"));
     if (progressTem) {
@@ -86,37 +90,31 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         }
       });
       if (progressData) {
-        setProgress(progressTem);
+        userState.setProgress(progressTem);
       } else {
         progressTem.push({ courseName: courseName, completedChapter: [] });
-        setProgress(progressTem);
+        userState.setProgress(progressTem);
       }
     }
   }, [userState.testCase]);
 
   useEffect(() => {
-    if (progress && courses.length > 0) {
-      const Course = progress.find((post, index) => {
+    if (userState.progress && currentCourse) {
+      const Course = userState.progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
         }
       });
-      const Courses = courses.find((post, index) => {
-        if (post.courseUrl === courseName) {
-          return true;
-        }
-      });
-      const indexP = progress.indexOf(Course);
-      const indexC = courses.indexOf(Courses);
+
+      const indexP = userState.progress.indexOf(Course);
       setProgressBar(
-        (progress[indexP].completedChapter.length /
-          courses[indexC].chapters.length) *
+        (userState.progress[indexP].completedChapter.length /
+          currentCourse.chapters.length) *
           100
       );
     }
-  }, [progress]);
+  }, [userState.progress]);
 
-  let currentCourse = getCourse(courseName);
   const routerClick = (courseName, chapterEntry, e) => {
     e.preventDefault();
     if (chapterEntry !== undefined) {
@@ -125,6 +123,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     }
     return;
   };
+  // console.log(contentOnly, "- content only");
 
   return (
     <div>
@@ -139,10 +138,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       />
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
-        className="grid grid-cols-3"
+        className={`bg-gray-50 flex flex-row justify-center`}
         style={{ height: "calc(100vh - 104px)" }}
       >
-        <div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
+        <div
+          className={`px-4 py-4 overflow-auto text-gray-700 ${
+            contentOnly ? "w-1/2" : "w-1/3"
+          }`}
+        >
           <div className="py-3">
             <a
               href="#"
@@ -162,28 +165,30 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             dangerouslySetInnerHTML={{ __html: chapterData.contentHtml }}
           />
         </div>
-        <div>
-          <Editor courseName={courseName} chapterName={chapterName} />
-        </div>
-        <div>
-          <Output />
-        </div>
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Editor courseName={courseName} chapterName={chapterName} />
+          </div>
+        )}
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Output />
+          </div>
+        )}
       </div>
-      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
+      <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
-          style={{ width: "382px", marginLeft: "10px" }}
+          style={{ width: "24rem", margin: "0 1rem" }}
         >
           <div
             className="mt-0 bg-green-600 py-1 rounded-full"
             style={{ width: `${progressBar}%` }}
           ></div>
         </div>
-        <div className="pr-6">
+        <div className="flex flex-row w-1/3 justify-center items-center">
           <a
-            className={`text-white ${
-              chapterData.prev ? `cursor-pointer` : `cursor-not-allowed`
-            }`}
+            className={`text-white cursor-pointer`}
             onClick={(e) =>
               routerClick(
                 courseName,
@@ -194,20 +199,17 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               )
             }
           >
-            {findCourseIndex(courses, chapterName, courseName, false) > 0 ? (
-              <img
-                src="/images/svgs/leftarrawo.svg"
-                className="h-12 inline-block"
-              />
-            ) : (
-              <img
-                src="/images/svgs/leftdull.svg"
-                className="h-12 inline-block"
-              />
-            )}
+            <img
+              src="/images/svgs/leftarrawo.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) > 0
+                  ? ""
+                  : "invisible"
+              }`}
+            />
           </a>
           {courses.length > 0 ? (
-            <p className="text-white inline-block px-2">
+            <p className="text-white px-2">
               {findCourseIndex(courses, chapterName, courseName, false) + 1}/
               {
                 courses[findCourseIndex(courses, chapterName, courseName, true)]
@@ -218,9 +220,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             ""
           )}
           <a
-            className={`text-white ${
-              chapterData.next ? `cursor-pointer` : `cursor-not-allowed`
-            }`}
+            className={`text-white cursor-pointer`}
             onClick={(e) =>
               routerClick(
                 courseName,
@@ -231,18 +231,15 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               )
             }
           >
-            {findCourseIndex(courses, chapterName, courseName, false) + 1 <
-            currentCourse.chapters.length ? (
-              <img
-                src="/images/svgs/rightarrow.svg"
-                className="h-12 inline-block"
-              />
-            ) : (
-              <img
-                src="/images/svgs/rightdull.svg"
-                className="h-12 inline-block"
-              />
-            )}
+            <img
+              src="/images/svgs/rightarrow.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) + 1 <
+                currentCourse.chapters.length
+                  ? ""
+                  : "invisible"
+              }`}
+            />
           </a>
         </div>
       </div>

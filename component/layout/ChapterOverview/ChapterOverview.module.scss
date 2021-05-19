@@ -1,0 +1,33 @@
+.overview {
+
+    border: 1px solid #A7A7A7;
+    border-radius: 10px;
+
+}
+
+.item {
+
+    @apply text-center p-4 py-10;
+    border-bottom: 1px solid #D4D4D4;
+
+    &:last-child {
+        border: 0;
+
+        p {
+            @apply mb-3;
+        }
+    }
+
+    h3 {
+
+        @apply text-40 font-extrabold mb-3;
+
+    }
+
+    p  {
+
+        @apply font-semibold;
+    
+    }
+
+}

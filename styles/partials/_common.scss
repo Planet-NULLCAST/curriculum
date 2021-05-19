@@ -1,0 +1,92 @@
+
+a, button {
+    -webkit-tap-highlight-color: transparent;
+    transition: all ease .3s;
+}
+
+// Button component with style variations
+
+.btn {
+    --shadowcolor: #202020;
+    @apply inline-block bg-pink rounded-10 text-white px-10 lg:px-20 py-5 lg:py-7 text-lg md:text-xl xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
+    border: 1px solid #1C1C1D;
+    box-shadow: 0px 4px 0px var(--shadowcolor);
+
+    &:before {
+        @apply absolute top-0 h-full;
+        transition: all ease .5s;
+        background: linear-gradient(100deg,  #FDB500 60%, transparent);
+        content: '';
+        left: -200%;
+        width: 200%;
+    }
+
+    &:hover {
+        &:before {
+            @apply left-0;
+        }
+    }
+
+    &--subscribe {
+        @apply py-4 px-6 lg:px-14;
+    }
+
+    &__text {
+        @apply relative;
+    }
+
+    &--black, &--blackborder {
+        --shadowcolor:transparent;
+        @apply inline-block relative bg-black text-white px-7 py-4 mx-3 border border-black flex items-center justify-center capitalize text-base font-semibold;
+        border-radius: 1px;
+    }
+
+    &--blackborder {
+        @apply text-black;
+        background: transparent;
+
+    }
+
+    &--purple {
+        background: #8032ED;
+        @apply py-4 text-18;
+    }
+
+    &--small {
+        @apply text-xl px-10 py-3;
+    }
+
+    &__arrow {
+        @apply ml-2 relative;
+    }
+
+}
+
+.cta {
+    position: relative;
+    z-index: 9;
+}
+
+.container {
+    
+    @apply mx-auto px-3 md:px-4;
+    
+    &--small {
+        max-width: 1150px;
+    }
+    
+}
+
+.sectionHeader {
+    
+    @apply md:flex justify-between items-center text-center md:text-right;
+
+    &__title {
+        @apply font-darker text-gray-01 font-extrabold leading-none text-4xl lg:text-5xl xl:text-64 mb-10 md:mb-0;
+    }
+
+    &__description {
+        @apply font-medium lg:font-bold text-18 md:w-7/12 lg:w-1/2;
+    }
+
+}

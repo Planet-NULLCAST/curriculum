@@ -1,0 +1,31 @@
+.header {
+    @apply bg-white relative left-0 top-0 w-full z-50 p-5 md:px-20 md:py-8;
+    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, .15);
+}
+
+.wrap {
+    @apply flex items-center justify-end;
+}
+
+.mainMenu {
+    @apply flex items-center font-semibold;
+    font-size: 14px;
+
+    li {
+        @apply mx-3;
+    }
+
+    a {
+        transition: all ease .3s;
+        
+        &:hover {
+            @apply text-yellow-01;
+        }
+    }
+
+}
+
+.wrapBtn {
+    @apply flex;
+}
