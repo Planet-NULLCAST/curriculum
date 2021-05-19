@@ -8,7 +8,9 @@ export default function HomeSpotlight() {
                     <ul className={styles.mainMenu}>
                         <li><a href="">What the Ducks?</a></li>
                         <li><a href="">School of Ducks</a></li>
-                        <li><a href="">Leaderboard</a></li>
+                        <li>
+                            <a href="">Write <img src="/images/hand.png" className="ml-1" alt=""/></a>
+                        </li>
                         <li><a href="">Community</a></li>
                     </ul>
                 </nav>
