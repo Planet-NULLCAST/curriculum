@@ -9,8 +9,8 @@ export default function Login() {
   const [validPassword, setValidPassword] = useState(false);
   const [terms, setTerms] = useState(false);
 
-  const notify = (err) =>
-    toast.error(err.message, {
+  const notify = (item) =>
+    toast(item.message, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -177,7 +177,7 @@ export default function Login() {
                     className="cursor-pointer"
                     onClick={(e) => termsClick(e)}
                   />
-                  <label for="terms" className="ml-2 cursor-pointer">
+                  <label htmlFor="terms" className="ml-2 cursor-pointer">
                     I agree to the{" "}
                     <a href="#" className="text-blue-700">
                       terms and conditions
@@ -192,7 +192,7 @@ export default function Login() {
                     value="updates"
                     className="cursor-pointer"
                   />
-                  <label for="updates" className="ml-2 cursor-pointer">
+                  <label htmlFor="updates" className="ml-2 cursor-pointer">
                     Send me latest updates
                   </label>
                 </div>
