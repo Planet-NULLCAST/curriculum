@@ -15,7 +15,8 @@ export default function Chapter() {
         "alt": "Want to be Web Ninja?",
         "imageWidth": 482,
         "imageHeight": 377,
-        "bgcolor": "#083644"
+        "bgcolor": "#083644",
+        "bgimage": "bg2"
     }
     return (
         <>

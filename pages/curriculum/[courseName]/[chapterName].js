@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
 import { courses } from "../../../courses/meta";
@@ -7,12 +6,12 @@ import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
 import Navbar from "../../../component/layout/NavBar/NavBar";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
+import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
 import { useRouter } from "next/router";
-const axios = require("axios");
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -123,13 +122,13 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     }
     return;
   };
-  // console.log(contentOnly, "- content only");
 
   return (
     <div>
       <Head>
         <title>{chapterData.subheading} | Curriculum</title>
       </Head>
+      {/* <SiteHeader /> */}
       <Navbar
         onToggle={handleToggle}
         title={chapterData.title}
