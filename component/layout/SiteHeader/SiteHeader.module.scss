@@ -1,37 +1,36 @@
 .header {
-    @apply bg-white relative left-0 top-0 w-full z-50 p-5 md:px-10 md:py-4;
-    border: 1px solid rgb(255, 255, 255);
-    border: 1px solid rgba(255, 255, 255, .15);
+  @apply bg-white relative left-0 top-0 w-full z-20 p-5 md:px-10 md:py-4;
+  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .wrap {
-    @apply flex items-center justify-end;
+  @apply flex items-center justify-end;
 }
 
 .mainMenu {
-    @apply flex items-center font-semibold;
-    font-size: 14px;
+  @apply flex items-center font-semibold;
+  font-size: 14px;
 
-    li {
-        @apply mx-3;
+  li {
+    @apply mx-3;
+  }
+
+  a {
+    @apply flex items-center;
+    transition: all ease 0.3s;
+    background-image: linear-gradient(#000, #000);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    padding-bottom: 2px;
+
+    &:hover {
+      background-size: 40px 1px;
     }
-
-    a {
-        @apply flex items-center;
-        transition: all ease .3s;
-        background-image: linear-gradient(#000, #000);
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        background-size: 0 1px;
-        padding-bottom: 2px;
-        
-        &:hover {
-            background-size: 40px 1px;
-        }
-    }
-
+  }
 }
 
 .wrapBtn {
-    @apply flex;
+  @apply flex;
 }

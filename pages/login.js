@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
-
+import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
 import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
-
-// import LoginSide from "../images/svg/login_side.svg";
-// import LoginSide from "../images/png/login_side.png";
-
-import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
-import { useRouter } from "next/router";
 const axios = require("axios");
 
 export default function Login() {
+  const router = useRouter();
+  // console.log("redirect", router.query.redirect);
+  const redirectTo = router.query.redirect;
+
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(false);
 
@@ -32,7 +30,6 @@ export default function Login() {
     }
   };
 
-  const router = useRouter();
   const notify = (err) =>
     toast.error(err.message, {
       position: "top-right",
@@ -64,7 +61,7 @@ export default function Login() {
           return response.data;
         })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.accessToken) {
             document.cookie = `user=${JSON.stringify(data)}`;
 
@@ -79,7 +76,7 @@ export default function Login() {
               },
               data: progress
             }).then((response) => {
-              console.log(response);
+              // console.log(response);
             });
             axios({
               method: "post",
@@ -97,7 +94,11 @@ export default function Login() {
               .catch((err) => {
                 console.log(err.message);
               });
-            router.push("/");
+            if (redirectTo) {
+              router.push(redirectTo);
+            } else {
+              router.push("/");
+            }
           } else {
             notify(data);
           }
@@ -143,7 +144,7 @@ export default function Login() {
                   {validEmail ? (
                     ""
                   ) : (
-                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                    <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
                       Invalid email field !
                     </span>
                   )}
@@ -177,11 +178,6 @@ export default function Login() {
                 >
                   Login
                 </button>
-                {/* <a
-                  href="/signup"
-                >
-                  Don't have account?
-                </a> */}
               </form>
               <ToastContainer
                 position="top-right"
