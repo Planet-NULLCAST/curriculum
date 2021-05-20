@@ -1,0 +1,42 @@
+.bg_red_110 {
+  background-color: #fcebe6;
+}
+.bg_green_110 {
+  background-color: #e8f9ff;
+}
+.bg_blue_110 {
+  background-color: #f0fff2;
+}
+.bg_cyan_110 {
+  background-color: #fff9fd;
+}
+.h_max_40rem {
+  max-height: 41rem;
+}
+.a_green_210 {
+  color: #0b2a2b;
+}
+.a_green_210:hover {
+  color: #2e8a8d;
+}
+.color_scale_1 {
+  background-color: #effd5f;
+}
+.color_scale_2 {
+  background-color: #fee227;
+}
+.color_scale_3 {
+  background-color: #e4cd05;
+}
+.color_scale_4 {
+  background-color: #fda50f;
+}
+.color_scale_5 {
+  background-color: #c29200;
+}
+.min_w_18 {
+  min-width: 18rem;
+}
+.min_w_9 {
+  min-width: 9rem;
+}
