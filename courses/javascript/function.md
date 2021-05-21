@@ -2,7 +2,7 @@
 title: "Introduction to Javascript function"
 subheading: "Function"
 prev: "prototypes"
-next: "arrow-functions"
+next: ""
 testCase:
   [
     {
