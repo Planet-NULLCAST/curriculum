@@ -2,6 +2,7 @@ import styles from "./SiteHeader.module.scss";
 import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function HomeSpotlight() {
   const router = useRouter();
@@ -18,8 +19,8 @@ export default function HomeSpotlight() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
     document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    router.push(currentPath);
     setCookies("");
-    router.reload();
   }
   return (
     <header className={styles.header}>
@@ -27,18 +28,26 @@ export default function HomeSpotlight() {
         <nav>
           <ul className={styles.mainMenu}>
             <li>
-              <a href="">What the Ducks?</a>
+              <Link href="/">
+                <a>What the Ducks?</a>
+              </Link>
             </li>
             <li>
-              <a href="/curriculum">School of Ducks</a>
+              <Link href="/curriculum">
+                <a>School of Ducks</a>
+              </Link>
             </li>
             <li>
-              <a href="">
-                Write <img src="/images/hand.png" className="ml-1" alt="" />
-              </a>
+              <Link href="/write">
+                <a>
+                  Write <img src="/images/hand.png" className="ml-1" alt="" />
+                </a>
+              </Link>
             </li>
             <li>
-              <a href="">Community</a>
+              <Link href="/">
+                <a>Community</a>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -72,9 +81,9 @@ export default function HomeSpotlight() {
             </a>
           )}
 
-          <a href="" className="btn btn--blackborder">
+          {/* <a href="" className="btn btn--blackborder">
             <span className="btn__text">Donate</span>
-          </a>
+          </a> */}
         </div>
       </div>
     </header>
