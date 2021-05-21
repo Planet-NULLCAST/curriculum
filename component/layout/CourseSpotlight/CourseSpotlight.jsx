@@ -16,7 +16,10 @@ export default function CourseSpotlight({ contents }) {
             <h3 className="my-4 font-darker font-black text-5xl">
               {contents.subtitle}
             </h3>
-            <a href="#courses" className="btn btn--purple">
+            <a
+              href={contents.type === "courses" ? "#courses" : "#chapters"}
+              className="btn btn--purple"
+            >
               <span className="btn__text">{contents.buttonText}</span>
             </a>
           </div>
