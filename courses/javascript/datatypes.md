@@ -3,6 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Data types"
 next: "logical-operators"
 prev: "variables"
+contentOnly: false
 testCase: [
 			{
 				id: 1,

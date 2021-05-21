@@ -1,0 +1,106 @@
+
+.blogList {
+    @apply md:grid pt-24 lg:pt-36 gap-20 lg:gap-28 xl:gap-32 grid-cols-2 grid-rows-2;
+
+}
+
+.blogImage {
+    max-width: 250px;
+    @apply relative mb-4 mx-10 mx-auto sm:max-w-sm md:max-w-full;
+
+    &:before {
+        @apply h-full absolute;
+        content: '';
+        background: #A8EAF5;
+        left: -22.73%;
+        z-index: -1;
+        top: -7.85%;
+        width: 115.34%;
+    }
+
+    img {
+        transform-origin: bottom left;
+        transition: all ease .3s;
+    }
+    
+}
+
+.blogItem {
+
+    @apply mb-20 md:mb-10 xl:mb-16;
+    
+    &:nth-child(even) {
+        figure {
+            &:before {
+                background: #F92304;
+            }
+        }
+    }
+
+    h3 {
+        @apply text-2xl lg:text-32 font-bold underline text-gray-01 leading-tight mb-5;
+
+        a {
+            @apply text-gray-01;
+        }
+
+    }
+
+    &:hover {
+        .blogImage {
+            img {
+                transform: rotate(-3deg);
+            }
+        }
+    }
+}
+
+.author {
+    @apply flex items-center;
+
+    .icon {
+        @apply mr-5 rounded-full overflow-hidden;
+    }
+
+    h4 {
+        @apply text-xl lg:text-25 font-extrabold mb-1;
+    }
+
+    h5 {
+        @apply text-xl;
+        color: #717171;
+    }
+
+    .points {
+        @apply font-bold text-18 ml-3 flex items-center;
+        color: #F92304;
+    }
+
+    svg {
+        @apply mr-2;
+    }
+}
+
+@screen md {
+
+    .blogList {
+        padding-left: 9.3%;
+    }
+
+
+    .blogItem {
+        
+        &:nth-child(even) {
+            figure {
+                &:before {
+                    left: -10.98%;
+                    top: -12.96%;
+                    width: 101.7%;
+                    height: 106.02%;
+                }
+            }
+        }
+
+    }
+
+}

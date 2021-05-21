@@ -1,39 +1,79 @@
 import { useState } from "react";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
+  const [validEmail, setEmailValid] = useState(true);
+  const [validPassword, setValidPassword] = useState(false);
+  const [terms, setTerms] = useState(false);
+
+  const notify = (item) =>
+    toast(item.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+  const termsClick = (e) => {
+    setTerms((prevState) => {
+      return !prevState;
+    });
+  };
+  const eyeClick = (e) => {
+    setValidPassword((prevState) => {
+      return !prevState;
+    });
+  };
+  const emailValidator = (e) => {
+    let emailAdress = e.target.value;
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress === "") {
+      setEmailValid(true);
+    }
+    if (emailAdress.match(regexEmail)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  };
   const handleClick = (e) => {
     e.preventDefault();
     const fName = document.querySelector("#firstName").value;
-    const lName = document.querySelector("#lastName").value;
     const email = document.querySelector("#email").value;
     const user = document.querySelector("#username").value;
     const pass = document.querySelector("#password").value;
-    const bod = {
-      firstName: fName,
-      lastName: lName,
-      email: email,
-      username: user,
-      password: pass,
-    };
-    fetch("http://localhost:8080/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bod),
-    })
-      .then((response) => {
-        return response.json();
+    const update = document.querySelector("#updates").value;
+    console.log(terms);
+    if (validEmail && terms) {
+      const bod = {
+        firstName: fName,
+        email: email,
+        username: user,
+        password: pass
+      };
+      fetch("http://localhost:8080/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bod)
       })
-      .then((data) => {
-        if (data.message === "User was registered successfully!") {
-          console.log(data);
-          window.location.replace("http://localhost:3000/login");
-        }
-        console.log(data);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data.message === "User was registered successfully!") {
+            console.log(data);
+            window.location.replace("http://localhost:3000/login");
+          }
+          notify(data);
+        });
+    }
   };
   return (
     <div className="w-full min-h-screen bg-white flex">
@@ -96,7 +136,15 @@ export default function Login() {
                     className="inputStyle"
                     id="email"
                     type="email"
+                    onChange={(e) => emailValidator(e)}
                   />
+                  {validEmail ? (
+                    ""
+                  ) : (
+                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                      Invalid email address !
+                    </span>
+                  )}
                 </div>
                 <div className="mb-4 flex flex-col">
                   <label
@@ -109,12 +157,13 @@ export default function Login() {
                       placeholder="Enter password"
                       className="inputStyle w-full"
                       id="password"
-                      type="password"
+                      type={`${validPassword ? "text" : "password"}`}
                     />
                     <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                       <img
                         src="/images/eye.svg"
                         className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                        onClick={(e) => eyeClick(e)}
                       ></img>
                     </div>
                   </div>
@@ -126,8 +175,9 @@ export default function Login() {
                     name="terms"
                     value="terms"
                     className="cursor-pointer"
+                    onClick={(e) => termsClick(e)}
                   />
-                  <label for="terms" className="ml-2 cursor-pointer">
+                  <label htmlFor="terms" className="ml-2 cursor-pointer">
                     I agree to the{" "}
                     <a href="#" className="text-blue-700">
                       terms and conditions
@@ -142,7 +192,7 @@ export default function Login() {
                     value="updates"
                     className="cursor-pointer"
                   />
-                  <label for="updates" className="ml-2 cursor-pointer">
+                  <label htmlFor="updates" className="ml-2 cursor-pointer">
                     Send me latest updates
                   </label>
                 </div>
@@ -158,6 +208,17 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

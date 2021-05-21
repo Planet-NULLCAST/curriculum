@@ -3,6 +3,7 @@ title: "Introduction To Javascript"
 subheading: "If Condition"
 next: "arithmetic-operators"
 prev: "logical-operators"
+contentOnly: false
 testCase: [
 			{
 				id: 1,

@@ -55,6 +55,11 @@ let courses = [
         chapterUrl: "type-conversion",
         chapterName: "Type Conversion",
       },
+	    {
+        chapterId: 11,
+        chapterUrl: "arrow-functions",
+        chapterName: "Arrow Functions",
+      },
     ],
   },
   {
@@ -71,6 +76,16 @@ let courses = [
         chapterId: 2,
         chapterUrl: "hello-world",
         chapterName: "Hello World",
+      },
+      {
+        chapterId: 3,
+        chapterUrl: "datatypes",
+        chapterName: "Datatypes",
+      },
+      {
+        chapterId: 4,
+        chapterUrl: "if-condition",
+        chapterName: "If-Condition",
       },
     ],
   },

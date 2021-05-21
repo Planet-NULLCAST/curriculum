@@ -1,18 +1,35 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import { useRouter } from "next/router";
+import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
 import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
-
-// import LoginSide from "../images/svg/login_side.svg";
-// import LoginSide from "../images/png/login_side.png";
-
-import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
-
 const axios = require("axios");
 
 export default function Login() {
+  const router = useRouter();
+  // console.log("redirect", router.query.redirect);
+  const redirectTo = router.query.redirect;
+
+  const [validEmail, setEmailValid] = useState(true);
+  const [validPassword, setValidPassword] = useState(false);
+
+  const eyeClick = (e) => {
+    setValidPassword((prevState) => {
+      return !prevState;
+    });
+  };
+  const emailValidator = (e) => {
+    let emailAdress = e.target.value;
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress.match(regexEmail)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  };
+
   const notify = (err) =>
     toast.error(err.message, {
       position: "top-right",
@@ -21,66 +38,72 @@ export default function Login() {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: undefined
     });
   const handleClick = (e) => {
     e.preventDefault();
-    const pass = document.querySelector("#password").value;
-    const user = document.querySelector("#username").value;
-    const bod = {
-      username: user,
-      password: pass,
-    };
-    const err = axios({
-      method: "POST",
-      url: `${baseUrl}${authUrl}/signin`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: bod
-    })
-      .then((response) => {
-        return response.data;
+    if (validEmail) {
+      const pass = document.querySelector("#password").value;
+      const user = document.querySelector("#username").value;
+      const bod = {
+        username: user,
+        password: pass
+      };
+      const err = axios({
+        method: "POST",
+        url: `${baseUrl}${authUrl}/signin`,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: bod
       })
-      .then((data) => {
-        console.log(data);
-        if (data.accessToken) {
-          document.cookie = `user=${JSON.stringify(data)}`;
+        .then((response) => {
+          return response.data;
+        })
+        .then((data) => {
+          // console.log(data);
+          if (data.accessToken) {
+            document.cookie = `user=${JSON.stringify(data)}`;
 
-          let progress = JSON.parse(
-            window.localStorage.getItem("progress")
-          ) || [{ courseName: "", completedChapter: [] }];
-          axios({
-            method: "post",
-            url: `${baseUrl}${enrolUrl}/progress`,
-            headers: {
-              "x-access-token": `${data.accessToken}`
-            },
-            data: progress
-          }).then((response) => {
-            console.log(response);
-          });
-          axios({
-            method: "post",
-            url: `http://localhost:8080/api/progress/all`,
-            headers: {
-              "x-access-token": `${data.accessToken}`,
-            },
-          })
-            .then((response) => {
-              window.localStorage.setItem(
-                "progress",
-                JSON.stringify(response.data)
-              );
-            })
-            .catch((err) => {
-              console.log(err.message);
+            let progress = JSON.parse(
+              window.localStorage.getItem("progress")
+            ) || [{ courseName: "", completedChapter: [] }];
+            axios({
+              method: "post",
+              url: `${baseUrl}${enrolUrl}/progress`,
+              headers: {
+                "x-access-token": `${data.accessToken}`
+              },
+              data: progress
+            }).then((response) => {
+              // console.log(response);
             });
-          window.location.replace(`localhost:3000`);
-        } else {
-          notify(data);
-        }
-      });
+            axios({
+              method: "post",
+              url: `${baseUrl}/api/progress/all`,
+              headers: {
+                "x-access-token": `${data.accessToken}`
+              }
+            })
+              .then((response) => {
+                window.localStorage.setItem(
+                  "progress",
+                  JSON.stringify(response.data)
+                );
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+            if (redirectTo) {
+              router.push(redirectTo);
+            } else {
+              router.push("/");
+            }
+          } else {
+            notify(data);
+          }
+        });
+    }
   };
   return (
     <div className="w-full h-screen bg-white flex">
@@ -116,7 +139,15 @@ export default function Login() {
                     className="inputStyle"
                     id="username"
                     type="text"
+                    onChange={(e) => emailValidator(e)}
                   />
+                  {validEmail ? (
+                    ""
+                  ) : (
+                    <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                      Invalid email field !
+                    </span>
+                  )}
                 </div>
                 <div className="mb-4 flex flex-col">
                   <label
@@ -129,12 +160,13 @@ export default function Login() {
                       placeholder="Enter password"
                       className="inputStyle w-full"
                       id="password"
-                      type="password"
+                      type={`${validPassword ? "text" : "password"}`}
                     />
                     <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                       <img
                         src="/images/eye.svg"
                         className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                        onClick={(e) => eyeClick(e)}
                       ></img>
                     </div>
                   </div>
@@ -146,11 +178,6 @@ export default function Login() {
                 >
                   Login
                 </button>
-                {/* <a
-                  href="/signup"
-                >
-                  Don't have account?
-                </a> */}
               </form>
               <ToastContainer
                 position="top-right"

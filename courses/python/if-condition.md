@@ -2,7 +2,7 @@
 title: "Introduction To Javascript"
 subheading: "If Condition"
 next: ""
-prev: "logical-operators"
+prev: "datatypes"
 testCase: [
 			{
 				id: 1,
