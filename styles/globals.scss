@@ -6,44 +6,49 @@
 @import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;600;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
 body {
-	font-family: "Open Sans", sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .bg-pink-710 {
-	background-color: #f13e5d;
+  background-color: #f13e5d;
 }
 .hover-text-pink-710:hover {
-	color: #f13e5d;
+  color: #f13e5d;
 }
 .border-pink-710 {
-	border-color: #f13e5d;
+  border-color: #f13e5d;
 }
 
 .submitButtons {
-	@apply bg-pink-710 font-semibold hover:bg-white hover-text-pink-710 border border-pink-710 py-2 px-2 rounded duration-700 text-white focus:outline-none;
+  @apply bg-pink-710 font-semibold hover:bg-white hover-text-pink-710 border border-pink-710 py-2 px-2 rounded duration-700 text-white focus:outline-none;
 }
 
 .inputStyle {
-	@apply bg-gray-100 px-3 py-3 placeholder-gray-300 focus:outline-none text-gray-800 rounded text-sm;
+  @apply bg-gray-100 px-3 py-3 placeholder-gray-300 focus:outline-none text-gray-800 rounded text-sm;
 }
 
 .GrotesqueFamily {
-	font-family: "Darker Grotesque", sans-serif !important;
+  font-family: "Darker Grotesque", sans-serif !important;
 }
 .opensansFamily {
-	font-family: "Open Sans", sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
 }
 
-@import './partials/fonts';
-@import './partials/common';
+@import "./partials/fonts";
+@import "./partials/common";
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1em;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
 }
 
-h2, h3 {
-	line-height: 1;
+h2,
+h3 {
+  line-height: 1;
 }
 
 .codeClass {
@@ -94,68 +99,68 @@ h2, h3 {
 }
 
 .h-fit {
-	height: fit-content;
+  height: fit-content;
 }
 
 .multi-line-truncate {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
-	/* background-color: yellow; */
-	width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  /* background-color: yellow; */
+  width: 100%;
 }
 
 /* heatmap styling */
 .react-calendar-heatmap {
-	width: 100%;
+  width: 100%;
 }
 @media only screen and (max-width: 1024px) {
-	.react-calendar-heatmap {
-		width: 50rem !important;
-	}
+  .react-calendar-heatmap {
+    width: 50rem !important;
+  }
 }
 .color-empty {
-	fill: #e7e7e7;
+  fill: #e7e7e7;
 }
 .react-calendar-heatmap .color-scale-1 {
-	fill: #effd5f;
+  fill: #effd5f;
 }
 .react-calendar-heatmap .color-scale-2 {
-	fill: #fee227;
+  fill: #fee227;
 }
 .react-calendar-heatmap .color-scale-3 {
-	fill: #e4cd05;
+  fill: #e4cd05;
 }
 .react-calendar-heatmap .color-scale-4 {
-	fill: #fda50f;
+  fill: #fda50f;
 }
 .react-calendar-heatmap .color-scale-5 {
-	fill: #c29200;
+  fill: #c29200;
 }
 .react-calendar-heatmap-month-label {
-	font-weight: 600;
-	fill: rgba(55, 65, 81, 1);
+  font-weight: 600;
+  fill: rgba(55, 65, 81, 1);
 }
 
 ::-webkit-scrollbar {
-	width: 7px;
-	height: 7px;
+  width: 7px;
+  height: 7px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #f1f1f1;
-	border-radius: 10px;
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888;
-	border-radius: 10px;
+  background: #888;
+  border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #555;
+  background: #555;
 }
