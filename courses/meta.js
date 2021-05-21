@@ -72,6 +72,16 @@ let courses = [
         chapterUrl: "hello-world",
         chapterName: "Hello World",
       },
+      {
+        chapterId: 3,
+        chapterUrl: "datatypes",
+        chapterName: "Datatypes",
+      },
+      {
+        chapterId: 4,
+        chapterUrl: "if-condition",
+        chapterName: "If-Condition",
+      },
     ],
   },
 ];

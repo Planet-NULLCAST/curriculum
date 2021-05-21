@@ -1,8 +1,8 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Data types"
-next: "logical-operators"
-prev: "variables"
+next: "if-condition"
+prev: "hello-world"
 testCase: [
 			{
 				id: 1,

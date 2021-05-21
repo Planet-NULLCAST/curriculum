@@ -7,17 +7,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Runbutton({ editorVal, courseName, chapterName }) {
-  const globalState = useContext(UserContext);
-  const testCase = globalState.test;
+  const userState = useContext(UserContext);
+  const testCase = userState.test;
 
   let clicked = false;
   let flag = false;
 
   const notify = (err) => {
     console.log(err);
-    toast.error(err, {
+    toast.dark(err, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -28,7 +28,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
 
   const clickHandle = () => {
     clicked = true;
-    globalState.setRun(clicked);
+    userState.setRun(clicked);
 
     let i = 0;
 
@@ -80,9 +80,9 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
           }
         }).then((response) => {
           if (response.data.entryAdded) {
-            notify("Chapter Is Completed!");
+            notify("👍 Chapter Is Completed!");
           } else {
-            notify(response.data);
+            notify(`👍 ${response.data}`);
           }
         });
       }
@@ -90,7 +90,15 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       let progress = JSON.parse(window.localStorage.getItem("progress")) || [
         { courseName: "", completedChapter: [] }
       ];
-      // console.log(progress);
+      const Course = progress.find((post, index) => {
+        if (post.courseName === courseName) {
+          return true;
+        }
+      });
+      if (Course) {
+        // console.log(Course);
+        const index = progress.indexOf(Course);
+      }
       let chapterList = new Set(progress[index].completedChapter);
       chapterList.add(chapterName);
       chapterList = [...chapterList];
@@ -99,15 +107,16 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         completedChapter: chapterList
       };
       progress[index] = progressItem;
+      userState.setProgress(progress);
       window.localStorage.setItem("progress", JSON.stringify(progress));
     }
-    globalState.setTest(testCase);
+    userState.setTest(testCase);
   };
   return (
     <div className="absolute bottom-14">
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

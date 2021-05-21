@@ -1,10 +1,35 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../constants/axios";
+import "react-toastify/dist/ReactToastify.css";
+import Loginstyles from "../styles/Login.module.css";
+import SideLogin from "../component/login/side/SideLogin";
 const axios = require("axios");
 
 export default function Login() {
+  const router = useRouter();
+  // console.log("redirect", router.query.redirect);
+  const redirectTo = router.query.redirect;
+
+  const [validEmail, setEmailValid] = useState(true);
+  const [validPassword, setValidPassword] = useState(false);
+
+  const eyeClick = (e) => {
+    setValidPassword((prevState) => {
+      return !prevState;
+    });
+  };
+  const emailValidator = (e) => {
+    let emailAdress = e.target.value;
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress.match(regexEmail)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  };
+
   const notify = (err) =>
     toast.error(err.message, {
       position: "top-right",
@@ -17,113 +42,157 @@ export default function Login() {
     });
   const handleClick = (e) => {
     e.preventDefault();
-    const pass = document.querySelector("#password").value;
-    const user = document.querySelector("#username").value;
-    const bod = {
-      username: user,
-      password: pass
-    };
-    const err = axios({
-      method: "POST",
-      url: `${baseUrl}${authUrl}/signin`,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: bod
-    })
-      .then((response) => {
-        return response.data;
+    if (validEmail) {
+      const pass = document.querySelector("#password").value;
+      const user = document.querySelector("#username").value;
+      const bod = {
+        username: user,
+        password: pass
+      };
+      const err = axios({
+        method: "POST",
+        url: `${baseUrl}${authUrl}/signin`,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: bod
       })
-      .then((data) => {
-        console.log(data);
-        if (data.accessToken) {
-          document.cookie = `user=${JSON.stringify(data)}`;
+        .then((response) => {
+          return response.data;
+        })
+        .then((data) => {
+          // console.log(data);
+          if (data.accessToken) {
+            document.cookie = `user=${JSON.stringify(data)}`;
 
-          let progress = JSON.parse(
-            window.localStorage.getItem("progress")
-          ) || [{ courseName: "", completedChapter: [] }];
-          axios({
-            method: "post",
-            url: `${baseUrl}${enrolUrl}/progress`,
-            headers: {
-              "x-access-token": `${data.accessToken}`
-            },
-            data: progress
-          }).then((response) => {
-            console.log(response);
-          });
-          axios({
-            method: "post",
-            url: `http://localhost:8080/api/progress/all`,
-            headers: {
-              "x-access-token": `${data.accessToken}`
-            }
-          })
-            .then((response) => {
-              window.localStorage.setItem(
-                "progress",
-                JSON.stringify(response.data)
-              );
-            })
-            .catch((err) => {
-              console.log(err.message);
+            let progress = JSON.parse(
+              window.localStorage.getItem("progress")
+            ) || [{ courseName: "", completedChapter: [] }];
+            axios({
+              method: "post",
+              url: `${baseUrl}${enrolUrl}/progress`,
+              headers: {
+                "x-access-token": `${data.accessToken}`
+              },
+              data: progress
+            }).then((response) => {
+              // console.log(response);
             });
-          window.location.replace(`localhost:3000`);
-        } else {
-          notify(data);
-        }
-      });
+            axios({
+              method: "post",
+              url: `${baseUrl}/api/progress/all`,
+              headers: {
+                "x-access-token": `${data.accessToken}`
+              }
+            })
+              .then((response) => {
+                window.localStorage.setItem(
+                  "progress",
+                  JSON.stringify(response.data)
+                );
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+            if (redirectTo) {
+              router.push(redirectTo);
+            } else {
+              router.push("/");
+            }
+          } else {
+            notify(data);
+          }
+        });
+    }
   };
   return (
-    <div className="max-w-lg bg-blue-800 shadow-2xl rounded-lg mx-auto text-center py-12 mt-12">
-      <h1 className="text-gray-200 text-center font-extrabold -mt-3 text-3xl">
-        Login Box
-      </h1>
-      <div className="container py-5 max-w-md mx-auto">
-        <form method="" action="">
-          <div className="mb-4">
-            <input
-              placeholder="Username"
-              className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-            />
+    <div className="w-full h-screen bg-white flex">
+      <div className="fixed top-0 right-0 flex items-center p-3 pr-6 sm:p-6 sm:pr-12">
+        <p className={`font-semibold ${Loginstyles.text_gray_910}`}>
+          Don’t have an Account ?
+        </p>
+        <a
+          href="/signup"
+          className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700"
+        >
+          Sign Up
+        </a>
+      </div>
+      <SideLogin />
+      <div className="flex justify-end w-full mt-20">
+        <div className="w-full lg:w-1/2 bg-white h-full flex flex-col items-center justify-center p-6 md:p-20 md:pb-5 md:pt-0 pt-0">
+          <div className="border border-gray-100 shadow-lg rounded-xl w-full h-fit p-5 sm:p-10 max-w-xl">
+            <h1 className="text-gray-500 font-extrabold text-xl">Login</h1>
+            <p className={`${Loginstyles.text_gray_910} mt-2 text-sm`}>
+              Welcome Back!
+            </p>
+            <div className="container py-2">
+              <form method="" action="">
+                <div className="mb-1 flex flex-col">
+                  <label
+                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                  >
+                    Email
+                  </label>
+                  <input
+                    placeholder="Enter email"
+                    className="inputStyle"
+                    id="username"
+                    type="text"
+                    onChange={(e) => emailValidator(e)}
+                  />
+                  {validEmail ? (
+                    ""
+                  ) : (
+                    <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                      Invalid email field !
+                    </span>
+                  )}
+                </div>
+                <div className="mb-4 flex flex-col">
+                  <label
+                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                  >
+                    Password
+                  </label>
+                  <div className="relative w-full">
+                    <input
+                      placeholder="Enter password"
+                      className="inputStyle w-full"
+                      id="password"
+                      type={`${validPassword ? "text" : "password"}`}
+                    />
+                    <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
+                      <img
+                        src="/images/eye.svg"
+                        className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                        onClick={(e) => eyeClick(e)}
+                      ></img>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="submitButtons w-full"
+                  type="submit"
+                  onClick={(e) => handleClick(e)}
+                >
+                  Login
+                </button>
+              </form>
+              <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+            </div>
           </div>
-          <div className="mb-6">
-            <input
-              placeholder="Password"
-              className="shadow appearance-none  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-              onClick={(e) => handleClick(e)}
-            >
-              Sign In
-            </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-gray-400 "
-              href="/signup"
-            >
-              Don't have account?
-            </a>
-          </div>
-        </form>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,26 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserState from "../../../context/user/userContext";
 
 export default function SideBar({ onToggle, toggle, course }) {
   const titles = course.chapters;
   // console.log({ titles });
   // console.log(course.courseUrl);
 
+  const userState = useContext(UserState);
+  const { progress } = userState;
+  // console.log({ progress });
+
   const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem("progress"));
-    const completedChapters = progress?.find(
-      (item) => item.courseName === course.courseUrl
-    ).completedChapter;
-    setChapters(completedChapters);
-  }, []);
+    if (progress !== "") {
+      const completedChapters = progress?.find(
+        (item) => item.courseName === course.courseUrl
+      )?.completedChapter;
+      setChapters(completedChapters);
+    }
+  }, [progress]);
 
   // console.log({ chapters });
 
@@ -26,7 +32,7 @@ export default function SideBar({ onToggle, toggle, course }) {
     <aside
       className={`transform top-0 ${
         toggle ? "left-0" : "-left-64"
-      } w-64 bg-white border-r fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-20 translate-x-0`}
+      } w-64 bg-white border-r fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-30 translate-x-0`}
     >
       <img
         className="h-5 w-5 absolute top-5 right-6 cursor-pointer close-icon"

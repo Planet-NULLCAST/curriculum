@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
 import { courses } from "../../../courses/meta";
@@ -7,11 +6,12 @@ import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
 import Navbar from "../../../component/layout/NavBar/NavBar";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
+import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
-const axios = require("axios");
+import { useRouter } from "next/router";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
   const paths = await getAllChapterIds();
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -30,23 +30,25 @@ export async function getStaticProps({ params }) {
     props: {
       chapterData,
       courseName,
-      chapterName,
-    },
+      chapterName
+    }
   };
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
-  // console.log(courses);
+  const userState = useContext(UserState);
+
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
     setToggle(!toggle);
   }
-  // console.log(courseName, "from chapter component");
-  const { testCase } = chapterData;
-  const userState = useContext(UserState);
-  const [progress, setProgress] = useState(0);
+  const router = useRouter();
+  const { testCase, contentOnly } = chapterData;
 
-  const findCourseIndex = (courses, chapterName, courseName) => {
-    // console.log(courses, "here");
+  const [progressBar, setProgressBar] = useState(0);
+
+  let currentCourse = getCourse(courseName);
+
+  const findCourseIndex = (courses, chapterName, courseName, chaporcourse) => {
     if (courses.length > 0) {
       const courseId = courses.indexOf(
         courses.find((post, index) => {
@@ -55,7 +57,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           }
         })
       );
-      // console.log(courseId, " - courseId");
+      if (chaporcourse) {
+        return courseId;
+      }
       const chapterId = courses[courseId].chapters.indexOf(
         courses[courseId].chapters.find((post, index) => {
           if (post.chapterUrl === chapterName) {
@@ -74,32 +78,57 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   useEffect(() => {
     userState.setTest(testCase);
     userState.setRun(false);
-    // console.log(progress);
   }, [testCase]);
+
   useEffect(() => {
-    let progress = JSON.parse(window.localStorage.getItem("progress"));
-    if (progress && courses.length > 0) {
-      const Course = progress.find((post, index) => {
-        if (post.courseName === chapterData.courseName) {
+    let progressTem = JSON.parse(window.localStorage.getItem("progress"));
+    if (progressTem) {
+      let progressData = progressTem.find((post, index) => {
+        if (post.courseName === courseName) {
           return true;
         }
       });
-      const indexC = progress.indexOf(Course);
-      setProgress(
-        (progress[indexC].completedChapter.length /
-          courses[indexC].chapters.length) *
+      if (progressData) {
+        userState.setProgress(progressTem);
+      } else {
+        progressTem.push({ courseName: courseName, completedChapter: [] });
+        userState.setProgress(progressTem);
+      }
+    }
+  }, [userState.testCase]);
+
+  useEffect(() => {
+    if (userState.progress && currentCourse) {
+      const Course = userState.progress.find((post, index) => {
+        if (post.courseName === courseName) {
+          return true;
+        }
+      });
+
+      const indexP = userState.progress.indexOf(Course);
+      setProgressBar(
+        (userState.progress[indexP].completedChapter.length /
+          currentCourse.chapters.length) *
           100
       );
     }
-  }, [userState]);
+  }, [userState.progress]);
 
-  let currentCourse = getCourse(courseName);
+  const routerClick = (courseName, chapterEntry, e) => {
+    e.preventDefault();
+    if (chapterEntry !== undefined) {
+      let chapterName = chapterEntry.chapterUrl;
+      router.push(`/curriculum/${courseName}/${chapterName}`);
+    }
+    return;
+  };
 
   return (
     <div>
       <Head>
         <title>{chapterData.subheading} | Curriculum</title>
       </Head>
+      {/* <SiteHeader /> */}
       <Navbar
         onToggle={handleToggle}
         title={chapterData.title}
@@ -108,10 +137,14 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       />
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
-        className="grid grid-cols-3"
+        className={`bg-gray-50 flex flex-row justify-center`}
         style={{ height: "calc(100vh - 104px)" }}
       >
-        <div className="bg-gray-50 px-4 py-4 overflow-auto text-gray-700">
+        <div
+          className={`px-4 py-4 overflow-auto text-gray-700 ${
+            contentOnly ? "w-1/2" : "w-1/3"
+          }`}
+        >
           <div className="py-3">
             <a
               href="#"
@@ -131,62 +164,82 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             dangerouslySetInnerHTML={{ __html: chapterData.contentHtml }}
           />
         </div>
-        <div>
-          <Editor initialValue={chapterData} />
-        </div>
-        <div>
-          <Output />
-        </div>
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Editor courseName={courseName} chapterName={chapterName} />
+          </div>
+        )}
+        {!contentOnly && (
+          <div className="w-1/3">
+            <Output />
+          </div>
+        )}
       </div>
-      <div className="flex flex-row space-x-52 bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
+      <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
         <div
           className="rounded-md bg-gray-600"
-          style={{ width: "382px", marginLeft: "10px" }}
+          style={{ width: "24rem", margin: "0 1rem" }}
         >
           <div
             className="mt-0 bg-green-600 py-1 rounded-full"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${progressBar}%` }}
           ></div>
         </div>
-        <div className="pr-6">
-          <Link href={`/curriculum/${courseName}/${chapterData.prev}`}>
-            <a className="text-white">
-              {chapterData.prev ? (
-                <img
-                  src="/images/svgs/leftarrawo.svg"
-                  className="h-12 inline-block"
-                />
-              ) : (
-                <img
-                  src="/images/svgs/leftdull.svg"
-                  className="h-12 inline-block"
-                />
-              )}
-            </a>
-          </Link>
+        <div className="flex flex-row w-1/3 justify-center items-center">
+          <a
+            className={`text-white cursor-pointer`}
+            onClick={(e) =>
+              routerClick(
+                courseName,
+                currentCourse.chapters[
+                  findCourseIndex(courses, chapterName, courseName, false) - 1
+                ],
+                e
+              )
+            }
+          >
+            <img
+              src="/images/svgs/leftarrawo.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) > 0
+                  ? ""
+                  : "invisible"
+              }`}
+            />
+          </a>
           {courses.length > 0 ? (
-            <p className="text-white inline-block">
-              {findCourseIndex(courses, chapterName, courseName) + 1}/
-              {courses[0].chapters.length}
+            <p className="text-white px-2">
+              {findCourseIndex(courses, chapterName, courseName, false) + 1}/
+              {
+                courses[findCourseIndex(courses, chapterName, courseName, true)]
+                  .chapters.length
+              }
             </p>
           ) : (
             ""
           )}
-          <Link href={`/curriculum/${courseName}/${chapterData.next}`}>
-            <a className="text-white">
-              {chapterData.next ? (
-                <img
-                  src="/images/svgs/rightarrow.svg"
-                  className="h-12 inline-block"
-                />
-              ) : (
-                <img
-                  src="/images/svgs/rightdull.svg"
-                  className="h-12 inline-block"
-                />
-              )}
-            </a>
-          </Link>
+          <a
+            className={`text-white cursor-pointer`}
+            onClick={(e) =>
+              routerClick(
+                courseName,
+                currentCourse.chapters[
+                  findCourseIndex(courses, chapterName, courseName, false) + 1
+                ],
+                e
+              )
+            }
+          >
+            <img
+              src="/images/svgs/rightarrow.svg"
+              className={`h-12 inline-block ${
+                findCourseIndex(courses, chapterName, courseName, false) + 1 <
+                currentCourse.chapters.length
+                  ? ""
+                  : "invisible"
+              }`}
+            />
+          </a>
         </div>
       </div>
     </div>

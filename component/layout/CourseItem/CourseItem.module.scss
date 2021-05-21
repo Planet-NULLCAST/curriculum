@@ -1,0 +1,66 @@
+.CourseItem {
+
+    @apply text-white flex flex-col items-center w-full p-5 lg:p-10 text-center text-18 mb-5 md:mb-0;
+    border-radius: 20px;
+        --bg1: #f00;
+        --bg2: #fb703e;
+    background: var(--bg1);
+    transition: all ease .2s;
+
+    &:nth-child(2) {
+        --bg1: #004977;
+        --bg2: #005588;
+    }
+
+    &:nth-child(3) {
+        --bg1: #00c750;
+        --bg2: #00d470;
+    }
+
+    h3 {
+        @apply text-40 font-darker font-extrabold mb-8;
+        background-image: linear-gradient(#F7DA5B, #F7DA5B);
+        background-position: center 100%;
+        background-repeat: no-repeat;
+        background-size: 0px 1px;
+        padding-bottom: 10px;
+        transition: all ease .2s;
+    }
+
+    p {
+        @apply mb-5 lg:mb-16;
+    }
+
+    &:hover {
+
+        box-shadow: 0 3px 6px rgba(0,0,0,.4);
+
+        h3 {
+
+            background-size: 100px 1px;
+
+        }
+
+    }
+
+}
+
+.icon {
+    height: 150px;
+    width: 150px;
+    background: var(--bg2);
+    @apply rounded-full flex items-center justify-center mb-8;
+
+    img, svg {
+        max-width: 76px;
+        max-height: 85px;
+        position: relative;
+    }
+
+}
+
+.tempLabel{
+    @apply py-4 inline-block text-xl px-10 w-full mt-auto;
+    background: rgba(200,255,255,.07);
+    opacity: 0.8;
+}

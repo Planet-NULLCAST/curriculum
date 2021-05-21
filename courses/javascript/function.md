@@ -3,42 +3,43 @@ title: "Introduction to Javascript function"
 subheading: "Function"
 prev: "prototypes"
 next: ""
+contentOnly: false
 testCase:
   [
     {
       id: 1,
       case: ["function addTwoNumbers(num1, num2) {"],
       hint: "Please re check the function syntax and code formatting.",
-      isCorrect: false,
+      isCorrect: false
     },
     {
       id: 2,
       case: ["const sum = num1 + num2;", const sum = num1 + num2"],
       hint: "Please re check the code and formatting.",
-      isCorrect: false,
+      isCorrect: false
     },
     {
       id: 3,
       case: ["return sum;", "return sum"],
       hint: "Please re check the code and formatting.",
-      isCorrect: false,
+      isCorrect: false
     },
     {
       id: 4,
       case: ["}"],
       hint: 'Please close the function by "}" and check code formatting.',
-      isCorrect: false,
+      isCorrect: false
     },
     {
       id: 5,
       case:
         [
           "console.log(addTwoNumbers(5, 6));",
-          "console.log(addTwoNumbers(5,6))",
+          "console.log(addTwoNumbers(5,6))"
         ],
       hint: "Please check the syntax and code formatting",
-      isCorrect: false,
-    },
+      isCorrect: false
+    }
   ]
 ---
 
