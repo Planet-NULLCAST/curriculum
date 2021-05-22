@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import EditorJs from "@editorjs/editorjs";
 
-import editorjsTools from "./tools";
+import editorjsTools from "./tools"
 
 export default function RTE_Component(props) {
   const { setEditorRef } = props;
@@ -13,7 +13,7 @@ export default function RTE_Component(props) {
     console.log("Now I know that Editor's content changed!");
     const data = await editor.save();
 
-    console.log(data);
+    console.log(JSON.stringify(data));
 
     // TODO: Make api call to save data
   };

@@ -3,6 +3,7 @@ import "../styles/globals.scss";
 import "../styles/slick.scss";
 import "../styles/slick-theme.scss";
 import "highlight.js/styles/default.css";
+import "../component/Editorjs/tools/embedTool/index.css"
 
 function MyApp({ Component, pageProps }) {
   return (
