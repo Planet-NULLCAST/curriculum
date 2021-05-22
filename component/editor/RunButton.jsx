@@ -74,7 +74,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         axios({
           method: "post",
           mode: "no-cors",
-          url: `http://localhost:8080/api/enrol/${courseName}/${chapterName}`,
+          url: `api.nullcast.io/api/enrol/${courseName}/${chapterName}`,
           headers: {
             "x-access-token": `${cook}`
           }

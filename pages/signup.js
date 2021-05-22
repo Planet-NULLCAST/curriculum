@@ -56,7 +56,7 @@ export default function Login() {
         username: user,
         password: pass
       };
-      fetch("http://localhost:8080/api/auth/signup", {
+      fetch("api.nullcast.io/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
