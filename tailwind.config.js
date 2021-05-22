@@ -1,5 +1,10 @@
+// some of the classes used is being purged after build is done.
+// solution: https://github.com/tailwindlabs/tailwindcss/issues/4009
+const fg = require('fast-glob');
+const purgeFiles = fg.sync(['./src/pages/**/*.jsx', './src/components/**/*.jsx'], { dot: false });
+
 module.exports = {
-	purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+	purge: purgeFiles,
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		extend: {

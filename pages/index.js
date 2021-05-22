@@ -8,7 +8,7 @@ import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 
-import "../styles/Home.module.scss";
+// import "../styles/Home.module.scss";
 
 export default function Home() {
   return (
