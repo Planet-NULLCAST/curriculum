@@ -50,8 +50,13 @@ let courses = [
         chapterUrl: "function",
         chapterName: "Function",
       },
-	  {
+      {
         chapterId: 10,
+        chapterUrl: "type-conversion",
+        chapterName: "Type Conversion",
+      },
+	    {
+        chapterId: 11,
         chapterUrl: "arrow-functions",
         chapterName: "Arrow Functions",
       },
