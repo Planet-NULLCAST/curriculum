@@ -3,6 +3,7 @@ import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseUrl, clientUrl } from "../config/config";
 
 export default function Login() {
   const [validEmail, setEmailValid] = useState(true);
@@ -56,7 +57,7 @@ export default function Login() {
         username: user,
         password: pass
       };
-      fetch("api.nullcast.io/api/auth/signup", {
+      fetch(`${baseUrl}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -69,7 +70,7 @@ export default function Login() {
         .then((data) => {
           if (data.message === "User was registered successfully!") {
             console.log(data);
-            window.location.replace("http://localhost:3000/login");
+            window.location.replace(clientUrl);
           }
           notify(data);
         });
@@ -141,7 +142,7 @@ export default function Login() {
                   {validEmail ? (
                     ""
                   ) : (
-                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                    <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
                       Invalid email address !
                     </span>
                   )}
