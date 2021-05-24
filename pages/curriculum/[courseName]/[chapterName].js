@@ -4,7 +4,6 @@ import { getCourse } from "../../../lib/getCourse";
 import { courses } from "../../../courses/meta";
 import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
-import Navbar from "../../../component/layout/NavBar/NavBar";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import hljs from "highlight.js";
@@ -12,6 +11,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -128,30 +128,19 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       <Head>
         <title>{chapterData.subheading} | Curriculum</title>
       </Head>
-      {/* <SiteHeader /> */}
-      <Navbar
-        onToggle={handleToggle}
-        title={chapterData.title}
-        showMenuIcon={true}
-        showTitle={true}
-      />
+      <SiteHeader />
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
         className={`bg-gray-50 flex flex-row justify-center`}
-        style={{ height: "calc(100vh - 104px)" }}
+        style={{ height: "calc(100vh - 124px)" }}
       >
         <div
           className={`px-4 py-4 overflow-auto text-gray-700 ${
             contentOnly ? "w-1/2" : "w-1/3"
           }`}
         >
-          <div className="py-3">
-            <a
-              href="#"
-              className="text-sm py-1 px-2 uppercase rounded-full border border-gray-500 tracking-wider font-medium"
-            >
-              Learn
-            </a>
+          <div className="p-1 text-sm uppercase rounded-full border border-gray-500 tracking-wider font-medium w-28 text-center">
+            JavaScript
           </div>
           <div className="font-bold my-3 uppercase">
             <h1 className="text-2xl">{chapterData.title}</h1>
@@ -176,70 +165,93 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         )}
       </div>
       <div className="flex flex-row bg-gray-900 items-center py-6 sticky bottom-0 h-12 justify-between">
-        <div
-          className="rounded-md bg-gray-600"
-          style={{ width: "24rem", margin: "0 1rem" }}
-        >
+        <div>
+          <img
+            src="/images/hamburger.svg"
+            alt="hamburger menu"
+            onClick={handleToggle}
+            className="h-6 w-6 cursor-pointer ml-4 inline-block m-2"
+          />
           <div
-            className="mt-0 bg-green-600 py-1 rounded-full"
-            style={{ width: `${progressBar}%` }}
-          ></div>
+            className="rounded-md bg-gray-600 inline-block"
+            style={{ width: "20rem", margin: "0 0.5rem" }}
+          >
+            <div
+              className="mt-0 bg-green-600 py-1 rounded-full"
+              style={{ width: `${progressBar}%` }}
+            ></div>
+          </div>
+          <div className="inline-block text-white">
+            {Math.round(progressBar)}%
+          </div>
         </div>
-        <div className="flex flex-row w-1/3 justify-center items-center">
-          <a
-            className={`text-white cursor-pointer`}
-            onClick={(e) =>
-              routerClick(
-                courseName,
-                currentCourse.chapters[
-                  findCourseIndex(courses, chapterName, courseName, false) - 1
-                ],
-                e
-              )
-            }
-          >
-            <img
-              src="/images/svgs/leftarrawo.svg"
-              className={`h-12 inline-block ${
-                findCourseIndex(courses, chapterName, courseName, false) > 0
-                  ? ""
-                  : "invisible"
-              }`}
-            />
-          </a>
-          {courses.length > 0 ? (
-            <p className="text-white px-2">
-              {findCourseIndex(courses, chapterName, courseName, false) + 1}/
-              {
-                courses[findCourseIndex(courses, chapterName, courseName, true)]
-                  .chapters.length
+
+        <div className="flex flex-row w-1/3 justify-between items-center">
+          <div className="flex flex-row justify-start items-center ml-4">
+            <a
+              className={`text-white cursor-pointer`}
+              onClick={(e) =>
+                routerClick(
+                  courseName,
+                  currentCourse.chapters[
+                    findCourseIndex(courses, chapterName, courseName, false) - 1
+                  ],
+                  e
+                )
               }
-            </p>
-          ) : (
-            ""
-          )}
-          <a
-            className={`text-white cursor-pointer`}
-            onClick={(e) =>
-              routerClick(
-                courseName,
-                currentCourse.chapters[
-                  findCourseIndex(courses, chapterName, courseName, false) + 1
-                ],
-                e
-              )
-            }
-          >
-            <img
-              src="/images/svgs/rightarrow.svg"
-              className={`h-12 inline-block ${
-                findCourseIndex(courses, chapterName, courseName, false) + 1 <
-                currentCourse.chapters.length
-                  ? ""
-                  : "invisible"
-              }`}
-            />
-          </a>
+            >
+              <img
+                src="/images/svgs/leftarrawo.svg"
+                className={`h-12 inline-block ${
+                  findCourseIndex(courses, chapterName, courseName, false) > 0
+                    ? ""
+                    : "invisible"
+                }`}
+              />
+            </a>
+            {courses.length > 0 ? (
+              <p className="text-white px-2">
+                {findCourseIndex(courses, chapterName, courseName, false) + 1}/
+                {
+                  courses[
+                    findCourseIndex(courses, chapterName, courseName, true)
+                  ].chapters.length
+                }
+              </p>
+            ) : (
+              ""
+            )}
+            <a
+              className={`text-white cursor-pointer`}
+              onClick={(e) =>
+                routerClick(
+                  courseName,
+                  currentCourse.chapters[
+                    findCourseIndex(courses, chapterName, courseName, false) + 1
+                  ],
+                  e
+                )
+              }
+            >
+              <img
+                src="/images/svgs/rightarrow.svg"
+                className={`h-12 inline-block ${
+                  findCourseIndex(courses, chapterName, courseName, false) + 1 <
+                  currentCourse.chapters.length
+                    ? ""
+                    : "invisible"
+                }`}
+              />
+            </a>
+          </div>
+
+          <div className="w-1/3 mx-4">
+            <Link href="https://discord.com/invite/5byDDp2qbK">
+              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm">
+                Trouble? Join Discord
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
