@@ -44,6 +44,58 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   const router = useRouter();
   const { testCase, contentOnly } = chapterData;
 
+  const clickHandle = (courseName, chapterName) => {
+    if (contentOnly) {
+      let cook = document.cookie;
+      cook = cook.split("=");
+      cook[0] !== ""
+        ? (cook = JSON.parse(cook[1]).accessToken)
+        : (cook = false);
+      if (cook) {
+        axios({
+          method: "post",
+          mode: "no-cors",
+          url: `http://localhost:8080/api/enrol/${courseName}/${chapterName}`,
+          headers: {
+            "x-access-token": `${cook}`
+          }
+        }).then((response) => {
+          if (response.data.entryAdded) {
+            console.log("👍 Chapter Is Completed!");
+          } else {
+            console.log(`👍 ${response.data}`);
+          }
+        });
+      }
+      let index = 0;
+      let progress = JSON.parse(window.localStorage.getItem("progress")) || [
+        { courseName: "", completedChapter: [] }
+      ];
+      const Course = progress.find((post, index) => {
+        if (post.courseName === courseName) {
+          return true;
+        }
+      });
+      if (Course) {
+        // console.log(Course);
+        const index = progress.indexOf(Course);
+      }
+      let chapterList = new Set(progress[index].completedChapter);
+      chapterList.add(chapterName);
+      chapterList = [...chapterList];
+      let progressItem = {
+        courseName: courseName,
+        completedChapter: chapterList
+      };
+      progress[index] = progressItem;
+      userState.setProgress(progress);
+      window.localStorage.setItem("progress", JSON.stringify(progress));
+      userState.setRun(true);
+    }
+    // userState.setTest(testCase);
+    // let clicked = true;
+  };
+
   const [progressBar, setProgressBar] = useState(0);
 
   let currentCourse = getCourse(courseName);
@@ -223,15 +275,16 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             )}
             <a
               className={`text-white cursor-pointer`}
-              onClick={(e) =>
+              onClick={(e) => {
+                clickHandle(courseName, chapterName);
                 routerClick(
                   courseName,
                   currentCourse.chapters[
                     findCourseIndex(courses, chapterName, courseName, false) + 1
                   ],
                   e
-                )
-              }
+                );
+              }}
             >
               <img
                 src="/images/svgs/rightarrow.svg"

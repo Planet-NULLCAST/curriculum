@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "rm -rf .next/ && cross-env NODE_ENV=production next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "NODE_ENV=test next",
+    "test:build": "NODE_ENV=test next build",
+    "test:start": "NODE_ENV=test next start",
+    "test:dev": "NODE_ENV=test next dev"
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.18.0",

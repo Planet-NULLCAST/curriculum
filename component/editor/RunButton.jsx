@@ -5,6 +5,7 @@ import { courses } from "../../courses/meta";
 const axios = require("axios");
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseUrl } from "../../config/config";
 
 export default function Runbutton({ editorVal, courseName, chapterName }) {
   const userState = useContext(UserContext);
@@ -74,7 +75,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         axios({
           method: "post",
           mode: "no-cors",
-          url: `api.nullcast.io/api/enrol/${courseName}/${chapterName}`,
+          url: `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
           headers: {
             "x-access-token": `${cook}`
           }

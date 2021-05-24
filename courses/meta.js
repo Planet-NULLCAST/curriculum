@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "../config/config";
 let courses = [
   {
     courseId: 1,
@@ -94,7 +95,7 @@ let courses = [
 async function addCourses() {
   // console.log("in add courses");
   axios
-    .post("api.nullcast.io", courses)
+    .post(baseUrl, courses)
     .then((res) => console.log("sent courses", res.data))
     .catch((err) => console.log(err));
 }

@@ -11,9 +11,9 @@ export default function ChapterList({ chapters, courseUrl }) {
 
   const getSlicedChapters = (start, end) => {
     const slicedChapters = chapters.slice(start, end);
-    console.log({ slicedChapters });
+    // console.log({ slicedChapters });
     tempChapterList = [...chaptersToShow, ...slicedChapters];
-    console.log({ tempChapterList });
+    // console.log({ tempChapterList });
     setChaptersToShow(tempChapterList);
   };
 
