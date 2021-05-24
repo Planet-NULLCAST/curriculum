@@ -6,8 +6,6 @@ import "highlight.js/styles/default.css";
 import "../component/Editorjs/tools/embedTool/index.css"
 import "../styles/Home.module.scss";
 
-import 'tailwindcss/tailwind.css'
-
 function MyApp({ Component, pageProps }) {
   return (
     <UserState>
