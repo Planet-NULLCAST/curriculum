@@ -11,7 +11,7 @@ import "../styles/Home.module.scss";
 import { baseUrl, clientUrl } from "../config/config";
 
 export default function Home() {
-  // console.log(process.env.NODE_ENV, baseUrl, clientUrl);
+  // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
       <Head>
