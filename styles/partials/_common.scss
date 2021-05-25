@@ -2,7 +2,17 @@
 a, button {
     -webkit-tap-highlight-color: transparent;
     transition: all ease .3s;
+
+    &:focus {
+        @apply outline-none;
+    }
 }
+input {
+    &:focus {
+        outline: none;
+    }
+}
+
 
 // Button component with style variations
 
@@ -93,4 +103,31 @@ a, button {
         @apply font-medium lg:font-bold text-18 md:w-7/12 lg:w-1/2;
     }
 
+}
+
+
+.authorDetails {
+    @apply flex items-center;
+
+    &__icon {
+        @apply mr-5 rounded-full overflow-hidden;
+    }
+
+    &__title {
+        @apply text-xl lg:text-25 font-extrabold mb-1;
+    }
+
+    &__position {
+        @apply text-xl;
+        color: #717171;
+    }
+
+    &__points {
+        @apply font-bold text-18 ml-3 flex items-center;
+        color: #F92304;
+    }
+
+    svg {
+        @apply mr-2;
+    }
 }

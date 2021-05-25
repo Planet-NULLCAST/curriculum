@@ -55,32 +55,6 @@
     }
 }
 
-.author {
-    @apply flex items-center;
-
-    .icon {
-        @apply mr-5 rounded-full overflow-hidden;
-    }
-
-    h4 {
-        @apply text-xl lg:text-25 font-extrabold mb-1;
-    }
-
-    h5 {
-        @apply text-xl;
-        color: #717171;
-    }
-
-    .points {
-        @apply font-bold text-18 ml-3 flex items-center;
-        color: #F92304;
-    }
-
-    svg {
-        @apply mr-2;
-    }
-}
-
 @screen md {
 
     .blogList {

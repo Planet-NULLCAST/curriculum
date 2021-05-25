@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomeSpotlight() {
   const router = useRouter();
@@ -52,6 +53,42 @@ export default function HomeSpotlight() {
           </ul>
         </nav>
         <div className={styles.wrapBtn}>
+
+          <div className={styles.userInfo}>
+            <div className={styles.profile__icon}>
+              <Image
+                src='/images/dummy.svg'
+                alt="Profile"
+                width={32}
+                height={32}
+              />
+            </div>
+            <div className={styles.profile__dropdown}>
+              <div className={styles.profile__details}>
+                <h4>DataTurks</h4>
+                <p>
+                  <img src='/images/smallduck.svg' alt=""/>
+                   22000
+                </p>
+              </div>
+              <ul>
+                <li>
+                  <Link href="/">
+                  <a>
+                    Profile
+                    <svg className="ml-3" width="5" height="7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.31 3.308L1.073.079A.271.271 0 00.69.463L3.735 3.5.689 6.537a.271.271 0 10.384.384L4.31 3.692a.271.271 0 000-.384z" fill="#878787"/></svg>
+                  </a>
+                </Link>
+                </li>
+                <li>
+                  <Link href="/">
+                  <a>Logout</a>
+                </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           {cookies ? (
             <div className="flex flex-row justify-center items-center">
               <Profile />

@@ -1,0 +1,20 @@
+.section {
+    @apply bg-gray-01 text-white py-10 lg:py-20;
+
+    h2 {
+        @apply text-64 font-black font-darker leading-none mb-6;
+    }
+
+}
+
+.form {
+
+    @apply flex;
+    input {
+        @apply flex-1 bg-transparent;
+        &::placeholder {
+            color: #626262;
+
+        }
+    }
+}
