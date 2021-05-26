@@ -29,7 +29,6 @@ export default function CourseSpotlight({ contents }) {
               alt={contents.alt}
               width={contents.imageWidth}
               height={contents.imageHeight}
-              layout="fixed"
             />
           </div>
         </div>

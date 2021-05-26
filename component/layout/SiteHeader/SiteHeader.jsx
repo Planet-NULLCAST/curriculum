@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomeSpotlight() {
   const router = useRouter();
@@ -52,6 +53,7 @@ export default function HomeSpotlight() {
           </ul>
         </nav>
         <div className={styles.wrapBtn}>
+
           {cookies ? (
             <div className="flex flex-row justify-center items-center">
               <Profile />

@@ -1,0 +1,13 @@
+.listing__tab {
+    @apply flex flex-wrap justify-between lg:mb-5;
+    a {
+        @apply bg-none;
+        &.active {
+            background: rgba(28, 53, 185, 0.13);
+            color: #1C35B9;
+        }
+    }
+ }
+ .listing__list {
+     @apply sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7;
+ }
