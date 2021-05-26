@@ -6,7 +6,7 @@
 
 .blogImage {
     max-width: 250px;
-    @apply relative mb-4 mx-10 mx-auto sm:max-w-sm md:max-w-full;
+    @apply relative mb-5 mx-10 mx-auto sm:max-w-sm md:max-w-full;
 
     &:before {
         @apply h-full absolute;
@@ -21,6 +21,10 @@
     img {
         transform-origin: bottom left;
         transition: all ease .3s;
+    }
+
+    div {
+        overflow: visible !important;
     }
     
 }
@@ -38,7 +42,7 @@
     }
 
     h3 {
-        @apply text-2xl lg:text-32 font-bold underline text-gray-01 leading-tight mb-5;
+        @apply text-2xl 2xl:text-32 font-bold underline text-gray-01 leading-tight mb-6;
 
         a {
             @apply text-gray-01;

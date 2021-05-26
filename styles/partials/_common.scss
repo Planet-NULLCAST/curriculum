@@ -18,7 +18,7 @@ input {
 
 .btn {
     --shadowcolor: #202020;
-    @apply inline-block bg-pink rounded-10 text-white px-10 lg:px-20 py-5 lg:py-7 text-lg md:text-xl xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
+    @apply inline-block bg-pink rounded-10 text-white px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
     border: 1px solid #1C1C1D;
     box-shadow: 0px 4px 0px var(--shadowcolor);
 
@@ -53,6 +53,10 @@ input {
             border border-black ;
         font-size: 14px;
         border-radius: 1px;
+
+        &:hover {
+            border-color: #FDB500;
+        }
     }
 
     &--blackborder {
@@ -87,6 +91,9 @@ input {
     
     &--small {
         max-width: 1150px;
+        @media (min-width: 1536px) {
+            max-width: 1280px;
+        }
     }
     
 }
@@ -106,28 +113,18 @@ input {
 }
 
 
-.authorDetails {
-    @apply flex items-center;
-
-    &__icon {
-        @apply mr-5 rounded-full overflow-hidden;
+.tags {
+    @apply flex flex-wrap mb-4;
+    &__item {
+        @apply inline-block px-4 py-2 rounded-full mr-5 text-sm font-bold;
+        background: #F2FAFD;
+        color: #1C8AB9;
     }
-
-    &__title {
-        @apply text-xl lg:text-25 font-extrabold mb-1;
-    }
-
-    &__position {
-        @apply text-xl;
-        color: #717171;
-    }
-
-    &__points {
-        @apply font-bold text-18 ml-3 flex items-center;
-        color: #F92304;
-    }
-
-    svg {
-        @apply mr-2;
+    &--large {
+        .tags__item {
+            @media (min-width: 1028px) {
+                @apply text-lg px-5;
+            }
+        }
     }
 }

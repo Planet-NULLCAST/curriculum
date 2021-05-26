@@ -1,11 +1,12 @@
 
-import styles from './ListingHeader.module.scss'
+import styles from './ListingHeader.module.scss';
+import Image from "next/image";
 import Fade from 'react-reveal/Fade';
 
 export default function ListingHeader() {
     return (
         <section className={styles.section}>
-            <div className="container md:flex justify-between items-center">
+            <div className="container container--small md:flex justify-between items-center">
                 <Fade>
                 <div className="md:w-7/12 lg:w-1/2">
                     <h2>Nullcast is a Series of Blogs</h2>

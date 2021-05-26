@@ -5,16 +5,29 @@
         @apply text-64 font-black font-darker leading-none mb-6;
     }
 
+    p {
+        @apply mb-8;
+    }
+
 }
 
 .form {
 
     @apply flex;
+    border: 2px solid #626262;
+    border-radius: 5px;
+    max-width: 385px;
+    form {
+        @apply flex items-center w-full;
+    }
     input {
-        @apply flex-1 bg-transparent;
+        @apply flex-1 bg-transparent px-4 py-3;
         &::placeholder {
             color: #626262;
 
         }
+    }
+    button{
+        @apply w-10 h-10 flex items-center justify-center;
     }
 }

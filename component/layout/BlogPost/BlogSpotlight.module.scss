@@ -1,0 +1,10 @@
+.section {
+
+    &:before {
+        
+    }
+    img {
+        @apply w-full m-auto;
+        max-width: 1700px;
+    }
+}

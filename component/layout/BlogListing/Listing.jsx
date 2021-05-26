@@ -2,42 +2,43 @@ import styles from './Listing.module.scss';
 import Link from "next/link";
 import Image from "next/image";
 import Fade from 'react-reveal/Fade';
+import ListingItem from './ListingItem'
 
 export default function Listing() {
     return (
         <section className={styles.listing}>
-            <div className="container">
+            <div className="container container--small">
                 <Fade>
                 <div className={styles.listing__tab}>
-                    <ul>
+                    <ul className="tags tags--large">
                         <li>
                         <Link href="/">
-                            <a>Latest Updates</a>
+                            <a className="tags__item">Latest Updates</a>
                         </Link>
                         </li>
                         <li>
                         <Link href="/">
-                            <a>Web</a>
+                            <a className="tags__item">Web</a>
                         </Link>
                         </li>
                         <li>
                         <Link href="/">
-                            <a>Mobile</a>
+                            <a className="tags__item">Mobile</a>
                         </Link>
                         </li>
                         <li>
                         <Link href="/">
-                            <a>Javascript</a>
+                            <a className="tags__item">Javascript</a>
                         </Link>
                         </li>
                         <li>
                         <Link href="/">
-                            <a>Algorithm</a>
+                            <a className="tags__item">Algorithm</a>
                         </Link>
                         </li>
                         <li>
                         <Link href="/">
-                            <a>Angular</a>
+                            <a className="tags__item">Angular</a>
                         </Link>
                         </li>
                     </ul>
@@ -50,16 +51,7 @@ export default function Listing() {
                 </Fade>
 
                 <div className={styles.listing__list}>
-                    <div className={styles.listing__item}>
-                        <figure className={styles.listing__figure}>
-                            <Image 
-                                src="/images/temp/blog-1.png"
-                                alt="Blog image"
-                                width={350}
-                                height={370}
-                            />
-                        </figure>
-                    </div>
+                    <ListingItem />
                 </div>
             </div>
         </section>

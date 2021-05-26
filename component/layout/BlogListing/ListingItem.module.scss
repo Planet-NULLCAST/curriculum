@@ -1,0 +1,29 @@
+
+ .listing__item {
+    @apply mb-10;
+    &:hover {
+        .listing__figure {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+    h3 {
+        @apply text-xl font-bold mb-3;
+    }
+    p{ 
+        @apply mb-3;
+    }
+ }
+
+ .listing__figure {
+     @apply overflow-hidden mb-4;
+    border: 1px solid #D8D8D8;
+    border-radius: 6px;
+
+    img {
+
+        transition: all ease .3s;
+
+    }
+}
