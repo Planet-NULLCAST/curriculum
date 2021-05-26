@@ -32,7 +32,7 @@ export default function SideBar({ onToggle, toggle, course }) {
     <aside
       className={`transform top-0 ${
         toggle ? "left-0" : "-left-64"
-      } w-64 bg-white border-r fixed h-full overflow-auto ease-in-out transition-all delay-200 duration-500 z-30 translate-x-0`}
+      } w-64 bg-white border-r fixed ease-in-out h-full transition-all delay-200 duration-500 z-40 translate-x-0 `}
     >
       <img
         className="h-5 w-5 absolute top-5 right-6 cursor-pointer close-icon"
@@ -40,11 +40,14 @@ export default function SideBar({ onToggle, toggle, course }) {
         onClick={handleClick}
       />
 
-      <ul className="text-gray-900 flex flex-col mt-14 h-80">
+      <ul
+        className="text-gray-900 flex flex-col my-14 overflow-auto"
+        style={{ height: "86%" }}
+      >
         {titles.map((title) => (
           <li
             key={title.chapterId}
-            className={`flex flex-row justify-between items-center text-center text-gray-700 border-l-8 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
+            className={`flex flex-row justify-between items-center text-center text-gray-700 border-l-4 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
           >
             <Link href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}>
               <a onClick={handleClick}>{title.chapterName}</a>
