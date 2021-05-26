@@ -7,10 +7,11 @@ import SectionEvents from "../component/layout/SectionEvents/SectionEvents";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
-
-// import "../styles/Home.module.scss";
+import "../styles/Home.module.scss";
+import { baseUrl, clientUrl } from "../config/config";
 
 export default function Home() {
+  // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
       <Head>

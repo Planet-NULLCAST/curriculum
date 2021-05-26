@@ -1,4 +1,3 @@
-// import Navbar from "../../component/layout/NavBar/NavBar";
 import Head from "next/head";
 import { courses, addCourses } from "../../courses/meta";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";

@@ -1,6 +1,5 @@
 import { getAllCourseIds, getCourseData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
-// import Navbar from "../../../component/layout/NavBar/NavBar";
 import Head from "next/head";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import CourseSpotlight from "../../../component/layout/CourseSpotlight/CourseSpotlight";
@@ -61,26 +60,6 @@ export default function CourseName({ courseData, params }) {
       <ChapterList chapters={currentChapters} courseUrl={courseUrl} />
       <SectionSwag />
       <SiteFooter />
-      {/* <Navbar showMenuIcon={false} showTitle={false} />
-      <div className="bg-gray-50 h-screen">
-        <h1 className="uppercase text-2xl tracking-widest text-center p-8">
-          {courseName}
-        </h1>
-        <div className="flex flex-col items-center justify-center">
-          {currentChapters.map((chapter) => (
-            <div
-              key={chapter.chapterUrl + courseUrl}
-              className="bg-white m-2 px-12 h-14 w-2/4 flex flex-row items-center shadow-md text-xl tracking-wider hover:shadow-lg"
-            >
-              <Link href={`/curriculum/${courseUrl}/${chapter.chapterUrl}`}>
-                <a className="text-gray-700 font-medium hover:text-purple-800">
-                  {chapter.chapterName}
-                </a>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 }
