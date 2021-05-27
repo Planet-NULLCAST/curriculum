@@ -2,7 +2,7 @@ import styles from './ListingFeatured.module.scss'
 import Link from "next/link";
 import Image from "next/image";
 import Fade from 'react-reveal/Fade';
-import Details from './Details';
+import Details from './AuthorDetails';
 
 export default function ListingFeatured() {
     return (

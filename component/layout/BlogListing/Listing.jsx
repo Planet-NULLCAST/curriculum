@@ -53,6 +53,13 @@ export default function Listing() {
                 <div className={styles.listing__list}>
                     <ListingItem />
                 </div>
+                <div className={styles.wrapBtn}>
+                    <Link href="#">
+                        <a className="btn btn--gray">
+                            <span className="btn__text">Load more</span>
+                        </a>
+                    </Link>
+                </div>
             </div>
         </section>
     );

@@ -13,7 +13,7 @@ export default function CourseSpotlight({ contents }) {
         <div className="md:flex items-center justify-between">
           <div className="md:w-5/12">
             <h2>{contents.title}</h2>
-            <h3 className="my-4 font-darker font-black text-5xl">
+            <h3 className="mb-10 font-semibold text-lg">
               {contents.subtitle}
             </h3>
             <a
