@@ -1,15 +1,17 @@
 import styles from './SectionBlogs.module.scss';
 import Image from "next/image";
 import Fade from 'react-reveal/Fade';
-import Details from '../BlogListing/Details';
+import AuthorDetails from '../BlogListing/AuthorDetails';
 
 export default function SectionBlogs() {
     return (
         <section className='pt-10 lg:pt-20'>
             <div className='container container--small'>
                 <div className="sectionHeader">
+                    <Fade cascade>
                     <h2 className='sectionHeader__title md:w-36 lg:w-44 xl:w-56'>Series of Blogs</h2>
                     <p className="sectionHeader__description">Get the latest scoop from the world of tech ranging from javascript to AI and other crazy hacks from dev ducks across the globe.</p>
+                    </Fade>
                 </div>
                 <div className={styles.blogList}>
 
@@ -29,7 +31,7 @@ export default function SectionBlogs() {
                             <a href="">All you need to know about Supabase</a>
                         </h3>
 
-                        <Details />
+                        <AuthorDetails />
                     </div>
 
 
@@ -48,7 +50,7 @@ export default function SectionBlogs() {
                         <h3>
                             <a href="">Creative Search Bar and Input Field Design Inspiration</a>
                         </h3>
-                        <Details />
+                        <AuthorDetails />
                     </div>
 
 
@@ -67,7 +69,7 @@ export default function SectionBlogs() {
                         <h3>
                             <a href="">All you need to know about Supabase</a>
                         </h3>
-                        <Details />
+                        <AuthorDetails />
                     </div>
 
 
@@ -86,7 +88,7 @@ export default function SectionBlogs() {
                         <h3>
                             <a href="">All you need to know about Supabase</a>
                         </h3>
-                        <Details />
+                        <AuthorDetails />
                     </div>
 
                 </div>

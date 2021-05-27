@@ -8,11 +8,12 @@
         
         &:nth-child(1){
             @apply text-black text-5xl lg:text-90;
-            text-shadow:
-                -2px -2px 0 #fff,  
-                2px -2px 0 #fff,
-                -2px 2px 0 #fff,
-                2px 2px 0 #fff;
+            -webkit-text-stroke: 2px #fff;
+            // text-shadow:
+            //     -2px -2px 0 #fff,  
+            //     2px -2px 0 #fff,
+            //     -2px 2px 0 #fff,
+            //     2px 2px 0 #fff;
         }
 
         &:nth-child(2) {

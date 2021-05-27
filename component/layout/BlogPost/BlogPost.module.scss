@@ -1,0 +1,141 @@
+.post {
+
+    @apply text-lg relative py-20 lg:py-24;
+    color: #202020;
+    h2 {
+        @apply font-bold text-xl xl:text-4xl 2xl:text-40;
+    }
+
+}
+
+.postContent {
+
+    line-height: 2.2;
+
+    p, img, iframe, ul, ol, blockquote, h2, h3, h4, pre, figure {
+        @apply mb-6 xl:mb-10;
+    }
+
+    img{
+
+        @apply max-w-full m-auto mb-5 xl:mb-10;
+    }
+
+    pre {
+
+        @apply max-w-full;
+    }
+
+    code {
+        @apply block max-w-full overflow-auto p-5 rounded-sm bg-black text-white rounded-md;
+    }
+
+
+
+    blockquote {
+        
+        @apply p-5 lg:p-10 rounded-md;
+        background: #F9F6E3;
+
+        p:last-child{
+            @apply m-0;
+        }
+        
+    }
+
+    h3 {
+        @apply font-bold text-xl xl:text-2xl 2xl:text-25;
+    }
+
+    ul {
+        
+        @apply ml-7;
+
+        li {
+            list-style-image: url('../../../public/images/arrow.svg');
+        }
+    }
+
+    iframe {
+        @apply max-w-full m-auto;
+    }
+
+}
+
+.title {
+    @apply text-center mb-12;
+    color: #353535;
+    h2 {
+        @apply leading-snug mb-5;
+    }
+    h3 {
+        @apply text-xl m-0 font-bold;
+        color: #717171;
+    }
+}
+
+.vote {
+    position: -webkit-sticky;
+    @apply sticky top-10  flex flex-col items-center font-black font-darker text-xl w-20;
+    margin-bottom: -100px;
+    margin-left: -12vw;
+    span {
+        @apply block my-2;
+    }
+    svg {
+        @apply m-auto;
+    }
+}
+
+.sidebar {
+    @apply absolute left-full top-0 h-full ml-10;
+}
+.widget {
+    @apply sticky top-0 p-4 py-6 lg:p-5 lg:py-7;
+    width: min(280px, 18vw);
+    background: #242424;
+    color: #AFAFAF;
+}
+
+.index {
+    counter-reset: count;
+    h3 {
+        @apply text-xl text-white mb-3 font-bold;
+    }
+    ol {
+        @apply mb-5;
+    }
+    li {
+        @apply leading-snug py-4 -mx-5 px-5 text-sm font-semibold flex;
+        border-bottom: 1px solid #3E3E3E;
+        &:before {
+            @apply mr-4;
+            counter-increment: count;
+            content: '0' counter(count);
+        }
+    }
+    [class*="linkUnderline"]  {
+        background-size: 0 1px;
+        &:hover {
+            background-size: 30px 1px;
+        }
+    }
+}
+.social {
+    h3 {
+        @apply font-semibold mb-3;
+        font-size: 13px;
+    }
+    ul{
+        @apply m-0 flex items-center;
+    }
+    li{
+        @apply mr-3;
+    }
+
+    a {
+        @apply flex items-center justify-center;
+        width: 22px;
+        height: 18px;
+    }
+}

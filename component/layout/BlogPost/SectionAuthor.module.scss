@@ -1,0 +1,52 @@
+.section {
+
+    h2 {
+        
+        @apply text-25 font-extrabold;
+        color: #353535;
+    }
+}
+
+.widget {
+
+    @apply p-11;
+    background: #FCEBE6;
+
+}
+
+.details {
+    @apply flex mb-7 items-center;
+    [class*="authorDetails__icon"] {
+        max-width: 100px;
+        max-height: 100px;
+        img{
+   
+            width: 100px;
+            height: 100px;
+        }
+    }
+}
+
+.stats {
+
+    background: #FFDFD6;
+    @apply flex ml-10;
+}
+.statsItem {
+    @apply flex-1 text-center p-4;
+    strong, span {
+        @apply block;
+    }
+}
+
+.profileLink{
+    @apply font-bold;
+    color: #404852;
+    &:hover {
+        color: #000;
+        background-size: 30px 1px;
+    }
+}
+.description{
+    @apply text-xs;
+}
