@@ -4,8 +4,9 @@ import SideLogin from "../component/login/side/SideLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl, clientUrl } from "../config/config";
+import Head from "next/head";
 
-export default function Login() {
+export default function SignUp() {
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(false);
   const [terms, setTerms] = useState(false);
@@ -70,7 +71,7 @@ export default function Login() {
         .then((data) => {
           if (data.message === "User was registered successfully!") {
             console.log(data);
-            window.location.replace(clientUrl);
+            window.location.replace("/login");
           }
           notify(data);
         });
@@ -78,6 +79,9 @@ export default function Login() {
   };
   return (
     <div className="w-full min-h-screen bg-white flex">
+      <Head>
+        <title>Sign Up | Nullcast</title>{" "}
+      </Head>
       <div className="fixed w-full lg:w-1/2 top-0 right-0 flex items-center justify-end p-3 pr-6 sm:p-6 sm:pr-12 sm:pb-0 bg-white">
         <p className={`font-semibold ${Loginstyles.text_gray_910}`}>
           Already have an Account ?
