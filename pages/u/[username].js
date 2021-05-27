@@ -8,6 +8,7 @@ import FollowersList from "../../component/profile/FollowersList";
 import BlogList from "../../component/profile/BlogList";
 import LuckEgg from "../../component/profile/LuckEgg";
 import Profilestyles from "../../styles/Profile.module.css";
+import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 
 export default function Username() {
   const [currentNav, setcurrentNav] = useState("profile");
@@ -21,6 +22,7 @@ export default function Username() {
       <Head>
         <title>Profile | Nullcast</title>
       </Head>
+      <SiteHeader />
       <div className="bg-gray-100 py-2 pb-6 px-6">
         <Navbar changeNav={changeNav} currentNav={currentNav} />
         <div className="flex lg:flex-row flex-col">

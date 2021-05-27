@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomeSpotlight() {
   const router = useRouter();
@@ -19,8 +20,8 @@ export default function HomeSpotlight() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
     document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    router.push(currentPath);
     setCookies("");
+    router.reload();
   }
   return (
     <header className={styles.header}>
@@ -46,7 +47,8 @@ export default function HomeSpotlight() {
             </li>
             <li>
               <Link href="/">
-                <a>Community</a>
+                {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                <a>Explore</a>
               </Link>
             </li>
           </ul>

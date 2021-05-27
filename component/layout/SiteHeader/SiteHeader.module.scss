@@ -1,5 +1,5 @@
 .header {
-  @apply bg-white relative left-0 top-0 w-full z-20 p-5 md:px-10 md:py-4;
+  @apply bg-white relative left-0 top-0 w-full z-20 p-5 md:px-10 md:py-3 2xl:py-5;
   border: 1px solid rgb(255, 255, 255);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
@@ -32,5 +32,9 @@
 }
 
 .wrapBtn {
-  @apply flex;
+  @apply flex items-center pl-3;
+}
+
+.profile__icon {
+  @apply rounded-full relative overflow-hidden;
 }
