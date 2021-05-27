@@ -1,10 +1,45 @@
 .section {
 
+    @apply relative;
+
     &:before {
-        
+        @apply absolute left-0 bottom-0 w-full;
+        content: "";
+        background: url("../../../public/images/bg-coursespotlight.svg");
+        background-repeat: no-repeat;
+        background-position: center top;
+        height: 70px;
     }
+    figure {
+        
+        img {
+            @apply w-full m-auto;
+            max-width: 1700px;
+        }
+
+    }
+
+}
+
+.author {
+    @apply text-center absolute -bottom-9;
+    left: 50%;
+    transform: translateX(-50%);
+    h4 {
+        @apply text-25 font-extrabold mb-1;
+    }
+    h5 {
+        @apply text-base font-bold;
+        color: #717171;
+    }
+}
+.thumbnail {
     img {
-        @apply w-full m-auto;
-        max-width: 1700px;
+        @apply m-auto rounded-full mb-2;
+
+        @media (min-width: 1530px) {
+            width: 70px;
+            height: 70px;
+        }
     }
 }

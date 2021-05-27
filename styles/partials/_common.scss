@@ -70,6 +70,11 @@ input {
         @apply py-4 text-18;
     }
 
+    &--gray {
+        background: #EDEDED;
+        color: #F13E5D;
+    }
+
     &--small {
         @apply text-xl px-10 py-3;
     }
@@ -95,7 +100,9 @@ input {
             max-width: 1280px;
         }
     }
-    
+    &--post {
+        max-width: 800px;
+    }
 }
 
 .sectionHeader {
@@ -127,4 +134,30 @@ input {
             }
         }
     }
+}
+
+@keyframes move-duck {
+    20% { transform: rotate(-4deg); }
+    40% { transform: rotate(3deg); }
+    60% { transform: rotate(-2deg); }
+    80% { transform: rotate(1deg); }
+    100% { transform: rotate(0); }
+}
+
+.moveDuck {
+    transform-origin: 50% 100%;
+    animation: move-duck .5s ease forwards;
+    & img{
+        transform-origin: 50% 100%;
+        &:hover {
+            animation: move-duck .5s ease forwards;
+        }
+    }
+}
+
+.linkUnderline {
+    background-image: linear-gradient(#8DA1A1, #8DA1A1);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
 }

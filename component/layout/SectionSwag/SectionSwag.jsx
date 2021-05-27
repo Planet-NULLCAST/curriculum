@@ -1,6 +1,7 @@
 import styles from "./SectionSwag.module.scss";
 import Fade from 'react-reveal/Fade';
-import Bounce from 'react-reveal/Bounce';
+import Reveal from 'react-reveal/Reveal';
+import Image from 'next/image';
 
 export default function SectionSwag() {
   return (
@@ -29,11 +30,16 @@ export default function SectionSwag() {
             </p>
           </div>
           </Fade>
-          <div className={styles.duck}>
-            <Bounce right>
-            <img src="/images/duck.svg" alt="" />
-            </Bounce>
-          </div>
+            <Reveal effect="moveDuck">
+            <div className={styles.duck}>
+              <Image
+                src="/images/duck.svg"
+                alt="Duck"
+                width={370}
+                height={383}
+              />
+            </div>
+            </Reveal>
         </div>
         <div className="cta text-center">
           <a href="https://discord.com/invite/5byDDp2qbK" className="btn">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from 'next/image';
 import styles from "./SiteFooter.module.scss";
 
 export default function HomeSpotlight() {
@@ -54,19 +55,35 @@ export default function HomeSpotlight() {
                 href="https://twitter.com/nullcast_io?lang=en"
                 className={styles.twitter}
               >
-                <img src="/images/twitter-large.svg" alt="twitter" />
+                <Image 
+                  src="/images/twitter-large.svg"
+                  alt="twitter"
+                  width={268}
+                  height={268}
+                />
+                <img   />
               </a>
               <a
                 href="https://www.linkedin.com/company/nullcast/?originalSubdomain=in"
                 className={styles.linkedin}
               >
-                <img src="/images/linkedin-large.svg" alt="linkedin" />
+                <Image 
+                  src="/images/linkedin-large.svg"
+                  alt="linkedin"
+                  width={290}
+                  height={213}
+                />
               </a>
               <a
                 href="https://discord.com/invite/5byDDp2qbK"
                 className={styles.discord}
               >
-                <img src="/images/discord-large.svg" alt="discord" />
+              <Image 
+                src="/images/discord-large.svg"
+                alt="discord"
+                width={315}
+                height={217}
+              />
               </a>
             </div>
           </div>
