@@ -1,0 +1,32 @@
+
+.authorDetails {
+    @apply flex items-center;
+
+    &__icon {
+        @apply mr-3 2xl:mr-5 rounded-full overflow-hidden;
+        max-width: 42px;
+        max-height: 42px;
+        @media (min-width: 1530px) {
+            max-width: 70px;
+            max-height: 70px;
+        }
+    }
+
+    &__title {
+        @apply text-base 2xl:text-25 font-extrabold mb-1;
+    }
+
+    &__position {
+        @apply text-sm 2xl:text-xl;
+        color: #717171;
+    }
+
+    &__points {
+        @apply font-bold text-sm 2xl:text-18 ml-3 flex items-center;
+        color: #F92304;
+    }
+
+    svg {
+        @apply mr-2;
+    }
+}

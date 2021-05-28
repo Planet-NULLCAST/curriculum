@@ -12,6 +12,7 @@ import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
 import { useRouter } from "next/router";
 import Link from "next/link";
+const axios = require("axios");
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -184,7 +185,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
         className={`bg-gray-50 flex flex-row justify-center`}
-        style={{ height: "calc(100vh - 124px)" }}
+        style={{ height: "calc(100vh - 109px)" }}
       >
         <div
           className={`px-4 py-4 overflow-auto text-gray-700 ${

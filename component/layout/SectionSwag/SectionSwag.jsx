@@ -1,14 +1,22 @@
 import styles from "./SectionSwag.module.scss";
+import Fade from 'react-reveal/Fade';
+import Reveal from 'react-reveal/Reveal';
+import Image from 'next/image';
 
 export default function SectionSwag() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <h2 className="text-center">Want #swag?</h2>
-        <div className={styles.subtitle}>
-          <h3>Join our monthly raffle! </h3>
+        <Fade>
+        <div>
+          <h2 className="text-center">Want #swag?</h2>
+          <div className={styles.subtitle}>
+            <h3>Join our monthly raffle! </h3>
+          </div>
         </div>
+        </Fade>
         <div className="md:flex items-center justify-between mb-10 xl:mb-20">
+          <Fade>
           <div className="md:w-8/12 xl:w-7/12 font-darker font-bold text-25 xl:text-34 text-gray-01 text-center md:text-left">
             <p className="mb-10">
               Every month, One Lucky Duck gets free swag shipped to their
@@ -21,9 +29,17 @@ export default function SectionSwag() {
               channel.
             </p>
           </div>
-          <div className={styles.duck}>
-            <img src="/images/duck.svg" alt="" />
-          </div>
+          </Fade>
+            <Reveal effect="moveDuck">
+            <div className={styles.duck}>
+              <Image
+                src="/images/duck.svg"
+                alt="Duck"
+                width={370}
+                height={383}
+              />
+            </div>
+            </Reveal>
         </div>
         <div className="cta text-center">
           <a href="https://discord.com/invite/5byDDp2qbK" className="btn">
