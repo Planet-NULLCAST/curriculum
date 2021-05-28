@@ -5,31 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar(props) {
-  const data = [
-    {
-      name: "Active Tab Animation using HTML, CSS and JS",
-      date: "2021-05-04T03:59:48.157Z",
-      status: "pending",
-      id: "blog1"
-    },
-    {
-      name:
-        "Social Meta Tags & Validators (Facebook debugger, Twitter card validator, LinkedIn post inspector)",
-      date: "2021-05-04T03:59:48.157Z",
-      status: "rejected",
-      id: "blog2"
-    },
-    {
-      name:
-        "Autocomplete Google places in an input field on Angular 9 using Google Maps.",
-      date: "2021-05-04T03:59:48.157Z",
-      status: "approved",
-      id: "blog3"
-    }
-  ];
+  const { data } = props;
+
   return (
     <div className="w-full mt-4 bg-white py-5 rounded  shadow-sm">
-      {data?.map((item, index) => (
+      {data?.data?.map((item, index) => (
         <div
           className={`flex items-center justify-between p-4 ${MyBlogsstyles.oddBg}`}
         >
@@ -37,10 +17,10 @@ export default function Navbar(props) {
             <div
               className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
             >
-              {item.name}
+              {item.title}
             </div>
             <div className={`text-xs text-gray-400`}>
-              {moment(item?.date).format("LL")}
+              {moment(item?.createdAt).format("LL")}
             </div>
           </div>
           <div className="flex items-center">
@@ -68,7 +48,7 @@ export default function Navbar(props) {
                 {item.status}
               </span>
             </div>
-            <Link href={`/myblogs/write?blog_id=${item.id}`}>
+            <Link href={`/myblogs/write?blog_id=${item._id}`}>
               <div
                 className={`flex items-center px-4 flex items-center justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-700 ${MyBlogsstyles.linkBg}`}
               >

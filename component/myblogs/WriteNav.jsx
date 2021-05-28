@@ -1,10 +1,27 @@
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import baseUrl from "../../config/config";
+const axios = require("axios");
 
 export default function Navbar(props) {
-  const { currentNav } = props;
   const [openSettings, setopenSettings] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/post/:${router.query.blog_id}`)
+      .then((response) => {
+        if (response) {
+          console.log("blog listed");
+        } else {
+          console.log("err");
+        }
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  }, []);
 
   return (
     <div className="bg-white my-3 flex flex-row items-center rounded shadow-sm">
@@ -29,7 +46,7 @@ export default function Navbar(props) {
         </div>
       </div>
       {openSettings && (
-        <div className="fixed right-0 bottom-0 w-72">
+        <div className="fixed right-0 bottom-0 w-72 z-50">
           <div className="w-full h-screen">
             <div className="w-full h-full bg-white relative border">
               <div
@@ -53,8 +70,12 @@ export default function Navbar(props) {
                 <span className="font-bold text-lg">Settings</span>
               </div>
               <div className="flex flex-col p-5">
-                <div className="w-full relative h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden">
-                  <div className="absolute top-0 w-full h-24 bg-gray-100 flex justify-center items-center">
+                <div class="h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative cursor-pointer">
+                  <input
+                    type="file"
+                    class="cursor-pointer relative block opacity-0 w-full h-full z-50"
+                  />
+                  <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
                     <Image
                       src="/images/image-up.svg"
                       alt="edit"
@@ -65,11 +86,6 @@ export default function Navbar(props) {
                     />
                     <span className="ml-2 text-sm">Upload Image</span>
                   </div>
-                  <input
-                    type="text"
-                    className="w-full m-0 h-24 outline-none focus:outline-none text-sm bg-transparent"
-                    // placeholder="Meta Title"
-                  />
                 </div>
                 <div className="w-full mt-5">
                   <span className="text-gray-900 mb-1">URL</span>
