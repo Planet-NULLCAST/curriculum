@@ -8,18 +8,18 @@ const axios = require("axios");
 
 export default function Mypost() {
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/posts`)
-      .then((response) => {
-        if (response) {
-          console.log("blog listed");
-        } else {
-          console.log("err");
-        }
-      })
-      .catch((err) => {
-        console.log("error");
-      });
+    // axios
+    //   .get(`http://localhost:8080/api/posts`)
+    //   .then((response) => {
+    //     if (response) {
+    //       console.log("blog listed");
+    //     } else {
+    //       console.log("err");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log("error");
+    //   });
   }, []);
 
   const data = {

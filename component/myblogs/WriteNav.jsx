@@ -26,18 +26,18 @@ export default function Navbar(props) {
   const router = useRouter();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/post/:${router.query.blog_id}`)
-      .then((response) => {
-        if (response) {
-          console.log("blog listed");
-        } else {
-          console.log("err");
-        }
-      })
-      .catch((err) => {
-        console.log("error");
-      });
+    // axios
+    //   .get(`http://localhost:8080/api/post/:${router.query.blog_id}`)
+    //   .then((response) => {
+    //     if (response) {
+    //       console.log("blog listed");
+    //     } else {
+    //       console.log("err");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log("error");
+    //   });
   }, []);
 
   return (
