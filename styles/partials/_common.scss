@@ -3,7 +3,7 @@ a, button {
     -webkit-tap-highlight-color: transparent;
     transition: all ease .3s;
 
-    &:focus {
+    &:focus, &:active {
         @apply outline-none;
     }
 }

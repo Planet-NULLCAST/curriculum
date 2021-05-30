@@ -1,7 +1,18 @@
 .header {
-  @apply bg-white relative left-0 top-0 w-full z-20 p-5 md:px-10 md:py-3 2xl:py-5;
+  @apply bg-white relative left-0 top-0 w-full z-20 p-3 md:px-10 2xl:py-5 sticky;
   border: 1px solid rgb(255, 255, 255);
   border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all ease .3s;
+  &[class*="sticky"] {
+    box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+    transform: translateY(-65px);
+  }
+  &[class*="show"] {
+    transform: translateY(0);
+  }
+  [class*="btn"]:last-child {
+    margin-right: 0;
+  }
 }
 
 .wrap {

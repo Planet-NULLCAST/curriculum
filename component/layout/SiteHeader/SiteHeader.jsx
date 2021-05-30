@@ -16,6 +16,36 @@ export default function HomeSpotlight() {
     cook[0] !== "" && setCookies(JSON.parse(cook[1]));
   }, []);
 
+  useEffect(() => {
+
+    let header = document.getElementById("header");
+    let sticky = header.offsetTop;
+    let prevScrollpos = window.pageYOffset;
+
+    function headerSticky() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+
+    window.onscroll = function() {
+
+      headerSticky();
+
+      let currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+          header.classList.add('show');
+      } else {
+          header.classList.remove('show');
+      }
+      prevScrollpos = currentScrollPos;
+
+    };
+
+  }, []);
+
   function logout() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
@@ -24,7 +54,7 @@ export default function HomeSpotlight() {
     router.reload();
   }
   return (
-    <header className={styles.header}>
+    <header className={styles.header} id="header">
       <div className={styles.wrap}>
         <nav>
           <ul className={styles.mainMenu}>
