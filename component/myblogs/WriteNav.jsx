@@ -2,11 +2,28 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import baseUrl from "../../config/config";
+// import {
+//   baseUrl,
+//   clientUrl,
+//   authUrl,
+//   enrolUrl,
+//   postUrl,
+//   allPostsUrl
+// } from "../../config/config";
 const axios = require("axios");
 
 export default function Navbar(props) {
   const [openSettings, setopenSettings] = useState(false);
+  // console.log(
+  //   baseUrl,
+  //   clientUrl,
+  //   authUrl,
+  //   enrolUrl,
+  //   postUrl,
+  //   allPostsUrl,
+  //   "baseUrl"
+  // );
+  const router = useRouter();
 
   useEffect(() => {
     axios
