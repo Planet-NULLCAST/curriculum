@@ -18,6 +18,15 @@ body {
 .border-pink-710 {
   border-color: #f13e5d;
 }
+.bg-green-710 {
+  background-color: #007F00;
+}
+.hover-green-pink-710:hover {
+  color: #007F00;
+}
+.border-green-710 {
+  border-color: #007F00;
+}
 
 .submitButtons {
   @apply bg-pink-710 font-semibold hover:bg-white hover-text-pink-710 border border-pink-710 py-2 px-2 rounded duration-700 text-white focus:outline-none;
@@ -163,4 +172,19 @@ h3 {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+// maximum width for profile panels
+.max-w-panel {
+  max-width: 1600px;
+  margin: auto;
+}
+
+// font size 15px global
+.text-15 {
+  font-size: 15px;
+}
+
+.min-h-24{
+  min-height: 6rem;
 }
