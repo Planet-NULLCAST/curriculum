@@ -50,7 +50,7 @@ export default function SignUp() {
     const user = document.querySelector("#username").value;
     const pass = document.querySelector("#password").value;
     const update = document.querySelector("#updates").value;
-    console.log(terms);
+    // console.log(terms);
     if (validEmail && terms) {
       const bod = {
         fullName: fName,
@@ -213,17 +213,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
     </div>
   );
 }
