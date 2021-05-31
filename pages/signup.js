@@ -53,12 +53,12 @@ export default function SignUp() {
     // console.log(terms);
     if (validEmail && terms) {
       const bod = {
-        firstName: fName,
+        fullName: fName,
         email: email,
         username: user,
         password: pass
       };
-      fetch(`${baseUrl}/api/auth/signup`, {
+      fetch("http://localhost:8080/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ export default function SignUp() {
                   <input
                     placeholder="Enter full name"
                     className="inputStyle"
-                    id="firstName"
+                    id="fullName"
                     type="text"
                   />
                 </div>
