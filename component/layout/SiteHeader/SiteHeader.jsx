@@ -77,7 +77,7 @@ export default function HomeSpotlight() {
                 </Link>
               </li>
               <li>
-                <Link href="/write">
+                <Link href="/posts">
                   <a>
                     Write <img src="/images/hand.png" className="ml-1" alt="" />
                   </a>
