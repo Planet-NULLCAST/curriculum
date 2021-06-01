@@ -56,33 +56,40 @@ export default function HomeSpotlight() {
   return (
     <header className={styles.header} id="header">
       <div className={styles.wrap}>
-        <nav>
-          <ul className={styles.mainMenu}>
-            <li>
-              <Link href="/">
-                <a>What the Ducks?</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/curriculum">
-                <a>School of Ducks</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/write">
-                <a>
-                  Write <img src="/images/hand.png" className="ml-1" alt="" />
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                <a>Explore</a>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className={styles.navFixed}>
+          <nav>
+            <ul className={styles.mainMenu}>
+              <li>
+                <Link href="/">
+                  <a>What the Ducks?</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/curriculum">
+                  <a>School of Ducks</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/write">
+                  <a>
+                    Write <img src="/images/hand.png" className="ml-1" alt="" />
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                  <a>Explore</a>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <a href="#" className={styles.btnMenu}>
+             <span></span>
+             <span></span>
+             <span></span>
+         </a>
+        </div>
         <div className={styles.wrapBtn}>
           {cookies ? (
             <div className="flex flex-row justify-center items-center">

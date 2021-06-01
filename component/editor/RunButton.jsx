@@ -68,9 +68,11 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
     if (flag) {
       let cook = document.cookie;
       cook = cook.split("=");
-      cook[0] !== ""
+      if(cook) {
+        cook[0] !== ""
         ? (cook = JSON.parse(cook[1]).accessToken)
         : (cook = false);
+      }
       if (cook) {
         axios({
           method: "post",

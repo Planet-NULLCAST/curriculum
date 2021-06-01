@@ -50,15 +50,15 @@ export default function SignUp() {
     const user = document.querySelector("#username").value;
     const pass = document.querySelector("#password").value;
     const update = document.querySelector("#updates").value;
-    console.log(terms);
+    // console.log(terms);
     if (validEmail && terms) {
       const bod = {
-        firstName: fName,
+        fullName: fName,
         email: email,
         username: user,
         password: pass
       };
-      fetch(`${baseUrl}/api/auth/signup`, {
+      fetch("http://localhost:8080/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ export default function SignUp() {
                   <input
                     placeholder="Enter full name"
                     className="inputStyle"
-                    id="firstName"
+                    id="fullName"
                     type="text"
                   />
                 </div>
@@ -213,17 +213,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
     </div>
   );
 }

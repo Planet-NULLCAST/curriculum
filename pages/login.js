@@ -44,19 +44,20 @@ export default function Login() {
   const handleClick = (e) => {
     e.preventDefault();
     if (validEmail) {
-      const pass = document.querySelector("#password").value;
-      const user = document.querySelector("#username").value;
-      const bod = {
-        username: user,
-        password: pass
+      const password = document.querySelector("#password").value;
+      const email = document.querySelector("#email").value;
+      const loginDetails = {
+        email: email,
+        password: password
       };
+      // console.log({ loginDetails });
       const err = axios({
         method: "POST",
         url: `${baseUrl}${authUrl}/signin`,
         headers: {
           "Content-Type": "application/json"
         },
-        data: bod
+        data: loginDetails
       })
         .then((response) => {
           return response.data;
@@ -109,7 +110,7 @@ export default function Login() {
   return (
     <div>
       <Head>
-        <title>Nullcast | Login</title>
+        <title>Login | Nullcast</title>
       </Head>
       <div className="w-full h-screen bg-white flex">
         <div className="fixed top-0 right-0 flex items-center p-3 pr-6 sm:p-6 sm:pr-12">
@@ -142,7 +143,7 @@ export default function Login() {
                     <input
                       placeholder="Enter email"
                       className="inputStyle"
-                      id="username"
+                      id="email"
                       type="text"
                       onChange={(e) => emailValidator(e)}
                     />
@@ -184,17 +185,7 @@ export default function Login() {
                     Login
                   </button>
                 </form>
-                <ToastContainer
-                  position="top-right"
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
+                <ToastContainer />
               </div>
             </div>
           </div>
