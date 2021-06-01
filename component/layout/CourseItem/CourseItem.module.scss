@@ -1,6 +1,6 @@
 .CourseItem {
 
-    @apply text-white flex flex-col items-center w-full p-5 lg:p-10 text-center text-18 mb-5 md:mb-0;
+    @apply text-white flex flex-col items-center w-full p-5 py-10 sm:px-8 md:px-3 lg:p-10 text-center text-18 mb-5 md:mb-0;
     border-radius: 20px;
         --bg1: #f00;
         --bg2: #fb703e;
@@ -18,7 +18,7 @@
     }
 
     h3 {
-        @apply text-40 font-darker font-extrabold mb-8;
+        @apply text-3xl lg:text-40 font-darker font-extrabold mb-8;
         background-image: linear-gradient(#F7DA5B, #F7DA5B);
         background-position: center 100%;
         background-repeat: no-repeat;
@@ -46,8 +46,13 @@
 }
 
 .icon {
-    height: 150px;
-    width: 150px;
+    @apply p-7 lg:p-0;
+    height: 100px;
+    width: 100px;
+    @screen lg{
+        height: 150px;
+        width: 150px;
+    }
     background: var(--bg2);
     @apply rounded-full flex items-center justify-center mb-8;
 

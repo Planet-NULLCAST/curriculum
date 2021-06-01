@@ -5,13 +5,71 @@
   transition: all ease .3s;
   &[class*="sticky"] {
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
-    transform: translateY(-65px);
+    @media (min-width: 993px){
+      transform: translateY(-65px);
+    }
   }
   &[class*="show"] {
     transform: translateY(0);
   }
   [class*="btn"]:last-child {
     margin-right: 0;
+  }
+
+  .btnMenu {
+    @apply fixed left-7 top-8;
+    @media (max-width: 992px) {
+      display: block;
+    }
+  }
+  .navFixed {
+    @media (max-width: 992px) {
+      @apply fixed left-0 top-0 w-screen h-screen bg-black bg-opacity-95 z-50 flex items-center justify-center;
+      transform: translateX(-100%);
+      transition: transform ease .4s;
+    }
+    ul {
+      @media (max-width:992px) {
+        @apply flex flex-col items-start text-2xl;
+      }
+    }
+    li {
+      @media (max-width:992px) {
+        @apply mb-5;
+      }
+    }
+    a {
+      @media (max-width:992px) {
+        @apply text-white;
+        background-image: linear-gradient(#fff, #fff);
+      }
+    }
+  }
+  &[class*="menu-open"] {
+    .navFixed {
+      @media (max-width: 992px) {
+        transform: translateX(0);
+      }
+      
+    }
+    .btnMenu {
+      span {
+        @apply bg-white;
+        transition: top 0.3s , transform 0.3s , opacity 0.3s;
+        transition-delay: 0s , 0.3s , 0.3s;
+        &:nth-child(1){
+          top: 50%; 
+          transform: translate(0,-50%) rotate(-45deg);
+        }
+        &:nth-child(2){
+          opacity: 0; 
+        }
+        &:nth-child(3){
+          top: 50%; 
+          transform: translate(0,-50%) rotate(45deg);
+        }
+      }
+    }
   }
 }
 
@@ -49,25 +107,17 @@
 .profile__icon {
   @apply rounded-full relative overflow-hidden;
 }
-
-.navFixed {
-  @media (max-width: 992px) {
-    @apply fixed left-0 w-full h-full bg-gray-01;
-  }
-}
 .btnMenu {
-  @apply absolute top-5 left-5 bg-white;
+  @apply fixed top-5 left-5 z-50 w-10 h-10 cursor-pointer;
   transform: translate(-50%,-50%);
-  width: 35px;  height: 35px;
 
   span {
-    @apply absolute h-1;
+    @apply absolute h-1 opacity-100;
     left: 10%;
     transform: translate(0,-50%);
     width: 80%;
     border-radius: 20px;
-    background: #0070c9;
-    opacity: 1;
+    background: #000;
     transition: transform 0.3s , top 0.3s , opacity 0.9s;
     transition-delay: 0s , 0.3s , 0.3s;
 

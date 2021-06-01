@@ -3,8 +3,8 @@ import styles from "./ChapterOverview.module.scss";
 export default function ChapterOverview() {
   return (
     <section className="pb-10  lg:pb-20" style={{ color: "#202020" }}>
-      <div className="container">
-        <h2 className="text-gray-01 font-darker font-extrabold text-64 mb-10 xl:mb-14">
+      <div className="container text-center md:text-left">
+        <h2 className="text-gray-01 font-darker font-extrabold text-4xl lg:text-64 mb-10 xl:mb-14">
           Overview
         </h2>
         <div className="row md:flex">

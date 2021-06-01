@@ -9,6 +9,9 @@
         background-repeat: no-repeat;
         background-position: center top;
         height: 70px;
+        @media (max-width: 767px) {
+            height: 30px;
+        }
     }
     figure {
         
@@ -22,7 +25,7 @@
 }
 
 .author {
-    @apply text-center absolute -bottom-9;
+    @apply text-center absolute -bottom-20 md:-bottom-9;
     left: 50%;
     transform: translateX(-50%);
     h4 {

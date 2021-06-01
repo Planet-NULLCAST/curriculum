@@ -1,19 +1,27 @@
 .section {
-    @apply bg-gray-01 text-white py-10 lg:py-20;
+    @apply text-center md:text-left bg-gray-01 text-white py-10 lg:py-20;
 
     h2 {
-        @apply text-64 font-black font-darker leading-none mb-6;
+        @apply text-4xl xl:text-64 font-black font-darker leading-none mb-6;
     }
 
     p {
         @apply mb-8;
     }
 
+    figure {
+        @apply m-auto mt-10;
+        max-width: 250px;
+        @screen md {
+            @apply max-w-full;
+        }
+    }
+
 }
 
 .form {
 
-    @apply flex;
+    @apply flex m-auto md:m-0;
     border: 2px solid #626262;
     border-radius: 5px;
     max-width: 385px;

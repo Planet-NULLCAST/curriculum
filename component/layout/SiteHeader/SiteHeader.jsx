@@ -6,6 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function HomeSpotlight() {
+  const [menuState, ToggleMenu] = useState(false);
+  const ShowMenu = () => {
+    ToggleMenu(!menuState);
+  };
+  useEffect(() => {
+    document.body.classList.toggle('menuOpen', menuState);
+  }, [menuState])
   const router = useRouter();
   // console.log("aspath", router.asPath);
   const currentPath = router.asPath;
@@ -54,7 +61,7 @@ export default function HomeSpotlight() {
     router.reload();
   }
   return (
-    <header className={styles.header} id="header">
+    <header className={`${styles.header} ${ menuState ? "menu-open" : " " }`} id="header">
       <div className={styles.wrap}>
         <div className={styles.navFixed}>
           <nav>
@@ -84,12 +91,12 @@ export default function HomeSpotlight() {
               </li>
             </ul>
           </nav>
-          <a href="#" className={styles.btnMenu}>
+        </div>
+          <a className={`${styles.btnMenu} hidden`} onClick={() => ShowMenu()}>
              <span></span>
              <span></span>
              <span></span>
          </a>
-        </div>
         <div className={styles.wrapBtn}>
           {cookies ? (
             <div className="flex flex-row justify-center items-center">

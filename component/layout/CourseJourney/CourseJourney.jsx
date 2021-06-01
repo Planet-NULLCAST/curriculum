@@ -18,7 +18,7 @@ export default function CourseJourney() {
     <section className={styles.path}>
       <div className="container container--small">
         <div className={styles.row}>
-          <div className="w-8/12">
+          <div className="md:w-8/12">
             <h3>Start with HTML</h3>
             <p>
               Our online program is an amazing way for children to learn coding
@@ -33,7 +33,6 @@ export default function CourseJourney() {
               alt="HTML5"
               width={143}
               height={199}
-              layout="fixed"
               margin={0}
             />
           </div>
@@ -66,7 +65,7 @@ export default function CourseJourney() {
           </svg>
         </div>
         <div className={styles.row}>
-          <div className="w-8/12">
+          <div className="md:w-8/12">
             <h3>CSS</h3>
             <p>
               Our online program is an amazing way for children to learn coding
@@ -81,7 +80,6 @@ export default function CourseJourney() {
               alt="HTML5"
               width={143}
               height={199}
-              layout="fixed"
               margin={0}
             />
           </div>
@@ -114,7 +112,7 @@ export default function CourseJourney() {
           </svg>
         </div>
         <div className={styles.row}>
-          <div className="w-8/12">
+          <div className="md:w-8/12">
             <h3>Create Sample Projects</h3>
             <p>
               Our online program is an amazing way for children to learn coding
@@ -129,7 +127,6 @@ export default function CourseJourney() {
               alt="HTML5"
               width={143}
               height={199}
-              layout="fixed"
               margin={0}
             />
           </div>
@@ -162,7 +159,7 @@ export default function CourseJourney() {
           </svg>
         </div>
         <div className={styles.row}>
-          <div className="w-8/12">
+          <div className="md:w-8/12">
             <h3>Javascript</h3>
             <p>
               Our online program is an amazing way for children to learn coding
@@ -177,7 +174,6 @@ export default function CourseJourney() {
               alt="HTML5"
               width={143}
               height={199}
-              layout="fixed"
               margin={0}
             />
           </div>
