@@ -51,7 +51,8 @@
     "remark-html": "^13.0.1",
     "sass": "^1.32.12",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
