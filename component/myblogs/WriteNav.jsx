@@ -50,7 +50,7 @@ export default function Navbar(props) {
     <div className="bg-white my-3 flex flex-row items-center rounded shadow-sm">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
-          <Link href={`/myblogs`}>
+          <Link href={`/posts`}>
             <div className="flex items-center">
               <Image
                 src="/images/svgs/left-arrow.svg"
@@ -128,7 +128,7 @@ export default function Navbar(props) {
                   <div className="w-full mt-3">
                     <div className="flex w-full border rounded overflow-hidden">
                       <div className="w-4/12 border border-black text-white bg-black h-10 flex justify-center items-center text-xs font-semibold">
-                        Nullcast.io/
+                        nullcast.io/
                       </div>
                       <input
                         type="text"

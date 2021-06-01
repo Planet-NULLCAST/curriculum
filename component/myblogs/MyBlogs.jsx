@@ -51,7 +51,12 @@ export default function Navbar({ posts }) {
                   {item.status}
                 </span>
               </div>
-              <Link href={`/posts/write`}>
+              <Link
+                href={{
+                  pathname: "/posts/write",
+                  query: { blog_id: item._id }
+                }}
+              >
                 <div
                   className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-700 ${MyBlogsstyles.linkBg}`}
                 >
