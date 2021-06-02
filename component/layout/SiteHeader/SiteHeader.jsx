@@ -4,6 +4,7 @@ import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
+import { authCheck } from "../../../lib/authCheck";
 
 export default function HomeSpotlight() {
   const [menuState, ToggleMenu] = useState(false);
@@ -18,9 +19,9 @@ export default function HomeSpotlight() {
   const currentPath = router.asPath;
   const [cookies, setCookies] = useState("");
   useEffect(() => {
-    let cook = document.cookie;
-    cook = cook.split("=");
-    cook[0] !== "" && setCookies(JSON.parse(cook[1]));
+    let cook = authCheck();
+    // cook = cook.split("=");
+    cook && setCookies(cook);
   }, []);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function HomeSpotlight() {
   function logout() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
-    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userNullcast=";
     setCookies("");
     router.reload();
   }
