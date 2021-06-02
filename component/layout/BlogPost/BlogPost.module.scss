@@ -1,6 +1,6 @@
 .post {
 
-    @apply text-lg relative py-20 lg:py-24;
+    @apply text-lg relative py-20 pt-32 lg:py-24;
     color: #202020;
     h2 {
         @apply font-bold text-xl xl:text-4xl 2xl:text-40;
@@ -63,7 +63,7 @@
 }
 
 .title {
-    @apply text-center mb-12;
+    @apply lg:text-center mb-12 ml-10 lg:ml-0;
     color: #353535;
     h2 {
         @apply leading-snug mb-5;
@@ -73,22 +73,30 @@
         color: #717171;
     }
 }
-
+.postHeader {
+    @media (max-width: 1023px) {
+        @apply flex;
+    }
+}
 .vote {
-    position: -webkit-sticky;
-    @apply sticky top-10  flex flex-col items-center font-black font-darker text-xl w-20;
-    margin-bottom: -100px;
-    margin-left: -12vw;
+    @apply lg:sticky top-10  flex flex-col items-center font-black font-darker text-xl w-20;
+    @media (min-width: 1024px) {
+        margin-bottom: -100px;
+        margin-left: -12vw;
+    }
     span {
         @apply block my-2;
     }
     svg {
         @apply m-auto;
     }
+    @media (max-width: 1023px) {
+        @apply static;
+    }
 }
 
 .sidebar {
-    @apply absolute left-full top-0 h-full ml-10;
+    @apply absolute left-full top-0 h-full ml-10 hidden lg:block;
 }
 .widget {
     @apply sticky top-0 p-4 py-6 lg:p-5 lg:py-7;

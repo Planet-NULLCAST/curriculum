@@ -21,7 +21,9 @@ export default function ListingItem() {
             </Fade>
             <div>
                 <div className="tags">
-                    <a className="tags__item">Development</a>
+                    <Link href="/">
+                        <a className="tags__item">Development</a>
+                    </Link>
                 </div>
                 <h3>
                     <Link href="/">
@@ -54,7 +56,9 @@ export default function ListingItem() {
             </Fade>
             <div>
                 <div className="tags">
-                    <a className="tags__item">Development</a>
+                    <Link href="/">
+                        <a className="tags__item">Development</a>
+                    </Link>
                 </div>
                 <h3>
                     <Link href="/">
@@ -87,7 +91,9 @@ export default function ListingItem() {
             </Fade>
             <div>
                 <div className="tags">
-                    <a className="tags__item">Development</a>
+                    <Link href="/">
+                        <a className="tags__item">Development</a>
+                    </Link>
                 </div>
                 <h3>
                     <Link href="/">
@@ -120,7 +126,9 @@ export default function ListingItem() {
             </Fade>
             <div>
                 <div className="tags">
-                    <a className="tags__item">Development</a>
+                    <Link href="/">
+                        <a className="tags__item">Development</a>
+                    </Link>
                 </div>
                 <h3>
                     <Link href="/">
@@ -153,7 +161,9 @@ export default function ListingItem() {
             </Fade>
             <div>
                 <div className="tags">
-                    <a className="tags__item">Development</a>
+                    <Link href="/">
+                        <a className="tags__item">Development</a>
+                    </Link>
                 </div>
                 <h3>
                     <Link href="/">

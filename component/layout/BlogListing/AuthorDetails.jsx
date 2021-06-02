@@ -1,4 +1,5 @@
 import styles from './AuthorDetails.module.scss';
+import Image from 'next/image';
 
 export default function Details() {
     return(
@@ -7,7 +8,12 @@ export default function Details() {
             <div className={styles.authorDetails}>
                 <div className={styles.authorDetails__icon}>
                     <a href="">
-                        <img src="/images/temp/avatar1.png" className="w-full" alt=""/>
+                        <Image
+                            src="/images/temp/avatar1.png"
+                            alt=""
+                            width={150}
+                            height={150}
+                        />    
                     </a>
                 </div>
                 <div className={styles.authorDetails__text}>

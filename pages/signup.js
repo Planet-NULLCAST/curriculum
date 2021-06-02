@@ -3,7 +3,7 @@ import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { baseUrl, clientUrl } from "../config/config";
+import { baseUrl } from "../config/config";
 import Head from "next/head";
 
 export default function SignUp() {
@@ -45,25 +45,32 @@ export default function SignUp() {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    const fName = document.querySelector("#fullName").value;
-    const email = document.querySelector("#email").value;
-    const user = document.querySelector("#username").value;
-    const pass = document.querySelector("#password").value;
-    const update = document.querySelector("#updates").value;
-    // console.log(terms);
+    // const fName = document.querySelector("#fullName").value;
+    // const email = document.querySelector("#email").value;
+    // const user = document.querySelector("#username").value;
+    // const pass = document.querySelector("#password").value;
+    // const update = document.querySelector("#updates").value;
+    const fName = e.target.fullName.value;
+    const email = e.target.email.value;
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+    const updates = e.target.updates.value;
+
+    console.log(updates);
     if (validEmail && terms) {
-      const bod = {
+      const signupData = {
         fullName: fName,
         email: email,
-        username: user,
-        password: pass
+        username: username,
+        password: password,
+        updates: updates
       };
-      fetch("http://localhost:8080/api/auth/signup", {
+      fetch(`${baseUrl}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(bod)
+        body: JSON.stringify(signupData)
       })
         .then((response) => {
           return response.json();
@@ -103,10 +110,11 @@ export default function SignUp() {
               community
             </p>
             <div className="container py-2">
-              <form method="" action="">
-                <div className="mb-1 flex flex-col">
+              <form onSubmit={(e) => handleClick(e)}>
+                <div className="mb-1 flex flex-col" name="inner-div">
                   <label
                     className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                    htmlFor="fullName"
                   >
                     Full Name
                   </label>
@@ -114,12 +122,14 @@ export default function SignUp() {
                     placeholder="Enter full name"
                     className="inputStyle"
                     id="fullName"
+                    name="fullName"
                     type="text"
                   />
                 </div>
                 <div className="mb-1 flex flex-col">
                   <label
                     className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                    htmlFor="username"
                   >
                     Username
                   </label>
@@ -127,12 +137,14 @@ export default function SignUp() {
                     placeholder="Enter username"
                     className="inputStyle"
                     id="username"
+                    name="username"
                     type="text"
                   />
                 </div>
                 <div className="mb-1 flex flex-col">
                   <label
                     className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                    htmlFor="email"
                   >
                     Email
                   </label>
@@ -140,6 +152,7 @@ export default function SignUp() {
                     placeholder="Enter email"
                     className="inputStyle"
                     id="email"
+                    name="email"
                     type="email"
                     onChange={(e) => emailValidator(e)}
                   />
@@ -154,6 +167,7 @@ export default function SignUp() {
                 <div className="mb-4 flex flex-col">
                   <label
                     className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                    htmlFor="password"
                   >
                     Password
                   </label>
@@ -162,6 +176,7 @@ export default function SignUp() {
                       placeholder="Enter password"
                       className="inputStyle w-full"
                       id="password"
+                      name="password"
                       type={`${validPassword ? "text" : "password"}`}
                     />
                     <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
@@ -201,11 +216,7 @@ export default function SignUp() {
                     Send me latest updates
                   </label>
                 </div>
-                <button
-                  className="submitButtons w-full"
-                  type="submit"
-                  onClick={(e) => handleClick(e)}
-                >
+                <button className="submitButtons w-full" type="submit">
                   Create account
                 </button>
               </form>

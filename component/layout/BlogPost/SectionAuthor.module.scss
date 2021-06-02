@@ -9,28 +9,35 @@
 
 .widget {
 
-    @apply p-11;
+    @apply p-5 md:p-11;
     background: #FCEBE6;
 
 }
 
 .details {
-    @apply flex mb-7 items-center;
+    @apply md:flex mb-7 items-center;
     [class*="authorDetails__icon"] {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 80px;
+        max-height: 80px;
+        @media (min-width: 768px) {
+            max-width: 100px;
+            max-height: 100px;
+        }
         img{
    
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
+            @media (min-width: 768px) {
+                max-width: 100px;
+                max-height: 100px;
+            }
         }
     }
 }
 
 .stats {
-
     background: #FFDFD6;
-    @apply flex ml-10;
+    @apply flex mt-5 md:mt-0 md:ml-10;
 }
 .statsItem {
     @apply flex-1 text-center p-4;

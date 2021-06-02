@@ -19,13 +19,13 @@ body {
   border-color: #f13e5d;
 }
 .bg-green-710 {
-  background-color: #007F00;
+  background-color: #007f00;
 }
 .hover-green-pink-710:hover {
-  color: #007F00;
+  color: #007f00;
 }
 .border-green-710 {
-  border-color: #007F00;
+  border-color: #007f00;
 }
 
 .submitButtons {
@@ -185,6 +185,22 @@ h3 {
   font-size: 15px;
 }
 
-.min-h-24{
+.min-h-24 {
   min-height: 6rem;
+}
+
+// styleing multi select
+
+.basic-multi-select {
+  .css-yk16xz-control {
+    background-color: #f3f4f5;
+    border: 0px;
+    &:focus {
+      outline: none;
+    }
+  }
+  .css-1pahdxg-control {
+    border: 0px !important;
+    box-shadow: 0px 0px 0px 0px #000 !important;
+  }
 }

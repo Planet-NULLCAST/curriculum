@@ -1,6 +1,6 @@
 
 .blogList {
-    @apply md:grid pt-24 lg:pt-36 gap-20 lg:gap-28 xl:gap-32 grid-cols-2 grid-rows-2;
+    @apply md:grid pt-24 lg:pt-36 gap-20 gap-y-16 lg:gap-x-28 2xl:gap-32 grid-cols-2 grid-rows-2;
 
 }
 

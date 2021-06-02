@@ -15,7 +15,7 @@
 
 }
 .profile__dropdown {
-  @apply absolute top-1/2 right-0 lg:right-1/2 w-52 px-5 py-3 opacity-0 pointer-events-none z-50;
+  @apply absolute top-1/2 right-0 lg:-right-5 w-52 px-5 py-3 opacity-0 pointer-events-none z-50;
   background: #fff;
   box-shadow: 0px 0px 7px rgb(0 0 0 / 10%);
   border-radius: 2px;
@@ -24,27 +24,24 @@
 
   &:before {
     content: '';
-    @apply absolute left-1/2 w-0 h-0;
-    transform: translateX(-50%);
+    @apply absolute left-40 w-0 h-0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid #fff;
     top: -10px;
   }
 
-  @screen lg {
-    transform: translateX(50%);
-  }
-
   li {
     @apply py-2;
     border-top: 1px solid #F3F3F3;
 
-    a {
-      @apply text-sm flex items-center;
+    a, button {
+      @apply text-sm inline-flex items-center;
       color: #878787;
+      background-size: 0 1px;
       &:hover {
         color: #333;
+        background-size: 40px 1px;
         path {
           fill: #333;
         }

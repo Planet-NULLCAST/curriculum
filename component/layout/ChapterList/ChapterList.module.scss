@@ -6,17 +6,17 @@
 
 .list {
 
-    @apply pb-10;
+    @apply pb-5 md:pb-10;
     counter-reset: chapternumber;
 
     li {
 
-        @apply mb-12 flex items-center p-5 md:py-16;
+        @apply mb-12 flex items-center p-3 py-5 md:p-5 md:py-16;
         background: #030B1B;
 
         &:before {
 
-            @apply flex items-center justify-center text-64 font-darker font-black mr-5 lg:mr-10 w-16 h-16 lg:w-32 lg:w-32 flex-shrink-0;
+            @apply flex items-center justify-center text-3xl xl:text-64 font-darker font-black mr-3 md:mr-5 lg:mr-10 w-12 h-12 md:w-32 md:h-32 flex-shrink-0;
             counter-increment: chapternumber;
             content: counter(chapternumber);
             border: 1px solid #1C2525;

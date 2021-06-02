@@ -1,6 +1,6 @@
 .path {
 
-    @apply py-48 bg-dark text-white relative;
+    @apply py-10 xl:py-48 bg-dark text-white relative;
     background-image: url("../../../public/images/bgarrow.svg");
     background-repeat: repeat-y;
     background-position: center top;
@@ -26,7 +26,7 @@
 
     h3 {
 
-        @apply font-darker font-extrabold text-5xl xl:text-64 mb-8;
+        @apply font-darker font-extrabold text-3xl xl:text-64 mb-5 md:mb-8;
 
     }
 
@@ -41,7 +41,7 @@
 
 .row {
 
-    @apply md:flex items-center flex-wrap md:-my-4;
+    @apply flex flex-col-reverse md:flex-row items-center flex-wrap mb-14 md:-my-4 text-center md:text-left;
 
     img {
 
@@ -49,13 +49,13 @@
     }
 
     .svgpath {
-        width: 100%;
-        @apply w-full;
+        @apply w-full hidden md:block;
     }
 }
 
 .image {
 
-    @apply w-4/12 flex justify-end;
-
+    @apply w-4/12 flex justify-end py-5;
+    max-width: 80px;
+    max-height: 160px;
 }
