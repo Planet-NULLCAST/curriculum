@@ -11,7 +11,7 @@ export default function CourseSpotlight({ contents }) {
     >
       <div className="container container--small">
         <div className="md:flex items-center justify-between">
-          <div className="md:w-5/12">
+          <div className="md:w-5/12 text-center md:text-left py-10 md:p-0 mb-5 md:m-0">
             <h2>{contents.title}</h2>
             <h3 className="mb-10 font-semibold text-lg">
               {contents.subtitle}
@@ -23,7 +23,7 @@ export default function CourseSpotlight({ contents }) {
               <span className="btn__text">{contents.buttonText}</span>
             </a>
           </div>
-          <div className="md:w-5/12">
+          <div className="w-1/2 m-auto md:w-5/12">
             <Image
               src={contents.image}
               alt={contents.alt}

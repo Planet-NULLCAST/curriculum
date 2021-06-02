@@ -3,7 +3,7 @@ a, button {
     -webkit-tap-highlight-color: transparent;
     transition: all ease .3s;
 
-    &:focus {
+    &:focus, &:active {
         @apply outline-none;
     }
 }
@@ -12,13 +12,21 @@ input {
         outline: none;
     }
 }
-
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ background: transparent;
+}
+body.menuOpen {
+    overflow: hidden;
+}
 // Button component with style variations
 
 .btn {
     --shadowcolor: #202020;
-    @apply inline-block bg-pink rounded-10 text-white px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
+    @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
     border: 1px solid #1C1C1D;
     box-shadow: 0px 4px 0px var(--shadowcolor);
 
@@ -34,6 +42,9 @@ input {
     &:hover {
         &:before {
             @apply left-0;
+            @media (hover:none) {
+                left: -200%;
+            }
         }
     }
 
@@ -121,7 +132,7 @@ input {
 
 
 .tags {
-    @apply flex flex-wrap mb-4;
+    @apply flex flex-wrap mb-5;
     &__item {
         @apply inline-block px-4 py-2 rounded-full mr-5 text-sm font-bold;
         background: #F2FAFD;

@@ -21,22 +21,22 @@ export default function BlogPost() {
         `}</style>
         <section className={styles.post}>
             <div className="container container--post relative">
+                <div className={styles.postHeader}>
+                        <div className={styles.vote}>
+                            <a href="" className="uo">
+                                <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z" fill="#CFCFCF"/></svg>
+                            </a>
+                            <span className="count">10215</span>
+                            <a href="" className="down">
+                                <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 25.751L.977 5.553C.338 4.62 0 3.68 0 2.899 0 1.389 1.212.454 3.241.454h29.886c2.027 0 3.237.933 3.237 2.44 0 .782-.339 1.707-.98 2.642L21.557 25.744c-.891 1.3-2.09 2.02-3.377 2.02-1.286 0-2.484-.712-3.375-2.013z" fill="#CFCFCF"/></svg>
+                            </a>
+                        </div>
 
-                    <div className={styles.vote}>
-                        <a href="" className="uo">
-                            <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z" fill="#CFCFCF"/></svg>
-                        </a>
-                        <span className="count">10215</span>
-                        <a href="" className="down">
-                            <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 25.751L.977 5.553C.338 4.62 0 3.68 0 2.899 0 1.389 1.212.454 3.241.454h29.886c2.027 0 3.237.933 3.237 2.44 0 .782-.339 1.707-.98 2.642L21.557 25.744c-.891 1.3-2.09 2.02-3.377 2.02-1.286 0-2.484-.712-3.375-2.013z" fill="#CFCFCF"/></svg>
-                        </a>
+                    <div className={styles.title}>
+                        <h2>Creative Search Bar and Input Field Design Inspiration</h2>
+                        <h3 className="date">12 May 2021</h3>
                     </div>
-
-                <div className={styles.title}>
-                    <h2>Creative Search Bar and Input Field Design Inspiration</h2>
-                    <h3 className="date">12 May 2021</h3>
                 </div>
-
                 <div className={styles.sidebar}>
                     <div className={styles.widget}>
                         <div className={styles.index}>
@@ -116,7 +116,7 @@ Year-on-year we see hundreds of startups popping up everywhere with what sounds 
                     <li>adfafsadf</li>
                     </ul>
                     
-                    <figure class="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
+                    <figure class="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></figure>
 
 
                     <div>

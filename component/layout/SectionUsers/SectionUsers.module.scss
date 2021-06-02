@@ -6,7 +6,7 @@
 
 .wrap {
 
-    @apply bg-gray-01 text-white py-7 lg:py-12 relative;
+    @apply bg-gray-01 text-white py-7 xl:py-12 relative;
     transform: rotate(6.2deg);
     margin: 0 -15px;
 
@@ -57,7 +57,7 @@ $animationSpeed: 15s;
     min-width: fit-content;
 
     h4 {
-        @apply text-25 lg:text-34 xl:text-50 font-extrabold text-orange whitespace-nowrap;
+        @apply text-25 xl:text-34 xl:text-40 2xl:text-50 font-extrabold text-orange whitespace-nowrap;
     }
 
 }
