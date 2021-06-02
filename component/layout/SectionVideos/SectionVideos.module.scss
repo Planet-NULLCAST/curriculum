@@ -59,6 +59,11 @@
         height: 6.25rem;
         transform: translate(-50%, -80%);
         z-index: 1;
+        svg {
+            @media (max-width: 1440px) {
+                transform: scale(.7);
+            }
+        }
     }
 
     figcaption {
@@ -67,11 +72,11 @@
     }
 
     h3 {
-        @apply font-bold text-lg md:text-2xl lg:text-32;
+        @apply font-bold text-lg md:text-2xl 2xl:text-32;
         background-image: linear-gradient(#F7DA5B, #F7DA5B);
         background-position: 0 100%;
         background-repeat: no-repeat;
-        background-size: 0px 2px;
+        background-size: 0px 1px;
         padding-bottom: 10px;
         transition: all ease .3s;
         line-height: 1.3;
@@ -96,7 +101,7 @@
     &:hover {
 
         h3 {
-            background-size: 150px 2px;
+            background-size: 80px 1px;
             color: #FDB500;
         }
 

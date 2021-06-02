@@ -1,5 +1,8 @@
 .section {
     @apply py-10 lg:py-12;
+    figure {
+        @apply mb-5 md:mb-0;
+    }
 }
 
 .text {
@@ -10,5 +13,9 @@
 
     p {
         @apply text-15 mb-5;
+    }
+
+    .tags {
+        @apply mb-10;
     }
 }

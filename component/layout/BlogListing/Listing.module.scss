@@ -3,7 +3,7 @@
 }
 
 .listing__tab {
-    @apply flex flex-wrap justify-between lg:mb-5;
+    @apply flex flex-wrap justify-between lg:mb-5 items-center;
     a {
         @apply bg-none;
         &.active {

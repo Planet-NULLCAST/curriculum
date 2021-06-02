@@ -22,7 +22,7 @@ export default function ListingFeatured() {
                     </Fade>
                 </div>
                 <Fade>
-                <div className={` ${styles.text} w-2/3 md:pl-6`}>
+                <div className={` ${styles.text} md:w-2/3 md:pl-6`}>
                     <div className="tags">
                         <a href="" className="tags__item">Development</a>
                         <a href="" className="tags__item">Latest Updates</a>

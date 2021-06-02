@@ -39,13 +39,13 @@ export default function CourseList({ courses }) {
   return (
     <section className="pb-10 lg:pb-20" style={{ scrollBehavior: "smooth" }}>
       <div className="container">
-        <div className="w-8/12">
+        <div className="md:w-8/12 text-center md:text-left">
           <p className="font-bold text-18 text-gray-800">
             Get Ready to leave the pond and dive straight into the ever changing
             rapid stream of Web development.
           </p>
         </div>
-        <div id="courses" className="md:grid gap-3 lg:gap-8 grid-cols-3 py-20">
+        <div id="courses" className="md:grid gap-3 lg:gap-8 grid-cols-3 pt-10 pb-4 lg:py-20">
           {contents.map((content) => (
             <CourseItem key={content.alt} content={content} />
           ))}
