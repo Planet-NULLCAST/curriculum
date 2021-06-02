@@ -6,7 +6,11 @@ module.exports = {
   env: {
     BASE_URL: process.env.BASE_URL,
     CLIENT_URL: process.env.CLIENT_URL,
-    ENV: process.env.ENV
+    ENV: process.env.ENV,
+    EDITOR_URL:
+      process.env.ENV === "development"
+        ? "http://localhost:4200"
+        : "https://editor.nullcast.io"
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")]
