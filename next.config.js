@@ -9,20 +9,23 @@ module.exports = {
     CLIENT_URL: process.env.CLIENT_URL,
     ENV: process.env.ENV,
     EDITOR_URL:
-      process.env.EDITOR_URL || process.env.NODE_ENV === "development"
-        ? "http://localhost:4200"
-        : "https://editor.nullcast.io"
+      process.env.EDITOR_URL
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")]
+  },
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|png)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=9999999999, must-revalidate',
+          }
+        ],
+      },
+    ]
   }
-  // webpack: (config, { isServer }) => {
-  //   // Fixes npm packages that depend on `fs` module
-  //   if (!isServer) {
-  //     config.node = {
-  //       fs: 'empty'
-  //     }
-  //   }
-  //   return config;
-  // },
 };
