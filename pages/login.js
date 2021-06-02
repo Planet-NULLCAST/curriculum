@@ -65,7 +65,7 @@ export default function Login() {
         .then((data) => {
           // console.log(data);
           if (data.accessToken) {
-            document.cookie = `user=${JSON.stringify(data)}`;
+            document.cookie = `userNullcast=${JSON.stringify(data)}`;
 
             let progress = JSON.parse(
               window.localStorage.getItem("progress")
