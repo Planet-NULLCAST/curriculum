@@ -1,4 +1,5 @@
 const path = require("path");
+
 module.exports = {
   future: {
     webpack5: true
@@ -8,7 +9,7 @@ module.exports = {
     CLIENT_URL: process.env.CLIENT_URL,
     ENV: process.env.ENV,
     EDITOR_URL:
-      process.env.ENV === "development"
+      process.env.EDITOR_URL || process.env.NODE_ENV === "development"
         ? "http://localhost:4200"
         : "https://editor.nullcast.io"
   },
