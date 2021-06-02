@@ -13,7 +13,7 @@ export default function Username() {
   const iframeRef = useRef();
 
   useEffect(() => {
-    console.log(process.env);
+    console.log(TARGET);
     // TODO: make api call to get the corresponding post
     // TODO: after getting the post sent a post message to the iframe
     // with { msg: providePost, post: {mobiledoc: required, title} }
