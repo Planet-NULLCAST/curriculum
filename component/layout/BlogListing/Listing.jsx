@@ -42,7 +42,7 @@ export default function Listing() {
                         </Link>
                         </li>
                     </ul>
-                    <div>
+                    <div className="mb-5">
                         <Link href="/">
                             <a>Explore topics</a>
                         </Link>

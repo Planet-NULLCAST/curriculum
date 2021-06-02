@@ -116,7 +116,7 @@ Year-on-year we see hundreds of startups popping up everywhere with what sounds 
                     <li>adfafsadf</li>
                     </ul>
                     
-                    <figure class="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
+                    <figure class="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></figure>
 
 
                     <div>

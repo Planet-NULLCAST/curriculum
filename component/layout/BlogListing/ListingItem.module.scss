@@ -1,6 +1,6 @@
 
  .listing__item {
-    @apply mb-14 md:mb-10;
+    @apply mb-14 md:mb-10 flex flex-col;
     &:hover {
         .listing__figure {
             img {
@@ -13,6 +13,9 @@
     }
     p{ 
         @apply mb-3;
+    }
+    [class*="authorDetails"] {
+        @apply mt-auto;
     }
  }
 

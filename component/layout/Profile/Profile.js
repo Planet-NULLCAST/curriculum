@@ -19,7 +19,7 @@ export default function Profile({ onLogout }) {
         <ul>
           <li>
             <Link href="/u/abc">
-              <a>
+              <a className="linkUnderline">
                 Profile
                 <svg
                   className="ml-3"
@@ -38,7 +38,7 @@ export default function Profile({ onLogout }) {
           </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout}>Logout</button>
+            <button onClick={onLogout} className="linkUnderline">Logout</button>
           </li>
         </ul>
       </div>
