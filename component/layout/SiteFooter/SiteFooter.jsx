@@ -84,6 +84,7 @@ export default function SiteFooter() {
               <a
                 href="https://twitter.com/nullcast_io?lang=en"
                 className={styles.twitter}
+                target="_blank"
               >
                 <Image
                   src="/images/twitter-large.svg"
@@ -96,6 +97,7 @@ export default function SiteFooter() {
               <a
                 href="https://www.linkedin.com/company/nullcast/?originalSubdomain=in"
                 className={styles.linkedin}
+                target="_blank"
               >
                 <Image
                   src="/images/linkedin-large.svg"
@@ -107,6 +109,7 @@ export default function SiteFooter() {
               <a
                 href="https://discord.com/invite/5byDDp2qbK"
                 className={styles.discord}
+                target="_blank"
               >
                 <Image
                   src="/images/discord-large.svg"

@@ -185,11 +185,11 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
       <div
         className={`bg-gray-50 flex flex-row justify-center`}
-        style={{ height: "calc(100vh - 109px)" }}
+        style={{ height: "calc(100vh - 107px)" }}
       >
         <div
           className={`px-4 py-4 overflow-auto text-gray-700 ${
-            contentOnly ? "w-1/2" : "w-1/3"
+            contentOnly ? "md:w-1/2" : "md:w-1/3"
           }`}
         >
           <div className="p-1 text-sm uppercase rounded-full border border-gray-500 tracking-wider font-medium w-28 text-center">
@@ -207,12 +207,12 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           />
         </div>
         {!contentOnly && (
-          <div className="w-1/3">
+          <div className="w-1/3 hidden md:block">
             <Editor courseName={courseName} chapterName={chapterName} />
           </div>
         )}
         {!contentOnly && (
-          <div className="w-1/3">
+          <div className="w-1/3 hidden md:block">
             <Output />
           </div>
         )}
@@ -226,20 +226,19 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             className="h-6 w-6 cursor-pointer ml-4 inline-block m-2"
           />
           <div
-            className="rounded-md bg-gray-600 inline-block"
-            style={{ width: "20rem", margin: "0 0.5rem" }}
+            className="rounded-md bg-gray-600 hidden md:inline-block w-60 lg:w-80 mx-2"
           >
             <div
               className="mt-0 bg-green-600 py-1 rounded-full"
               style={{ width: `${progressBar}%` }}
             ></div>
           </div>
-          <div className="inline-block text-white">
+          <div className="hidden md:inline-block text-white">
             {Math.round(progressBar)}%
           </div>
         </div>
 
-        <div className="flex flex-row w-1/3 justify-between items-center">
+        <div className="flex flex-row w-1/2 justify-end items-center">
           <div className="flex flex-row justify-start items-center ml-4">
             <a
               className={`text-white cursor-pointer`}
@@ -299,10 +298,11 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
             </a>
           </div>
 
-          <div className="w-1/3 mx-4">
+          <div className="pr-5 ml-5 lg:ml-10 hidden md:block">
             <Link href="https://discord.com/invite/5byDDp2qbK">
-              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm">
+              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center">
                 Trouble? Join Discord
+                <svg className="hidden lg:block ml-2" width="19" height="15" viewBox="0 0 19 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.984 6.379c-.756-2.537-1.609-3.848-1.623-3.871-.048-.058-1.253-1.466-4.158-2.508l-.384 1.02c1.382.496 2.362 1.1 2.901 1.49-1.61-.468-3.524-.756-5.22-.756-1.696 0-3.61.288-5.22.757.539-.39 1.519-.995 2.9-1.49L6.798 0C3.892 1.042 2.687 2.45 2.64 2.508c-.014.023-.867 1.334-1.623 3.871C.286 8.824.01 12.273 0 12.411.065 12.51 1.559 15 5.63 15L6.66 13.54a11.102 11.102 0 01-3.267-1.439l.617-.904A10.048 10.048 0 009.5 12.815c1.963 0 3.861-.56 5.49-1.617l.616.904c-1 .652-2.104 1.138-3.267 1.44L13.371 15c4.07 0 5.564-2.49 5.629-2.59-.01-.137-.287-3.586-1.016-6.031zM6.926 9.222H5.813V7.411h1.113v1.812zm6.261 0h-1.113V7.411h1.113v1.812z" fill="#fff"/></svg>
               </a>
             </Link>
           </div>

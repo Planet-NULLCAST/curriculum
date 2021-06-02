@@ -1,6 +1,6 @@
 .spotlight {
-    @apply bg-black min-h-screen flex items-center justify-center text-white md:py-20;
-
+    @apply bg-black flex items-center justify-center text-white md:py-20 relative;
+    height: min(100vh, 1500px);
     &__title {
 
         @apply text-center relative z-10 py-2 block;
@@ -31,6 +31,20 @@
     }
 }
 
+.btnWrap {
+    @apply relative md:flex justify-center py-12 lg:py-20 text-center;
+    a {
+        @apply m-3 text-center md:inline-block;
+        min-width: 260px;
+        max-width: 280px;
+        @media (min-width: 1024px) {
+            min-width: 296px;
+        }
+    }
+    [class*="text"] {
+        @apply text-lg;
+    }
+}
 
 @keyframes move-twink-back {
     from {background-position:0 0;}
@@ -55,16 +69,30 @@
 
 .stars {
   background:#000 url("../../../public/images/sky.png") repeat top center;
-  z-index:0;
 }
 
 .twinkling{
   background:transparent url("../../../public/images/twinkling.png") repeat top center;
-  z-index:1;
 
   -moz-animation:move-twink-back 200s linear infinite;
   -ms-animation:move-twink-back 200s linear infinite;
   -o-animation:move-twink-back 200s linear infinite;
   -webkit-animation:move-twink-back 200s linear infinite;
   animation:move-twink-back 200s linear infinite;
+}
+@keyframes arrow {
+    0% { opacity: 0;  transform: translateY(-40px); }
+    35% { opacity: 1; transform: translateY(0); fill:#969696; }
+    75% { opacity: 1; transform: translateY(0); fill:#969696; }
+    100% { opacity: 0; transform: translateY(40px); fill:#626262; }
+}
+.scroll {
+    @apply absolute left-1/2 bottom-14 sm:bottom-20;
+    transform: translateX(-50%);
+    path {
+        animation: arrow 3s infinite;
+        &:last-child {
+            animation-delay: .3s;
+        }
+    }
 }
