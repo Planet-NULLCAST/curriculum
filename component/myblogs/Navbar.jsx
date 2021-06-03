@@ -37,7 +37,7 @@ export default function Navbar(props) {
           <Select
             options={optionsCategory}
             isMulti={false}
-            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10rem}`}
+            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
             placeholder="Category"
@@ -46,7 +46,7 @@ export default function Navbar(props) {
           <Select
             options={optionsStatus}
             isMulti={false}
-            className={`basic-multi-select postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_5rem}`}
+            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
             placeholder="Blog Status"

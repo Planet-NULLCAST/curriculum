@@ -177,7 +177,8 @@ h3 {
 // maximum width for profile panels
 .max-w-panel {
   max-width: 1600px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 // font size 15px global
@@ -187,6 +188,10 @@ h3 {
 
 .min-h-24 {
   min-height: 6rem;
+}
+.px-0-imp {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 // styleing multi select

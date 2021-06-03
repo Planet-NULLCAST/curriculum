@@ -25,7 +25,7 @@ export default function Username() {
       <SiteHeader />
       <div className="bg-gray-100 py-2 pb-6 px-6">
         <Navbar changeNav={changeNav} currentNav={currentNav} />
-        <div className="flex lg:flex-row flex-col">
+        <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
             <ProfileDetails />
             {currentNav === "profile" && (
