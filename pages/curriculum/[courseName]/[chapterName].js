@@ -48,13 +48,8 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
 
   const clickHandle = (courseName, chapterName) => {
     if (contentOnly) {
-      // let cook = document.cookie;
-      // cook = cook.split("=");
-      // cook[0] !== ""
-      //   ? (cook = JSON.parse(cook[1]).accessToken)
-      //   : (cook = false);
       let cook = authCheck();
-      console.log(cook);
+      // console.log(cook);
       if (cook) {
         axios({
           method: "post",
@@ -121,8 +116,6 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       window.localStorage.setItem("progress", JSON.stringify(progress));
       userState.setRun(true);
     }
-    // userState.setTest(testCase);
-    // let clicked = true;
   };
 
   const [progressBar, setProgressBar] = useState(0);

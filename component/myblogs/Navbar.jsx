@@ -19,7 +19,7 @@ export default function Navbar(props) {
             <p>Blog Status</p>
             <img src="/images/arrowDown.svg" className="ml-2"></img>
           </div>
-          <Link href="/myblogs/write">
+          <Link href="/posts/write">
             <div className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
               <p>Add a New Post</p>
             </div>

@@ -63,20 +63,20 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/blog">
                   <a>Blog</a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/">
                   <a>Events</a>
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link href="/">
                   <a>Leaderboard</a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="md:w-5/12 md:pl-4 lg:w-1/2">
