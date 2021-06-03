@@ -8,8 +8,7 @@ module.exports = {
     BASE_URL: process.env.BASE_URL,
     CLIENT_URL: process.env.CLIENT_URL,
     ENV: process.env.ENV,
-    EDITOR_URL:
-      process.env.EDITOR_URL
+    EDITOR_URL: process.env.EDITOR_URL
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")]
@@ -17,15 +16,15 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png)',
+        source: "/:all*(svg|jpg|png)",
         locale: false,
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=9999999999, must-revalidate',
+            key: "Cache-Control",
+            value: "public, max-age=9999999999, must-revalidate"
           }
-        ],
-      },
-    ]
+        ]
+      }
+    ];
   }
 };
