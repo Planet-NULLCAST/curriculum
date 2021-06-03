@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Select from "react-select";
-import styles from './blogs.module.scss'
+import styles from "./blogs.module.scss";
 
 export default function Navbar(props) {
   const { currentNav } = props;
@@ -16,14 +16,14 @@ export default function Navbar(props) {
     { label: "NodeJS", value: "node" },
     { label: "Database", value: "database" },
     { label: "Python", value: "python" },
-    { label: "Testing", value: "testing" },
+    { label: "Testing", value: "testing" }
   ];
 
   const optionsStatus = [
     { label: "All Posts", value: "all" },
     { label: "Approved", value: "js" },
     { label: "Pending", value: "html" },
-    { label: "Rejected", value: "css" },
+    { label: "Rejected", value: "css" }
   ];
 
   return (
@@ -52,8 +52,10 @@ export default function Navbar(props) {
             placeholder="Blog Status"
             // closeMenuOnSelect={false}
           />
-          <Link href="/myblogs/write">
-            <div className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}>
+          <Link href="/posts/write">
+            <div
+              className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
+            >
               <p>Add a New Post</p>
             </div>
           </Link>

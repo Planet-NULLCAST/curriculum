@@ -6,10 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import Head from "next/head";
+import Cookies from "universal-cookie";
 const axios = require("axios");
 
 export default function Login() {
   const router = useRouter();
+  const cookies = new Cookies();
   // console.log("redirect", router.query.redirect);
   const redirectTo = router.query.redirect;
 
@@ -65,7 +67,8 @@ export default function Login() {
         .then((data) => {
           // console.log(data);
           if (data.accessToken) {
-            document.cookie = `user=${JSON.stringify(data)}`;
+            document.cookie = `userNullcast=${JSON.stringify(data)}`;
+            sessionStorage.setItem("userNullcast", JSON.stringify(data));
 
             let progress = JSON.parse(
               window.localStorage.getItem("progress")

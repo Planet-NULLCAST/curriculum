@@ -66,13 +66,14 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       }
     }
     if (flag) {
-      let cook = document.cookie;
-      cook = cook.split("=");
-      if(cook) {
-        cook[0] !== ""
-        ? (cook = JSON.parse(cook[1]).accessToken)
-        : (cook = false);
-      }
+      // let cook = document.cookie;
+      // cook = cook.split("=");
+      // if (cook) {
+      //   cook[0] !== ""
+      //     ? (cook = JSON.parse(cook[1]).accessToken)
+      //     : (cook = false);
+      // }
+      let cook = authCheck();
       if (cook) {
         axios({
           method: "post",
@@ -89,27 +90,31 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
           }
         });
       }
-      let index = 0;
-      let progress = JSON.parse(window.localStorage.getItem("progress")) || [
-        { courseName: "", completedChapter: [] }
-      ];
+      let progress = JSON.parse(window.localStorage.getItem("progress"));
+      console.log(progress);
       const Course = progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
         }
       });
-      if (Course) {
-        // console.log(Course);
+      if (progress.length > 0 && Course) {
         const index = progress.indexOf(Course);
+        let chapterList = new Set(progress[index].completedChapter);
+        chapterList.add(chapterName);
+        chapterList = [...chapterList];
+        let progressItem = {
+          courseName: courseName,
+          completedChapter: chapterList
+        };
+        progress[index] = progressItem;
+      } else {
+        let progressDetails = {
+          courseName: courseName,
+          completedChapter: []
+        };
+        progressDetails.completedChapter.push(chapterName);
+        progress.push(progressDetails);
       }
-      let chapterList = new Set(progress[index].completedChapter);
-      chapterList.add(chapterName);
-      chapterList = [...chapterList];
-      let progressItem = {
-        courseName: courseName,
-        completedChapter: chapterList
-      };
-      progress[index] = progressItem;
       userState.setProgress(progress);
       window.localStorage.setItem("progress", JSON.stringify(progress));
     }

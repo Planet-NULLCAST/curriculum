@@ -63,20 +63,25 @@ export default function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/blog">
                   <a>Blog</a>
                 </Link>
               </li>
               <li>
+                <Link href="/code-of-conduct">
+                  <a>Code of conduct</a>
+                </Link>
+              </li>
+              {/* <li>
                 <Link href="/">
                   <a>Events</a>
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link href="/">
                   <a>Leaderboard</a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="md:w-5/12 md:pl-4 lg:w-1/2">
@@ -84,6 +89,7 @@ export default function SiteFooter() {
               <a
                 href="https://twitter.com/nullcast_io?lang=en"
                 className={styles.twitter}
+                target="_blank"
               >
                 <Image
                   src="/images/twitter-large.svg"
@@ -96,6 +102,7 @@ export default function SiteFooter() {
               <a
                 href="https://www.linkedin.com/company/nullcast/?originalSubdomain=in"
                 className={styles.linkedin}
+                target="_blank"
               >
                 <Image
                   src="/images/linkedin-large.svg"
@@ -107,6 +114,7 @@ export default function SiteFooter() {
               <a
                 href="https://discord.com/invite/5byDDp2qbK"
                 className={styles.discord}
+                target="_blank"
               >
                 <Image
                   src="/images/discord-large.svg"

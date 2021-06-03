@@ -14,6 +14,7 @@ const axios = require("axios");
 import Select from "react-select";
 
 export default function Navbar(props) {
+  const { saveToDraft } = props;
   const [openSettings, setopenSettings] = useState(false);
   // console.log(
   //   baseUrl,
@@ -71,7 +72,7 @@ export default function Navbar(props) {
           <div className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
             <p>Publish</p>
           </div>
-          <div className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+          <div onClick={saveToDraft} className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
             <p>Save to Draft</p>
           </div>
           <div
@@ -108,10 +109,10 @@ export default function Navbar(props) {
                   <span className="font-bold text-lg">Settings</span>
                 </div>
                 <div className="flex flex-col p-5">
-                  <div class="h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative cursor-pointer">
+                  <div className="h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative cursor-pointer">
                     <input
                       type="file"
-                      class="cursor-pointer relative block opacity-0 w-full h-full z-50"
+                      className="cursor-pointer relative block opacity-0 w-full h-full z-50"
                     />
                     <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
                       <Image
@@ -151,7 +152,7 @@ export default function Navbar(props) {
                   <div className="w-full mt-3 relative h-20 mb-0">
                     <textarea
                       maxlength="160"
-                      className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full h-20"
+                      className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
                       placeholder="Excerpt - short description about post"
                     />
                     <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
@@ -168,7 +169,7 @@ export default function Navbar(props) {
                   <div className="w-full mt-3 relative h-20 mb-0">
                     <textarea
                       maxlength="160"
-                      className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full h-20"
+                      className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
                       placeholder="Description"
                     />
                     <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">

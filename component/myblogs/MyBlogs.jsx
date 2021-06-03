@@ -20,7 +20,9 @@ export default function Navbar({ posts }) {
                 href="/a-post"
                 className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
               >
-                <a>{item.title}</a>
+                <a className="text-gray-900 text-xl hover:text-green-600">
+                  {item.title}
+                </a>
               </Link>
               <div className={`text-xs text-gray-400`}>
                 {moment(item?.createdAt).format("LL")}
@@ -54,7 +56,7 @@ export default function Navbar({ posts }) {
               <Link
                 href={{
                   pathname: "/posts/write",
-                  query: { blog_id: item._id }
+                  query: { post_id: item._id }
                 }}
               >
                 <div

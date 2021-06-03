@@ -1,13 +1,14 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../component/myblogs/Navbar";
 import MyBlogs from "../../component/myblogs/MyBlogs";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { baseUrl, allPostsUrl } from "../../config/config";
 import Cookies from "universal-cookie";
+import withAuth from "../../component/withAuth/withAuth";
 const axios = require("axios");
 
-export default function Mypost() {
+const MyPost = () => {
   const cookies = new Cookies();
   const [postData, setPostData] = useState({
     posts: [],
@@ -16,28 +17,28 @@ export default function Mypost() {
 
   useEffect(() => {
     // console.log(cookies.get("user"));
-    const userCookie = cookies.get("user");
-    async function getPost() {
-      try {
-        const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
-          headers: {
-            "x-access-token": `${userCookie.accessToken}`
-          }
-        });
-        console.log(data);
-        const posts = data.posts;
-        const count = data.count;
-        console.log(typeof posts);
-        console.log(posts);
-        setPostData({
-          posts: posts,
-          count: count
-        });
-      } catch (err) {
-        console.log(err);
+    const userCookie = cookies.get("userNullcast");
+    if (userCookie) {
+      async function getPost() {
+        try {
+          const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+            headers: {
+              "x-access-token": `${userCookie.accessToken}`
+            }
+          });
+          // console.log(response);
+          const { posts, count } = data;
+          // console.log({ posts });
+          setPostData({
+            posts: posts,
+            count: count
+          });
+        } catch (err) {
+          console.log(err);
+        }
       }
+      getPost();
     }
-    getPost();
   }, []);
 
   const data = [
@@ -78,6 +79,7 @@ export default function Mypost() {
       __v: 0
     }
   ];
+
   return (
     <div>
       <Head>
@@ -88,11 +90,15 @@ export default function Mypost() {
         <div className="max-w-panel">
           <Navbar />
           <MyBlogs
-            // posts={postData.posts}
-            posts={data}
+            posts={postData.posts}
+            // posts={data}
           />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default withAuth(MyPost);
+
+// export default MyPost;
