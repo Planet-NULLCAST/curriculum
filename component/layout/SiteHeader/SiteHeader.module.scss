@@ -6,11 +6,11 @@
   &[class*="sticky"] {
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
     @media (min-width: 993px){
-      transform: translateY(-65px);
+      // transform: translateY(-65px);
     }
   }
   &[class*="show"] {
-    transform: translateY(0);
+    // transform: translateY(0);
   }
   [class*="btn"]:last-child {
     margin-right: 0;
@@ -42,7 +42,7 @@
   &[class*="menu-open"] {
     .navFixed {
       @media (max-width: 992px) {
-        transform: translateX(0);
+        // transform: translateX(0);
       }
       
     }
@@ -168,12 +168,13 @@
     display: block;
   }
   span {
-    @apply absolute h-1 opacity-100;
-    left: 10%;
+    @apply absolute opacity-100;
+    left: 25%;
     transform: translate(0,-50%);
-    width: 80%;
+    width: 18px;
+    height: 2px;
     border-radius: 20px;
-    background: #000;
+    background: #4E4E4E;
     transition: transform 0.3s , top 0.3s , opacity 0.9s;
     transition-delay: 0s , 0.3s , 0.3s;
 

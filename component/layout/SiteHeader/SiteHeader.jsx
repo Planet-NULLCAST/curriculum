@@ -67,7 +67,7 @@ export default function HomeSpotlight() {
         <div id="logo">
           <Link href="/">
             <a>
-              <img src="/images/nullcast.png" alt=""/>
+              <img src="/images/nullcast.svg" alt=""/>
             </a>
           </Link>
         </div>

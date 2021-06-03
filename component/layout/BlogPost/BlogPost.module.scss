@@ -10,6 +10,7 @@
 
 .postContent {
 
+    @apply lg:text-lg
     line-height: 2.2;
 
     p, img, iframe, ul, ol, blockquote, h2, h3, h4, pre, figure {
