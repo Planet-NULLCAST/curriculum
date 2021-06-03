@@ -3,29 +3,26 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 import { authCheck } from "../../../lib/authCheck";
 
 export default function HomeSpotlight() {
-  const [menuState, ToggleMenu] = useState(false);
+  const [menuState, toggleMenu] = useState(false);
   const ShowMenu = () => {
-    ToggleMenu(!menuState);
+    toggleMenu(!menuState);
   };
   useEffect(() => {
-    document.body.classList.toggle('menuOpen', menuState);
-  }, [menuState])
+    document.body.classList.toggle("menuOpen", menuState);
+  }, [menuState]);
   const router = useRouter();
   // console.log("aspath", router.asPath);
   const currentPath = router.asPath;
   const [cookies, setCookies] = useState("");
   useEffect(() => {
     let cook = authCheck();
-    // cook = cook.split("=");
     cook && setCookies(cook);
   }, []);
 
   useEffect(() => {
-
     let header = document.getElementById("header");
     let sticky = header.offsetTop;
     let prevScrollpos = window.pageYOffset;
@@ -38,36 +35,38 @@ export default function HomeSpotlight() {
       }
     }
 
-    window.onscroll = function() {
-
+    window.onscroll = function () {
       headerSticky();
 
       let currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
-          header.classList.add('show');
+        header.classList.add("show");
       } else {
-          header.classList.remove('show');
+        header.classList.remove("show");
       }
       prevScrollpos = currentScrollPos;
-
     };
-
   }, []);
 
   function logout() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
-    document.cookie = "userNullcast=";
+    document.cookie =
+      "userNullcast=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setCookies("");
+    sessionStorage.setItem("userNullcast", null);
     router.reload();
   }
   return (
-    <header className={`${styles.header} ${ menuState ? "menu-open" : " " }`} id="header">
+    <header
+      className={`${styles.header} ${menuState ? "menu-open" : " "}`}
+      id="header"
+    >
       <div className={styles.wrap}>
         <div id="logo">
           <Link href="/">
             <a>
-              <img src="/images/nullcast.png" alt=""/>
+              <img src="/images/nullcast.png" alt="" />
             </a>
           </Link>
         </div>
@@ -93,22 +92,18 @@ export default function HomeSpotlight() {
               </li>
               <li>
                 <Link href="/">
-                  {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                  {/*TO DO: add drop down menu blog, code of conduct*/}
                   <a>Explore</a>
                 </Link>
                 <ul>
                   <li>
                     <Link href="/blog">
-                      <a>
-                        Blog
-                      </a>
+                      <a>Blog</a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog">
-                      <a>
-                        Blog
-                      </a>
+                    <Link href="/code-of-conduct">
+                      <a>Code of conduct</a>
                     </Link>
                   </li>
                 </ul>
@@ -116,11 +111,11 @@ export default function HomeSpotlight() {
             </ul>
           </nav>
         </div>
-          <a className={`${styles.btnMenu} hidden`} onClick={() => ShowMenu()}>
-             <span></span>
-             <span></span>
-             <span></span>
-         </a>
+        <a className={`${styles.btnMenu} hidden`} onClick={() => ShowMenu()}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
         <div className={styles.wrapBtn}>
           {cookies ? (
             <div className="flex flex-row justify-center items-center">
