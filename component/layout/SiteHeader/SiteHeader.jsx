@@ -63,6 +63,13 @@ export default function HomeSpotlight() {
       id="header"
     >
       <div className={styles.wrap}>
+        <div id="logo">
+          <Link href="/">
+            <a>
+              <img src="/images/nullcast.png" alt="" />
+            </a>
+          </Link>
+        </div>
         <div className={styles.navFixed}>
           <nav>
             <ul className={styles.mainMenu}>
@@ -88,6 +95,18 @@ export default function HomeSpotlight() {
                   {/*TO DO: add drop down menu blog, code of conduct*/}
                   <a>Explore</a>
                 </Link>
+                <ul>
+                  <li>
+                    <Link href="/blog">
+                      <a>Blog</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/code-of-conduct">
+                      <a>Code of conduct</a>
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </nav>
