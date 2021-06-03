@@ -28,7 +28,10 @@ export default function Trails() {
   return (
     <>
       {trailItems.map((trail) => (
-        <div className={`w-1/5 px-1 h-auto py-1 ${Profilestyles.min_w_9}`}>
+        <div
+          key={trail.trailName}
+          className={`w-1/5 px-1 h-auto py-1 ${Profilestyles.min_w_9}`}
+        >
           <div
             className={`w-full p-4 h-full rounded ${
               trail.trailName === "Contributor" && Profilestyles?.bg_green_110

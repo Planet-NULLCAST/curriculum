@@ -23,11 +23,11 @@ export default function FollowersList() {
       image: "/images/pic1.png"
     },
     {
-      name: "Benjamin Amelia",
+      name: "Benjamin Amel",
       image: ""
     },
     {
-      name: "William Sophia",
+      name: "William Sophi",
       image: "/images/pic2.png"
     },
     {
@@ -39,7 +39,7 @@ export default function FollowersList() {
       image: ""
     },
     {
-      name: "Oliver Ava",
+      name: "Oliver Eva",
       image: "/images/pic1.png"
     }
   ];
@@ -58,7 +58,7 @@ export default function FollowersList() {
       </div>
       <div className="mt-4">
         {followers?.map((data) => (
-          <div className="flex items-center py-2">
+          <div className="flex items-center py-2" key={data.name + data.image}>
             {data?.image ? (
               <div className="w-8 h-8 overflow-hidden rounded-full flex items-center justify-center text-white mr-3">
                 <img
