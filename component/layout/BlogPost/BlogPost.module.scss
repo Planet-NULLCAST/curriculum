@@ -10,7 +10,7 @@
 
 .postContent {
 
-    @apply lg:text-lg
+    @apply lg:text-lg;
     line-height: 2.2;
 
     p, img, iframe, ul, ol, blockquote, h2, h3, h4, pre, figure {
@@ -64,7 +64,7 @@
 }
 
 .title {
-    @apply lg:text-center mb-12 ml-10 lg:ml-0;
+    @apply lg:text-center mb-12 ml-5 md:ml-10 lg:ml-0;
     color: #353535;
     h2 {
         @apply leading-snug mb-5;
@@ -79,12 +79,15 @@
         @apply flex;
     }
 }
-.vote {
-    @apply lg:sticky top-10  flex flex-col items-center font-black font-darker text-xl w-20;
-    @media (min-width: 1024px) {
-        margin-bottom: -100px;
+.wrapVote {
+    @media (min-width: 1024px){
+        @apply absolute h-full;
         margin-left: -12vw;
     }
+}
+.vote {
+    @apply lg:sticky top-20  flex flex-col items-center font-black font-darker text-xl w-20;
+
     span {
         @apply block my-2;
     }
@@ -100,10 +103,11 @@
     @apply absolute left-full top-0 h-full ml-10 hidden lg:block;
 }
 .widget {
-    @apply sticky top-0 p-4 py-6 lg:p-5 lg:py-7;
+    @apply sticky p-4 py-6 lg:p-5 lg:py-7;
     width: min(280px, 18vw);
     background: #242424;
     color: #AFAFAF;
+    top: 80px;
 }
 
 .index {

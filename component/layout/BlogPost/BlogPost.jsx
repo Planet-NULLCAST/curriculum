@@ -22,6 +22,7 @@ export default function BlogPost() {
         <section className={styles.post}>
             <div className="container container--post relative">
                 <div className={styles.postHeader}>
+                    <div className={styles.wrapVote}>
                         <div className={styles.vote}>
                             <a href="" className="uo">
                                 <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z" fill="#CFCFCF"/></svg>
@@ -31,6 +32,7 @@ export default function BlogPost() {
                                 <svg width="37" height="28" viewBox="0 0 37 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.805 25.751L.977 5.553C.338 4.62 0 3.68 0 2.899 0 1.389 1.212.454 3.241.454h29.886c2.027 0 3.237.933 3.237 2.44 0 .782-.339 1.707-.98 2.642L21.557 25.744c-.891 1.3-2.09 2.02-3.377 2.02-1.286 0-2.484-.712-3.375-2.013z" fill="#CFCFCF"/></svg>
                             </a>
                         </div>
+                    </div>
 
                     <div className={styles.title}>
                         <h2>Creative Search Bar and Input Field Design Inspiration</h2>
@@ -94,13 +96,13 @@ export default function BlogPost() {
 Year-on-year we see hundreds of startups popping up everywhere with what sounds like the next big thing in tech that's going to revolutionize the industry and year-on-year without fail we see the vast majority of them fail.</p>
 
 <h3 id="post1">Twitter post</h3>
-                    <figure class="kg-card kg-embed-card"><blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">In the third installment of <a href="https://twitter.com/hashtag/OpenMinded?src=hash&amp;ref_src=twsrc%5Etfw">#OpenMinded</a>, <a href="https://twitter.com/KendallJenner?ref_src=twsrc%5Etfw">@KendallJenner</a> is joined by Dr. Curley Bonds (<a href="https://twitter.com/md_bonds?ref_src=twsrc%5Etfw">@md_bonds</a>), who explains how to step up as an ally for a loved one who is experiencing a panic attack or seems regularly anxious.<br /><br />Watch more: <a href="https://t.co/aAzSYRjj3A">https://t.co/aAzSYRjj3A</a> <a href="https://t.co/a301idiLwi">pic.twitter.com/a301idiLwi</a></p>&mdash; Vogue Magazine (@voguemagazine) <a href="https://twitter.com/voguemagazine/status/1395487612614455304?ref_src=twsrc%5Etfw">May 20, 2021</a></blockquote>
+                    <figure className="kg-card kg-embed-card"><blockquote className="twitter-tweet" data-width="550"><p lang="en" dir="ltr">In the third installment of <a href="https://twitter.com/hashtag/OpenMinded?src=hash&amp;ref_src=twsrc%5Etfw">#OpenMinded</a>, <a href="https://twitter.com/KendallJenner?ref_src=twsrc%5Etfw">@KendallJenner</a> is joined by Dr. Curley Bonds (<a href="https://twitter.com/md_bonds?ref_src=twsrc%5Etfw">@md_bonds</a>), who explains how to step up as an ally for a loved one who is experiencing a panic attack or seems regularly anxious.<br /><br />Watch more: <a href="https://t.co/aAzSYRjj3A">https://t.co/aAzSYRjj3A</a> <a href="https://t.co/a301idiLwi">pic.twitter.com/a301idiLwi</a></p>&mdash; Vogue Magazine (@voguemagazine) <a href="https://twitter.com/voguemagazine/status/1395487612614455304?ref_src=twsrc%5Etfw">May 20, 2021</a></blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </figure>
 
                     <p>A startup can fail for a wide variety of reasons, but most often than not, they fail because they don't achieve product-market fit. It is because the product they have built—no matter how good it is—is not selling.  Customers are not talking about it, they don't understand its values, dwindling sales numbers, below par user base, and so on. Which points to one thing </p>
                     <h3 id="post2">Image post</h3>
-                    <figure class="kg-card kg-image-card"><img src="https://nullcast-assets.s3.amazonaws.com/dev/posts/4243524wrtfsdf/nullcast-banner-template.png" class="kg-image" alt loading="lazy" width="340" height="192" /></figure>
+                    <figure className="kg-card kg-image-card"><img src="https://nullcast-assets.s3.amazonaws.com/dev/posts/4243524wrtfsdf/nullcast-banner-template.png" className="kg-image" alt loading="lazy" width="340" height="192" /></figure>
                     <h2 id="heading-1">heading 1</h2>
                     <blockquote>
                     <p>a quote<br />
@@ -116,7 +118,7 @@ Year-on-year we see hundreds of startups popping up everywhere with what sounds 
                     <li>adfafsadf</li>
                     </ul>
                     
-                    <figure class="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></figure>
+                    <figure className="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></figure>
 
 
                     <div>
@@ -125,26 +127,26 @@ Year-on-year we see hundreds of startups popping up everywhere with what sounds 
 
                     <p>A startup can fail for a wide variety of reasons, but most often than not, they fail because they don't achieve product-market fit. It is because the product they have built—no matter how good it is—is not selling.  Customers are not talking about it, they don't understand its values, dwindling sales numbers, below par user base, and so on. Which points to one thing </p>
 
-                    <pre><code>&lt;div class="navbar"&gt;
-                        &lt;div class="nav"&gt;
-                            &lt;a href="#home" class="activeTab" onclick="setActive('home')" id='home'&gt;
-                                &lt;i class="fa fa-home"&gt;&lt;/i&gt;
+                    <pre><code>&lt;div className="navbar"&gt;
+                        &lt;div className="nav"&gt;
+                            &lt;a href="#home" className="activeTab" onclick="setActive('home')" id='home'&gt;
+                                &lt;i className="fa fa-home"&gt;&lt;/i&gt;
                                 Home
                             &lt;/a&gt;
                             &lt;a href="#contact" onclick="setActive('contact')" id='contact'&gt;
-                                &lt;i class="fa fa-phone-square-alt"&gt;&lt;/i&gt;
+                                &lt;i className="fa fa-phone-square-alt"&gt;&lt;/i&gt;
                                 Contact
                             &lt;/a&gt;
                             &lt;a href="#gallery" onclick="setActive('gallery')" id='gallery'&gt;
-                                &lt;i class="fa fa-image"&gt;&lt;/i&gt;
+                                &lt;i className="fa fa-image"&gt;&lt;/i&gt;
                                 Gallery
                             &lt;/a&gt;
                             &lt;a href="#login" onclick="setActive('login')" id='login'&gt;
-                                &lt;i class="fa fa-sign-in-alt"&gt;&lt;/i&gt;
+                                &lt;i className="fa fa-sign-in-alt"&gt;&lt;/i&gt;
                                 Login
                             &lt;/a&gt;
                         &lt;/div&gt;
-                        &lt;div class="tab activeTabhome" id='tab'&gt;
+                        &lt;div className="tab activeTabhome" id='tab'&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;</code></pre>
 

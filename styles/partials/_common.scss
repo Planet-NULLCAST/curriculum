@@ -20,7 +20,9 @@ input:-webkit-autofill:active
  background: transparent;
 }
 body.menuOpen {
-    overflow: hidden;
+    @media (max-width: 991px) {
+        overflow: hidden;
+    }
 }
 // Button component with style variations
 
@@ -149,7 +151,7 @@ body.menuOpen {
     }
     &--post {
         max-width: 800px;
-        @screen 2xl {
+        @media (min-width: 1536px) {
             max-width: 950px;
         }
     }
