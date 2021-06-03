@@ -28,7 +28,7 @@
 
     .text {
 
-        @apply relative pl-5 lg:pl-10 text-18 font-semibold;
+        @apply relative pl-5 lg:pl-10 text-18 lg:font-semibold;
 
         &:before {
 

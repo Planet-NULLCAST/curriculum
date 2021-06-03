@@ -2,7 +2,7 @@
 a, button {
     -webkit-tap-highlight-color: transparent;
     transition: all ease .3s;
-
+    outline: none;
     &:focus, &:active {
         @apply outline-none;
     }
@@ -49,7 +49,7 @@ body.menuOpen {
     }
 
     &--subscribe {
-        @apply py-4 px-6 lg:px-14;
+        @apply p-3 sm:py-4 sm:px-6 lg:px-14;
     }
 
     &__text {
@@ -88,6 +88,15 @@ body.menuOpen {
 
     &--small {
         @apply text-xl px-10 py-3;
+    }
+
+    &--whiteBorder {
+        --shadowcolor:transparent;
+        @apply bg-transparent border border-white;
+        border-radius: 2px;
+        @media (max-width: 1023px) {
+            @apply px-7 py-4;
+        }
     }
 
     &__arrow {

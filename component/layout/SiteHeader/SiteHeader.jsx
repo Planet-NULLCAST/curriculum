@@ -64,6 +64,13 @@ export default function HomeSpotlight() {
   return (
     <header className={`${styles.header} ${ menuState ? "menu-open" : " " }`} id="header">
       <div className={styles.wrap}>
+        <div id="logo">
+          <Link href="/">
+            <a>
+              <img src="/images/nullcast.png" alt=""/>
+            </a>
+          </Link>
+        </div>
         <div className={styles.navFixed}>
           <nav>
             <ul className={styles.mainMenu}>
@@ -89,6 +96,22 @@ export default function HomeSpotlight() {
                   {/*TO DO: add some menu blog, events, leaderboard drop down*/}
                   <a>Explore</a>
                 </Link>
+                <ul>
+                  <li>
+                    <Link href="/blog">
+                      <a>
+                        Blog
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/blog">
+                      <a>
+                        Blog
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </nav>

@@ -8,7 +8,7 @@ export default function SectionBlogs() {
         <section className='pt-10 lg:pt-20'>
             <div className='container container--small'>
                 <div className="sectionHeader">
-                    <Fade cascade>
+                    <Fade>
                     <h2 className='sectionHeader__title md:w-36 lg:w-44 xl:w-56'>Series of Blogs</h2>
                     <p className="sectionHeader__description">Get the latest scoop from the world of tech ranging from javascript to AI and other crazy hacks from dev ducks across the globe.</p>
                     </Fade>
