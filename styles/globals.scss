@@ -47,7 +47,7 @@ body {
 @import "./partials/common";
 
 html {
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
 }
 
 body {
@@ -191,7 +191,8 @@ h3 {
 
 // styleing multi select
 
-.basic-multi-select {
+.basic-multi-select,
+.basic-single {
   .css-yk16xz-control {
     background-color: #f3f4f5;
     border: 0px;
@@ -202,5 +203,21 @@ h3 {
   .css-1pahdxg-control {
     border: 0px !important;
     box-shadow: 0px 0px 0px 0px #000 !important;
+  }
+  .css-1okebmr-indicatorSeparator {
+    display: none !important;
+  }
+  .css-tlfecz-indicatorContainer {
+    svg {
+      path {
+        fill: black;
+      }
+    }
+  }
+}
+.postFilter {
+  .css-yk16xz-control {
+    background-color: #e5e7eb !important;
+    height: 38px !important;
   }
 }

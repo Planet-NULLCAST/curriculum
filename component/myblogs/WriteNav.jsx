@@ -14,6 +14,7 @@ const axios = require("axios");
 import Select from "react-select";
 
 export default function Navbar(props) {
+  const { saveToDraft } = props;
   const [openSettings, setopenSettings] = useState(false);
   // console.log(
   //   baseUrl,
@@ -71,7 +72,7 @@ export default function Navbar(props) {
           <div className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
             <p>Publish</p>
           </div>
-          <div className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+          <div onClick={saveToDraft} className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
             <p>Save to Draft</p>
           </div>
           <div

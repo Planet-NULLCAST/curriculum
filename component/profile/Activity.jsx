@@ -2,16 +2,34 @@ import React from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import Profilestyles from "../../styles/Profile.module.css";
+import Select from "react-select";
+// import styles from './blogs.module.scss'
 
 export default function Activity() {
+
+  const optionsCategory = [
+    { label: "2021", value: "2021" },
+    { label: "2020", value: "2020" },
+    { label: "2019", value: "2019" },
+  ];
+
   return (
     <div className="bg-white shadow-sm rounded p-4 mt-4 h-72 flex flex-col justify-between">
       <div className="flex justify-between items-center mb-4">
         <span className="font-bold">Activity</span>
-        <div className="bg-gray-200 flex items-center text-sm font-semibold px-3 py-2">
+        {/* <div className="bg-gray-200 flex items-center text-sm font-semibold px-3 py-2">
           <p>2021</p>
           <img src="/images/arrowDown.svg" className="ml-2"></img>
-        </div>
+        </div> */}
+        <Select
+            options={optionsCategory}
+            isMulti={false}
+            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${Profilestyles.min_w_6rem}`}
+            classNamePrefix="Year"
+            clearValue={() => undefined}
+            placeholder="Year"
+            // closeMenuOnSelect={false}
+          />
       </div>
       <div className="overflow-x-auto pb-3">
         <CalendarHeatmap

@@ -1,0 +1,41 @@
+.spotlight {
+  @apply text-white pt-10 xl:pt-16 relative;
+  background: var(--bgcolor);
+  padding-bottom: 150px;
+  @screen lg {
+    padding-bottom: 170px;
+  }
+  &:before {
+    @apply absolute left-0 bottom-0 w-full;
+    content: "";
+    background: url("../public/images/bg-coursespotlight2.svg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 100px;
+    @screen lg {
+      height: 125px;
+    }
+  }
+
+  h2 {
+    @apply pb-6 2xl:pb-10 font-darker font-black text-5xl md:text-5xl xl:text-64;
+  }
+
+  img {
+    @apply m-auto;
+    max-width: 200px;
+  }
+}
+.code {
+  margin-bottom: 6rem !important;
+  p,
+  li {
+    color: #202020;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  h3 {
+    color: #353535;
+    font-size: 25px;
+  }
+}
