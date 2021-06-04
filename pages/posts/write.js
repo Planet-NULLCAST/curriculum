@@ -8,7 +8,7 @@ import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
 const TARGET = env.EDITOR_URL;
 
-export default function Username() {
+export default function Write() {
   const [currentNav, setcurrentNav] = useState("profile");
   const [post, setPost] = useState(null);
   const iframeRef = useRef();
@@ -63,7 +63,7 @@ export default function Username() {
   return (
     <>
       <Head>
-        <title>My Posts | Nullcast</title>
+        <title>Write | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 px-6 min-h-screen-top">

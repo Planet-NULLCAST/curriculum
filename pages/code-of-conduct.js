@@ -1,17 +1,10 @@
 import Head from "next/head";
-import { courses, addCourses } from "../courses/meta";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import CourseSpotlight from "../component/layout/CourseSpotlight/CourseSpotlight";
-import CourseList from "../component/layout/CourseList/CourseList";
-import CourseJourney from "../component/layout/CourseJourney/CourseJourney";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import styles from "./../styles/Conduct.module.scss";
-import Image from "next/image";
 
-export default function Courses() {
-  // addCourses();
-
+export default function CodeConduct() {
   const contents = {
     type: "courses",
     title: "Code of conduct",
@@ -23,12 +16,11 @@ export default function Courses() {
     imageWidth: 482,
     imageHeight: 377,
     bgcolor: "#083644"
-    // bgimage: "bg1"
   };
   return (
     <div>
       <Head>
-        <title> Curriculum | Nullcast </title>
+        <title>Code of Conduct | Nullcast </title>
       </Head>
       <SiteHeader />
       <section
@@ -207,7 +199,6 @@ export default function Courses() {
       </div>
       <SectionSwag />
       <SiteFooter />
-      {/* <CourseList courses={courses} /> */}
     </div>
   );
 }

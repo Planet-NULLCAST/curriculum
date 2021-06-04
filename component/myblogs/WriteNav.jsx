@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const axios = require("axios");
 import Select from "react-select";
 
-export default function Navbar(props) {
+export default function WriteNav(props) {
   const { saveToDraft } = props;
   const [openSettings, setopenSettings] = useState(false);
   // console.log(

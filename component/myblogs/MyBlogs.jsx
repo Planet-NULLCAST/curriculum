@@ -4,7 +4,7 @@ import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Navbar({ posts }) {
+export default function Blogs({ posts }) {
   // console.log({posts});
 
   return (
