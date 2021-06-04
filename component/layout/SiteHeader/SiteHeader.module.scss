@@ -1,11 +1,15 @@
 .header {
-  @apply bg-white relative left-0 top-0 w-full z-20 p-3 md:px-10 2xl:py-5 sticky;
+  height: 60px;
+  @media (min-width: 1536px) {
+    height: 80px;
+  }
+  @apply bg-white relative left-0 top-0 w-full z-20 px-3 md:px-10 sticky flex items-center;
   // border: 1px solid rgb(255, 255, 255);
   // border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all ease .3s;
+  transition: all ease 0.3s;
   &[class*="sticky"] {
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
-    @media (min-width: 993px){
+    @media (min-width: 993px) {
       // transform: translateY(-65px);
     }
   }
@@ -15,12 +19,12 @@
   [class*="btn"]:last-child {
     margin-right: 0;
   }
-  
+
   &[class*="menu-open"] {
     .navFixed {
       @media (max-width: 992px) {
         @apply pointer-events-auto opacity-100;
-        transition: opacity .05s;
+        transition: opacity 0.05s;
       }
       @media (max-width: 767px) {
         top: 0;
@@ -45,25 +49,25 @@
   @media (max-width: 992px) {
     @apply fixed left-0 top-0 w-screen h-screen bg-opacity-95 z-20 pointer-events-none opacity-0;
     height: calc(100vh + 10px);
-    transition: opacity .2s;
+    transition: opacity 0.2s;
     max-width: 414px;
   }
   @media (max-width: 767px) {
-    transition: opacity .5s cubic-bezier(1.000, 0.020, 1.000, -0.100);
+    transition: opacity 0.5s cubic-bezier(1, 0.02, 1, -0.1);
     max-width: 100%;
   }
   ul {
-    @media (max-width:992px) {
+    @media (max-width: 992px) {
       @apply flex flex-col items-start text-base;
     }
   }
   li {
-    @media (max-width:992px) {
+    @media (max-width: 992px) {
       @apply mb-5;
     }
   }
   a {
-    @media (max-width:992px) {
+    @media (max-width: 992px) {
       @apply text-white;
     }
   }
@@ -80,9 +84,9 @@
   transition: none;
   @media (max-width: 992px) {
     @apply w-full h-full relative px-6 py-5 flex flex-col justify-between items-center;
-    background: #090E1E;
+    background: #090e1e;
     padding-bottom: 100px;
-    transition: transform ease .5s;
+    transition: transform ease 0.5s;
     transform: translate(-100%, 0);
     nav {
       @apply w-full;
@@ -90,7 +94,7 @@
   }
   @media (max-width: 767px) {
     margin-top: 60px;
-    transform: translate(0,100%);
+    transform: translate(0, 100%);
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
   }
@@ -104,14 +108,14 @@
     @apply w-full block bg-white left-0 top-0;
     height: 59px;
     transform: translate(-100%, 0);
-    transition: transform ease .5s;
+    transition: transform ease 0.5s;
     max-width: 414px;
   }
   @media (max-width: 767px) {
     @apply fixed max-w-full;
     height: 85px;
     transform: translate(0, -85px);
-    transition-delay: .2s;
+    transition-delay: 0.2s;
   }
 }
 .wrap {
@@ -170,9 +174,9 @@
       box-shadow: 0px 0px 7px rgb(0 0 0 / 10%);
       border-radius: 2px;
       border-radius: 2px;
-      transition: all ease .3s;
+      transition: all ease 0.3s;
       &:before {
-        content: '';
+        content: "";
         @apply absolute left-40 w-0 h-0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
@@ -180,15 +184,15 @@
         top: -10px;
       }
     }
-  
-  
+
     li {
       @apply py-2 m-0;
-      border-top: 1px solid #F3F3F3;
+      border-top: 1px solid #f3f3f3;
       @media (max-width: 992px) {
         @apply border-0 pt-5 pb-3;
       }
-      a, button {
+      a,
+      button {
         @apply text-base inline-flex items-center;
         color: #878787;
         background-size: 0 1px;
@@ -202,7 +206,6 @@
       }
     }
   }
-
 }
 
 .wrapBtn {
@@ -213,7 +216,8 @@
   @apply rounded-full relative overflow-hidden;
 }
 
-.btnMenu, .btnClose {
+.btnMenu,
+.btnClose {
   @apply absolute left-3 z-10 w-10 h-10 cursor-pointer;
   top: 10px;
   @media (max-width: 992px) {
@@ -222,21 +226,21 @@
   span {
     @apply absolute opacity-100;
     left: 25%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     width: 20px;
     height: 2px;
     border-radius: 20px;
     background: #333;
-    transition: transform 0.3s , top 0.3s , opacity 0.9s;
-    transition-delay: 0s , 0.3s , 0.3s;
+    transition: transform 0.3s, top 0.3s, opacity 0.9s;
+    transition-delay: 0s, 0.3s, 0.3s;
 
-    &:nth-child(1){
-      top: 14px; 
+    &:nth-child(1) {
+      top: 14px;
     }
-    &:nth-child(2){
-      top: 20px; 
+    &:nth-child(2) {
+      top: 20px;
     }
-    &:nth-child(3){
+    &:nth-child(3) {
       top: 26px;
       width: 11px;
     }
@@ -246,16 +250,16 @@
   @apply left-auto right-3;
   span {
     width: 23px;
-    &:nth-child(1){
-      top: 50%; 
-      transform: translate(0,-50%) rotate(-45deg);
+    &:nth-child(1) {
+      top: 50%;
+      transform: translate(0, -50%) rotate(-45deg);
     }
-    &:nth-child(2){
-      opacity: 0; 
+    &:nth-child(2) {
+      opacity: 0;
     }
-    &:nth-child(3){
-      top: 50%; 
-      transform: translate(0,-50%) rotate(45deg);
+    &:nth-child(3) {
+      top: 50%;
+      transform: translate(0, -50%) rotate(45deg);
       width: 23px;
     }
   }

@@ -20,7 +20,7 @@ export default function Navbar({ posts }) {
                 href="/a-post"
                 className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
               >
-                <a className="text-gray-900 text-xl hover:text-green-600">
+                <a className="text-gray-900 text-xl hover:text-purple-600 font-semibold">
                   {item.title}
                 </a>
               </Link>

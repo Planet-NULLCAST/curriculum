@@ -180,6 +180,9 @@ h3 {
   margin-left: auto;
   margin-right: auto;
 }
+.min-h-screen-top {
+  min-height: calc(100vh - 60px);
+}
 
 // font size 15px global
 .text-15 {

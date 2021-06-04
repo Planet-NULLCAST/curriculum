@@ -50,7 +50,7 @@ const MyPost = () => {
       createdBy: "60a4d5ac2871874c835ca542",
       updatedBy: "person b",
       html: "</a>",
-      title: "person a post 21",
+      title: "Creative Search Bar and Input Field Design Inspiration",
       mobiledoc: "mobiledoc",
       status: "approved",
       featured: true,
@@ -86,12 +86,12 @@ const MyPost = () => {
         <title>My Posts | Nullcast</title>
       </Head>
       <SiteHeader />
-      <div className="bg-gray-100 py-2 pb-6 px-6 min-h-screen">
+      <div className="bg-gray-100 py-2 pb-6 px-6 min-h-screen-top">
         <div className="max-w-panel">
           <Navbar />
           <MyBlogs
-            posts={postData.posts}
-            // posts={data}
+            // posts={postData.posts}
+            posts={data}
           />
         </div>
       </div>
@@ -99,6 +99,6 @@ const MyPost = () => {
   );
 };
 
-export default withAuth(MyPost);
+// export default withAuth(MyPost);
 
-// export default MyPost;
+export default MyPost;
