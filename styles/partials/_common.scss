@@ -20,10 +20,19 @@ input:-webkit-autofill:active
  background: transparent;
 }
 body.menuOpen {
-    overflow: hidden;
+    @media (max-width: 991px) {
+        overflow: hidden;
+    }
 }
 // Button component with style variations
 
+.linkUnderline {
+    background-image: linear-gradient(#8DA1A1, #8DA1A1);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    transition: all ease .4s;
+}
 .btn {
     --shadowcolor: #202020;
     @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
@@ -65,15 +74,27 @@ body.menuOpen {
         font-size: 14px;
         border-radius: 1px;
 
+        &:before {
+            display: none;
+        }
+        .btn__text {
+            @apply linkUnderline;
+            background-image: linear-gradient(#fff, #fff);
+            background-size: 0 1px;
+        }
         &:hover {
-            border-color: #FDB500;
+            .btn__text {
+                background-size: 40px 1px;
+            }
         }
     }
 
     &--blackborder {
         @apply text-black;
         background: transparent;
-
+        .btn__text {
+            background-image: linear-gradient(#000, #000);
+        }
     }
 
     &--purple {
@@ -96,6 +117,16 @@ body.menuOpen {
         border-radius: 2px;
         @media (max-width: 1023px) {
             @apply px-7 py-4;
+        }
+        .btn__text {
+            @apply linkUnderline;
+            background-image: linear-gradient(#fff, #fff);
+            background-size: 0 1px;
+        }
+        &:hover {
+            .btn__text {
+                background-size: 40px 1px;
+            }
         }
     }
 
@@ -122,6 +153,9 @@ body.menuOpen {
     }
     &--post {
         max-width: 800px;
+        @media (min-width: 1536px) {
+            max-width: 950px;
+        }
     }
 }
 
@@ -173,11 +207,4 @@ body.menuOpen {
             animation: move-duck .5s ease forwards;
         }
     }
-}
-
-.linkUnderline {
-    background-image: linear-gradient(#8DA1A1, #8DA1A1);
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 100% 1px;
 }

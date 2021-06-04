@@ -6,13 +6,13 @@ import Link from "next/link";
 import { authCheck } from "../../../lib/authCheck";
 
 export default function HomeSpotlight() {
-  const [menuState, toggleMenu] = useState(false);
+  const [menu, setMenu] = useState(false);
   const ShowMenu = () => {
-    toggleMenu(!menuState);
+    setMenu(menu);
   };
   useEffect(() => {
-    document.body.classList.toggle("menuOpen", menuState);
-  }, [menuState]);
+    document.body.classList.toggle('menuOpen', menu);
+  }, [menu])
   const router = useRouter();
   // console.log("aspath", router.asPath);
   const currentPath = router.asPath;
@@ -58,64 +58,73 @@ export default function HomeSpotlight() {
     router.reload();
   }
   return (
-    <header
-      className={`${styles.header} ${menuState ? "menu-open" : " "}`}
-      id="header"
-    >
+    <header className={`${styles.header} ${ menu ? "menu-open" : " " }`} id="header">
       <div className={styles.wrap}>
         <div id="logo">
           <Link href="/">
-            <a>
-              <img src="/images/nullcast.png" alt="" />
+            <a onClick={() => setMenu(true)}>
+              <img src="/images/nullcast.svg" alt=""/>
             </a>
           </Link>
         </div>
         <div className={styles.navFixed}>
-          <nav>
-            <ul className={styles.mainMenu}>
-              <li>
-                <Link href="/">
-                  <a>What the Ducks?</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/curriculum">
-                  <a>School of Ducks</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/posts">
-                  <a>
-                    Write <img src="/images/hand.png" className="ml-1" alt="" />
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/">
-                  {/*TO DO: add drop down menu blog, code of conduct*/}
-                  <a>Explore</a>
-                </Link>
-                <ul>
-                  <li>
-                    <Link href="/blog">
-                      <a>Blog</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/code-of-conduct">
-                      <a>Code of conduct</a>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
+          <div className={styles.whiteBg}>
+            <a className={`${styles.btnClose} hidden`} onClick={() => setMenu(false)}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </a>
+          </div>
+          <div className={styles.darkBg}>
+            <nav>
+              <ul className={styles.mainMenu}>
+                <li>
+                  <Link href="/">
+                    <a onClick={() => setMenu(true)}>What the Ducks?</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/curriculum">
+                    <a onClick={() => setMenu(true)}>School of Ducks</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/posts">
+                    <a onClick={() => setMenu(true)}>
+                      Write <img src="/images/hand.png" className="ml-1" alt="" />
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/">
+                    {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                    <a onClick={() => setMenu(true)}>Explore</a>
+                  </Link>
+                  <ul>
+                    <li>
+                      <Link href="/blog">
+                        <a onClick={() => setMenu(true)}>
+                          Blog
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/blog">
+                        <a onClick={() => setMenu(true)}>
+                          Code of conduct
+                        </a>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            <a href="" className="btn btn--whiteBorder">
+              <span className="btn__text">Donate</span>
+            </a>
+          </div>
         </div>
-        <a className={`${styles.btnMenu} hidden`} onClick={() => ShowMenu()}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </a>
+            
         <div className={styles.wrapBtn}>
           {cookies ? (
             <div className="flex flex-row justify-center items-center">
@@ -146,10 +155,15 @@ export default function HomeSpotlight() {
             </a>
           )}
 
-          {/* <a href="" className="btn btn--blackborder">
+          {/* <a href="" className="btn btn--blackborder hidden lg:block">
             <span className="btn__text">Donate</span>
           </a> */}
         </div>
+        <a className={`${styles.btnMenu} hidden`} onClick={() => setMenu(true)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
       </div>
     </header>
   );
