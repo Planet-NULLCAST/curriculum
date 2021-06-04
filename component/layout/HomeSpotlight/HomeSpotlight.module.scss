@@ -40,6 +40,9 @@
         @media (min-width: 1024px) {
             min-width: 296px;
         }
+        @media (min-width: 1440px) {
+            max-width: 350px;
+        }
         &:hover {
             &:before {
                 display: none;

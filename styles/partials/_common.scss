@@ -92,7 +92,9 @@ body.menuOpen {
     &--blackborder {
         @apply text-black;
         background: transparent;
-
+        .btn__text {
+            background-image: linear-gradient(#000, #000);
+        }
     }
 
     &--purple {

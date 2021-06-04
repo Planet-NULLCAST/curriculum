@@ -1,15 +1,12 @@
 
 .userInfo {
-  @apply relative flex-shrink-0 mr-2;
+  @apply relative flex-shrink-0 mr-2 2xl:p-1;
   div {
     display: block !important;
   }
   &:hover {
     .profile__dropdown {
       @apply opacity-100 pointer-events-auto top-full;
-      @screen lg {
-        top: 110%;
-      }
     }
   }
 

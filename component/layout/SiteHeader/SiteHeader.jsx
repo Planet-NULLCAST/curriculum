@@ -155,7 +155,7 @@ export default function HomeSpotlight() {
             </a>
           )}
 
-          {/* <a href="" className="btn btn--blackborder">
+          {/* <a href="" className="btn btn--blackborder hidden lg:block">
             <span className="btn__text">Donate</span>
           </a> */}
         </div>
