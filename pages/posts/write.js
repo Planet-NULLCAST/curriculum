@@ -69,7 +69,7 @@ export default function Username() {
       <div className="bg-gray-100 px-6 min-h-screen-top">
       <div className="max-w-panel pt-15px">
           <WriteNav saveToDraft={saveBlog} />
-          <div className={`${MyBlogsstyles.height_Iframe_write} bg-white w-full rounded overflow-y-auto`}>
+          <div className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}>
             <iframe
               ref={iframeRef}
               className="w-full h-full"

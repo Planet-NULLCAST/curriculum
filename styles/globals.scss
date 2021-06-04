@@ -190,7 +190,20 @@ h3 {
 .pt-15px{
   padding-top: 15px;
 }
-
+.height_list {
+  max-height: calc(100vh - 206px);
+}
+.height_Iframe_write{
+  height: calc(100vh - 176px);
+}
+@media (min-width: 1536px) {
+  .height_list {
+    max-height: calc(100vh - 226px);
+  }
+  .height_Iframe_write{
+    height: calc(100vh - 196px);
+  }
+}
 // font size 15px global
 .text-15 {
   font-size: 15px;

@@ -9,7 +9,7 @@ export default function Navbar({ posts }) {
 
   return (
     <div
-      className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto ${MyBlogsstyles.height_list}`}
+      className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list`}
     >
       {posts &&
         posts.map((item, index) => (

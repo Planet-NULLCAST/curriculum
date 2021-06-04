@@ -45,12 +45,7 @@
   font-size: 14px;
   font-weight: 600;
 }
-.height_list {
-  max-height: calc(100vh - 206px);
-}
-.height_Iframe_write{
-  height: calc(100vh - 176px);
-}
+
 .navigation {
   height: 50px;
 }
