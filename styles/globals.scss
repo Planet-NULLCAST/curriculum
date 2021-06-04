@@ -183,6 +183,13 @@ h3 {
 .min-h-screen-top {
   min-height: calc(100vh - 60px);
 }
+.h-sub-nav{
+  height: 65px;
+  margin-bottom: 15px;
+}
+.pt-15px{
+  padding-top: 15px;
+}
 
 // font size 15px global
 .text-15 {
