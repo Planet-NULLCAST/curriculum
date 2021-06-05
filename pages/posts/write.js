@@ -4,10 +4,11 @@ import MyBlogs from "../../component/myblogs/MyBlogs";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { env } from "../../next.config";
+import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
 const TARGET = env.EDITOR_URL;
 
-export default function Username() {
+export default function Write() {
   const [currentNav, setcurrentNav] = useState("profile");
   const [post, setPost] = useState(null);
   const iframeRef = useRef();
@@ -62,14 +63,13 @@ export default function Username() {
   return (
     <>
       <Head>
-        <title>My Posts | Nullcast</title>
+        <title>Write | Nullcast</title>
       </Head>
       <SiteHeader />
-      <div className="bg-gray-100 py-2 pb-6 px-6 min-h-screen">
-        <div className="max-w-panel">
-          {/* <Navbar /> */}
+      <div className="bg-gray-100 px-6 min-h-screen-top">
+      <div className="max-w-panel pt-15px">
           <WriteNav saveToDraft={saveBlog} />
-          <div className="h-screen">
+          <div className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}>
             <iframe
               ref={iframeRef}
               className="w-full h-full"

@@ -109,7 +109,7 @@ export default function SignUp() {
               Want to be a Mighty Dev Duck? Login and contribute to our
               community
             </p>
-            <div className="container py-2">
+            <div className="container py-2 px-0-imp">
               <form onSubmit={(e) => handleClick(e)}>
                 <div className="mb-1 flex flex-col" name="inner-div">
                   <label

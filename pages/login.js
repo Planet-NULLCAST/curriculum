@@ -135,7 +135,7 @@ export default function Login() {
               <p className={`${Loginstyles.text_gray_910} mt-2 text-sm`}>
                 Welcome Back!
               </p>
-              <div className="container py-2">
+              <div className="container py-2 px-0-imp">
                 <form method="" action="">
                   <div className="mb-1 flex flex-col">
                     <label
