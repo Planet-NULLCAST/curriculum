@@ -78,22 +78,34 @@ body.menuOpen {
             display: none;
         }
         .btn__text {
-            @apply linkUnderline;
-            background-image: linear-gradient(#fff, #fff);
-            background-size: 0 1px;
+            // @apply linkUnderline;
+            // background-image: linear-gradient(#fff, #fff);
+            // background-size: 0 1px;
         }
         &:hover {
             .btn__text {
-                background-size: 40px 1px;
+                // background-size: 40px 1px;
             }
         }
+    }
+
+    svg {
+        transition: all ease .3s;
     }
 
     &--blackborder {
         @apply text-black;
         background: transparent;
         .btn__text {
-            background-image: linear-gradient(#000, #000);
+            // background-image: linear-gradient(#000, #000);
+        }
+    }
+    &--black {
+        &:hover {
+            @apply bg-white text-black;
+            svg {
+                fill: #000;
+            }
         }
     }
 

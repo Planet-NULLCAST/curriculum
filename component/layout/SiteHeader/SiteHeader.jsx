@@ -98,7 +98,12 @@ export default function HomeSpotlight() {
                 <li>
                   <Link href="/">
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)}>Explore</a>
+                    <a onClick={() => setMenu(true)}>
+                      Explore
+                      <span className={styles.downArrow}>
+                        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" fill="#1B1B1B"><path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" /></svg>
+                      </span>
+                    </a>
                   </Link>
                   <ul>
                     <li>
@@ -143,13 +148,12 @@ export default function HomeSpotlight() {
                 className="btn__arrow"
                 width="14"
                 height="9"
-                fill="none"
+                fill="#fff"
                 viewBox="0 0 14 9"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.794 3.862L10.119.205a.703.703 0 00-.992.997l2.467 2.454H.704a.703.703 0 100 1.406h10.89L9.127 7.518a.703.703 0 10.992.997l3.674-3.656a.705.705 0 000-.996z"
-                  fill="#fff"
                 />
               </svg>
             </a>

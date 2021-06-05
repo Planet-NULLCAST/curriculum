@@ -34,7 +34,7 @@
 .btnWrap {
     @apply relative md:flex justify-center py-5 pb-14 md:py-20 2xl:pt-28 2xl:pb-10 text-center;
     a {
-        @apply m-1 lg:mx-3 text-center md:inline-block;
+        @apply m-1 lg:mx-3 text-center md:inline-block leading-none;
         min-width: 260px;
         max-width: 280px;
         @media (min-width: 1024px) {
