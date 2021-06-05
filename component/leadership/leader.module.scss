@@ -1,0 +1,33 @@
+.spotlight {
+    background-image: url(../../public/images/bg-leader.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-clip: unset;
+    background-size: cover;
+    @media (max-width: 768px) {
+        background-position: center;
+    }
+
+    @apply text-white pt-10 xl:pt-16 relative mb-8;
+    h2 {
+        @apply pb-6 2xl:pb-10 font-darker font-black text-5xl md:text-5xl xl:text-64;
+    }
+
+    img {
+        @apply m-auto;
+        max-width: 200px;
+    }
+}
+.code {
+    margin-bottom: 6rem !important;
+    p,
+    li {
+        color: #202020;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    h3 {
+        color: #353535;
+        font-size: 25px;
+    }
+}

@@ -4,11 +4,13 @@ import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Navbar({ posts }) {
+export default function Blogs({ posts }) {
   // console.log({posts});
 
   return (
-    <div className="w-full mt-4 bg-white py-5 rounded  shadow-sm">
+    <div
+      className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list`}
+    >
       {posts &&
         posts.map((item, index) => (
           <div
@@ -20,7 +22,7 @@ export default function Navbar({ posts }) {
                 href="/a-post"
                 className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
               >
-                <a className="text-gray-900 text-xl hover:text-green-600">
+                <a className="text-gray-900 text-xl hover:text-purple-600 font-semibold">
                   {item.title}
                 </a>
               </Link>
@@ -77,6 +79,33 @@ export default function Navbar({ posts }) {
                   </span>
                 </div>
               </Link>
+            </div>
+            <div
+              className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
+            >
+              <div className="max-w-panel w-full flex justify-end items-center">
+                <span className="text-purple-600 text-sm">1 - 10&nbsp;&nbsp;of 1100</span>
+                <div className="ml-4 hover:bg-white duration-700 w-6 h-6 rounded flex justify-center items-center cursor-pointer hover:opacity-50">
+                  <Image
+                    src="/images/svgs/left.svg"
+                    alt="edit"
+                    width={15}
+                    height={15}
+                    layout="fixed"
+                    margin={0}
+                  />
+                </div>
+                <div className="ml-3 hover:bg-white duration-700 w-6 h-6 rounded flex justify-center items-center cursor-pointer hover:opacity-50">
+                  <Image
+                    src="/images/svgs/right.svg"
+                    alt="edit"
+                    width={15}
+                    height={15}
+                    layout="fixed"
+                    margin={0}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         ))}

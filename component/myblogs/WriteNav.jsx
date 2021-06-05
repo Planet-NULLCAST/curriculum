@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const axios = require("axios");
 import Select from "react-select";
 
-export default function Navbar(props) {
+export default function WriteNav(props) {
   const { saveToDraft } = props;
   const [openSettings, setopenSettings] = useState(false);
   // console.log(
@@ -48,7 +48,7 @@ export default function Navbar(props) {
   ];
 
   return (
-    <div className="bg-white my-3 flex flex-row items-center rounded shadow-sm">
+    <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
           <Link href={`/posts`}>
