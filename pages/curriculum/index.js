@@ -14,6 +14,7 @@ export default function Courses() {
     type: "courses",
     title: "School of Ducks",
     subtitle: "Want to be a Mighty Duck?",
+    description: "Get Ready to leave the pond and dive straight into the ever changing rapid stream of Web development.",
     buttonText: "Get Started for free",
     image: "/images/illustration-1.svg",
     alt: "Want to be a Mighty Duck?",

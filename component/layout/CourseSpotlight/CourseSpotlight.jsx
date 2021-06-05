@@ -12,9 +12,12 @@ export default function CourseSpotlight({ contents }) {
     >
       <div className="container container--small">
         <div className="md:flex items-center justify-between">
-          <div className="md:w-5/12 text-center md:text-left py-10 md:p-0 mb-5 md:m-0">
+          <div className="md:w-5/12 text-center md:text-left md:py-10 md:p-0 mb-5 md:m-0">
             <h2>{contents.title}</h2>
-            <h3 className="mb-10 font-semibold text-lg">{contents.subtitle}</h3>
+            <div className="mb-10">
+              <h3 className="font-semibold text-lg mb-2">{contents.subtitle}</h3>
+              <p className="text-lg">{contents.description}</p>
+            </div>
             <Link
               href={
                 contents.type === "courses"
@@ -27,7 +30,7 @@ export default function CourseSpotlight({ contents }) {
               </a>
             </Link>
           </div>
-          <div className="w-1/2 m-auto md:w-5/12">
+          <div className="w-1/2 m-auto md:w-5/12 spotlightImage">
             <Image
               src={contents.image}
               alt={contents.alt}
