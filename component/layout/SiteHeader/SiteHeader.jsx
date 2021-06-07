@@ -96,7 +96,7 @@ export default function HomeSpotlight() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/">
+                  <Link href="#">
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
                     <a onClick={() => setMenu(true)}>
                       Explore

@@ -68,7 +68,7 @@ body.menuOpen {
     &--black, &--blackborder {
         --shadowcolor:transparent;
         @apply 
-            inline-block relative bg-black flex items-center justify-center 
+            inline-block relative bg-black inline-flex items-center justify-center 
             text-white px-3 2xl:px-6 py-2 mx-3  capitalize font-semibold leading-tight 2xl:leading-normal 
             border border-black ;
         font-size: 14px;
