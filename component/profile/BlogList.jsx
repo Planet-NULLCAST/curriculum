@@ -3,7 +3,7 @@ import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function Activity() {
+export default function BlogList() {
   const blogs = [
     {
       name: "Null Safety in Flutter",

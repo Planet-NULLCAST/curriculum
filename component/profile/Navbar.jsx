@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 export default function Navbar(props) {
   const { currentNav } = props;
   return (
-    <div className="bg-white h-12 my-3 flex flex-row items-center rounded shadow-sm">
+    <div className="bg-white h-12 my-3 flex flex-row items-center rounded shadow-sm max-w-panel">
       <ul className="flex flex-row justify-start items-center font-semibold h-full">
         <li
           className={`mx-4 cursor-pointer border-b-4 h-full flex justify-center items-center ${

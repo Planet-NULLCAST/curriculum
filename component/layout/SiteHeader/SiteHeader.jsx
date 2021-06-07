@@ -58,8 +58,8 @@ export default function HomeSpotlight() {
     router.reload();
   }
   return (
-    <header className={`${styles.header} ${ menu ? "menu-open" : " " }`} id="header">
-      <div className={styles.wrap}>
+    <header className={`${styles.header} ${ menu ? "menu-open" : " " } w-full`} id="header">
+      <div className={`${styles.wrap} flex items-center justify-between w-full`}>
         <div id="logo">
           <Link href="/">
             <a onClick={() => setMenu(true)}>
@@ -67,6 +67,7 @@ export default function HomeSpotlight() {
             </a>
           </Link>
         </div>
+        <div className="flex items-center flex-end">
         <div className={styles.navFixed}>
           <div className={styles.whiteBg}>
             <a className={`${styles.btnClose} hidden`} onClick={() => setMenu(false)}>
@@ -168,6 +169,7 @@ export default function HomeSpotlight() {
           <span></span>
           <span></span>
         </a>
+        </div>
       </div>
     </header>
   );
