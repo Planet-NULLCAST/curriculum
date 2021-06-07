@@ -7,7 +7,7 @@
         font-weight: 800;
         
         &:nth-child(1){
-            @apply text-black text-5xl lg:text-90;
+            @apply text-black text-5xl xl:text-6xl 2xl:text-90;
             -webkit-text-stroke: 2px #fff;
             // text-shadow:
             //     -2px -2px 0 #fff,  
@@ -22,7 +22,7 @@
         }
 
         &:nth-child(3) {
-            @apply text-yellow-01 text-40 lg:text-75 uppercase;
+            @apply text-yellow-01 text-40 xl:text-6xl 2xl:text-75 uppercase;
             font-family: 'Darker Grotesque', sans-serif;
             font-weight: 900;
             transform: rotate(-4.58deg);
@@ -34,7 +34,7 @@
 .btnWrap {
     @apply relative md:flex justify-center py-5 pb-14 md:py-20 2xl:pt-28 2xl:pb-10 text-center;
     a {
-        @apply m-1 lg:mx-3 text-center md:inline-block;
+        @apply m-1 lg:mx-3 text-center md:inline-block leading-none;
         min-width: 260px;
         max-width: 280px;
         @media (min-width: 1024px) {

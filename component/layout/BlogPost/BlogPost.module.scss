@@ -113,7 +113,7 @@
         top: 80px;
     }
     @media (max-width: 1024px) {
-        @apply p-0;
+        @apply p-0 w-auto rounded-sm;
     }
 }
 
@@ -169,7 +169,7 @@
         ul {
             @apply block w-auto;
             a {
-                @apply block p-3 py-4 w-auto h-auto;
+                @apply block p-2 py-4 w-auto h-auto;
             }
             svg {
                 @apply m-auto;

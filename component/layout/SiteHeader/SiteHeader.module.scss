@@ -134,7 +134,7 @@
   }
 
   li {
-    @apply mx-3;
+    @apply mx-3 relative;
 
     @media (max-width: 992px) {
       @apply m-0 py-5 w-full;
@@ -149,12 +149,15 @@
         @screen lg {
           top: 100%;
         }
+        @media (max-width: 991px) {
+          max-height: 1000px;
+        }
       }
     }
   }
 
   a {
-    @apply flex items-center;
+    @apply inline-flex items-center;
     transition: all ease 0.3s;
     background-image: linear-gradient(#000, #000);
     background-position: 0 100%;
@@ -168,13 +171,13 @@
   }
 
   ul {
+    transition: all ease .3s;
     @media (min-width: 992px) {
       @apply absolute top-1/2 right-0 lg:-right-5 w-52 px-5 py-3 opacity-0 pointer-events-none z-50;
       background: #fff;
       box-shadow: 0px 0px 7px rgb(0 0 0 / 10%);
       border-radius: 2px;
       border-radius: 2px;
-      transition: all ease 0.3s;
       &:before {
         content: "";
         @apply absolute left-40 w-0 h-0;
@@ -184,7 +187,10 @@
         top: -10px;
       }
     }
-
+    @media (max-width: 991px) {
+      @apply max-h-0 overflow-hidden;
+    }
+  
     li {
       @apply py-2 m-0;
       border-top: 1px solid #f3f3f3;
@@ -206,6 +212,18 @@
       }
     }
   }
+  .downArrow {
+    @apply mt-1 ml-2;
+    @media (max-width: 991px) {
+      @apply absolute right-2 top-2 w-7 h-7 flex items-center justify-center;
+    }
+  }
+  svg {
+    @media (max-width: 991px) {
+      fill: #fff;
+    }
+  }
+
 }
 
 .wrapBtn {
