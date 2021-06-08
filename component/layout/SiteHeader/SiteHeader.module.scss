@@ -42,6 +42,9 @@
     @apply mr-auto relative z-40;
     img {
       max-height: 30px;
+      @screen md {
+        min-width: 140px;
+      }
     }
   }
 }

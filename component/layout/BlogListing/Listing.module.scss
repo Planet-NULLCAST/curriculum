@@ -1,14 +1,35 @@
 .listing {
-    @apply py-10 lg:pb-20;
+    @apply py-10 pt-6 lg:pb-20;
 }
 
 .listing__tab {
-    @apply flex flex-wrap justify-between lg:mb-5 items-center;
+    @apply flex flex-wrap lg:flex-nowrap lg:mb-5 items-end 992:items-center justify-end lg:justify-between flex-col-reverse 992:flex-row sticky bg-white w-full;
+    top: 22px;
+    z-index: 1;
+    @screen lg {
+        @apply pt-5;
+        top: 60px;
+    }
+    @screen 2xl {
+        top: 79px;
+    }
     a {
-        @apply bg-none;
+        @apply bg-none whitespace-nowrap;
         &.active {
             background: rgba(28, 53, 185, 0.13);
             color: #1C35B9;
+        }
+    }
+    ul {
+        @apply flex flex-nowrap mb-3;
+    }
+    [class*="blackborder"] {
+        @screen lg {
+            @apply border-0 p-0 font-bold underline text-lg;
+            color: #1E1E1E;
+            svg {
+                @apply hidden;
+            }
         }
     }
  }
