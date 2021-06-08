@@ -6,6 +6,7 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import Cookies from "universal-cookie";
 import withAuth from "../../component/withAuth/withAuth";
 import PostService from "../../services/PostService";
+import Pagination from "../../component/pagination/pagination";
 
 const MyPost = () => {
   const cookies = new Cookies();
@@ -34,6 +35,11 @@ const MyPost = () => {
       getPosts();
     }
   }, []);
+  
+  const pageChange = (pageNo, limit) => {
+    console.log(pageNo, limit, "page index");
+    // call api here for Pagination
+  };
 
   return (
     <div>
@@ -45,8 +51,9 @@ const MyPost = () => {
         <div className="max-w-panel pt-15px">
           <Navbar />
           <MyBlogs
-            posts={postData.posts}
-            // posts={data}
+            // posts={postData.posts}
+            posts={data}
+            paginationData={pageChange}
           />
         </div>
       </div>
@@ -54,9 +61,9 @@ const MyPost = () => {
   );
 };
 
-export default withAuth(MyPost);
+// export default withAuth(MyPost);
 
-// export default MyPost;
+export default MyPost;
 
 const data = [
   {
