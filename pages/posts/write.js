@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
 import { baseUrl } from "../../config/config";
+// import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
 const TARGET = env.EDITOR_URL;
 
 export default function Write() {
-  const [currentNav, setcurrentNav] = useState("profile");
   // const [post, setPost] = useState(null);
   const iframeRef = useRef();
   const postElement = useRef();
@@ -73,10 +73,6 @@ export default function Write() {
       });
     };
   }, [postId]);
-
-  const changeNav = (data) => {
-    setcurrentNav(data);
-  };
 
   const updateThisPost = {
     mobiledoc: {
@@ -193,17 +189,19 @@ export default function Write() {
   return (
     <>
       <Head>
-        <title>My Posts | Nullcast</title>
+        <title>Write | Nullcast</title>
       </Head>
       <SiteHeader />
-      <div className="bg-gray-100 py-2 pb-6 px-6 min-h-screen">
-        <div className="max-w-panel">
+      <div className="bg-gray-100 px-6 min-h-screen-top">
+        <div className="max-w-panel pt-15px">
           <WriteNav
             saveToDraft={saveToDraft}
             publishPost={publishPost}
             getSettings={getSettings}
           />
-          <div className="h-screen">
+          <div
+            className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
+          >
             <iframe
               ref={iframeRef}
               className="w-full h-full"

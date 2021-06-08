@@ -3,7 +3,7 @@ import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function Activity() {
+export default function BlogList() {
   const blogs = [
     {
       name: "Null Safety in Flutter",
@@ -70,7 +70,7 @@ export default function Activity() {
               >
                 {data?.name}
               </p>
-              {/* <p class="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
+              {/* <p className="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
             </div>
           </div>
         ))}

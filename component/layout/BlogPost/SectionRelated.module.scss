@@ -13,10 +13,10 @@
 }
 
 .relatedList {
-    @apply md:grid grid-cols-3 gap-4 lg:gap-9;
+    @apply sm:grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-9;
 
     h3 {
-        @apply text-base font-semibold mb-7 leading-normal;
+        @apply text-base 2xl:text-lg font-semibold mb-7 leading-normal;
         a {
             transition: all ease .6s;
             background-size: 0 1px;
@@ -36,6 +36,11 @@
     [class*="position"] {
         @apply font-bold;
         color: #C3BEBE;
+    }
+    [class*="authorDetails"] {
+        h4 {
+            @apply 2xl:text-lg;
+        }
     }
 
 }

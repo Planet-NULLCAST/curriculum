@@ -2,38 +2,51 @@
 
     @apply relative;
 
-    &:before {
-        @apply absolute left-0 bottom-0 w-full;
-        content: "";
-        background: url("../../../public/images/bg-coursespotlight.svg");
-        background-repeat: no-repeat;
-        background-position: center top;
-        height: 70px;
-        @media (max-width: 767px) {
-            height: 30px;
-        }
-    }
+    // &:before {
+    //     @apply absolute left-0 bottom-0 w-full;
+    //     content: "";
+    //     background: url("../../../public/images/bg-coursespotlight.svg");
+    //     background-repeat: no-repeat;
+    //     background-position: center top;
+    //     height: 70px;
+    //     @media (max-width: 767px) {
+    //         height: 30px;
+    //     }
+    // }
     figure {
         
         img {
             @apply w-full m-auto;
-            max-width: 1700px;
         }
 
     }
 
 }
-
+.postWrap {
+    @apply relative mx-auto;
+    max-width: 1700px;
+}
 .author {
-    @apply text-center absolute -bottom-20 md:-bottom-9;
-    left: 50%;
-    transform: translateX(-50%);
+    @apply md:absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 mx-auto mt-10;
+    background: #242424;
+    color: #AFAFAF;
+    max-width: 290px;
+    @screen lg{
+        transform: translateY(-50%);
+        width: min(290px, 18vw);
+    }
     h4 {
-        @apply text-25 font-extrabold mb-1;
+        @apply text-white;
     }
     h5 {
-        @apply text-base font-bold;
-        color: #717171;
+        color: #AFAFAF;
+    }
+    .item {
+        @apply p-3 py-4;
+        border-bottom: 1px solid #3e3e3e;
+        &:last-child {
+            border: 0;
+        }
     }
 }
 .thumbnail {
@@ -44,5 +57,21 @@
             width: 70px;
             height: 70px;
         }
+    }
+}
+.postTitle {
+    @apply pt-10 lg:pt-16;
+    border-top: 1px solid #D5D5D5;
+}
+.title {
+    @apply text-center mb-6  mx-auto;
+    max-width: 800px;
+    color: #353535;
+    h2 {
+        @apply font-bold text-2xl xl:text-4xl 2xl:text-40 leading-snug mb-5;
+    }
+    h3 {
+        @apply text-lg m-0 font-bold;
+        color: #717171;
     }
 }

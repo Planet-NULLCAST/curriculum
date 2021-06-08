@@ -31,7 +31,7 @@ export default function Navbar(props) {
   ];
 
   return (
-    <div className="bg-white my-3 flex flex-row items-center rounded shadow-sm">
+    <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex justify-center items-center relative">
           <span className="mt-1 text-gray-900">My Post</span>
@@ -41,7 +41,7 @@ export default function Navbar(props) {
           <Select
             options={optionsCategory}
             isMulti={false}
-            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10rem}`}
+            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
             placeholder="Category"
@@ -50,7 +50,7 @@ export default function Navbar(props) {
           <Select
             options={optionsStatus}
             isMulti={false}
-            className={`basic-multi-select postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_5rem}`}
+            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
             placeholder="Blog Status"

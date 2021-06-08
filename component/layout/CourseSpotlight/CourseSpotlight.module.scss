@@ -26,4 +26,7 @@
     @apply m-auto;
     max-width: 200px;
   }
+  [class*="spotlightImage"] {
+    max-width: 380px;
+  }
 }
