@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
 import moment from "moment";
 import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Navbar({ posts }) {
+export default function MyBlogs({ posts }) {
   // console.log({posts});
 
   return (
@@ -53,10 +52,11 @@ export default function Navbar({ posts }) {
                   {item.status}
                 </span>
               </div>
+              {/* EDIT button goes to posts/write route*/}
               <Link
                 href={{
-                  pathname: "/posts/write",
-                  query: { post_id: item._id }
+                  pathname: `/posts/write`,
+                  query: { post_id: `${item._id}` }
                 }}
               >
                 <div

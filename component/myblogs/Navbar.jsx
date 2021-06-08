@@ -6,6 +6,7 @@ import styles from "./blogs.module.scss";
 export default function Navbar(props) {
   const { currentNav } = props;
 
+  //get tag data from db with same structure - and value should be the id
   const optionsCategory = [
     { label: "All Category", value: "all" },
     { label: "HTML", value: "html" },
@@ -20,10 +21,13 @@ export default function Navbar(props) {
   ];
 
   const optionsStatus = [
-    { label: "All Posts", value: "all" },
-    { label: "Approved", value: "js" },
-    { label: "Pending", value: "html" },
-    { label: "Rejected", value: "css" }
+    { label: "All Posts", value: "" },
+    { label: "Approved", value: "approved" },
+    { label: "Pending", value: "pending" },
+    { label: "Rejected", value: "rejected" },
+    { label: "Published", value: "published" },
+    { label: "Drafted", value: "drafted" }
+    //published, drafted
   ];
 
   return (
@@ -52,6 +56,7 @@ export default function Navbar(props) {
             placeholder="Blog Status"
             // closeMenuOnSelect={false}
           />
+          {/* Add a New Post goes to /posts/write  */}
           <Link href="/posts/write">
             <div
               className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
@@ -59,14 +64,6 @@ export default function Navbar(props) {
               <p>Add a New Post</p>
             </div>
           </Link>
-          {/* <div className="bg-gray-200 h-8 flex border border-gray-200 items-center text-sm font-semibold px-3 py-2 mr-4 rounded-sm">
-            <p>Category</p>
-            <img src="/images/arrowDown.svg" className="ml-2"></img>
-          </div>
-          <div className="bg-gray-200 h-8 flex border border-gray-200 items-center text-sm font-semibold px-3 py-2 mr-4 rounded-sm">
-            <p>Blog Status</p>
-            <img src="/images/arrowDown.svg" className="ml-2"></img>
-          </div> */}
         </div>
       </div>
     </div>
