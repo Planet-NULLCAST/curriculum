@@ -3,10 +3,10 @@ import Navbar from "../../component/myblogs/Navbar";
 import MyBlogs from "../../component/myblogs/MyBlogs";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import { baseUrl, allPostsUrl } from "../../config/config";
 import Cookies from "universal-cookie";
 import withAuth from "../../component/withAuth/withAuth";
-const axios = require("axios");
+import PostService from "../../services/PostService";
+import Pagination from "../../component/pagination/pagination";
 
 const MyPost = () => {
   const cookies = new Cookies();
@@ -16,17 +16,12 @@ const MyPost = () => {
   });
 
   useEffect(() => {
-    // console.log(cookies.get("user"));
     const userCookie = cookies.get("userNullcast");
     if (userCookie) {
-      async function getPost() {
+      async function getPosts() {
         try {
-          const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
-            headers: {
-              "x-access-token": `${userCookie.accessToken}`
-            }
-          });
-          // console.log(response);
+          const data = await PostService.getPostsByUserId(userCookie);
+          console.log(data);
           const { posts, count } = data;
           // console.log({ posts });
           setPostData({
@@ -37,9 +32,14 @@ const MyPost = () => {
           console.log(err);
         }
       }
-      getPost();
+      getPosts();
     }
   }, []);
+  
+  const pageChange = (pageNo, limit) => {
+    console.log(pageNo, limit, "page index");
+    // call api here for Paginations
+  };
 
   return (
     <div>
@@ -51,8 +51,9 @@ const MyPost = () => {
         <div className="max-w-panel pt-15px">
           <Navbar />
           <MyBlogs
-            // posts={postData.posts}
-            posts={data}
+            posts={postData.posts}
+            // posts={data}
+            paginationData={pageChange}
           />
         </div>
       </div>
@@ -60,9 +61,9 @@ const MyPost = () => {
   );
 };
 
-// export default withAuth(MyPost);
+export default withAuth(MyPost);
 
-export default MyPost;
+// export default MyPost;
 
 const data = [
   {
@@ -388,5 +389,5 @@ const data = [
     createdAt: "2021-05-28T06:11:40.644Z",
     updatedAt: "2021-05-28T06:11:40.644Z",
     __v: 0
-  },
+  }
 ];

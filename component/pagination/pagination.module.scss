@@ -1,0 +1,23 @@
+.arrowStyle {
+    svg {
+        stroke: #000;
+    }
+    &:hover {
+        svg {
+            stroke: #fff;
+        }
+    }
+}
+.arrowStyleDisabled {
+    svg {
+        stroke: rgb(180, 180, 180);
+    }
+}
+.go {
+    svg {
+        margin-top: 0.15rem;
+    }
+    &:hover{
+        opacity: 0.5;
+    }
+}
