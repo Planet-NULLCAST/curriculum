@@ -38,7 +38,7 @@ const MyPost = () => {
   
   const pageChange = (pageNo, limit) => {
     console.log(pageNo, limit, "page index");
-    // call api here for Pagination
+    // call api here for Paginations
   };
 
   return (
