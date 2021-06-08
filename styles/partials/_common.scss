@@ -35,7 +35,7 @@ body.menuOpen {
 }
 .btn {
     --shadowcolor: #202020;
-    @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
+    @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
     border: 1px solid #1C1C1D;
     box-shadow: 0px 4px 0px var(--shadowcolor);
 

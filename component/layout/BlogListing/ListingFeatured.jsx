@@ -42,6 +42,10 @@ export default function ListingFeatured() {
               bar and input field will enhance user experience.Styled Search Bar
               Design with Code LinkIn the
             </p>
+            <p className={styles.time}>
+                <span>February 26,2021</span>
+                <span>5 Min Read</span>
+            </p>
 
             <Details />
           </div>
