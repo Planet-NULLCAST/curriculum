@@ -86,7 +86,7 @@ export default function MyBlogs({ posts, paginationData }) {
               className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
             >
               <Pagination
-                PagesTotal={15}
+                TotalCount={154}
                 CurrentPage={3}
                 changedPage={changedPage}
               />

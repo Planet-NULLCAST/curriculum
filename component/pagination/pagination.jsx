@@ -4,22 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import Styles from "./pagination.module.scss";
 
-export default function Pagination({ PagesTotal, CurrentPage, changedPage }) {
+export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
   const [TotalPages, setTotalPages] = useState();
   const [FirstThree, setFirstThree] = useState([]);
   const [LastThree, setLastThree] = useState([]);
   const [pageNo, setpageNo] = useState(1);
   const [middle, setmiddle] = useState(false);
   const [valuePage, setvaluePage] = useState("");
+  const [limit, setlimit] = useState(10);
 
   useEffect(() => {
-    setTotalPages(PagesTotal);
+    setTotalPages(Math.ceil(TotalCount / limit));
     if (CurrentPage) {
       setpageNo(CurrentPage);
     } else {
       setpageNo(1);
     }
-  }, [PagesTotal, CurrentPage]);
+  }, [TotalCount, CurrentPage]);
   useEffect(() => {
     if (TotalPages >= 6) {
       setFirstThree([1, 2, 3, 4, 5]);
@@ -40,7 +41,7 @@ export default function Pagination({ PagesTotal, CurrentPage, changedPage }) {
     } else if (pageNo >= TotalPages || pageNo <= 5) {
       setmiddle(false);
     }
-    changedPage(pageNo, 10);
+    changedPage(pageNo, limit);
   }, [pageNo]);
 
   const nextBut = () => {
