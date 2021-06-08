@@ -6,6 +6,7 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import Cookies from "universal-cookie";
 import withAuth from "../../component/withAuth/withAuth";
 import PostService from "../../services/PostService";
+import Pagination from "../../component/pagination/pagination";
 
 const MyPost = () => {
   const cookies = new Cookies();
@@ -34,6 +35,11 @@ const MyPost = () => {
       getPosts();
     }
   }, []);
+  
+  const pageChange = (pageNo, limit) => {
+    console.log(pageNo, limit, "page index");
+    // call api here for Paginations
+  };
 
   return (
     <div>
@@ -47,6 +53,7 @@ const MyPost = () => {
           <MyBlogs
             posts={postData.posts}
             // posts={data}
+            paginationData={pageChange}
           />
         </div>
       </div>
