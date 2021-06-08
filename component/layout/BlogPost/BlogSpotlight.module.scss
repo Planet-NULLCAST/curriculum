@@ -30,10 +30,17 @@
     @apply md:absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 mx-auto mt-10;
     background: #242424;
     color: #AFAFAF;
-    max-width: 290px;
-    @screen lg{
+    width: min(100%, 420px);
+    @screen md {
+        @apply mt-0 bottom-auto top-1/2;
+        width: min(300px, 35vw);
         transform: translateY(-50%);
-        width: min(290px, 18vw);
+    }
+    @screen xl {
+        width: min(350px, 20vw);
+    }
+    @screen 2xl {
+        width: min(350px, 23vw);
     }
     h4 {
         @apply text-white;

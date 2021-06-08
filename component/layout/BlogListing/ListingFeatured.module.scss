@@ -3,6 +3,12 @@
     figure {
         @apply mb-5 md:mb-0;
     }
+    [class*="icon"] {
+        @screen xl {
+            max-width: 70px;
+            max-height: 70px;
+        }
+    }
 }
 
 .text {
@@ -17,5 +23,12 @@
 
     .tags {
         @apply mb-10;
+    }
+    .time {
+        @apply font-bold;
+        color: #717171;
+        span {
+            @apply inline-block mr-5;
+        }
     }
 }
