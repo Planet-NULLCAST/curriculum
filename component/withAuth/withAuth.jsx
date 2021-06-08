@@ -11,7 +11,7 @@ const withAuth = (PassedComponent) => {
       if (!userSession) {
         const Router = useRouter();
         Router.push("/login");
-        // return null;
+        return null;
       }
 
       return <PassedComponent />;

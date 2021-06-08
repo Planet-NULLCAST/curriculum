@@ -14,38 +14,22 @@ const axios = require("axios");
 import Select from "react-select";
 
 export default function WriteNav(props) {
-  const { saveToDraft } = props;
+  const { saveToDraft, publishPost, getSettings } = props;
   const [openSettings, setopenSettings] = useState(false);
-  // console.log(
-  //   baseUrl,
-  //   clientUrl,
-  //   authUrl,
-  //   enrolUrl,
-  //   postUrl,
-  //   allPostsUrl,
-  //   "baseUrl"
-  // );
+  const [tagData, setTagData] = useState();
   const router = useRouter();
 
-  useEffect(() => {
-    // axios
-    //   .get(`http://localhost:8080/api/post/:${router.query.blog_id}`)
-    //   .then((response) => {
-    //     if (response) {
-    //       console.log("blog listed");
-    //     } else {
-    //       console.log("err");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("error");
-    //   });
-  }, []);
+  //get tag data from db with same structure - and value should be the id
   const options = [
     { label: "HTML", value: "html" },
     { label: "CSS", value: "css" },
     { label: "JS", value: "js" }
   ];
+
+  function handleSelectTag(e) {
+    // console.log(e);
+    setTagData(e);
+  }
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
@@ -65,14 +49,20 @@ export default function WriteNav(props) {
             </div>
           </Link>
           <span className="text-gray-500 ml-1">
-            {router.query.blog_id ? "/ Edits" : "/ Create"}
+            {router.query.post_id ? "/ Edits" : "/ Create"}
           </span>
         </div>
         <div className="flex items-center py-3">
-          <div className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+          <div
+            onClick={publishPost}
+            className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+          >
             <p>Publish</p>
           </div>
-          <div onClick={saveToDraft} className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+          <div
+            onClick={saveToDraft}
+            className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+          >
             <p>Save to Draft</p>
           </div>
           <div
@@ -86,7 +76,10 @@ export default function WriteNav(props) {
       {openSettings && (
         <div className="fixed right-0 bottom-0 w-72 z-50">
           <div className="w-full h-screen">
-            <div className="w-full h-full bg-white relative border flex flex-col justify-between">
+            <form
+              className="w-full h-full bg-white relative border flex flex-col justify-between"
+              onSubmit={(e) => getSettings(e, tagData)}
+            >
               <div
                 className="absolute right-0 top-0 w-6 h-6 flex justify-center items-center mr-2 mt-2 cursor-pointer hover:opacity-50"
                 onClick={() => setopenSettings(false)}
@@ -113,6 +106,8 @@ export default function WriteNav(props) {
                     <input
                       type="file"
                       className="cursor-pointer relative block opacity-0 w-full h-full z-50"
+                      name="imageUpload"
+                      // onChange={handleImageUpload}
                     />
                     <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
                       <Image
@@ -135,6 +130,7 @@ export default function WriteNav(props) {
                         type="text"
                         className="w-8/12 m-0 outline-none focus:outline-none px-2 text-sm bg-gray-100"
                         placeholder="Enter post URL"
+                        name="url"
                       />
                     </div>
                   </div>
@@ -147,13 +143,17 @@ export default function WriteNav(props) {
                       clearValue={() => undefined}
                       placeholder="Tags"
                       closeMenuOnSelect={false}
+                      name="tags"
+                      onChange={handleSelectTag}
+                      // defaultInputValue={}
                     />
                   </div>
                   <div className="w-full mt-3 relative h-20 mb-0">
                     <textarea
-                      maxlength="160"
+                      maxLength="160"
                       className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
                       placeholder="Excerpt - short description about post"
+                      name="shortDes"
                     />
                     <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
                       <span className="text-gray-300 text-xs">160</span>
@@ -164,13 +164,15 @@ export default function WriteNav(props) {
                       type="text"
                       className="w-full m-0 h-10 outline-none focus:outline-none px-2 text-sm bg-gray-100 border rounded"
                       placeholder="Meta Title"
+                      name="metaTitle"
                     />
                   </div>
                   <div className="w-full mt-3 relative h-20 mb-0">
                     <textarea
-                      maxlength="160"
+                      maxLength="160"
                       className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
                       placeholder="Description"
+                      name="metaDes"
                     />
                     <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
                       <span className="text-gray-300 text-xs">160</span>
@@ -183,7 +185,8 @@ export default function WriteNav(props) {
                   <div className="w-1/2 pr-1">
                     <button
                       className="w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-                      onClick={() => setopenSettings(false)}
+                      // onClick={() => setopenSettings(false)}
+                      type="submit"
                     >
                       Save
                     </button>
@@ -198,15 +201,12 @@ export default function WriteNav(props) {
                   </div>
                 </div>
                 <div className="w-full flex justify-center mb-3">
-                  <button
-                    className="text-sm text-red-500 outline-none"
-                    onClick={() => setopenSettings(false)}
-                  >
+                  <button className="text-sm text-red-500 outline-none">
                     Delete Post
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
