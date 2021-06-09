@@ -75,9 +75,9 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               height="100%"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className={`feather feather-chevron-left w-4 h-4`}
             >
               <polyline points="15 18 9 12 15 6"></polyline>
@@ -96,6 +96,32 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               >
                 {FirstThree[0]}
               </div>
+              {pageNo === TotalPages - 1 && TotalPages > 6 && (
+                <div
+                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                    pageNo === FirstThree[1] && "text-white bg-black"
+                  }`}
+                  onClick={() => {
+                    setpageNo(FirstThree[1]);
+                    setvaluePage("");
+                  }}
+                >
+                  {FirstThree[1]}
+                </div>
+              )}
+              {pageNo === TotalPages - 1 && TotalPages > 6 && (
+                <div
+                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                    pageNo === FirstThree[2] && "text-white bg-black"
+                  }`}
+                  onClick={() => {
+                    setpageNo(FirstThree[2]);
+                    setvaluePage("");
+                  }}
+                >
+                  {FirstThree[2]}
+                </div>
+              )}
               {!middle && (
                 <>
                   {FirstThree[1] && (
@@ -239,9 +265,9 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               height="100%"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className={`feather feather-chevron-left w-4 h-4`}
             >
               <polyline points="9 18 15 12 9 6"></polyline>
@@ -283,9 +309,9 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
             fill="none"
             viewBox="0 0 24 24"
             stroke="#545E6B"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className={`feather feather-chevron-left w-4 h-4`}
           >
             <polyline points="9 18 15 12 9 6"></polyline>

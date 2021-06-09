@@ -198,10 +198,13 @@ h3 {
 }
 @media (min-width: 1536px) {
   .height_list {
-    max-height: calc(100vh - 226px);
+    max-height: calc(100vh - 246px);
   }
   .height_Iframe_write{
     height: calc(100vh - 196px);
+  }
+  .min-h-screen-top {
+    min-height: calc(100vh - 80px);
   }
 }
 // font size 15px global

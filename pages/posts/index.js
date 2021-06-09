@@ -51,8 +51,8 @@ const MyPost = () => {
         <div className="max-w-panel pt-15px">
           <Navbar />
           <MyBlogs
-            posts={postData.posts}
-            // posts={data}
+            // posts={postData.posts}
+            posts={data}
             paginationData={pageChange}
           />
         </div>
@@ -61,9 +61,9 @@ const MyPost = () => {
   );
 };
 
-export default withAuth(MyPost);
+// export default withAuth(MyPost);
 
-// export default MyPost;
+export default MyPost;
 
 const data = [
   {
@@ -112,7 +112,7 @@ const data = [
     html: "</a>",
     title: "Active Tab Animation using HTML, CSS and JS",
     mobiledoc: "mobiledoc",
-    status: "pending",
+    status: "drafted",
     featured: true,
     canonicalUrl: "ww/www",
     primaryTag: "css",
@@ -148,7 +148,7 @@ const data = [
     html: "</a>",
     title: "Null Safety in Flutter",
     mobiledoc: "mobiledoc",
-    status: "rejected",
+    status: "published",
     featured: true,
     canonicalUrl: "ww/www",
     primaryTag: "css",
