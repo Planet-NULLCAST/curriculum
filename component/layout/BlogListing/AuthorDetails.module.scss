@@ -1,19 +1,52 @@
 
 .authorDetails {
-    @apply flex items-center;
+    @apply inline-flex items-center;
 
+    &:hover {
+        .authorDetails__icon {
+            svg {
+                transform: rotate(-90deg);
+            }
+            circle {
+                stroke-dasharray: 211 211;
+                opacity: 1;
+            }
+        }
+        .authorDetails__title {
+            background-size: 50px 1px;
+        }
+    }
+
+    circle {
+        stroke-dasharray: 0 211;
+        transition: all .5s cubic-bezier(.66,.22,.62,.78);
+        // opacity: 0;
+    }
     &__icon {
-        @apply mr-3 2xl:mr-5 rounded-full overflow-hidden;
+        @apply mr-3 2xl:mr-5 rounded-full overflow-hidden relative;
         max-width: 42px;
         max-height: 42px;
         @media (min-width: 1530px) {
             max-width: 70px;
             max-height: 70px;
         }
+        svg {
+            @apply absolute left-0 top-0 w-full h-auto;
+            transform: rotate(-90deg);
+            transition: all ease .3s;
+        }
     }
 
     &__title {
         @apply text-base 2xl:text-lg font-extrabold mb-1;
+        background-image: linear-gradient(#F13E5D, #F13E5D);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 0 1px;
+        transition: all ease .4s;
+        a:hover {
+            color: #F13E5D;
+        }
     }
 
     &__position {
@@ -24,9 +57,9 @@
     &__points {
         @apply font-bold text-sm 2xl:text-18 ml-3 flex items-center;
         color: #F92304;
+        svg {
+            @apply mr-2;
+        }
     }
 
-    svg {
-        @apply mr-2;
-    }
 }

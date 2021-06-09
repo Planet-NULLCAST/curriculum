@@ -30,11 +30,24 @@
 
     }
 }
-
+@keyframes zoom{
+    0%{
+        transform: rotateZ(0) scale(1);
+    }
+    20% {
+        // opacity: 1;
+    }
+    40%{
+        transform: rotateZ(10deg) scale(1);
+    }
+    100%{
+        transform: scale(.65);
+    }
+}
 .btnWrap {
     @apply relative md:flex justify-center py-5 pt-10 md:py-20 2xl:pt-28 2xl:pb-10 text-center;
     a {
-        @apply m-1 lg:mx-3 text-center md:inline-block leading-none;
+        @apply m-1 lg:mx-3 text-center md:inline-block leading-none relative;
         min-width: 260px;
         max-width: 280px;
         @media (min-width: 1024px) {
@@ -50,10 +63,23 @@
             [class*="text"] {
                 background-size: 50px 1px;
             }
+            svg {
+                opacity: 1;
+                animation: zoom .4s forwards;
+            }
+            [class*="text"] {
+                transform: translateX(20px);
+            }
+        }
+        svg {
+            @apply hidden xl:block absolute left-4 top-4 opacity-0;
+            transform: scale(.65);
+            transition: all ease .3s;
         }
     }
     [class*="text"] {
         @apply text-lg;
+        transition: all ease .3s;
     }
 }
 
@@ -93,17 +119,19 @@
 }
 @keyframes arrow {
     0% { opacity: 0;  transform: translateY(-40px); }
-    35% { opacity: 1; transform: translateY(0); fill:#969696; }
-    75% { opacity: 1; transform: translateY(0); fill:#969696; }
+    15% { opacity: 1; transform: translateY(0); fill:#969696; }
+    85% { opacity: 1; transform: translateY(0); fill:#969696; }
     100% { opacity: 0; transform: translateY(40px); fill:#626262; }
 }
 .scroll {
     @apply absolute left-1/2 bottom-0 md:bottom-5 pointer-events-none;
     transform: translateX(-50%);
-    // path {
-    //     animation: arrow 3s infinite;
-    //     &:last-child {
-    //         animation-delay: .3s;
-    //     }
-    // }
+    path {
+        @screen xl {
+            animation: arrow 4s infinite;
+            &:last-child {
+                animation-delay: .1s;
+            }
+        }
+    }
 }

@@ -10,10 +10,13 @@ export default function Details() {
                     <a href="">
                         <Image
                             src="/images/temp/avatar1.png"
-                            alt=""
+                            alt="Author"
                             width={150}
                             height={150}
-                        />    
+                        />
+                        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="35" cy="35" r="33.5" stroke="#F13E5D" strokeWidth="3"/>
+                        </svg>
                     </a>
                 </div>
                 <div className={styles.authorDetails__text}>
