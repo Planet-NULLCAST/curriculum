@@ -44,10 +44,16 @@ const MyPost = () => {
       <div className="bg-gray-100 px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <Navbar />
-          <MyBlogs
-            posts={postData.posts}
-            // posts={data}
-          />
+          {postData.posts.length ? (
+            <MyBlogs
+              posts={postData.posts}
+              // posts={data}
+            />
+          ) : (
+            <div className="pt-8 text-black text-center">
+              You have not created any posts!
+            </div>
+          )}
         </div>
       </div>
     </div>
