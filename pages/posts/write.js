@@ -2,14 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import WriteNav from "../../component/myblogs/WriteNav";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import { env } from "../../next.config";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
-import { baseUrl } from "../../config/config";
+import { baseUrl, editorUrl } from "../../config/config";
 // import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
-const TARGET = env.EDITOR_URL;
+const TARGET = editorUrl;
 
 export default function Write() {
   // const [post, setPost] = useState(null);
@@ -28,17 +27,20 @@ export default function Write() {
     console.log({ postId });
     if (userCookie) {
       if (postId) {
-        console.log("test");
+        console.log("eeee");
         async function getPostById() {
           const response = await PostService.getPostById(userCookie, postId);
-          console.log(response);
+          console.log("get post response", response);
+          const post = {
+            mobiledoc: response.mobiledoc,
+            title: response.title
+          };
 
-          // const title = "some title";
           // ---- to show the post in iframe
           iframeRef.current.contentWindow.postMessage(
             {
               msg: "providePost",
-              post: response
+              post: post
             },
             TARGET
           );
@@ -72,17 +74,18 @@ export default function Write() {
         // console.log("listener removed");
       });
     };
-  }, [postId]);
+  }, []);
 
-  const updateThisPost = {
-    mobiledoc: {
-      atoms: [],
-      cards: [],
-      sections: [[1, "p", [[0, [], 0, "asfasdfdsafdafadsf"]]]],
-      version: "0.3.1",
-      ghostVersion: "4.0"
-    }
-  };
+  // const updateThisPost = {
+  //   //get mobiledoc from iframe - this is dummy data
+  //   mobiledoc: {
+  //     atoms: [],
+  //     cards: [],
+  //     sections: [[1, "p", [[0, [], 0, "asfasdfdsafdafadsf"]]]],
+  //     version: "0.3.1",
+  //     ghostVersion: "4.0"
+  //   }
+  // };
 
   async function updatePostById(updateData) {
     const response = await PostService.updatePostById(
@@ -90,34 +93,37 @@ export default function Write() {
       updateData,
       postId
     );
-    console.log(response);
+    console.log("updated post response", response);
   }
 
-  async function createPost(settingsData) {
+  async function createPost(newMobiledoc) {
+    // const {
+    //   tags,
+    //   // url: ,
+    //   title,
+    //   status,
+    //   canonicalUrl,
+    //   primaryTag,
+    //   bannerImage,
+    //   shortDescription,
+    //   metaTitle,
+    //   metaDescription,
+    //   type
+    // } = settingsData;
     const createThisPost = {
-      mobiledoc: {
-        atoms: [],
-        cards: [],
-        sections: [[1, "p", [[0, [], 0, "some new post "]]]],
-        version: "0.3.1",
-        ghostVersion: "4.0"
-      }
-
-      //settings data
-
-      // tags: ["css", "js"],
-      // url: "ww/ww/",
-      // title: "person a post 1",
-      // status: "pending",
-      // canonicalUrl: "ww/www",
-      // primaryTag: "css",
-      // bannerImage: "img",
-      // metaTitle: "some article",
-      // metaDescription: "some description",
-      // type: "type"
+      mobiledoc: newMobiledoc,
+      title: "person a post 1",
+      status: "drafted",
+      type: "blog"
     };
-    const response = await PostService.createPost(userCookie, createThisPost);
-    console.log(response);
+    console.log(createThisPost);
+    const { data } = await PostService.createPost(userCookie, createThisPost);
+    const { post, msg } = data;
+    // console.log(post, msg);
+    //TO DO: compare our user id and the posts's user id
+    router.push(`?post_id=${post._id}`, undefined, {
+      shallow: true
+    });
   }
 
   const saveToDraft = () => {
@@ -126,18 +132,21 @@ export default function Write() {
     setTimeout(() => {
       // wait for the response post message to get the post from the state
       console.log({ postElement });
+      // console.log(postElement.current.scratch);
+      const newMobiledoc = postElement.current.scratch;
+      // const title = postElement.current.titlescratch;
       // createPost or updatePost -  if post id - update, else create
       if (postId) {
         //updatePost
-        updatePostById(updateThisPost);
+        updatePostById(newMobiledoc);
       } else {
-        createPost();
+        createPost(newMobiledoc);
       }
     }, 500);
   };
 
-  const publishPost = () => {
-    //status pending for publish
+  const submitForReview = () => {
+    //status pending if submitted for review
   };
 
   const getSettings = (e, tagData) => {
@@ -145,6 +154,7 @@ export default function Write() {
     e.preventDefault();
     // console.log(tagData);
     // console.log(e.target.imageUpload.files[0]);
+    console.log("in settings");
     const imageFile = e.target.imageUpload.files[0];
     const imageData = {
       stage: "dev",
@@ -157,10 +167,12 @@ export default function Write() {
     const imageName = imageFile.name;
     const postUrl = e.target.url.value;
     // console.log(`${baseUrl}/${postUrl}`);
-    const tags = Array.from(e.target.tags).map((tag) =>
-      tag.value.toUpperCase()
-    );
-    console.log(tags);
+    if (e.target.tags) {
+      const tags = Array.from(e.target.tags).map((tag) =>
+        tag.value.toUpperCase()
+      );
+      console.log(tags);
+    }
 
     const shortDes = e.target.shortDes.value;
     const metaTitle = e.target.metaTitle.value;
@@ -169,15 +181,12 @@ export default function Write() {
     const settingsData = {
       tags: tags,
       // url: ,
-      title: "person a post 1",
-      status: "drafted",
       canonicalUrl: `${baseUrl}/${postUrl}`,
       primaryTag: "css",
       bannerImage: imageName,
       shortDescription: shortDes,
       metaTitle: metaTitle,
-      metaDescription: metaDes,
-      type: "blog"
+      metaDescription: metaDes
     };
     if (postId) {
       updatePostById(settingsData);
@@ -185,6 +194,17 @@ export default function Write() {
       createPost(settingsData);
     }
   };
+
+  const notify = (item) =>
+    toast(item.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
 
   return (
     <>
@@ -196,7 +216,7 @@ export default function Write() {
         <div className="max-w-panel pt-15px">
           <WriteNav
             saveToDraft={saveToDraft}
-            publishPost={publishPost}
+            submitForReview={submitForReview}
             getSettings={getSettings}
           />
           <div
@@ -209,6 +229,7 @@ export default function Write() {
             ></iframe>
           </div>
         </div>
+        {/* <ToastContainer /> */}
       </div>
     </>
   );
