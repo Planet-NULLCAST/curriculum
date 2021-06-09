@@ -35,7 +35,7 @@ body.menuOpen {
 }
 .btn {
     --shadowcolor: #202020;
-    @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 2xl:px-20 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
+    @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
     border: 1px solid #1C1C1D;
     box-shadow: 0px 4px 0px var(--shadowcolor);
 
@@ -68,7 +68,7 @@ body.menuOpen {
     &--black, &--blackborder {
         --shadowcolor:transparent;
         @apply 
-            inline-block relative bg-black flex items-center justify-center 
+            inline-block relative bg-black inline-flex items-center justify-center 
             text-white px-3 2xl:px-6 py-2 mx-3  capitalize font-semibold leading-tight 2xl:leading-normal 
             border border-black ;
         font-size: 14px;
@@ -78,22 +78,34 @@ body.menuOpen {
             display: none;
         }
         .btn__text {
-            @apply linkUnderline;
-            background-image: linear-gradient(#fff, #fff);
-            background-size: 0 1px;
+            // @apply linkUnderline;
+            // background-image: linear-gradient(#fff, #fff);
+            // background-size: 0 1px;
         }
         &:hover {
             .btn__text {
-                background-size: 40px 1px;
+                // background-size: 40px 1px;
             }
         }
+    }
+
+    svg {
+        transition: all ease .3s;
     }
 
     &--blackborder {
         @apply text-black;
         background: transparent;
         .btn__text {
-            background-image: linear-gradient(#000, #000);
+            // background-image: linear-gradient(#000, #000);
+        }
+    }
+    &--black {
+        &:hover {
+            @apply bg-white text-black;
+            svg {
+                fill: #000;
+            }
         }
     }
 

@@ -2,14 +2,14 @@ import styles from './SectionRelated.module.scss';
 import Link from "next/link";
 import AuthorDetails from '../BlogListing/AuthorDetails';
 
-export default function SectionRelated() {
+export default function SectionRelated({title}) {
 
     return(
         <section className={`${styles.section} py-10 lg:py-20`}>
             <div className="container">
                 
                 <div className="flex items-center justify-between mb-10">
-                    <h2 className="text-25 font-extrabold">Related Blogs</h2>
+                    <h2 className="text-25 font-extrabold">{title}</h2>
                     <span>
                         <Link href="#">
                             <a className={`${styles.moreLink} linkUnderline`}>View All Blogs</a>

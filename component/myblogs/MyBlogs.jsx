@@ -2,10 +2,12 @@ import moment from "moment";
 import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import Pagination from "../pagination/pagination";
 
-export default function MyBlogs({ posts }) {
-  // console.log({posts});
-
+export default function MyBlogs({ posts, paginationData }) {
+  const changedPage = (pageNo, limit) => {
+    paginationData(pageNo, limit);
+  };
   return (
     <div
       className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list`}
@@ -62,7 +64,7 @@ export default function MyBlogs({ posts }) {
                 }}
               >
                 <div
-                  className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-700 ${MyBlogsstyles.linkBg}`}
+                  className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.linkBg}`}
                 >
                   <div className="mr-1 mt-1 rounded-full">
                     <Image
@@ -226,6 +228,11 @@ export default function MyBlogs({ posts }) {
                 </div>
               </div>
              */}
+              <Pagination
+                TotalCount={154}
+                CurrentPage={3}
+                changedPage={changedPage}
+              />
             </div>
           </div>
         ))}

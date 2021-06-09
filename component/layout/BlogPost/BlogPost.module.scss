@@ -111,9 +111,13 @@
     color: #AFAFAF;
     @screen xl {
         top: 80px;
+        width: min(350px, 20vw);
     }
-    @media (max-width: 1024px) {
-        @apply p-0;
+    @screen 2xl {
+        width: min(350px, 23vw);
+    }
+    @media (max-width: 1200px) {
+        @apply p-0 w-auto rounded-sm;
     }
 }
 
@@ -140,7 +144,7 @@
             background-size: 30px 1px;
         }
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
         display: none;
     }
 }
@@ -161,7 +165,7 @@
         width: 22px;
         height: 18px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
         @apply md:p-3;
         h3 {
             @apply hidden;
@@ -169,7 +173,7 @@
         ul {
             @apply block w-auto;
             a {
-                @apply block p-3 py-4 w-auto h-auto;
+                @apply block p-2 py-4 w-auto h-auto;
             }
             svg {
                 @apply m-auto;
