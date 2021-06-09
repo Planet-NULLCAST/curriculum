@@ -142,6 +142,7 @@
         background-size: 0 1px;
         &:hover {
             background-size: 30px 1px;
+            color: #fafafa;
         }
     }
     @media (max-width: 1200px) {
@@ -177,6 +178,50 @@
             }
             svg {
                 @apply m-auto;
+            }
+        }
+    }
+    .facebook {
+        a {
+            &:hover {
+                svg {
+                    @screen lg {
+                        fill: #4267B2;
+                    }
+                }
+            }
+        }
+    }
+    .linkedin {
+        a {
+            &:hover {
+                svg {
+                    @screen lg {
+                        fill: #0e76a8;
+                    }
+                }
+            }
+        }
+    }
+    .twitter {
+        a {
+            &:hover {
+                svg {
+                    @screen lg {
+                        fill: #00acee;
+                    }
+                }
+            }
+        }
+    }
+    .instagram {
+        a {
+            &:hover {
+                svg {
+                    @screen lg {
+                        fill: #3f729b;
+                    }
+                }
             }
         }
     }
