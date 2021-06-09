@@ -51,8 +51,8 @@ const MyPost = () => {
         <div className="max-w-panel pt-15px">
           <Navbar />
           <MyBlogs
-            // posts={postData.posts}
-            posts={data}
+            posts={postData.posts}
+            // posts={data}
             paginationData={pageChange}
           />
         </div>
@@ -61,9 +61,9 @@ const MyPost = () => {
   );
 };
 
-// export default withAuth(MyPost);
+export default withAuth(MyPost);
 
-export default MyPost;
+// export default MyPost;
 
 const data = [
   {
