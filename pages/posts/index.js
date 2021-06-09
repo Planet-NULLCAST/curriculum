@@ -60,11 +60,6 @@ const MyPost = () => {
               You have not created any posts!
             </div>
           )}
-//           <MyBlogs
-//             posts={postData.posts}
-//             // posts={data}
-//             paginationData={pageChange}
-//           />
         </div>
       </div>
     </div>
