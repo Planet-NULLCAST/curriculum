@@ -10,45 +10,52 @@ import { baseUrl, editorUrl } from "../../config/config";
 
 const TARGET = editorUrl;
 
-export default function Write() {
+Write.getInitialProps = async (ctx) => {
+  // console.log(ctx);
+  // console.log(ctx.query);
+  const postId = ctx.query.post_id;
+  return { postId: postId };
+};
+
+export default function Write({ postId }) {
   // const [post, setPost] = useState(null);
+  console.log(postId);
   const iframeRef = useRef();
   const postElement = useRef();
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
-  const postId = router.query.post_id;
   // console.log(userCookie);
 
   useEffect(() => {
-    // console.log(TARGET);
-    // console.log(router.query);
-
-    console.log({ postId });
+    // const _postId = window.location.search.split("=")[1];
     if (userCookie) {
-      if (postId) {
-        console.log("eeee");
-        async function getPostById() {
-          const response = await PostService.getPostById(userCookie, postId);
-          console.log("get post response", response);
-          const post = {
-            mobiledoc: response.mobiledoc,
-            title: response.title
-          };
-
-          // ---- to show the post in iframe
-          iframeRef.current.contentWindow.postMessage(
-            {
-              msg: "providePost",
-              post: post
-            },
-            TARGET
-          );
+      iframeRef.current.onload = function () {
+        // console.log("iframe loaded ======>>>>>");
+        if (postId) {
+          getPostById(postId);
         }
-        getPostById();
-      } else {
-        //create blank ??
+      };
+      // if (postId) {
+      async function getPostById(postId) {
+        const response = await PostService.getPostById(userCookie, postId);
+        console.log("get post response", response);
+        const post = {
+          mobiledoc: response.mobiledoc,
+          title: response.title
+        };
+
+        // ---- to show the post in iframe
+        iframeRef.current.contentWindow.postMessage(
+          {
+            msg: "providePost",
+            post: post
+          },
+          TARGET
+        );
       }
+      // getPostById();
+      // }
     }
 
     window.addEventListener(
@@ -74,7 +81,7 @@ export default function Write() {
         // console.log("listener removed");
       });
     };
-  }, []);
+  }, [postId]);
 
   // const updateThisPost = {
   //   //get mobiledoc from iframe - this is dummy data
@@ -96,7 +103,7 @@ export default function Write() {
     console.log("updated post response", response);
   }
 
-  async function createPost(newMobiledoc) {
+  async function createPost(newMobiledoc, newTitle) {
     // const {
     //   tags,
     //   // url: ,
@@ -112,7 +119,7 @@ export default function Write() {
     // } = settingsData;
     const createThisPost = {
       mobiledoc: newMobiledoc,
-      title: "person a post 1",
+      title: newTitle,
       status: "drafted",
       type: "blog"
     };
@@ -134,13 +141,18 @@ export default function Write() {
       console.log({ postElement });
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement.current.scratch;
-      // const title = postElement.current.titlescratch;
+      const title = postElement.current.titleScratch;
+      console.log("title: ", title);
       // createPost or updatePost -  if post id - update, else create
       if (postId) {
         //updatePost
-        updatePostById(newMobiledoc);
+        const newUpdatedPost = {
+          title: title,
+          mobiledoc: newMobiledoc
+        };
+        updatePostById(newUpdatedPost);
       } else {
-        createPost(newMobiledoc);
+        createPost(newMobiledoc, title);
       }
     }, 500);
   };
@@ -155,7 +167,7 @@ export default function Write() {
     // console.log(tagData);
     // console.log(e.target.imageUpload.files[0]);
     console.log("in settings");
-    const imageFile = e.target.imageUpload.files[0];
+    const imageFile = e.target.imageUpload.files[0] || "";
     const imageData = {
       stage: "dev",
       fileName: imageFile.name,
@@ -165,18 +177,21 @@ export default function Write() {
     };
     PostService.uploadImage(imageFile, imageData);
     const imageName = imageFile.name;
-    const postUrl = e.target.url.value;
+    const postUrl = e.target.url.value || "";
     // console.log(`${baseUrl}/${postUrl}`);
-    if (e.target.tags) {
-      const tags = Array.from(e.target.tags).map((tag) =>
-        tag.value.toUpperCase()
-      );
-      console.log(tags);
+    let tags = Array.from(e.target.tags) || "";
+    // console.log("tags length: ", tags.length);
+    if (tags.length > 0) {
+      tags = tags.map((tag) => tag.value.toUpperCase());
+      // console.log("multiple tags", tags);
+    } else {
+      tags = e.target.tags.value.toUpperCase();
+      // console.log("single tag", tags);
     }
 
-    const shortDes = e.target.shortDes.value;
-    const metaTitle = e.target.metaTitle.value;
-    const metaDes = e.target.metaDes.value;
+    const shortDes = e.target.shortDes.value || "";
+    const metaTitle = e.target.metaTitle.value || "";
+    const metaDes = e.target.metaDes.value || "";
     // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
     const settingsData = {
       tags: tags,
