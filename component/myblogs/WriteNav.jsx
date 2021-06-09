@@ -14,7 +14,7 @@ const axios = require("axios");
 import Select from "react-select";
 
 export default function WriteNav(props) {
-  const { saveToDraft, publishPost, getSettings } = props;
+  const { saveToDraft, submitForReview, getSettings } = props;
   const [openSettings, setopenSettings] = useState(false);
   const [tagData, setTagData] = useState();
   const router = useRouter();
@@ -54,16 +54,16 @@ export default function WriteNav(props) {
         </div>
         <div className="flex items-center py-3">
           <div
-            onClick={publishPost}
+            onClick={submitForReview}
             className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Publish</p>
+            <p>Submit For Review</p>
           </div>
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Save to Draft</p>
+            <p>Save</p>
           </div>
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
