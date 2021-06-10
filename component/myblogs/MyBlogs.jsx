@@ -85,7 +85,7 @@ export default function MyBlogs({ posts, paginationData }) {
             <div
               className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
             >
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              {/* <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div className="flex-1 flex justify-between sm:hidden">
                   <a
                     href="#"
@@ -201,8 +201,8 @@ export default function MyBlogs({ posts, paginationData }) {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="max-w-panel w-full flex justify-end items-center">
+								
+							<div className="max-w-panel w-full flex justify-end items-center">
                 <span className="text-purple-600 text-sm">
                   1 - 10&nbsp;&nbsp;of 1100
                 </span>
@@ -230,7 +230,7 @@ export default function MyBlogs({ posts, paginationData }) {
              */}
               <Pagination
                 TotalCount={154}
-                CurrentPage={3}
+                // CurrentPage={3}
                 changedPage={changedPage}
               />
             </div>
