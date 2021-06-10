@@ -5,7 +5,9 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
-import { baseUrl, editorUrl } from "../../config/config";
+import { baseUrl, clientUrl, editorUrl } from "../../config/config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
 const TARGET = editorUrl;
@@ -13,13 +15,14 @@ const TARGET = editorUrl;
 Write.getInitialProps = async (ctx) => {
   // console.log(ctx);
   // console.log(ctx.query);
-  const postId = ctx.query.post_id;
-  return { postId: postId };
+  const post_Id = ctx.query.post_id;
+  return { post_Id: post_Id ? post_Id : "" };
 };
 
-export default function Write({ postId }) {
-  // const [post, setPost] = useState(null);
-  console.log(postId);
+export default function Write({ post_Id }) {
+  // console.log("postId if there's a post Id", post_Id);
+  const [postId, setPostId] = useState("");
+  const [post, setPost] = useState();
   const iframeRef = useRef();
   const postElement = useRef();
   const cookies = new Cookies();
@@ -29,27 +32,32 @@ export default function Write({ postId }) {
 
   useEffect(() => {
     // const _postId = window.location.search.split("=")[1];
+    const currentPostId = router.query.post_id;
+    // console.log({ currentPostId });
     if (userCookie) {
+      setPostId(currentPostId);
       iframeRef.current.onload = function () {
-        // console.log("iframe loaded ======>>>>>");
-        if (postId) {
-          getPostById(postId);
+        console.log("iframe loaded ======>>>>>");
+        if (currentPostId) {
+          console.log("iframe current", currentPostId);
+          getPostById(currentPostId);
         }
       };
       // if (postId) {
-      async function getPostById(postId) {
-        const response = await PostService.getPostById(userCookie, postId);
-        console.log("get post response", response);
-        const post = {
-          mobiledoc: response.mobiledoc,
-          title: response.title
+      async function getPostById(id) {
+        // console.log("in function", id);
+        const res = await PostService.getPostById(userCookie, id);
+        console.log("get post response", res);
+        const resPost = {
+          mobiledoc: res.mobiledoc,
+          title: res.title
         };
-
+        setPost(res);
         // ---- to show the post in iframe
         iframeRef.current.contentWindow.postMessage(
           {
             msg: "providePost",
-            post: post
+            post: resPost
           },
           TARGET
         );
@@ -81,56 +89,26 @@ export default function Write({ postId }) {
         // console.log("listener removed");
       });
     };
-  }, [postId]);
+  }, [post_Id]);
 
-  // const updateThisPost = {
-  //   //get mobiledoc from iframe - this is dummy data
-  //   mobiledoc: {
-  //     atoms: [],
-  //     cards: [],
-  //     sections: [[1, "p", [[0, [], 0, "asfasdfdsafdafadsf"]]]],
-  //     version: "0.3.1",
-  //     ghostVersion: "4.0"
-  //   }
-  // };
-
-  async function updatePostById(updateData) {
-    const response = await PostService.updatePostById(
+  async function updatePostById(updateData, newPostId) {
+    const { msg, data } = await PostService.updatePostById(
       userCookie,
       updateData,
-      postId
+      newPostId
     );
-    console.log("updated post response", response);
+    console.log("updated post response", data);
+    notify(msg);
   }
 
-  async function createPost(newMobiledoc, newTitle) {
-    // const {
-    //   tags,
-    //   // url: ,
-    //   title,
-    //   status,
-    //   canonicalUrl,
-    //   primaryTag,
-    //   bannerImage,
-    //   shortDescription,
-    //   metaTitle,
-    //   metaDescription,
-    //   type
-    // } = settingsData;
-    const createThisPost = {
-      mobiledoc: newMobiledoc,
-      title: newTitle,
-      status: "drafted",
-      type: "blog"
-    };
-    console.log(createThisPost);
+  async function createPost(createThisPost) {
     const { data } = await PostService.createPost(userCookie, createThisPost);
     const { post, msg } = data;
+    notify(msg);
     // console.log(post, msg);
     //TO DO: compare our user id and the posts's user id
-    router.push(`?post_id=${post._id}`, undefined, {
-      shallow: true
-    });
+    // setPostId(post._id);
+    router.push(`?post_id=${post._id}`);
   }
 
   const saveToDraft = () => {
@@ -141,18 +119,28 @@ export default function Write({ postId }) {
       console.log({ postElement });
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement.current.scratch;
-      const title = postElement.current.titleScratch;
-      console.log("title: ", title);
+      const title = postElement.current.titleScratch || "[Untitled]";
+      // console.log("title: ", title);
       // createPost or updatePost -  if post id - update, else create
-      if (postId) {
+      console.log({ router });
+      const newPostId = router.query.post_id;
+      console.log({ newPostId });
+      if (newPostId) {
         //updatePost
         const newUpdatedPost = {
           title: title,
           mobiledoc: newMobiledoc
         };
-        updatePostById(newUpdatedPost);
+        updatePostById(newUpdatedPost, newPostId);
       } else {
-        createPost(newMobiledoc, title);
+        const createThisPost = {
+          mobiledoc: newMobiledoc,
+          title: title,
+          status: "drafted",
+          type: "blog"
+        };
+        console.log(createThisPost);
+        createPost(createThisPost);
       }
     }, 500);
   };
@@ -161,12 +149,11 @@ export default function Write({ postId }) {
     //status pending if submitted for review
   };
 
-  const getSettings = (e, tagData) => {
+  const getSettings = async (e) => {
     //get form settings data - imageUpload url tags shortDes metaTitle metaDes
     e.preventDefault();
-    // console.log(tagData);
-    // console.log(e.target.imageUpload.files[0]);
-    console.log("in settings");
+    console.log(e.target.imageUpload.files[0]);
+    // console.log("in settings");
     const imageFile = e.target.imageUpload.files[0] || "";
     const imageData = {
       stage: "dev",
@@ -175,8 +162,8 @@ export default function Write({ postId }) {
       category: "posts",
       ContentType: imageFile.type
     };
-    PostService.uploadImage(imageFile, imageData);
-    const imageName = imageFile.name;
+    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
+    console.log(s3ImageUrl);
     const postUrl = e.target.url.value || "";
     // console.log(`${baseUrl}/${postUrl}`);
     let tags = Array.from(e.target.tags) || "";
@@ -195,23 +182,22 @@ export default function Write({ postId }) {
     // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
     const settingsData = {
       tags: tags,
-      // url: ,
-      canonicalUrl: `${baseUrl}/${postUrl}`,
-      primaryTag: "css",
-      bannerImage: imageName,
+      // url: , //p/id
+      canonicalUrl: `${clientUrl}/${postUrl}`,
+      bannerImage: s3ImageUrl,
       shortDescription: shortDes,
       metaTitle: metaTitle,
       metaDescription: metaDes
     };
     if (postId) {
-      updatePostById(settingsData);
+      updatePostById(settingsData, postId);
     } else {
       createPost(settingsData);
     }
   };
 
-  const notify = (item) =>
-    toast(item.message, {
+  const notify = (msg) =>
+    toast(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -233,6 +219,7 @@ export default function Write({ postId }) {
             saveToDraft={saveToDraft}
             submitForReview={submitForReview}
             getSettings={getSettings}
+            post={post}
           />
           <div
             className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
@@ -244,7 +231,7 @@ export default function Write({ postId }) {
             ></iframe>
           </div>
         </div>
-        {/* <ToastContainer /> */}
+        <ToastContainer />
       </div>
     </>
   );
