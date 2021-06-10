@@ -35,7 +35,7 @@ const MyPost = () => {
       getPosts();
     }
   }, []);
-  
+
   const pageChange = (pageNo, limit) => {
     console.log(pageNo, limit, "page index");
     // call api here for Paginations
@@ -50,11 +50,17 @@ const MyPost = () => {
       <div className="bg-gray-100 px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <Navbar />
-          <MyBlogs
-            posts={postData.posts}
-            // posts={data}
-            paginationData={pageChange}
-          />
+          {postData.posts.length ? (
+            <MyBlogs
+              posts={postData.posts}
+              paginationData={pageChange}
+              // posts={data}
+            />
+          ) : (
+            <div className="pt-8 text-black text-center">
+              You have not created any posts!
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -112,7 +118,7 @@ const data = [
     html: "</a>",
     title: "Active Tab Animation using HTML, CSS and JS",
     mobiledoc: "mobiledoc",
-    status: "pending",
+    status: "drafted",
     featured: true,
     canonicalUrl: "ww/www",
     primaryTag: "css",
@@ -148,7 +154,7 @@ const data = [
     html: "</a>",
     title: "Null Safety in Flutter",
     mobiledoc: "mobiledoc",
-    status: "rejected",
+    status: "published",
     featured: true,
     canonicalUrl: "ww/www",
     primaryTag: "css",

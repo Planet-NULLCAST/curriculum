@@ -5,7 +5,7 @@
   background-color: #f5f5f5;
 }
 .successBg {
-  background-color: #e5f9e5;
+  background-color: #d7defa;
 }
 .warningBg {
   background-color: #ffe7ce;
@@ -13,11 +13,17 @@
 .dangerBg {
   background-color: #fdedef;
 }
+.draftedBg {
+  background-color: #e7e7e7;
+}
 .linkBg {
   background-color: #d7defa;
 }
+.publishedBg {
+  background-color: #e5f9e5;
+}
 .successDot {
-  background-color: #007f00;
+  background-color: #3e66fb;
 }
 .warningDot {
   background-color: #fd870b;
@@ -25,8 +31,14 @@
 .dangerDot {
   background-color: #e8505b;
 }
+.draftedDot {
+  background-color: #6c757d;
+}
+.publishedDot {
+  background-color: #007f00;
+}
 .successText {
-  color: #007f00;
+  color: #3e66fb;
   font-size: 14px;
   font-weight: 600;
 }
@@ -40,8 +52,18 @@
   font-size: 14px;
   font-weight: 600;
 }
+.draftedText {
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 600;
+}
 .linkText {
   color: #3e66fb;
+  font-size: 14px;
+  font-weight: 600;
+}
+.publishedText {
+  color: #007f00;
   font-size: 14px;
   font-weight: 600;
 }

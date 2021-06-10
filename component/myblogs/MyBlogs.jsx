@@ -36,6 +36,8 @@ export default function MyBlogs({ posts, paginationData }) {
                 className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 ${
                   item.status === "approved" && MyBlogsstyles.successBg
                 } ${item.status === "pending" && MyBlogsstyles.warningBg} ${
+                  item.status === "drafted" && MyBlogsstyles.draftedBg
+                } ${item.status === "published" && MyBlogsstyles.publishedBg} ${
                   item.status === "rejected" && MyBlogsstyles.dangerBg
                 }`}
               >
@@ -43,15 +45,17 @@ export default function MyBlogs({ posts, paginationData }) {
                   className={`w-2 h-2 mr-2 rounded-full  ${
                     item.status === "approved" && MyBlogsstyles.successDot
                   } ${item.status === "pending" && MyBlogsstyles.warningDot} ${
-                    item.status === "rejected" && MyBlogsstyles.dangerDot
-                  }`}
+                    item.status === "drafted" && MyBlogsstyles.draftedDot
+                  } ${item.status === "published" && MyBlogsstyles.publishedDot
+                  } ${item.status === "rejected" && MyBlogsstyles.dangerDot}`}
                 ></div>
                 <span
                   className={`capitalize  ${
                     item.status === "approved" && MyBlogsstyles.successText
                   } ${item.status === "pending" && MyBlogsstyles.warningText} ${
-                    item.status === "rejected" && MyBlogsstyles.dangerText
-                  }`}
+                    item.status === "drafted" && MyBlogsstyles.draftedText
+                  } ${item.status === "published" && MyBlogsstyles.publishedText
+                  } ${item.status === "rejected" && MyBlogsstyles.dangerText}`}
                 >
                   {item.status}
                 </span>
@@ -87,7 +91,7 @@ export default function MyBlogs({ posts, paginationData }) {
             >
               <Pagination
                 TotalCount={154}
-                CurrentPage={3}
+                // CurrentPage={3}
                 changedPage={changedPage}
               />
             </div>
