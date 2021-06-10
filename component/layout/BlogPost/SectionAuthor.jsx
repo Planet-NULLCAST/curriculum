@@ -2,8 +2,8 @@ import styles from './SectionAuthor.module.scss';
 import Link from "next/link";
 import AuthorDetails from '../BlogListing/AuthorDetails';
 
-export default function SectionAuthor() {
-
+export default function SectionAuthor(props) {
+    const { username } = props.data;
     return(
         <section className={`${styles.section} py-10 lg:py-20`}>
             <div className="container container--post">
@@ -18,7 +18,9 @@ export default function SectionAuthor() {
                 <div className={styles.widget}>
                     <div className={styles.details}>
                         
-                        <AuthorDetails />
+                        <AuthorDetails 
+                          username={username}
+                        />
 
                         <div className={styles.stats}>
                             <div className={styles.statsItem}>

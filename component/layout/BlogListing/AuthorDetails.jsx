@@ -1,7 +1,9 @@
 import styles from './AuthorDetails.module.scss';
 import Image from 'next/image';
 
-export default function Details() {
+export default function Details(props) {
+    const { username } = props;
+
     return(
         <>
             
@@ -21,7 +23,9 @@ export default function Details() {
                 </div>
                 <div className={styles.authorDetails__text}>
                     <h4 className={styles.authorDetails__title}>
-                        <a href="">Allie Grater</a>
+                        <a href="">
+                            {username}
+                        </a>
                     </h4>
                     <div className="flex items-center">
                         <h5 className={styles.authorDetails__position}>Master Ninja</h5>

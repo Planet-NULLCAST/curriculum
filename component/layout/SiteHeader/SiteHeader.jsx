@@ -11,8 +11,8 @@ export default function HomeSpotlight() {
     setMenu(menu);
   };
   useEffect(() => {
-    document.body.classList.toggle('menuOpen', menu);
-  }, [menu])
+    document.body.classList.toggle("menuOpen", menu);
+  }, [menu]);
   const router = useRouter();
   // console.log("aspath", router.asPath);
   const currentPath = router.asPath;
@@ -58,117 +58,132 @@ export default function HomeSpotlight() {
     router.reload();
   }
   return (
-    <header className={`${styles.header} ${ menu ? "menu-open" : " " } w-full`} id="header">
-      <div className={`${styles.wrap} flex items-center justify-between w-full`}>
+    <header
+      className={`${styles.header} ${menu ? "menu-open" : " "} w-full`}
+      id="header"
+    >
+      <div
+        className={`${styles.wrap} flex items-center justify-between w-full`}
+      >
         <div id="logo">
           <Link href="/">
             <a onClick={() => setMenu(true)}>
-              <img src="/images/nullcast.svg" alt=""/>
+              <img src="/images/nullcast.svg" alt="" />
             </a>
           </Link>
         </div>
         <div className="flex items-center flex-end">
-        <div className={styles.navFixed}>
-          <div className={styles.whiteBg}>
-            <a className={`${styles.btnClose} hidden`} onClick={() => setMenu(false)}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </a>
+          <div className={styles.navFixed}>
+            <div className={styles.whiteBg}>
+              <a
+                className={`${styles.btnClose} hidden`}
+                onClick={() => setMenu(false)}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+            </div>
+            <div className={styles.darkBg}>
+              <nav>
+                <ul className={styles.mainMenu}>
+                  <li>
+                    <Link href="/">
+                      <a onClick={() => setMenu(true)}>What the Ducks?</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/curriculum">
+                      <a onClick={() => setMenu(true)}>School of Ducks</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/posts">
+                      <a onClick={() => setMenu(true)}>
+                        Write{" "}
+                        <img src="/images/hand.png" className="ml-1" alt="" />
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#">
+                      {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                      <a onClick={() => setMenu(true)}>
+                        Explore
+                        <span className={styles.downArrow}>
+                          <svg
+                            width="8"
+                            height="5"
+                            viewBox="0 0 8 5"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#1B1B1B"
+                          >
+                            <path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" />
+                          </svg>
+                        </span>
+                      </a>
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link href="/blog">
+                          <a onClick={() => setMenu(true)}>Blog</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/code-of-conduct">
+                          <a onClick={() => setMenu(true)}>Code of conduct</a>
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <a href="" className="btn btn--whiteBorder">
+                <span className="btn__text">Donate</span>
+              </a>
+            </div>
           </div>
-          <div className={styles.darkBg}>
-            <nav>
-              <ul className={styles.mainMenu}>
-                <li>
-                  <Link href="/">
-                    <a onClick={() => setMenu(true)}>What the Ducks?</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/curriculum">
-                    <a onClick={() => setMenu(true)}>School of Ducks</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/posts">
-                    <a onClick={() => setMenu(true)}>
-                      Write <img src="/images/hand.png" className="ml-1" alt="" />
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#">
-                    {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)}>
-                      Explore
-                      <span className={styles.downArrow}>
-                        <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" fill="#1B1B1B"><path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" /></svg>
-                      </span>
-                    </a>
-                  </Link>
-                  <ul>
-                    <li>
-                      <Link href="/blog">
-                        <a onClick={() => setMenu(true)}>
-                          Blog
-                        </a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/blog">
-                        <a onClick={() => setMenu(true)}>
-                          Code of conduct
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-            <a href="" className="btn btn--whiteBorder">
-              <span className="btn__text">Donate</span>
-            </a>
-          </div>
-        </div>
-            
-        <div className={styles.wrapBtn}>
-          {cookies ? (
-            <div className="flex flex-row justify-center items-center">
-              <Profile onLogout={() => logout()} />
-              {/* <div>
+
+          <div className={styles.wrapBtn}>
+            {cookies ? (
+              <div className="flex flex-row justify-center items-center">
+                <Profile onLogout={() => logout()} />
+                {/* <div>
                 <button onClick={() => logout()}>Logout</button>
               </div> */}
-            </div>
-          ) : (
-            <a
-              href={`/login/?redirect=${currentPath}`}
-              className="btn btn--black"
-            >
-              <span className="btn__text">Login</span>
-              <svg
-                className="btn__arrow"
-                width="14"
-                height="9"
-                fill="#fff"
-                viewBox="0 0 14 9"
-                xmlns="http://www.w3.org/2000/svg"
+              </div>
+            ) : (
+              <a
+                href={`/login/?redirect=${currentPath}`}
+                className="btn btn--black"
               >
-                <path
-                  d="M13.794 3.862L10.119.205a.703.703 0 00-.992.997l2.467 2.454H.704a.703.703 0 100 1.406h10.89L9.127 7.518a.703.703 0 10.992.997l3.674-3.656a.705.705 0 000-.996z"
-                />
-              </svg>
-            </a>
-          )}
+                <span className="btn__text">Login</span>
+                <svg
+                  className="btn__arrow"
+                  width="14"
+                  height="9"
+                  fill="#fff"
+                  viewBox="0 0 14 9"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M13.794 3.862L10.119.205a.703.703 0 00-.992.997l2.467 2.454H.704a.703.703 0 100 1.406h10.89L9.127 7.518a.703.703 0 10.992.997l3.674-3.656a.705.705 0 000-.996z" />
+                </svg>
+              </a>
+            )}
 
-          {/* <a href="" className="btn btn--blackborder hidden lg:block">
+            {/* <a href="" className="btn btn--blackborder hidden lg:block">
             <span className="btn__text">Donate</span>
           </a> */}
-        </div>
-        <a className={`${styles.btnMenu} hidden`} onClick={() => setMenu(true)}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </a>
+          </div>
+          <a
+            className={`${styles.btnMenu} hidden`}
+            onClick={() => setMenu(true)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
         </div>
       </div>
     </header>

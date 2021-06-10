@@ -17,12 +17,23 @@ async function getPostsByUserId(userCookie) {
 
 async function getPostById(userCookie, postId) {
   try {
+    console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
     });
     return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+async function getPostBySlug(slug) {
+  try {
+    const response = await axios.get(`${baseUrl}/${postUrl}/blog/${slug}`);
+    return response;
   } catch (err) {
     console.log(err);
     return;
@@ -74,14 +85,20 @@ async function deletePostById(userCookie, postId) {
 async function uploadImage(imageFile, imageData) {
   // get url from s3url and send imagefile to that url
   console.log(imageData);
-  console.log(s3Url);
+  // console.log(s3Url);
   try {
     const response = await axios.post(
       `${s3Url}/dev/s3-presigned-url`,
       imageData
     );
-    console.log(response); //put with imageFile
-    return;
+    // console.log(response.data);
+    //put with imageFile
+    const uploadUrl = response.data;
+    const uploadResponse = await axios.put(uploadUrl, imageFile);
+    // console.log({ uploadResponse });
+    const imageUrl = uploadResponse.config.url.split("?")[0];
+    // console.log({ imageUrl });
+    return imageUrl;
   } catch (err) {
     console.log(err);
     return;
@@ -90,6 +107,7 @@ async function uploadImage(imageFile, imageData) {
 const PostService = {
   getPostById,
   getPostsByUserId,
+  getPostBySlug,
   createPost,
   updatePostById,
   deletePostById,
