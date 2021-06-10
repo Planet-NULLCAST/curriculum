@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "../config/config";
 import Head from "next/head";
+import Link from "next/link";
+import Fade from "react-reveal/Fade";
 
 export default function SignUp() {
   const [validEmail, setEmailValid] = useState(true);
@@ -93,135 +95,146 @@ export default function SignUp() {
         <p className={`font-semibold ${Loginstyles.text_gray_910}`}>
           Already have an Account ?
         </p>
-        <a
-          href="/login"
-          className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700"
+        {/* <a
+            href="/login"
+            className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700"
+          >
+            Sign Up
+          </a> */}
+        <Link
+          href={{
+            pathname: `/login`
+          }}
         >
-          Login
-        </a>
+          <div className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700 cursor-pointer">
+            Login
+          </div>
+        </Link>
       </div>
       <SideLogin />
       <div className="flex justify-end w-full mt-20">
-        <div className="w-full lg:w-1/2 bg-white h-full flex flex-col items-center justify-center p-6 md:p-20 md:pb-5 md:pt-0 pt-0">
-          <div className="border border-gray-100 shadow-lg rounded-xl w-full h-fit p-5 sm:p-10 max-w-xl">
-            <h1 className="text-gray-500 font-extrabold text-xl">Sign up</h1>
-            <p className={`${Loginstyles.text_gray_910} mt-2 text-sm`}>
-              Want to be a Mighty Dev Duck? Login and contribute to our
-              community
-            </p>
-            <div className="container py-2 px-0-imp">
-              <form onSubmit={(e) => handleClick(e)}>
-                <div className="mb-1 flex flex-col" name="inner-div">
-                  <label
-                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
-                    htmlFor="fullName"
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    placeholder="Enter full name"
-                    className="inputStyle"
-                    id="fullName"
-                    name="fullName"
-                    type="text"
-                  />
-                </div>
-                <div className="mb-1 flex flex-col">
-                  <label
-                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
-                    htmlFor="username"
-                  >
-                    Username
-                  </label>
-                  <input
-                    placeholder="Enter username"
-                    className="inputStyle"
-                    id="username"
-                    name="username"
-                    type="text"
-                  />
-                </div>
-                <div className="mb-1 flex flex-col">
-                  <label
-                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    placeholder="Enter email"
-                    className="inputStyle"
-                    id="email"
-                    name="email"
-                    type="email"
-                    onChange={(e) => emailValidator(e)}
-                  />
-                  {validEmail ? (
-                    ""
-                  ) : (
-                    <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
-                      Invalid email address !
-                    </span>
-                  )}
-                </div>
-                <div className="mb-4 flex flex-col">
-                  <label
-                    className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
-                    htmlFor="password"
-                  >
-                    Password
-                  </label>
-                  <div className="relative w-full">
+        <div className="w-full lg:w-1/2 bg-white h-full flex flex-col items-center justify-center p-6 md:p-20 md:pb-5 md:pt-0 pt-0 overflow-x-hidden">
+          <Fade duration={2000}>
+            <div className="border border-gray-100 shadow-lg rounded-xl w-full h-fit p-5 sm:p-10 max-w-xl">
+              <h1 className="text-gray-500 font-extrabold text-xl">Sign up</h1>
+              <p className={`${Loginstyles.text_gray_910} mt-2 text-sm`}>
+                Want to be a Mighty Dev Duck? Login and contribute to our
+                community
+              </p>
+              <div className="container py-2 px-0-imp">
+                <form onSubmit={(e) => handleClick(e)}>
+                  <div className="mb-1 flex flex-col" name="inner-div">
+                    <label
+                      className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                      htmlFor="fullName"
+                    >
+                      Full Name
+                    </label>
                     <input
-                      placeholder="Enter password"
-                      className="inputStyle w-full"
-                      id="password"
-                      name="password"
-                      type={`${validPassword ? "text" : "password"}`}
+                      placeholder="Enter full name"
+                      className="inputStyle"
+                      id="fullName"
+                      name="fullName"
+                      type="text"
                     />
-                    <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
-                      <img
-                        src="/images/eye.svg"
-                        className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
-                        onClick={(e) => eyeClick(e)}
-                      ></img>
+                  </div>
+                  <div className="mb-1 flex flex-col">
+                    <label
+                      className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                      htmlFor="username"
+                    >
+                      Username
+                    </label>
+                    <input
+                      placeholder="Enter username"
+                      className="inputStyle"
+                      id="username"
+                      name="username"
+                      type="text"
+                    />
+                  </div>
+                  <div className="mb-1 flex flex-col">
+                    <label
+                      className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      placeholder="Enter email"
+                      className="inputStyle"
+                      id="email"
+                      name="email"
+                      type="email"
+                      onChange={(e) => emailValidator(e)}
+                    />
+                    {validEmail ? (
+                      ""
+                    ) : (
+                      <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        Invalid email address !
+                      </span>
+                    )}
+                  </div>
+                  <div className="mb-4 flex flex-col">
+                    <label
+                      className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                      htmlFor="password"
+                    >
+                      Password
+                    </label>
+                    <div className="relative w-full">
+                      <input
+                        placeholder="Enter password"
+                        className="inputStyle w-full"
+                        id="password"
+                        name="password"
+                        type={`${validPassword ? "text" : "password"}`}
+                      />
+                      <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
+                        <img
+                          src="/images/eye.svg"
+                          className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                          onClick={(e) => eyeClick(e)}
+                        ></img>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center text-xs mb-1">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    name="terms"
-                    value="terms"
-                    className="cursor-pointer"
-                    onClick={(e) => termsClick(e)}
-                  />
-                  <label htmlFor="terms" className="ml-2 cursor-pointer">
-                    I agree to the{" "}
-                    <a href="#" className="text-blue-700">
-                      terms and conditions
-                    </a>
-                  </label>
-                </div>
-                <div className="flex items-center text-xs mb-3">
-                  <input
-                    type="checkbox"
-                    id="updates"
-                    name="updates"
-                    value="updates"
-                    className="cursor-pointer"
-                  />
-                  <label htmlFor="updates" className="ml-2 cursor-pointer">
-                    Send me latest updates
-                  </label>
-                </div>
-                <button className="submitButtons w-full" type="submit">
-                  Create account
-                </button>
-              </form>
+                  <div className="flex items-center text-xs mb-1">
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      name="terms"
+                      value="terms"
+                      className="cursor-pointer"
+                      onClick={(e) => termsClick(e)}
+                    />
+                    <label htmlFor="terms" className="ml-2 cursor-pointer">
+                      I agree to the{" "}
+                      <a href="#" className="text-blue-700">
+                        terms and conditions
+                      </a>
+                    </label>
+                  </div>
+                  <div className="flex items-center text-xs mb-3">
+                    <input
+                      type="checkbox"
+                      id="updates"
+                      name="updates"
+                      value="updates"
+                      className="cursor-pointer"
+                    />
+                    <label htmlFor="updates" className="ml-2 cursor-pointer">
+                      Send me latest updates
+                    </label>
+                  </div>
+                  <button className="submitButtons w-full" type="submit">
+                    Create account
+                  </button>
+                </form>
+              </div>
             </div>
-          </div>
+          </Fade>
         </div>
       </div>
       <ToastContainer />

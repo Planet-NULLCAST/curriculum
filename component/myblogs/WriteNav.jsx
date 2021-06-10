@@ -135,46 +135,65 @@ export default function WriteNav({
                   <span className="font-bold text-lg">Settings</span>
                 </div>
                 <div className="flex flex-col p-5">
-                  <div className="h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative cursor-pointer">
-                    <input
-                      type="file"
-                      className="cursor-pointer relative block opacity-0 w-full h-full z-50"
-                      name="imageUpload"
-                      onChange={handleImageUpload}
-                      ref={imgRef}
-                      // value={imgFile}
-                    />
-
-                    <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
-                      {imageSrc ? (
-                        <img
-                          src={imageSrc}
-                          alt="banner"
-                          height="100px"
-                          width="100px"
-                        />
-                      ) : (
-                        <div>
-                          <Image
-                            src="/images/image-up.svg"
-                            alt="edit"
-                            width={15}
-                            height={15}
-                            layout="fixed"
-                            margin={0}
-                          />
-                          <span className="ml-2 text-sm">Upload Image</span>
+                  <div
+                    className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
+                      !imageSrc && "cursor-pointer"
+                    }`}
+                  >
+                    {imageSrc ? (
+                      <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
+                        <img src={imageSrc} alt="banner" width="100%" />
+                        <div className="w-full h-full absolute z-10 top-0 left-0 justify-center items-center bg-black opacity-60 bgshadow"></div>
+                        <div className="w-full h-full absolute z-20 top-0 left-0 justify-center items-center bgshadow">
+                          <div
+                            className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
+                            onClick={handleImageDelete}
+                          >
+                            <Image
+                              src="/images/svgs/delwhite.svg"
+                              alt="edit"
+                              width={22}
+                              height={22}
+                              layout="fixed"
+                              margin={0}
+                            />
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          className="cursor-pointer relative block opacity-0 w-full h-full z-50"
+                          name="imageUpload"
+                          onChange={handleImageUpload}
+                          ref={imgRef}
+                          // value={imgFile}
+                        />
 
+                        <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
+                          <div>
+                            <Image
+                              src="/images/image-up.svg"
+                              alt="edit"
+                              width={15}
+                              height={15}
+                              layout="fixed"
+                              margin={0}
+                            />
+                            <span className="ml-2 text-sm">Upload Image</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  {/* 
                   <div
                     className="cursor-pointer border border-black"
                     onClick={handleImageDelete}
                   >
                     Delete Image
-                  </div>
+                  </div> */}
                   <div className="w-full mt-3">
                     <div className="flex w-full border rounded overflow-hidden">
                       <div className="w-4/12 border border-black text-white bg-black h-10 flex justify-center items-center text-xs font-semibold">
