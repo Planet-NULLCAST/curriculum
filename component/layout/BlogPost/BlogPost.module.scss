@@ -98,6 +98,11 @@
     @media (max-width: 1023px) {
         @apply static;
     }
+    a:hover {
+        svg {
+            stroke: #333;
+        }
+    }
 }
 
 .sidebar {
