@@ -35,7 +35,7 @@ const MyPost = () => {
       getPosts();
     }
   }, []);
-  
+
   const pageChange = (pageNo, limit) => {
     console.log(pageNo, limit, "page index");
     // call api here for Paginations
@@ -53,6 +53,7 @@ const MyPost = () => {
           {postData.posts.length ? (
             <MyBlogs
               posts={postData.posts}
+              paginationData={pageChange}
               // posts={data}
             />
           ) : (
@@ -60,11 +61,6 @@ const MyPost = () => {
               You have not created any posts!
             </div>
           )}
-//           <MyBlogs
-//             posts={postData.posts}
-//             // posts={data}
-//             paginationData={pageChange}
-//           />
         </div>
       </div>
     </div>
