@@ -183,24 +183,24 @@ h3 {
 .min-h-screen-top {
   min-height: calc(100vh - 60px);
 }
-.h-sub-nav{
+.h-sub-nav {
   height: 65px;
   margin-bottom: 15px;
 }
-.pt-15px{
+.pt-15px {
   padding-top: 15px;
 }
 .height_list {
   max-height: calc(100vh - 226px);
 }
-.height_Iframe_write{
+.height_Iframe_write {
   height: calc(100vh - 176px);
 }
 @media (min-width: 1536px) {
   .height_list {
     max-height: calc(100vh - 246px);
   }
-  .height_Iframe_write{
+  .height_Iframe_write {
     height: calc(100vh - 196px);
   }
   .min-h-screen-top {
@@ -250,5 +250,15 @@ h3 {
   .css-yk16xz-control {
     background-color: #e5e7eb !important;
     height: 38px !important;
+  }
+}
+.hoverPreview {
+  .bgshadow {
+    display: none;
+  }
+  &:hover {
+    .bgshadow {
+      display: flex;
+    }
   }
 }
