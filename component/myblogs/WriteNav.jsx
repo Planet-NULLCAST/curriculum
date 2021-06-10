@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -13,11 +13,30 @@ import { useRouter } from "next/router";
 const axios = require("axios");
 import Select from "react-select";
 
-export default function WriteNav(props) {
-  const { saveToDraft, submitForReview, getSettings } = props;
-  const [openSettings, setopenSettings] = useState(false);
-  const [tagData, setTagData] = useState();
+export default function WriteNav({
+  saveToDraft,
+  submitForReview,
+  getSettings,
+  post
+}) {
+  // const  = props;
+  const [openSettings, setOpenSettings] = useState(false);
+  // const [tagData, setTagData] = useState();
+  const [imageSrc, setImageSrc] = useState();
+  const [currentPost, setCurrentPost] = useState({
+    bannerImage: "",
+    canonicalUrl: "",
+    tags: [],
+    shortDescription: "",
+    metaTitle: "",
+    metaDescription: ""
+  });
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(post);
+    setCurrentPost({ ...post });
+  }, [post]);
 
   //get tag data from db with same structure - and value should be the id
   const options = [
@@ -29,6 +48,20 @@ export default function WriteNav(props) {
   function handleSelectTag(e) {
     // console.log(e);
     setTagData(e);
+  }
+
+  function handleImageUpload(e) {
+    console.log(e.target.files[0]);
+    const imageUrl = URL.createObjectURL(e.target.files[0]);
+    // console.log(imageUrl);
+    setImageSrc(imageUrl);
+  }
+
+  const imgRef = useRef(null);
+  function handleImageDelete(e) {
+    // console.log(imgRef);
+    imgRef.current.value = null;
+    setImageSrc("");
   }
 
   return (
@@ -67,7 +100,7 @@ export default function WriteNav(props) {
           </div>
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-            onClick={() => setopenSettings(true)}
+            onClick={() => setOpenSettings(true)}
           >
             <p>Settings</p>
           </div>
@@ -78,11 +111,11 @@ export default function WriteNav(props) {
           <div className="w-full h-screen">
             <form
               className="w-full h-full bg-white relative border flex flex-col justify-between"
-              onSubmit={(e) => getSettings(e, tagData)}
+              onSubmit={(e) => getSettings(e)}
             >
               <div
                 className="absolute right-0 top-0 w-6 h-6 flex justify-center items-center mr-2 mt-2 cursor-pointer hover:opacity-50"
-                onClick={() => setopenSettings(false)}
+                onClick={() => setOpenSettings(false)}
               >
                 <svg
                   width="16"
@@ -107,19 +140,40 @@ export default function WriteNav(props) {
                       type="file"
                       className="cursor-pointer relative block opacity-0 w-full h-full z-50"
                       name="imageUpload"
-                      // onChange={handleImageUpload}
+                      onChange={handleImageUpload}
+                      ref={imgRef}
+                      // value={imgFile}
                     />
+
                     <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
-                      <Image
-                        src="/images/image-up.svg"
-                        alt="edit"
-                        width={15}
-                        height={15}
-                        layout="fixed"
-                        margin={0}
-                      />
-                      <span className="ml-2 text-sm">Upload Image</span>
+                      {imageSrc ? (
+                        <img
+                          src={imageSrc}
+                          alt="banner"
+                          height="100px"
+                          width="100px"
+                        />
+                      ) : (
+                        <div>
+                          <Image
+                            src="/images/image-up.svg"
+                            alt="edit"
+                            width={15}
+                            height={15}
+                            layout="fixed"
+                            margin={0}
+                          />
+                          <span className="ml-2 text-sm">Upload Image</span>
+                        </div>
+                      )}
                     </div>
+                  </div>
+
+                  <div
+                    className="cursor-pointer border border-black"
+                    onClick={handleImageDelete}
+                  >
+                    Delete Image
                   </div>
                   <div className="w-full mt-3">
                     <div className="flex w-full border rounded overflow-hidden">
@@ -185,7 +239,7 @@ export default function WriteNav(props) {
                   <div className="w-1/2 pr-1">
                     <button
                       className="w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-                      // onClick={() => setopenSettings(false)}
+                      // onClick={() => setOpenSettings(false)}
                       type="submit"
                     >
                       Save
@@ -194,7 +248,7 @@ export default function WriteNav(props) {
                   <div className="w-1/2 pl-1">
                     <button
                       className="w-full border border-black text-black hover:text-white bg-white hover:bg-black flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-                      onClick={() => setopenSettings(false)}
+                      onClick={() => setOpenSettings(false)}
                     >
                       Cancel
                     </button>
