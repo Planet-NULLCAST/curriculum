@@ -4,3 +4,14 @@
 .min_w_10 {
     min-width: 160px;
 }
+.imagepreview {
+    // background-color: red;
+    section {
+        display: none;
+    }
+    &:hover {
+        section {
+            display: flex;
+        }
+    }
+}

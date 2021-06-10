@@ -2,51 +2,68 @@ import React, { useRef, useEffect, useState } from "react";
 import WriteNav from "../../component/myblogs/WriteNav";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import { env } from "../../next.config";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
-import { baseUrl } from "../../config/config";
+import { baseUrl, clientUrl, editorUrl } from "../../config/config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
-const TARGET = env.EDITOR_URL;
+const TARGET = editorUrl;
 
-export default function Write() {
-  // const [post, setPost] = useState(null);
+Write.getInitialProps = async (ctx) => {
+  // console.log(ctx);
+  // console.log(ctx.query);
+  const post_Id = ctx.query.post_id;
+  return { post_Id: post_Id ? post_Id : "" };
+};
+
+export default function Write({ post_Id }) {
+  // console.log("postId if there's a post Id", post_Id);
+  const [postId, setPostId] = useState("");
+  const [post, setPost] = useState();
   const iframeRef = useRef();
   const postElement = useRef();
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
-  const postId = router.query.post_id;
   // console.log(userCookie);
 
   useEffect(() => {
-    // console.log(TARGET);
-    // console.log(router.query);
-
-    console.log({ postId });
+    // const _postId = window.location.search.split("=")[1];
+    const currentPostId = router.query.post_id;
+    // console.log({ currentPostId });
     if (userCookie) {
-      if (postId) {
-        console.log("test");
-        async function getPostById() {
-          const response = await PostService.getPostById(userCookie, postId);
-          console.log(response);
-
-          // const title = "some title";
-          // ---- to show the post in iframe
-          iframeRef.current.contentWindow.postMessage(
-            {
-              msg: "providePost",
-              post: response
-            },
-            TARGET
-          );
+      setPostId(currentPostId);
+      iframeRef.current.onload = function () {
+        console.log("iframe loaded ======>>>>>");
+        if (currentPostId) {
+          console.log("iframe current", currentPostId);
+          getPostById(currentPostId);
         }
-        getPostById();
-      } else {
-        //create blank ??
+      };
+      // if (postId) {
+      async function getPostById(id) {
+        // console.log("in function", id);
+        const res = await PostService.getPostById(userCookie, id);
+        console.log("get post response", res);
+        const resPost = {
+          mobiledoc: res.mobiledoc,
+          title: res.title
+        };
+        setPost(res);
+        // ---- to show the post in iframe
+        iframeRef.current.contentWindow.postMessage(
+          {
+            msg: "providePost",
+            post: resPost
+          },
+          TARGET
+        );
       }
+      // getPostById();
+      // }
     }
 
     window.addEventListener(
@@ -72,52 +89,26 @@ export default function Write() {
         // console.log("listener removed");
       });
     };
-  }, [postId]);
+  }, [post_Id]);
 
-  const updateThisPost = {
-    mobiledoc: {
-      atoms: [],
-      cards: [],
-      sections: [[1, "p", [[0, [], 0, "asfasdfdsafdafadsf"]]]],
-      version: "0.3.1",
-      ghostVersion: "4.0"
-    }
-  };
-
-  async function updatePostById(updateData) {
-    const response = await PostService.updatePostById(
+  async function updatePostById(updateData, newPostId) {
+    const { msg, data } = await PostService.updatePostById(
       userCookie,
       updateData,
-      postId
+      newPostId
     );
-    console.log(response);
+    console.log("updated post response", data);
+    notify(msg);
   }
 
-  async function createPost(settingsData) {
-    const createThisPost = {
-      mobiledoc: {
-        atoms: [],
-        cards: [],
-        sections: [[1, "p", [[0, [], 0, "some new post "]]]],
-        version: "0.3.1",
-        ghostVersion: "4.0"
-      }
-
-      //settings data
-
-      // tags: ["css", "js"],
-      // url: "ww/ww/",
-      // title: "person a post 1",
-      // status: "pending",
-      // canonicalUrl: "ww/www",
-      // primaryTag: "css",
-      // bannerImage: "img",
-      // metaTitle: "some article",
-      // metaDescription: "some description",
-      // type: "type"
-    };
-    const response = await PostService.createPost(userCookie, createThisPost);
-    console.log(response);
+  async function createPost(createThisPost) {
+    const { data } = await PostService.createPost(userCookie, createThisPost);
+    const { post, msg } = data;
+    notify(msg);
+    // console.log(post, msg);
+    //TO DO: compare our user id and the posts's user id
+    // setPostId(post._id);
+    router.push(`?post_id=${post._id}`);
   }
 
   const saveToDraft = () => {
@@ -126,26 +117,44 @@ export default function Write() {
     setTimeout(() => {
       // wait for the response post message to get the post from the state
       console.log({ postElement });
+      // console.log(postElement.current.scratch);
+      const newMobiledoc = postElement.current.scratch;
+      const title = postElement.current.titleScratch || "[Untitled]";
+      // console.log("title: ", title);
       // createPost or updatePost -  if post id - update, else create
-      if (postId) {
+      console.log({ router });
+      const newPostId = router.query.post_id;
+      console.log({ newPostId });
+      if (newPostId) {
         //updatePost
-        updatePostById(updateThisPost);
+        const newUpdatedPost = {
+          title: title,
+          mobiledoc: newMobiledoc
+        };
+        updatePostById(newUpdatedPost, newPostId);
       } else {
-        createPost();
+        const createThisPost = {
+          mobiledoc: newMobiledoc,
+          title: title,
+          status: "drafted",
+          type: "blog"
+        };
+        console.log(createThisPost);
+        createPost(createThisPost);
       }
     }, 500);
   };
 
-  const publishPost = () => {
-    //status pending for publish
+  const submitForReview = () => {
+    //status pending if submitted for review
   };
 
-  const getSettings = (e, tagData) => {
+  const getSettings = async (e) => {
     //get form settings data - imageUpload url tags shortDes metaTitle metaDes
     e.preventDefault();
-    // console.log(tagData);
-    // console.log(e.target.imageUpload.files[0]);
-    const imageFile = e.target.imageUpload.files[0];
+    console.log(e.target.imageUpload.files[0]);
+    // console.log("in settings");
+    const imageFile = e.target.imageUpload.files[0] || "";
     const imageData = {
       stage: "dev",
       fileName: imageFile.name,
@@ -153,38 +162,50 @@ export default function Write() {
       category: "posts",
       ContentType: imageFile.type
     };
-    PostService.uploadImage(imageFile, imageData);
-    const imageName = imageFile.name;
-    const postUrl = e.target.url.value;
+    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
+    console.log(s3ImageUrl);
+    const postUrl = e.target.url.value || "";
     // console.log(`${baseUrl}/${postUrl}`);
-    const tags = Array.from(e.target.tags).map((tag) =>
-      tag.value.toUpperCase()
-    );
-    console.log(tags);
+    let tags = Array.from(e.target.tags) || "";
+    // console.log("tags length: ", tags.length);
+    if (tags.length > 0) {
+      tags = tags.map((tag) => tag.value.toUpperCase());
+      // console.log("multiple tags", tags);
+    } else {
+      tags = e.target.tags.value.toUpperCase();
+      // console.log("single tag", tags);
+    }
 
-    const shortDes = e.target.shortDes.value;
-    const metaTitle = e.target.metaTitle.value;
-    const metaDes = e.target.metaDes.value;
+    const shortDes = e.target.shortDes.value || "";
+    const metaTitle = e.target.metaTitle.value || "";
+    const metaDes = e.target.metaDes.value || "";
     // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
     const settingsData = {
       tags: tags,
-      // url: ,
-      title: "person a post 1",
-      status: "drafted",
-      canonicalUrl: `${baseUrl}/${postUrl}`,
-      primaryTag: "css",
-      bannerImage: imageName,
+      // url: , //p/id
+      canonicalUrl: `${clientUrl}/${postUrl}`,
+      bannerImage: s3ImageUrl,
       shortDescription: shortDes,
       metaTitle: metaTitle,
-      metaDescription: metaDes,
-      type: "blog"
+      metaDescription: metaDes
     };
     if (postId) {
-      updatePostById(settingsData);
+      updatePostById(settingsData, postId);
     } else {
       createPost(settingsData);
     }
   };
+
+  const notify = (msg) =>
+    toast(msg, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
 
   return (
     <>
@@ -196,8 +217,9 @@ export default function Write() {
         <div className="max-w-panel pt-15px">
           <WriteNav
             saveToDraft={saveToDraft}
-            publishPost={publishPost}
+            submitForReview={submitForReview}
             getSettings={getSettings}
+            post={post}
           />
           <div
             className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
@@ -209,6 +231,7 @@ export default function Write() {
             ></iframe>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );

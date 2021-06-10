@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -13,11 +13,30 @@ import { useRouter } from "next/router";
 const axios = require("axios");
 import Select from "react-select";
 
-export default function WriteNav(props) {
-  const { saveToDraft, publishPost, getSettings } = props;
-  const [openSettings, setopenSettings] = useState(false);
-  const [tagData, setTagData] = useState();
+export default function WriteNav({
+  saveToDraft,
+  submitForReview,
+  getSettings,
+  post
+}) {
+  // const  = props;
+  const [openSettings, setOpenSettings] = useState(false);
+  // const [tagData, setTagData] = useState();
+  const [imageSrc, setImageSrc] = useState();
+  const [currentPost, setCurrentPost] = useState({
+    bannerImage: "",
+    canonicalUrl: "",
+    tags: [],
+    shortDescription: "",
+    metaTitle: "",
+    metaDescription: ""
+  });
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(post);
+    setCurrentPost({ ...post });
+  }, [post]);
 
   //get tag data from db with same structure - and value should be the id
   const options = [
@@ -29,6 +48,20 @@ export default function WriteNav(props) {
   function handleSelectTag(e) {
     // console.log(e);
     setTagData(e);
+  }
+
+  function handleImageUpload(e) {
+    console.log(e.target.files[0]);
+    const imageUrl = URL.createObjectURL(e.target.files[0]);
+    // console.log(imageUrl);
+    setImageSrc(imageUrl);
+  }
+
+  const imgRef = useRef(null);
+  function handleImageDelete(e) {
+    // console.log(imgRef);
+    imgRef.current.value = null;
+    setImageSrc("");
   }
 
   return (
@@ -54,20 +87,20 @@ export default function WriteNav(props) {
         </div>
         <div className="flex items-center py-3">
           <div
-            onClick={publishPost}
+            onClick={submitForReview}
             className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Publish</p>
+            <p>Submit For Review</p>
           </div>
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Save to Draft</p>
+            <p>Save</p>
           </div>
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-            onClick={() => setopenSettings(true)}
+            onClick={() => setOpenSettings(true)}
           >
             <p>Settings</p>
           </div>
@@ -78,11 +111,11 @@ export default function WriteNav(props) {
           <div className="w-full h-screen">
             <form
               className="w-full h-full bg-white relative border flex flex-col justify-between"
-              onSubmit={(e) => getSettings(e, tagData)}
+              onSubmit={(e) => getSettings(e)}
             >
               <div
                 className="absolute right-0 top-0 w-6 h-6 flex justify-center items-center mr-2 mt-2 cursor-pointer hover:opacity-50"
-                onClick={() => setopenSettings(false)}
+                onClick={() => setOpenSettings(false)}
               >
                 <svg
                   width="16"
@@ -102,25 +135,65 @@ export default function WriteNav(props) {
                   <span className="font-bold text-lg">Settings</span>
                 </div>
                 <div className="flex flex-col p-5">
-                  <div className="h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative cursor-pointer">
-                    <input
-                      type="file"
-                      className="cursor-pointer relative block opacity-0 w-full h-full z-50"
-                      name="imageUpload"
-                      // onChange={handleImageUpload}
-                    />
-                    <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
-                      <Image
-                        src="/images/image-up.svg"
-                        alt="edit"
-                        width={15}
-                        height={15}
-                        layout="fixed"
-                        margin={0}
-                      />
-                      <span className="ml-2 text-sm">Upload Image</span>
-                    </div>
+                  <div
+                    className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
+                      !imageSrc && "cursor-pointer"
+                    }`}
+                  >
+                    {imageSrc ? (
+                      <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
+                        <img src={imageSrc} alt="banner" width="100%" />
+                        <div className="w-full h-full absolute z-10 top-0 left-0 justify-center items-center bg-black opacity-60 bgshadow"></div>
+                        <div className="w-full h-full absolute z-20 top-0 left-0 justify-center items-center bgshadow">
+                          <div
+                            className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
+                            onClick={handleImageDelete}
+                          >
+                            <Image
+                              src="/images/svgs/delwhite.svg"
+                              alt="edit"
+                              width={22}
+                              height={22}
+                              layout="fixed"
+                              margin={0}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          className="cursor-pointer relative block opacity-0 w-full h-full z-50"
+                          name="imageUpload"
+                          onChange={handleImageUpload}
+                          ref={imgRef}
+                          // value={imgFile}
+                        />
+
+                        <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center">
+                          <div>
+                            <Image
+                              src="/images/image-up.svg"
+                              alt="edit"
+                              width={15}
+                              height={15}
+                              layout="fixed"
+                              margin={0}
+                            />
+                            <span className="ml-2 text-sm">Upload Image</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
+                  {/* 
+                  <div
+                    className="cursor-pointer border border-black"
+                    onClick={handleImageDelete}
+                  >
+                    Delete Image
+                  </div> */}
                   <div className="w-full mt-3">
                     <div className="flex w-full border rounded overflow-hidden">
                       <div className="w-4/12 border border-black text-white bg-black h-10 flex justify-center items-center text-xs font-semibold">
@@ -185,7 +258,7 @@ export default function WriteNav(props) {
                   <div className="w-1/2 pr-1">
                     <button
                       className="w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-                      // onClick={() => setopenSettings(false)}
+                      // onClick={() => setOpenSettings(false)}
                       type="submit"
                     >
                       Save
@@ -194,7 +267,7 @@ export default function WriteNav(props) {
                   <div className="w-1/2 pl-1">
                     <button
                       className="w-full border border-black text-black hover:text-white bg-white hover:bg-black flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-                      onClick={() => setopenSettings(false)}
+                      onClick={() => setOpenSettings(false)}
                     >
                       Cancel
                     </button>
