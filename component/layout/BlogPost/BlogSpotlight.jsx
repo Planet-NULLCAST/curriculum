@@ -21,7 +21,9 @@ export default function BlogSpotlight(props) {
         <section className={styles.section}>
             <div className={styles.postWrap}>
                 <figure>
-                    {/* <img src="/images/temp/blogmain.png" alt=""/> */}
+                    {!bannerImage && (
+                      <img src="/images/temp/blogmain.png" alt=""/>
+                    )}
                     <img src={bannerImage} alt=""/>
                 </figure>
                 <div className={styles.author}>

@@ -8,11 +8,17 @@ import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 
 import PostService from "../services/PostService";
 
+// unsure on using getServerSideProps
+// if facing SEO issues refer 
+// https://andrei-calazans.com/posts/2021-05-06/next-js-when-to-use-get-server-side-props
+// https://stackoverflow.com/questions/66294596/nextjs-getstaticprops-and-getserversideprops
+
 export async function getServerSideProps(context) {
-  const slug = Object.values(context.params)[0];
+  try{
+    const slug = context.params['blog-post'];
     const response = await PostService.getPostBySlug(slug);
 
-    if(!response) {
+    if(response.data['blog'] === null) {
       return {
         redirect: {
           permanent: false,
@@ -20,8 +26,21 @@ export async function getServerSideProps(context) {
         }
       }
     }
-  return {
-    props: { blog: response.data.blog}
+    if (response.data.blog.status === 'published') {
+      return {
+        props: { blog: response.data.blog}
+      }
+    }
+    else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/404"
+        }
+      }
+    }
+  } catch(err) {
+    console.log(err);
   }
 }
 
