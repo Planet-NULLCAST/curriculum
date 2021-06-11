@@ -14,7 +14,6 @@ const MyPost = () => {
     posts: [],
     count: 0
   });
-
   useEffect(() => {
     const userCookie = cookies.get("userNullcast");
     if (userCookie) {
@@ -47,7 +46,7 @@ const MyPost = () => {
         <title>My Posts | Nullcast</title>
       </Head>
       <SiteHeader />
-      <div className="bg-gray-100 px-6 min-h-screen-top">
+      <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <Navbar />
           {postData.posts.length ? (
@@ -58,9 +57,14 @@ const MyPost = () => {
               paginationData={pageChange}
             />
           ) : (
-            <div className="pt-8 text-black text-center">
-              You have not created any posts!
+            <div className="text-gray-700 text-center font-semibold mt-8">
+              Oops ! You have not created any posts!
             </div>
+            // <MyBlogs
+            //   paginationData={pageChange}
+            //   posts={data}
+            //   paginationData={pageChange}
+            // />
           )}
         </div>
       </div>
