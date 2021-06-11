@@ -55,7 +55,12 @@ export default function HomeSpotlight() {
       "userNullcast=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setCookies("");
     sessionStorage.setItem("userNullcast", null);
-    router.reload();
+    // console.log(router);
+    if (router.pathname === "/posts" || router.pathname === "/posts/write") {
+      router.push("/");
+    } else {
+      router.reload();
+    }
   }
   return (
     <header
