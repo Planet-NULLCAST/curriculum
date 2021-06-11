@@ -3,7 +3,8 @@ import Link from "next/link";
 import AuthorDetails from '../BlogListing/AuthorDetails';
 
 export default function SectionAuthor(props) {
-    const { username } = props.data;
+    const { username, bio } = props.primaryAuthor;
+    console.log(props);
     return(
         <section className={`${styles.section} py-10 lg:py-20`}>
             <div className="container container--post">
@@ -38,7 +39,10 @@ export default function SectionAuthor(props) {
                         </div>
                     </div>
                     <div className={styles.description}>
+                        <p>{bio}</p>
+                        {!bio && (
                         <p>ML data annotations made super easy. Just upload data, invite your team and build training/evaluation dataset in hours.ML data annotations made super easy. Just upload data, invite your team.</p>
+                        )}
                     </div>
                 </div>
             </div>

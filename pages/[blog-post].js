@@ -59,7 +59,7 @@ export default function BlogListing(props) {
         html={html}
       />
       <SectionAuthor 
-        data={primaryAuthor}
+        primaryAuthor={primaryAuthor}
       />
       <SectionRelated title="Related Blogs" />
       <SectionSwag />

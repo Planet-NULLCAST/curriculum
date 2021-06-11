@@ -1,6 +1,9 @@
 import styles from './BlogSpotlight.module.scss';
 import AuthorDetails from '../BlogListing/AuthorDetails';
 
+import moment from 'moment'
+
+
 export default function BlogSpotlight(props) {
     const { title, bannerImage, createdAt } = props;
 
@@ -13,8 +16,8 @@ export default function BlogSpotlight(props) {
                     <h2>
                         {title}
                     </h2>
-                    <h3 className="date">12 May 2021</h3>
-                    {/* <h3 className="date">{createdAt}</h3> */}
+                    {/* <h3 className="date">12 May 2021</h3> */}
+                    <h3 className="date">{moment(createdAt).format('Do MMMM YYYY')}</h3>
                 </div>
             </div>
         </section>
