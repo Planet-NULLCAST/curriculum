@@ -2,7 +2,12 @@ import styles from './BlogPost.module.scss';
 import Link from 'next/link';
 import Slider from "react-slick";
 
-export default function BlogPost() {
+export default function BlogPost(props) {
+
+    const createMarkup = (props) => {
+        return {__html: props};
+    }
+
     return (
         <>
         <style jsx>{`
@@ -84,8 +89,9 @@ export default function BlogPost() {
                             </div>
                         </div>
                     </div>
-
                     <div className={styles.postContent}>
+                        <div dangerouslySetInnerHTML={createMarkup(props.html)} />
+                    {/* 
 
                         <p>He wrote this in 2007, but it is still valid today, especially in the case of tech startups.
 
@@ -148,7 +154,8 @@ export default function BlogPost() {
 
                         </div>
 
-                    </div>
+                     */}
+                     </div>
                 </div>
             </div>
         </section>
