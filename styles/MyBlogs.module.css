@@ -71,3 +71,6 @@
 .navigation {
   height: 65px;
 }
+.min_w_25rem{
+  min-width: 25rem;
+}

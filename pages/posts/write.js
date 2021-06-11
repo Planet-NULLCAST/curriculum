@@ -150,46 +150,8 @@ export default function Write({ post_Id }) {
     //status pending if submitted for review
   };
 
-  const getSettings = async (e) => {
-    //get form settings data - imageUpload url tags shortDes metaTitle metaDes
-    e.preventDefault();
-    console.log(e.target.imageUpload.files[0]);
-    // console.log("in settings");
-    const imageFile = e.target.imageUpload.files[0] || "";
-    const imageData = {
-      stage: "dev",
-      fileName: imageFile.name,
-      id: postId,
-      category: "posts",
-      ContentType: imageFile.type
-    };
-    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    console.log(s3ImageUrl);
-    const postUrl = e.target.url.value || "";
-    // console.log(`${baseUrl}/${postUrl}`);
-    let tags = Array.from(e.target.tags) || "";
-    // console.log("tags length: ", tags.length);
-    if (tags.length > 0) {
-      tags = tags.map((tag) => tag.value.toUpperCase());
-      // console.log("multiple tags", tags);
-    } else {
-      tags = e.target.tags.value.toUpperCase();
-      // console.log("single tag", tags);
-    }
-
-    const shortDes = e.target.shortDes.value || "";
-    const metaTitle = e.target.metaTitle.value || "";
-    const metaDes = e.target.metaDes.value || "";
-    // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
-    const settingsData = {
-      tags: tags,
-      // url: , //p/id
-      canonicalUrl: `${clientUrl}/${postUrl}`,
-      bannerImage: s3ImageUrl,
-      shortDescription: shortDes,
-      metaTitle: metaTitle,
-      metaDescription: metaDes
-    };
+  const getSettings = async (settingsData) => {
+    console.log("in settings");
     if (postId) {
       updatePostById(settingsData, postId);
     } else {
@@ -200,7 +162,7 @@ export default function Write({ post_Id }) {
   const notify = (msg) =>
     toast(msg, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -223,13 +185,18 @@ export default function Write({ post_Id }) {
             post={post}
           />
           <div
-            className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
+            className={`height_Iframe_write hidden md:block bg-white w-full rounded overflow-y-auto`}
           >
             <iframe
               ref={iframeRef}
               className="w-full h-full"
               src={TARGET}
             ></iframe>
+          </div>
+          <div
+            className={`height_Iframe_write flex md:hidden w-full justify-center px-3 rounded overflow-y-auto`}
+          >
+            <p className="text-gray-700 text-center font-semibold mt-8">Oops! This functionality is disabled in smaller screens !</p>
           </div>
         </div>
         <ToastContainer />

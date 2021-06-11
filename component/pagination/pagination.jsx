@@ -280,7 +280,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
         <input
           type="text"
           name=""
-          id=""
+          // id=""
           className="border w-12 ml-2 border-gray-400 rounded px-2 text-xs py-1"
           value={valuePage}
           onChange={(e) => {
