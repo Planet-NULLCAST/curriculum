@@ -31,39 +31,22 @@ export default function Write({ post_Id }) {
   // console.log(userCookie);
 
   useEffect(() => {
-    // const _postId = window.location.search.split("=")[1];
     const currentPostId = router.query.post_id;
-    // console.log({ currentPostId });
+
     if (userCookie) {
       setPostId(currentPostId);
-      iframeRef.current.onload = function () {
-        console.log("iframe loaded ======>>>>>");
-        if (currentPostId) {
-          console.log("iframe current", currentPostId);
-          getPostById(currentPostId);
-        }
-      };
-      // if (postId) {
-      async function getPostById(id) {
-        // console.log("in function", id);
-        const res = await PostService.getPostById(userCookie, id);
-        console.log("get post response", res);
-        const resPost = {
-          mobiledoc: res.mobiledoc,
-          title: res.title
+      try {
+        // errors on refresh
+        console.log(iframeRef.current.contentWindow);
+
+        iframeRef.current.onload = function () {
+          if (currentPostId) {
+            getPostById(currentPostId);
+          }
         };
-        setPost(res);
-        // ---- to show the post in iframe
-        iframeRef.current.contentWindow.postMessage(
-          {
-            msg: "providePost",
-            post: resPost
-          },
-          TARGET
-        );
+      } catch (error) {
+        getPostById(currentPostId);
       }
-      // getPostById();
-      // }
     }
 
     window.addEventListener(
@@ -90,6 +73,24 @@ export default function Write({ post_Id }) {
       });
     };
   }, [post_Id]);
+
+  async function getPostById(id) {
+    const res = await PostService.getPostById(userCookie, id);
+    console.log("get post response", res);
+    const resPost = {
+      mobiledoc: res.mobiledoc,
+      title: res.title
+    };
+    setPost(res);
+    // ---- to show the post in iframe
+    iframeRef.current.contentWindow.postMessage(
+      {
+        msg: "providePost",
+        post: resPost
+      },
+      TARGET
+    );
+  }
 
   async function updatePostById(updateData, newPostId) {
     const { msg, data } = await PostService.updatePostById(

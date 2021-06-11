@@ -55,6 +55,7 @@ const MyPost = () => {
               posts={postData.posts}
               paginationData={pageChange}
               // posts={data}
+              paginationData={pageChange}
             />
           ) : (
             <div className="pt-8 text-black text-center">
