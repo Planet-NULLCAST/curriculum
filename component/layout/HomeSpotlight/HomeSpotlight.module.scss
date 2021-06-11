@@ -1,5 +1,5 @@
 .spotlight {
-    @apply bg-black flex items-center justify-center text-white md:py-20 relative;
+    @apply bg-black flex items-center justify-center text-white md:py-20 relative overflow-hidden;
     height: min(calc(100vh - 60px), 1500px);
     &__title {
 
@@ -30,20 +30,6 @@
 
     }
 }
-@keyframes zoom{
-    0%{
-        transform: rotateZ(0) scale(1);
-    }
-    20% {
-        // opacity: 1;
-    }
-    40%{
-        transform: rotateZ(10deg) scale(1);
-    }
-    100%{
-        transform: scale(.65);
-    }
-}
 .btnWrap {
     @apply relative md:flex justify-center py-5 pt-10 md:py-20 2xl:pt-28 2xl:pb-10 text-center;
     a {
@@ -63,18 +49,9 @@
             [class*="text"] {
                 background-size: 50px 1px;
             }
-            svg {
-                opacity: 1;
-                animation: zoom .4s forwards;
-            }
             [class*="text"] {
                 transform: translateX(20px);
             }
-        }
-        svg {
-            @apply hidden xl:block absolute left-4 top-4 opacity-0;
-            transform: scale(.65);
-            transition: all ease .3s;
         }
     }
     [class*="text"] {
