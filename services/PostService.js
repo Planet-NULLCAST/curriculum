@@ -17,12 +17,23 @@ async function getPostsByUserId(userCookie) {
 
 async function getPostById(userCookie, postId) {
   try {
+    console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
     });
     return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+async function getPostBySlug(slug) {
+  try {
+    const response = await axios.get(`${baseUrl}/${postUrl}/blog/${slug}`);
+    return response;
   } catch (err) {
     console.log(err);
     return;
@@ -96,6 +107,7 @@ async function uploadImage(imageFile, imageData) {
 const PostService = {
   getPostById,
   getPostsByUserId,
+  getPostBySlug,
   createPost,
   updatePostById,
   deletePostById,
