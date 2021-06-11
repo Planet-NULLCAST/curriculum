@@ -5,7 +5,8 @@ import moment from 'moment'
 
 
 export default function BlogSpotlight(props) {
-    const { title, bannerImage, createdAt } = props;
+    const { title, bannerImage, createdAt, primaryAuthor } = props;
+    const { username } = primaryAuthor;
 
     return (
         <>
@@ -31,14 +32,16 @@ export default function BlogSpotlight(props) {
                 </figure>
                 <div className={styles.author}>
                     <div className={styles.item}>
+                        <AuthorDetails 
+                            username={username}
+                        />
+                    </div>
+                    {/* <div className={styles.item}>
                         <AuthorDetails />
                     </div>
                     <div className={styles.item}>
                         <AuthorDetails />
-                    </div>
-                    <div className={styles.item}>
-                        <AuthorDetails />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

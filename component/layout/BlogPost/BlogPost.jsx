@@ -40,7 +40,7 @@ export default function BlogPost(props) {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.sidebar}>
+                    {/* <div className={styles.sidebar}>
                         <div className={styles.widget}>
                             <div className={styles.index}>
                                 <h3>Page Index</h3>
@@ -88,7 +88,7 @@ export default function BlogPost(props) {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={styles.postContent}>
                         <div dangerouslySetInnerHTML={createMarkup(props.html)} />
                     {/* 
