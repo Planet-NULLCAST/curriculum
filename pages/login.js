@@ -19,21 +19,32 @@ export default function Login() {
 
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(false);
+  const [hidePassword, setHidePassword] = useState(false);
 
   const eyeClick = (e) => {
-    setValidPassword((prevState) => {
+    setHidePassword((prevState) => {
       return !prevState;
     });
   };
   const emailValidator = (e) => {
-    let emailAdress = e.target.value;
+    let emailAddress = e.target.value;
+    // console.log(emailAddress);
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailAdress.match(regexEmail)) {
+    if (emailAddress.match(regexEmail)) {
       setEmailValid(true);
+    } else if (!e.target.value) {
+      setEmailValid(false);
     } else {
       setEmailValid(false);
     }
   };
+
+  function handlePassword(e) {
+    // console.log(e.target);
+    if (e.target.value) {
+      setValidPassword(true);
+    }
+  }
 
   const notify = (err) =>
     toast.error(err.message, {
@@ -47,7 +58,8 @@ export default function Login() {
     });
   const handleClick = (e) => {
     e.preventDefault();
-    if (validEmail) {
+    // console.log(e.target);
+    if (validEmail && validPassword) {
       const password = document.querySelector("#password").value;
       const email = document.querySelector("#email").value;
       const loginDetails = {
@@ -124,7 +136,9 @@ export default function Login() {
           className="fixed left-5 lg:left-10 top-5 lg:top-10 z-50 cursor-pointer"
         ></img>
       </Link>
-      <div className={`w-full h-screen flex ${Loginstyles.bg_yellow_710} loginSection`}>
+      <div
+        className={`w-full h-screen flex ${Loginstyles.bg_yellow_710} loginSection`}
+      >
         <SideLogin />
         <div className="flex justify-end w-full items-center">
           <div
@@ -137,9 +151,7 @@ export default function Login() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end p-6 w-full ${Loginstyles.bg_green_710}`}
                 >
-                  <p
-                    className={`font-semibold text-white text-sm flex mr-2`}
-                  >
+                  <p className={`font-semibold text-white text-sm flex mr-2`}>
                     Don’t have an Account ?
                   </p>
                   <Link
@@ -168,6 +180,7 @@ export default function Login() {
                         placeholder="Enter email"
                         className={`inputStyle ${Loginstyles.inputGreen}`}
                         id="email"
+                        name="email"
                         type="text"
                         onChange={(e) => emailValidator(e)}
                       />
@@ -190,7 +203,9 @@ export default function Login() {
                           placeholder="Enter password"
                           className={`inputStyle w-full ${Loginstyles.inputGreen}`}
                           id="password"
-                          type={`${validPassword ? "text" : "password"}`}
+                          name="password"
+                          onChange={handlePassword}
+                          type={`${hidePassword ? "text" : "password"}`}
                         />
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                           <img
@@ -202,9 +217,14 @@ export default function Login() {
                       </div>
                     </div>
                     <button
-                      className="submitButtons w-full py-2"
+                      className={`submitButtons w-full py-2 ${
+                        !validEmail || !validPassword
+                          ? "disabled:opacity-50 cursor-default"
+                          : ""
+                      }`}
                       type="submit"
                       onClick={(e) => handleClick(e)}
+                      // disabled={!validEmail || !validPassword ? true : false}
                     >
                       Login
                     </button>
