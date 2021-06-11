@@ -183,7 +183,7 @@ export default function WriteNav({
             {router.query.post_id ? "/ Edits" : "/ Create"}
           </span>
         </div>
-        <div className="flex items-center py-3">
+        <div className="items-center py-3 md:flex hidden">
           <div
             onClick={submitForReview}
             className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"

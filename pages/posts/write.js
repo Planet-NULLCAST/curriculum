@@ -185,13 +185,18 @@ export default function Write({ post_Id }) {
             post={post}
           />
           <div
-            className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
+            className={`height_Iframe_write hidden md:block bg-white w-full rounded overflow-y-auto`}
           >
             <iframe
               ref={iframeRef}
               className="w-full h-full"
               src={TARGET}
             ></iframe>
+          </div>
+          <div
+            className={`height_Iframe_write flex md:hidden w-full justify-center px-3 rounded overflow-y-auto`}
+          >
+            <p className="text-gray-700 text-center font-semibold mt-8">Oops! This functionality is disabled in smaller screens !</p>
           </div>
         </div>
         <ToastContainer />
