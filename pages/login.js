@@ -128,13 +128,9 @@ export default function Login() {
           >
             Sign Up
           </a> */}
-          <Link
-            href={{
-              pathname: `/signup`
-            }}
-          >
+          <Link href="/signup">
             <div className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700 cursor-pointer">
-              Login
+              Sign Up
             </div>
           </Link>
         </div>

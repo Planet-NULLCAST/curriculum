@@ -31,39 +31,22 @@ export default function Write({ post_Id }) {
   // console.log(userCookie);
 
   useEffect(() => {
-    // const _postId = window.location.search.split("=")[1];
     const currentPostId = router.query.post_id;
-    // console.log({ currentPostId });
+
     if (userCookie) {
       setPostId(currentPostId);
-      iframeRef.current.onload = function () {
-        console.log("iframe loaded ======>>>>>");
-        if (currentPostId) {
-          console.log("iframe current", currentPostId);
-          getPostById(currentPostId);
-        }
-      };
-      // if (postId) {
-      async function getPostById(id) {
-        // console.log("in function", id);
-        const res = await PostService.getPostById(userCookie, id);
-        console.log("get post response", res);
-        const resPost = {
-          mobiledoc: res.mobiledoc,
-          title: res.title
+      try {
+        // errors on refresh
+        console.log(iframeRef.current.contentWindow);
+
+        iframeRef.current.onload = function () {
+          if (currentPostId) {
+            getPostById(currentPostId);
+          }
         };
-        setPost(res);
-        // ---- to show the post in iframe
-        iframeRef.current.contentWindow.postMessage(
-          {
-            msg: "providePost",
-            post: resPost
-          },
-          TARGET
-        );
+      } catch (error) {
+        getPostById(currentPostId);
       }
-      // getPostById();
-      // }
     }
 
     window.addEventListener(
@@ -90,6 +73,24 @@ export default function Write({ post_Id }) {
       });
     };
   }, [post_Id]);
+
+  async function getPostById(id) {
+    const res = await PostService.getPostById(userCookie, id);
+    console.log("get post response", res);
+    const resPost = {
+      mobiledoc: res.mobiledoc,
+      title: res.title
+    };
+    setPost(res);
+    // ---- to show the post in iframe
+    iframeRef.current.contentWindow.postMessage(
+      {
+        msg: "providePost",
+        post: resPost
+      },
+      TARGET
+    );
+  }
 
   async function updatePostById(updateData, newPostId) {
     const { msg, data } = await PostService.updatePostById(
@@ -149,46 +150,8 @@ export default function Write({ post_Id }) {
     //status pending if submitted for review
   };
 
-  const getSettings = async (e) => {
-    //get form settings data - imageUpload url tags shortDes metaTitle metaDes
-    e.preventDefault();
-    console.log(e.target.imageUpload.files[0]);
-    // console.log("in settings");
-    const imageFile = e.target.imageUpload.files[0] || "";
-    const imageData = {
-      stage: "dev",
-      fileName: imageFile.name,
-      id: postId,
-      category: "posts",
-      ContentType: imageFile.type
-    };
-    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    console.log(s3ImageUrl);
-    const postUrl = e.target.url.value || "";
-    // console.log(`${baseUrl}/${postUrl}`);
-    let tags = Array.from(e.target.tags) || "";
-    // console.log("tags length: ", tags.length);
-    if (tags.length > 0) {
-      tags = tags.map((tag) => tag.value.toUpperCase());
-      // console.log("multiple tags", tags);
-    } else {
-      tags = e.target.tags.value.toUpperCase();
-      // console.log("single tag", tags);
-    }
-
-    const shortDes = e.target.shortDes.value || "";
-    const metaTitle = e.target.metaTitle.value || "";
-    const metaDes = e.target.metaDes.value || "";
-    // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
-    const settingsData = {
-      tags: tags,
-      // url: , //p/id
-      canonicalUrl: `${clientUrl}/${postUrl}`,
-      bannerImage: s3ImageUrl,
-      shortDescription: shortDes,
-      metaTitle: metaTitle,
-      metaDescription: metaDes
-    };
+  const getSettings = async (settingsData) => {
+    console.log("in settings");
     if (postId) {
       updatePostById(settingsData, postId);
     } else {
@@ -199,7 +162,7 @@ export default function Write({ post_Id }) {
   const notify = (msg) =>
     toast(msg, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
