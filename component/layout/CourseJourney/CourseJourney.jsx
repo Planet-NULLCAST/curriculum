@@ -55,7 +55,8 @@ export default function CourseJourney() {
               stroke="#178cf3"
               strokeDasharray="10 10"
               clipPath="url(#box_1)"
-              strokeWidth="2"
+              strokeWidth="3" 
+              strokeLinecap="round"
             />
             <defs>
               <clipPath id="box_1">
@@ -102,7 +103,8 @@ export default function CourseJourney() {
               stroke="#20d034"
               strokeDasharray="10 10"
               clipPath="url(#box_2)"
-              strokeWidth="2"
+              strokeWidth="3" 
+              strokeLinecap="round"
             />
             <defs>
               <clipPath id="box_2">
@@ -149,7 +151,8 @@ export default function CourseJourney() {
               stroke="#d8c00f"
               strokeDasharray="10 10"
               clipPath="url(#box_3)"
-              strokeWidth="2"
+              strokeWidth="3" 
+              strokeLinecap="round"
             />
             <defs>
               <clipPath id="box_3">
