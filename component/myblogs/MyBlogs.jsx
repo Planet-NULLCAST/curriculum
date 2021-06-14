@@ -2,34 +2,29 @@ import moment from "moment";
 import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import Pagination from "../pagination/pagination";
 
-export default function MyBlogs({ posts, paginationData }) {
-  const changedPage = (pageNo, limit) => {
-    paginationData(pageNo, limit);
-  };
+export default function MyBlogs({ posts }) {
   return (
     <div
       className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list`}
     >
-      <table className="w-full">
+      <div className="w-full">
         {posts &&
           posts.map((item, index) => (
-            <tr className={`${MyBlogsstyles.oddBg} w-full`}>
+            <div className={`${MyBlogsstyles.oddBg} w-full`} key={item._id}>
               <div
                 className={`flex flex-col md:flex-row md:items-center justify-between p-4`}
-                key={item._id}
               >
                 <div className="">
                   <Link
-                    href="/a-post"
+                    href={`${item.slug}`}
                     className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
                   >
-                    <div
+                    <a
                       className={`text-gray-900 text-xl hover:text-purple-600 font-semibold ${MyBlogsstyles.min_w_25rem}`}
                     >
                       {item.title}
-                    </div>
+                    </a>
                   </Link>
                   <div className={`text-xs text-gray-400`}>
                     {moment(item?.createdAt).format("LL")}
@@ -102,19 +97,10 @@ export default function MyBlogs({ posts, paginationData }) {
                     </div>
                   </Link>
                 </div>
-                <div
-                  className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
-                >
-                  <Pagination
-                    TotalCount={154}
-                    // CurrentPage={3}
-                    changedPage={changedPage}
-                  />
-                </div>
               </div>
-            </tr>
+            </div>
           ))}
-      </table>
+      </div>
     </div>
   );
 }

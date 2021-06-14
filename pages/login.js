@@ -219,7 +219,7 @@ export default function Login() {
                     <button
                       className={`submitButtons w-full py-2 ${
                         !validEmail || !validPassword
-                          ? "disabled:opacity-50 cursor-default"
+                          ? "disabled:opacity-50"
                           : ""
                       }`}
                       type="submit"

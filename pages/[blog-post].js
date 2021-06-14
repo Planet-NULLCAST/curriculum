@@ -9,37 +9,37 @@ import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import PostService from "../services/PostService";
 
 // unsure on using getServerSideProps
-// if facing SEO issues refer 
+// if facing SEO issues refer
 // https://andrei-calazans.com/posts/2021-05-06/next-js-when-to-use-get-server-side-props
 // https://stackoverflow.com/questions/66294596/nextjs-getstaticprops-and-getserversideprops
 
 export async function getServerSideProps(context) {
-  try{
-    const slug = context.params['blog-post'];
+  try {
+    const slug = context.params["blog-post"];
     const response = await PostService.getPostBySlug(slug);
 
-    if(response.data['blog'] === null) {
+    if (response.data["blog"] === null) {
       return {
         redirect: {
           permanent: false,
           destination: "/404"
         }
-      }
+      };
     }
-    if (response.data.blog.status === 'published') {
+    // if (response.data.blog.status === "pending") {
+    if (response.data.blog.status === "published") {
       return {
-        props: { blog: response.data.blog}
-      }
-    }
-    else {
+        props: { blog: response.data.blog }
+      };
+    } else {
       return {
         redirect: {
           permanent: false,
           destination: "/404"
         }
-      }
+      };
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 }
@@ -49,18 +49,14 @@ export default function BlogListing(props) {
   return (
     <>
       <SiteHeader />
-      <BlogSpotlight 
+      <BlogSpotlight
         title={title}
         bannerImage={bannerImage}
         createdAt={createdAt}
         primaryAuthor={primaryAuthor}
       />
-      <BlogPost 
-        html={html}
-      />
-      <SectionAuthor 
-        primaryAuthor={primaryAuthor}
-      />
+      <BlogPost html={html} />
+      <SectionAuthor primaryAuthor={primaryAuthor} />
       <SectionRelated title="Related Blogs" />
       <SectionSwag />
       <SiteFooter />
