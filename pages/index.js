@@ -9,8 +9,27 @@ import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 import "../styles/Home.module.scss";
 import { baseUrl, clientUrl } from "../config/config";
+import PostService from "../services/PostService";
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  try {
+    const reqParams = {
+      fieldName: 'publishedAt',
+      order:-1,
+      limit:4,
+      skip:0
+    }
+    const response = await PostService.getLatestPosts(reqParams);
+    return {
+      props: { blog: response.data.blog }
+    }
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+export default function Home(props) {
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -19,7 +38,9 @@ export default function Home() {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      <SectioBlogs />
+      <SectioBlogs 
+        blog={props.blog}
+      />
       <SectionVideos />
       <SectionUsers />
       <SectionEvents />

@@ -19,6 +19,7 @@ export async function getServerSideProps(context) {
     const response = await PostService.getPostBySlug(slug);
 
     if(response.data['blog'] === null) {
+      console.log('inside condition');
       return {
         redirect: {
           permanent: false,
@@ -26,21 +27,17 @@ export async function getServerSideProps(context) {
         }
       }
     }
-    if (response.data.blog.status === 'published') {
-      return {
-        props: { blog: response.data.blog}
-      }
-    }
-    else {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
-        }
-      }
+    return {
+      props: { blog: response.data.blog}
     }
   } catch(err) {
     console.log(err);
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404"
+      }
+    }
   }
 }
 

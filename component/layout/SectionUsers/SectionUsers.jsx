@@ -29,6 +29,15 @@ export default class SimpleSlider extends Component {
                                     <h4><a href="">Allie Grater</a></h4>
                                 </div>
                             </div>
+                            
+                            {/* <div>
+                                <div className={styles.item}>
+                                    <div className={styles.icon}>
+                                        <img src="/images/temp/avatar1.png" alt=""/>
+                                    </div>
+                                    <h4><a href="">Allie Grater</a></h4>
+                                </div>
+                            </div>
 
                             <div>
                                 <div className={styles.item}>
@@ -109,7 +118,7 @@ export default class SimpleSlider extends Component {
                                     </div>
                                     <h4><a href="">Allie Grater</a></h4>
                                 </div>
-                            </div>
+                            </div> */}
                         </Slider>
                     </div>
                 </div>
