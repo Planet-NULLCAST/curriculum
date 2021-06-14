@@ -7,37 +7,51 @@ import Cookies from "universal-cookie";
 import withAuth from "../../component/withAuth/withAuth";
 import PostService from "../../services/PostService";
 import Pagination from "../../component/pagination/pagination";
+import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 
 const MyPost = () => {
   const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+  // console.log(userCookie);
   const [postData, setPostData] = useState({
     posts: [],
     count: 0
   });
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    const userCookie = cookies.get("userNullcast");
     if (userCookie) {
-      async function getPosts() {
-        try {
-          const data = await PostService.getPostsByUserId(userCookie);
-          console.log(data);
-          const { posts, count } = data;
-          // console.log({ posts });
-          setPostData({
-            posts: posts,
-            count: count
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      getPosts();
+      // const reqData = {
+      //   pageNo: 1,
+      //   limit: 10
+      // };
+      // getPosts(reqData);
+      pageChange(1, 10);
+      setLoaded(true);
     }
   }, []);
 
+  async function getPosts(reqData) {
+    try {
+      const data = await PostService.getPostsByUserId(userCookie, reqData);
+      console.log(data);
+      const { posts, count } = data;
+      // console.log({ posts });
+      setPostData({
+        posts: posts,
+        count: count
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const pageChange = (pageNo, limit) => {
-    console.log(pageNo, limit, "page index");
-    // call api here for Paginations
+    // console.log(pageNo, limit);
+    const newReqData = {
+      pageNo: pageNo,
+      limit: limit
+    };
+    getPosts(newReqData);
   };
 
   return (
@@ -50,12 +64,18 @@ const MyPost = () => {
         <div className="max-w-panel pt-15px">
           <Navbar />
           {postData.posts.length ? (
-            <MyBlogs
-              posts={postData.posts}
-              paginationData={pageChange}
-              // posts={data}
-              paginationData={pageChange}
-            />
+            <div>
+              <MyBlogs posts={postData.posts} />
+              <div
+                className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
+              >
+                <Pagination
+                  TotalCount={postData.count}
+                  // CurrentPage={3}
+                  changedPage={pageChange}
+                />
+              </div>
+            </div>
           ) : (
             <div className="text-gray-700 text-center font-semibold mt-8">
               Oops ! You have not created any posts!
@@ -63,7 +83,6 @@ const MyPost = () => {
             // <MyBlogs
             //   paginationData={pageChange}
             //   posts={data}
-            //   paginationData={pageChange}
             // />
           )}
         </div>
