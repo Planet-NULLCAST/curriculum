@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import moment from "moment";
-import Link from "next/link";
-import Image from "next/image";
 import Styles from "./pagination.module.scss";
 
 export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
@@ -41,9 +38,11 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
     } else if (pageNo >= TotalPages || pageNo <= 5) {
       setmiddle(false);
     }
+    // console.log("changepage");
     changedPage(pageNo, limit);
   }, [pageNo]);
 
+  // console.log(pageNo);
   const nextBut = () => {
     if (pageNo !== TotalPages) {
       setpageNo(pageNo + 1);
@@ -86,7 +85,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
           <div className="flex h-8 font-medium rounded-full">
             <div className="flex h-8 font-medium rounded-full ">
               <div
-                className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 ${
                   pageNo === FirstThree[0] && "text-white bg-black"
                 }`}
                 onClick={() => {
@@ -98,7 +97,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               </div>
               {pageNo === TotalPages - 1 && TotalPages > 6 && (
                 <div
-                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 ${
                     pageNo === FirstThree[1] && "text-white bg-black"
                   }`}
                   onClick={() => {
@@ -111,7 +110,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               )}
               {pageNo === TotalPages - 1 && TotalPages > 6 && (
                 <div
-                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 ${
                     pageNo === FirstThree[2] && "text-white bg-black"
                   }`}
                   onClick={() => {
@@ -126,7 +125,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                 <>
                   {FirstThree[1] && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500  ${
                         pageNo === FirstThree[1] && "text-white bg-black"
                       }`}
                       onClick={() => {
@@ -139,7 +138,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                   )}
                   {FirstThree[2] && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500  ${
                         pageNo === FirstThree[2] && "text-white bg-black"
                       }`}
                       onClick={() => {
@@ -152,7 +151,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                   )}
                   {FirstThree[3] && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500  ${
                         pageNo === FirstThree[3] && "text-white bg-black"
                       }`}
                       onClick={() => {
@@ -165,7 +164,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                   )}
                   {FirstThree[4] && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500  ${
                         pageNo === FirstThree[4] && "text-white bg-black"
                       }`}
                       onClick={() => {
@@ -192,7 +191,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                   )}
                   {pageNo - 1 > 1 && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500`}
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 `}
                       onClick={() => {
                         setpageNo(pageNo - 1);
                         setvaluePage("");
@@ -202,7 +201,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                     </div>
                   )}
                   <div
-                    className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full duration-500 text-white bg-black`}
+                    className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  text-white bg-black`}
                     onClick={() => {
                       setpageNo(pageNo);
                       setvaluePage("");
@@ -212,7 +211,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                   </div>
                   {pageNo + 1 < TotalPages && (
                     <div
-                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500`}
+                      className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 `}
                       onClick={() => {
                         setpageNo(pageNo + 1);
                         setvaluePage("");
@@ -230,7 +229,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
               )}
               {LastThree[0] && (
                 <div
-                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500 ${
+                  className={`w-8 mx-2 md:flex justify-center items-center hidden font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500  ${
                     pageNo === LastThree[0] && "text-white bg-black"
                   }`}
                   onClick={() => {
@@ -242,7 +241,7 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
                 </div>
               )}
               <div
-                className={`w-8 flex justify-center flex md:hidden items-center font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 duration-500`}
+                className={`w-8 flex justify-center md:hidden items-center font-semibold  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full  hover:text-gray-500 `}
               >
                 {pageNo}
               </div>
