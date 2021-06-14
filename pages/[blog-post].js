@@ -46,7 +46,6 @@ export async function getServerSideProps(context) {
 
 export default function BlogListing(props) {
   const { html, primaryAuthor, title, bannerImage, createdAt } = props.blog;
-  // console.log(props.blog);
   return (
     <>
       <SiteHeader />
@@ -54,6 +53,7 @@ export default function BlogListing(props) {
         title={title}
         bannerImage={bannerImage}
         createdAt={createdAt}
+        primaryAuthor={primaryAuthor}
       />
       <BlogPost html={html} />
       <SectionAuthor primaryAuthor={primaryAuthor} />

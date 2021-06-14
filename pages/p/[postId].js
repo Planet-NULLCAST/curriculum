@@ -58,12 +58,13 @@ export default function BlogListing(props) {
         title={title}
         bannerImage={bannerImage}
         createdAt={createdAt}
+        primaryAuthor={primaryAuthor}
       />
       <BlogPost 
         html={html}
       />
       <SectionAuthor 
-        data={primaryAuthor}
+        primaryAuthor={primaryAuthor}      
       />
       <SectionRelated title="Related Blogs" />
       <SectionSwag />
