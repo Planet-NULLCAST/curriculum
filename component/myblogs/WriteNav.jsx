@@ -23,6 +23,7 @@ export default function WriteNav({
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [openSettings, setOpenSettings] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   // const [tagData, setTagData] = useState();
   // const [imageSrc, setImageSrc] = useState();
@@ -119,14 +120,17 @@ export default function WriteNav({
       category: "posts",
       ContentType: imageFile.type
     };
+    setLoading(true);
     const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
     console.log(s3ImageUrl);
+
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
         bannerImage: s3ImageUrl
       };
     });
+    setLoading(false);
   }
 
   const imgRef = useRef(null);
@@ -248,11 +252,16 @@ export default function WriteNav({
                   >
                     {currentPost.bannerImage ? (
                       <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
-                        <img
-                          src={currentPost.bannerImage}
-                          alt="banner"
-                          width="100%"
-                        />
+                        {loading ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <img
+                            src={currentPost.bannerImage}
+                            alt="banner"
+                            width="100%"
+                          />
+                        )}
+
                         <div className="w-full h-full absolute z-10 top-0 left-0 justify-center items-center bg-black opacity-60 bgshadow"></div>
                         <div className="w-full h-full absolute z-20 top-0 left-0 justify-center items-center bgshadow">
                           <div
@@ -282,17 +291,23 @@ export default function WriteNav({
                         />
 
                         <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center z-40">
-                          <div>
-                            <Image
-                              src="/images/image-up.svg"
-                              alt="edit"
-                              width={15}
-                              height={15}
-                              layout="fixed"
-                              margin={0}
-                            />
-                            <span className="ml-2 text-sm">Upload Image</span>
-                          </div>
+                          {loading ? (
+                            <div>
+                              <span className="ml-2 text-sm">Uploading...</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <Image
+                                src="/images/image-up.svg"
+                                alt="edit"
+                                width={15}
+                                height={15}
+                                layout="fixed"
+                                margin={0}
+                              />
+                              <span className="ml-2 text-sm">Upload Image</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
