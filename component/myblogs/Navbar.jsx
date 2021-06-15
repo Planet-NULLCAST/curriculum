@@ -2,37 +2,53 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Select from "react-select";
 import styles from "./blogs.module.scss";
+import tagOptions from "../../utils/tags";
 
 export default function Navbar(props) {
-  const { currentNav } = props;
+  const { currentNav, getPosts } = props;
+  // const cookies = new Cookies();
+  // const userCookie = cookies.get("userNullcast");
+  const [tag, setTag] = useState("");
+  const [status, setStatus] = useState("");
 
-  //get tag data from db with same structure - and value should be the id
-  const optionsCategory = [
-    { label: "All Category", value: "all" },
-    { label: "HTML", value: "html" },
-    { label: "CSS", value: "css" },
-    { label: "JavaScript", value: "js" },
-    { label: "Angular", value: "angular" },
-    { label: "React", value: "react" },
-    { label: "NodeJS", value: "node" },
-    { label: "Database", value: "database" },
-    { label: "Python", value: "python" },
-    { label: "Testing", value: "testing" }
-  ];
-
-  const optionsStatus = [
+  const statusOptions = [
     { label: "All Posts", value: "" },
     { label: "Approved", value: "approved" },
     { label: "Pending", value: "pending" },
     { label: "Rejected", value: "rejected" },
     { label: "Published", value: "published" },
     { label: "Drafted", value: "drafted" }
-    //published, drafted
   ];
 
-  // useEffect(() => {
-  //   console.log(window.innerWidth, "innerwidth");
-  // }, []);
+  function handleTagSelect(e) {
+    // console.log(e);
+    // const tag = e.value;
+    // console.log(tag);
+    setTag(e.value);
+    const newReqData = {
+      pageNo: 1,
+      limit: 10,
+      tag: e.value,
+      status: status
+    };
+    // call getallposts
+    getPosts(newReqData);
+  }
+
+  function handleStatusSelect(e) {
+    // console.log(e);
+    const status = e.value;
+    // console.log(status);
+    setStatus(status);
+    const newReqData = {
+      pageNo: 1,
+      limit: 10,
+      tag: tag,
+      status: status
+    };
+    // call getallposts
+    getPosts(newReqData);
+  }
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
@@ -43,22 +59,22 @@ export default function Navbar(props) {
         </div>
         <div className="flex items-center py-3">
           <Select
-            options={optionsCategory}
+            options={tagOptions}
             isMulti={false}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
             placeholder="Category"
-            // closeMenuOnSelect={false}
+            onChange={handleTagSelect}
           />
           <Select
-            options={optionsStatus}
+            options={statusOptions}
             isMulti={false}
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
             placeholder="Blog Status"
-            // closeMenuOnSelect={false}
+            onChange={handleStatusSelect}
           />
           {/* Add a New Post goes to /posts/write  */}
           <Link href="/posts/write">

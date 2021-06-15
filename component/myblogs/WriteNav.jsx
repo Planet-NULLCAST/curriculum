@@ -9,6 +9,10 @@ import PostService from "../../services/PostService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clientUrl } from "../../config/config";
+import tagOptions from "../../utils/tags";
+
+tagOptions.shift();
+// console.log(tagOptions);
 
 export default function WriteNav({
   saveToDraft,
@@ -34,15 +38,9 @@ export default function WriteNav({
   });
 
   useEffect(() => {
-    console.log(post);
+    console.log({ post });
     setCurrentPost({ ...post });
   }, [post]);
-
-  const options = [
-    { label: "HTML", value: "HTML" },
-    { label: "CSS", value: "CSS" },
-    { label: "JS", value: "JS" }
-  ];
 
   async function formSubmit(e) {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
@@ -68,7 +66,7 @@ export default function WriteNav({
     // console.log(imageName, postUrl, tags, shortDescription, metaTitle, metaDescription);
     const settingsData = {
       tags: tags,
-      url: `p/${postUrl}`,
+      url: `p/${currentPost._id}`,
       canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
       bannerImage: currentPost.bannerImage ? currentPost.bannerImage : null,
       shortDescription: shortDes,
@@ -201,11 +199,18 @@ export default function WriteNav({
             <p>Save</p>
           </div>
           {post && (
-            <div
-              className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-              onClick={() => setOpenSettings(true)}
-            >
-              <p>Settings</p>
+            <div className="flex flex-row">
+              <div
+                className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+                onClick={() => setOpenSettings(true)}
+              >
+                <p>Settings</p>
+              </div>
+              <div className="bg-blue-600 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+                <Link href={`/p/${currentPost._id}`}>
+                  <a>Preview Url</a>
+                </Link>
+              </div>
             </div>
           )}
         </div>
@@ -319,7 +324,7 @@ export default function WriteNav({
                   </div>
                   <div className="w-full mt-3">
                     <Select
-                      options={options}
+                      options={tagOptions}
                       isMulti
                       className="basic-multi-select w-full m-0 outline-none focus:outline-none text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                       classNamePrefix="Tags"

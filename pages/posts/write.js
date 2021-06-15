@@ -15,7 +15,7 @@ const TARGET = editorUrl;
 Write.getInitialProps = async (ctx) => {
   // console.log(ctx);
   // console.log(ctx.query);
-  const post_Id = ctx.query.post_id;
+  const post_Id = ctx.query.post_id; //if ctx.query just pass the post id, else create new post - call api, title=untitled, dummy structure for mobiledoc
   return { post_Id: post_Id ? post_Id : "" };
 };
 
@@ -37,7 +37,7 @@ export default function Write({ post_Id }) {
       setPostId(currentPostId);
       try {
         // errors on refresh
-        console.log(iframeRef.current.contentWindow);
+        // console.log(iframeRef.current.contentWindow);
 
         iframeRef.current.onload = function () {
           if (currentPostId) {
