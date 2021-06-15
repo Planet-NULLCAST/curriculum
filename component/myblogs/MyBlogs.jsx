@@ -17,7 +17,10 @@ export default function MyBlogs({ posts }) {
               >
                 <div className="">
                   <Link
-                    href={`${item.slug}`}
+                    href={{
+                      pathname: `/posts/write`,
+                      query: { post_id: `${item._id}` }
+                    }}
                     className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
                   >
                     <a

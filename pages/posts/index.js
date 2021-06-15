@@ -31,6 +31,7 @@ const MyPost = () => {
   }, []);
 
   async function getPosts(reqData) {
+    // console.log(reqData);
     try {
       const data = await PostService.getPostsByUserId(userCookie, reqData);
       console.log(data);
@@ -62,7 +63,7 @@ const MyPost = () => {
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
-          <Navbar />
+          <Navbar getPosts={getPosts} />
           {postData.posts.length ? (
             <div>
               <MyBlogs posts={postData.posts} />
