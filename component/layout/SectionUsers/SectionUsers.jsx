@@ -20,8 +20,18 @@ export default class SimpleSlider extends Component {
                 <div className={styles.wrap}>
                     <div className={styles.border}>
                         <Slider {...settings}>
+                            {this.props.user.map((item, key) => (
+                            <div key={key}>
+                                <div className={styles.item}>
+                                    <div className={styles.icon}>
+                                        <img src="/images/temp/avatar1.png" alt=""/>
+                                    </div>
+                                    <h4><a href="">{item.fullName}</a></h4>
+                                </div>
+                            </div>
+                            ))}
                             
-                            <div>
+                            {/* <div>
                                 <div className={styles.item}>
                                     <div className={styles.icon}>
                                         <img src="/images/temp/avatar1.png" alt=""/>
@@ -109,7 +119,7 @@ export default class SimpleSlider extends Component {
                                     </div>
                                     <h4><a href="">Allie Grater</a></h4>
                                 </div>
-                            </div>
+                            </div> */}
                         </Slider>
                     </div>
                 </div>

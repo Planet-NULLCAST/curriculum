@@ -3,7 +3,7 @@ import Image from "next/image";
 import Fade from 'react-reveal/Fade';
 import AuthorDetails from '../BlogListing/AuthorDetails';
 
-export default function SectionBlogs() {
+export default function SectionBlogs(props) {
     return (
         <section className='pt-10 lg:pt-20'>
             <div className='container container--small'>
@@ -13,7 +13,7 @@ export default function SectionBlogs() {
                     <p className="sectionHeader__description">Get the latest scoop from the world of tech ranging from javascript to AI and other crazy hacks from dev ducks across the globe.</p>
                     </Fade>
                 </div>
-                <div className={styles.blogList}>
+                {/* <div className={styles.blogList}>
 
                     <div className={styles.blogItem}>
                         <Fade>
@@ -91,9 +91,33 @@ export default function SectionBlogs() {
                         <AuthorDetails />
                     </div>
 
+                </div> */}
+                <div className={styles.blogList}>
+                {props.blog.map((item, key) => (
+                    <div className={styles.blogItem} key={key}>
+                        <Fade>
+                            <figure className={styles.blogImage}>
+                            <img
+                                src={item.bannerImage}
+                                alt={item.title}
+                                width={528}
+                                height={548}
+                                className="w-full"
+                            />
+                            </figure>
+                        </Fade>
+                        <h3>
+                            <a href={`/${item.slug}`}>{item.title}</a>
+                        </h3>
+
+                        <AuthorDetails 
+                            username={item.primaryAuthor.username}
+                        />
+                    </div>
+                ))}
                 </div>
                 <div className="cta text-center">
-                    <a href="" className="btn">
+                    <a href="/blog" className="btn">
                         <span className="btn__text">VIEW ALL OUR LATEST POSTS</span>
                     </a>
                 </div>

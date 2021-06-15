@@ -4,6 +4,7 @@ import {
   allPostsUrl,
   postUrl,
   s3Url,
+  userUrl,
   changeStatusUrl
 } from "../config/config";
 
@@ -50,6 +51,24 @@ async function createPost(userCookie, post) {
     const response = await axios.post(`${baseUrl}/${postUrl}`, post, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
+      }
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+async function getLatestPosts(reqParams) {
+  try {
+    const { order, fieldName, limit, skip } = reqParams;
+    const response = await axios.get(`${baseUrl}/${userUrl}/getPosts`, {
+      params: {
+        order,
+        fieldName,
+        limit,
+        skip
       }
     });
     return response;
@@ -137,6 +156,7 @@ const PostService = {
   updatePostById,
   deletePostById,
   uploadImage,
+  getLatestPosts,
   changePostStatus
 };
 
