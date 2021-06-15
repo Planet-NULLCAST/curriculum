@@ -1,6 +1,9 @@
 const path = require("path");
 
 module.exports = {
+  images: {
+    domains: ['nullcast-assets.s3.amazonaws.com'],
+  },
   future: {
     webpack5: true
   },

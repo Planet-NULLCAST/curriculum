@@ -8,7 +8,7 @@ import Select from "react-select";
 import PostService from "../../services/PostService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { baseUrl } from "../../config/config";
+import { clientUrl } from "../../config/config";
 
 export default function WriteNav({
   saveToDraft,
@@ -50,6 +50,7 @@ export default function WriteNav({
     // console.log(e.target);
 
     const postUrl = e.target.slug.value || "";
+    // console.log({ postUrl });
     // console.log(`${baseUrl}/${postUrl}`);
     let tags = Array.from(e.target.tags) || "";
     // console.log("tags length: ", tags.length);
@@ -67,16 +68,19 @@ export default function WriteNav({
     // console.log(imageName, postUrl, tags, shortDescription, metaTitle, metaDescription);
     const settingsData = {
       tags: tags,
-      // url: p/id
-      canonicalUrl: `${baseUrl}/${postUrl}`,
-      bannerImage: currentPost.bannerImage,
+      url: `p/${postUrl}`,
+      canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
+      bannerImage: currentPost.bannerImage ? currentPost.bannerImage : null,
       shortDescription: shortDes,
       metaTitle: metaTitle,
       metaDescription: metaDes,
       slug: postUrl
     };
-    console.log(settingsData);
+
     // send prop
+    // console.log(
+    //   Object.values(settingsData).some((k) => k !== "" || k !== null)
+    // );
     getSettings(settingsData);
   }
 
@@ -183,7 +187,7 @@ export default function WriteNav({
             {router.query.post_id ? "/ Edits" : "/ Create"}
           </span>
         </div>
-        <div className="flex items-center py-3">
+        <div className="items-center py-3 md:flex">
           <div
             onClick={submitForReview}
             className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
@@ -270,7 +274,7 @@ export default function WriteNav({
                           type="file"
                           className="cursor-pointer block opacity-0 w-full h-full z-50 absolute"
                           name="imageUpload"
-                          onInput={handleImageUpload}
+                          onChange={handleImageUpload}
                           ref={imgRef}
                           // value={imageSrc}
                         />

@@ -29,11 +29,18 @@ body {
 }
 
 .submitButtons {
-  @apply bg-pink-710 font-semibold hover:bg-white hover-text-pink-710 border border-pink-710 py-2 px-2 rounded duration-700 text-white focus:outline-none;
+  @apply bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 px-2 rounded duration-700 text-white focus:outline-none;
 }
 
 .inputStyle {
   @apply bg-gray-100 px-3 py-3 placeholder-gray-300 focus:outline-none text-gray-800 rounded text-sm;
+}
+
+.greenLogin {
+  height: calc(80vh);
+  @media (min-width: 1024px) {
+    height: calc(100vh - 3rem);
+  }
 }
 
 .GrotesqueFamily {
@@ -260,5 +267,29 @@ h3 {
     .bgshadow {
       display: flex;
     }
+  }
+}
+
+// login scroll
+.loginSection {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0px #051d1e;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ffc700;
+    border-radius: 3px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccb418;
   }
 }

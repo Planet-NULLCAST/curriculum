@@ -10,18 +10,26 @@ import Head from "next/head";
 import "../styles/Home.module.scss";
 import { baseUrl, clientUrl } from "../config/config";
 import PostService from "../services/PostService";
+import UserService from "../services/UserService";
 
 export async function getServerSideProps(context) {
   try {
-    const reqParams = {
+    const postParams = {
       fieldName: 'publishedAt',
       order:-1,
       limit:4,
       skip:0
     }
-    const response = await PostService.getLatestPosts(reqParams);
+    const userParams = {
+      fieldName:'createdAt',
+      order:-1,
+      limit:10,
+      skip:0
+    }
+    const responsePost = await PostService.getLatestPosts(postParams);
+    const responseUser = await UserService.getLatestUsers(userParams);
     return {
-      props: { blog: response.data.blog }
+      props: { blog: responsePost.data.blog, user: responseUser.data.user }
     }
   } catch (err) {
     console.log(err);
@@ -42,7 +50,9 @@ export default function Home(props) {
         blog={props.blog}
       />
       <SectionVideos />
-      <SectionUsers />
+      <SectionUsers 
+        user={props.user}
+      />
       <SectionEvents />
       <SectionSwag />
       <SiteFooter />

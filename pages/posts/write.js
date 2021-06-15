@@ -93,23 +93,37 @@ export default function Write({ post_Id }) {
   }
 
   async function updatePostById(updateData, newPostId) {
-    const { msg, data } = await PostService.updatePostById(
-      userCookie,
-      updateData,
-      newPostId
-    );
-    console.log("updated post response", data);
-    notify(msg);
+    try {
+      const { msg, data } = await PostService.updatePostById(
+        userCookie,
+        updateData,
+        newPostId
+      );
+      console.log("updated post response", data);
+      if (msg) {
+        notify(msg);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async function createPost(createThisPost) {
-    const { data } = await PostService.createPost(userCookie, createThisPost);
-    const { post, msg } = data;
-    notify(msg);
-    // console.log(post, msg);
-    //TO DO: compare our user id and the posts's user id
-    // setPostId(post._id);
-    router.push(`?post_id=${post._id}`);
+    try {
+      const { data } = await PostService.createPost(userCookie, createThisPost);
+      const { post, msg } = data;
+      notify(msg);
+      // console.log(post, msg);
+      //TO DO: compare our user id and the posts's user id
+      // setPostId(post._id);
+      router.push({
+        pathname: "/posts/write",
+        query: { post_id: post._id }
+      });
+      // getPostById(post._id);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const saveToDraft = () => {
@@ -137,7 +151,6 @@ export default function Write({ post_Id }) {
         const createThisPost = {
           mobiledoc: newMobiledoc,
           title: title,
-          status: "drafted",
           type: "blog"
         };
         console.log(createThisPost);
@@ -146,13 +159,31 @@ export default function Write({ post_Id }) {
     }, 500);
   };
 
-  const submitForReview = () => {
+  async function submitForReview() {
     //status pending if submitted for review
-  };
+    // console.log(postId);
+    try {
+      const statusUpdate = {
+        status: "pending"
+      };
+      const msg = await PostService.changePostStatus(
+        userCookie,
+        postId,
+        statusUpdate
+      );
+      // console.log(msg);
+      if (msg) {
+        notify(msg);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const getSettings = async (settingsData) => {
-    console.log("in settings");
+    // console.log("in settings");
     if (postId) {
+      // console.log("update");
       updatePostById(settingsData, postId);
     } else {
       createPost(settingsData);
@@ -193,6 +224,13 @@ export default function Write({ post_Id }) {
               src={TARGET}
             ></iframe>
           </div>
+          {/* <div
+            className={`height_Iframe_write flex  w-full justify-center px-3 rounded overflow-y-auto`}
+          >
+            <p className="text-gray-700 text-center font-semibold mt-8">
+              Oops! This functionality is disabled in smaller screens !
+            </p>
+          </div> */}
         </div>
         <ToastContainer />
       </div>

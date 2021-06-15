@@ -1,10 +1,16 @@
 const axios = require("axios");
-import { baseUrl, allPostsUrl, postUrl, s3Url, userUrl } from "../config/config";
-import env from "../next.config";
+import {
+  baseUrl,
+  allPostsUrl,
+  postUrl,
+  s3Url,
+  userUrl,
+  changeStatusUrl
+} from "../config/config";
 
-async function getPostsByUserId(userCookie) {
+async function getPostsByUserId(userCookie, reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+    const { data } = await axios.post(`${baseUrl}/${allPostsUrl}`, reqData, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
@@ -122,6 +128,26 @@ async function uploadImage(imageFile, imageData) {
     return;
   }
 }
+
+async function changePostStatus(userCookie, postId, statusUpdate) {
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${changeStatusUrl}/${postId}`,
+      statusUpdate,
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    // console.log(data.message);
+    return data.message;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -130,7 +156,8 @@ const PostService = {
   updatePostById,
   deletePostById,
   uploadImage,
-  getLatestPosts
+  getLatestPosts,
+  changePostStatus
 };
 
 module.exports = PostService;

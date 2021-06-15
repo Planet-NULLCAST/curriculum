@@ -6,6 +6,7 @@ const authUrl = "/api/auth";
 const enrolUrl = "/api/enrol";
 const postUrl = "api/post";
 const allPostsUrl = "api/posts";
+const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
 
@@ -17,6 +18,7 @@ export {
   enrolUrl,
   postUrl,
   allPostsUrl,
+  changeStatusUrl,
   subscribeUrl,
   editorUrl,
   userUrl

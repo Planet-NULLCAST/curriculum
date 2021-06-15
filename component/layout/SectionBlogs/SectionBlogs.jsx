@@ -97,13 +97,13 @@ export default function SectionBlogs(props) {
                     <div className={styles.blogItem} key={key}>
                         <Fade>
                             <figure className={styles.blogImage}>
-                            {/* <Image
+                            <img
                                 src={item.bannerImage}
                                 alt={item.title}
                                 width={528}
                                 height={548}
                                 className="w-full"
-                            /> */}
+                            />
                             </figure>
                         </Fade>
                         <h3>
@@ -117,7 +117,7 @@ export default function SectionBlogs(props) {
                 ))}
                 </div>
                 <div className="cta text-center">
-                    <a href="" className="btn">
+                    <a href="/blog" className="btn">
                         <span className="btn__text">VIEW ALL OUR LATEST POSTS</span>
                     </a>
                 </div>
