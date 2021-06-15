@@ -5,7 +5,7 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
-import { baseUrl, clientUrl, editorUrl } from "../../config/config";
+import { editorUrl } from "../../config/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import MyBlogsstyles from "../../styles/MyBlogs.module.css";
@@ -15,7 +15,11 @@ const TARGET = editorUrl;
 Write.getInitialProps = async (ctx) => {
   // console.log(ctx);
   // console.log(ctx.query);
-  const post_Id = ctx.query.post_id; //if ctx.query just pass the post id, else create new post - call api, title=untitled, dummy structure for mobiledoc
+  const post_Id = ctx.query.post_id;
+  //if ctx.query just pass the post id, else create new post - call api, title=untitled, dummy structure for mobiledoc
+  // if(post_Id) {
+
+  // }
   return { post_Id: post_Id ? post_Id : "" };
 };
 
@@ -108,23 +112,23 @@ export default function Write({ post_Id }) {
     }
   }
 
-  async function createPost(createThisPost) {
-    try {
-      const { data } = await PostService.createPost(userCookie, createThisPost);
-      const { post, msg } = data;
-      notify(msg);
-      // console.log(post, msg);
-      //TO DO: compare our user id and the posts's user id
-      // setPostId(post._id);
-      router.push({
-        pathname: "/posts/write",
-        query: { post_id: post._id }
-      });
-      // getPostById(post._id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function createPost(createThisPost) {
+  //   try {
+  //     const { data } = await PostService.createPost(userCookie, createThisPost);
+  //     const { post, msg } = data;
+  //     notify(msg);
+  //     // console.log(post, msg);
+  //     //TO DO: compare our user id and the posts's user id
+  //     // setPostId(post._id);
+  //     router.push({
+  //       pathname: "/posts/write",
+  //       query: { post_id: post._id }
+  //     });
+  //     // getPostById(post._id);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   const saveToDraft = () => {
     // Send a post message to the iframe
@@ -147,15 +151,16 @@ export default function Write({ post_Id }) {
           mobiledoc: newMobiledoc
         };
         updatePostById(newUpdatedPost, newPostId);
-      } else {
-        const createThisPost = {
-          mobiledoc: newMobiledoc,
-          title: title,
-          type: "blog"
-        };
-        console.log(createThisPost);
-        createPost(createThisPost);
       }
+      // else {
+      //   const createThisPost = {
+      //     mobiledoc: newMobiledoc,
+      //     title: title,
+      //     type: "blog"
+      //   };
+      //   console.log(createThisPost);
+      //   createPost(createThisPost);
+      // }
     }, 500);
   };
 
@@ -185,9 +190,10 @@ export default function Write({ post_Id }) {
     if (postId) {
       // console.log("update");
       updatePostById(settingsData, postId);
-    } else {
-      createPost(settingsData);
     }
+    // else {
+    //   createPost(settingsData);
+    // }
   };
 
   const notify = (msg) =>

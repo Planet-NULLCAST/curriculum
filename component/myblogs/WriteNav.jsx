@@ -198,21 +198,18 @@ export default function WriteNav({
           >
             <p>Save</p>
           </div>
-          {post && (
-            <div className="flex flex-row">
-              <div
-                className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-                onClick={() => setOpenSettings(true)}
-              >
-                <p>Settings</p>
-              </div>
-              <div className="bg-blue-600 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
-                <Link href={`/p/${currentPost._id}`}>
-                  <a>Preview Url</a>
-                </Link>
-              </div>
-            </div>
-          )}
+          {/* {post && <div className="flex flex-row"></div>} */}
+          <div
+            className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+            onClick={() => setOpenSettings(true)}
+          >
+            <p>Settings</p>
+          </div>
+          <div className="bg-blue-600 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+            <Link href={`/p/${currentPost._id}`}>
+              <a>Preview Url</a>
+            </Link>
+          </div>
         </div>
       </div>
       {openSettings && (

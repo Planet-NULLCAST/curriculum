@@ -3,11 +3,15 @@ import Link from "next/link";
 import Select from "react-select";
 import styles from "./blogs.module.scss";
 import tagOptions from "../../utils/tags";
+import { useRouter } from "next/router";
+import Cookies from "universal-cookie";
+import PostService from "../../services/PostService";
 
 export default function Navbar(props) {
   const { currentNav, getPosts } = props;
-  // const cookies = new Cookies();
-  // const userCookie = cookies.get("userNullcast");
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+  const router = useRouter();
   const [tag, setTag] = useState("");
   const [status, setStatus] = useState("");
 
@@ -50,6 +54,39 @@ export default function Navbar(props) {
     getPosts(newReqData);
   }
 
+  async function createPost(createThisPost) {
+    try {
+      const { data } = await PostService.createPost(userCookie, createThisPost);
+      const { post, msg } = data;
+      // notify(msg);
+      // console.log(post, msg);
+      //TO DO: compare our user id and the posts's user id
+      // setPostId(post._id);
+      router.push({
+        pathname: "/posts/write",
+        query: { post_id: post._id }
+      });
+      // getPostById(post._id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function handleAddNewPost() {
+    const newPost = {
+      title: "[Untitled]",
+      mobiledoc: {
+        version: "0.3.1",
+        atoms: [],
+        cards: [],
+        markups: [],
+        sections: [],
+        ghostVersion: "4.0"
+      }
+    };
+    createPost(newPost);
+  }
+
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full md:px-5 px-3">
@@ -77,13 +114,20 @@ export default function Navbar(props) {
             onChange={handleStatusSelect}
           />
           {/* Add a New Post goes to /posts/write  */}
-          <Link href="/posts/write">
+          {/* <Link href="/posts/write">
             <div
               className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
             >
               <p>Add a New Post</p>
             </div>
-          </Link>
+          </Link> */}
+
+          <div
+            onClick={handleAddNewPost}
+            className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
+          >
+            <p>Add a New Post</p>
+          </div>
         </div>
       </div>
     </div>
