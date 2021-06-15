@@ -4,7 +4,7 @@ import Image from "next/image";
 import Fade from 'react-reveal/Fade';
 import ListingItem from './ListingItem'
 
-export default function Listing() {
+export default function Listing(props) {
     return (
         <section className={styles.listing}>
             <div className="container container--small">
@@ -66,7 +66,9 @@ export default function Listing() {
                 </Fade>
 
                 <div className={styles.listing__list}>
-                    <ListingItem />
+                    <ListingItem 
+                      blog={props.blog}
+                    />
                 </div>
                 <div className={styles.wrapBtn}>
                     <Link href="#">

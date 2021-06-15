@@ -8,7 +8,6 @@ import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 import "../styles/Home.module.scss";
-import { baseUrl, clientUrl } from "../config/config";
 import PostService from "../services/PostService";
 import UserService from "../services/UserService";
 
@@ -32,9 +31,8 @@ export async function getServerSideProps(context) {
       props: { blog: responsePost.data.blog, user: responseUser.data.user }
     };
   } catch (err) {
-    console.log(err);
-    // return err;
-    return { props: {} };
+    console.log('Error => ', err);
+    return err;
   }
 }
 
