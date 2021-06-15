@@ -9,8 +9,36 @@ import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 import "../styles/Home.module.scss";
 import { baseUrl, clientUrl } from "../config/config";
+import PostService from "../services/PostService";
+import UserService from "../services/UserService";
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  try {
+    const postParams = {
+      fieldName: "publishedAt",
+      order: -1,
+      limit: 4,
+      skip: 0
+    };
+    const userParams = {
+      fieldName: "createdAt",
+      order: -1,
+      limit: 10,
+      skip: 0
+    };
+    const responsePost = await PostService.getLatestPosts(postParams);
+    const responseUser = await UserService.getLatestUsers(userParams);
+    return {
+      props: { blog: responsePost.data.blog, user: responseUser.data.user }
+    };
+  } catch (err) {
+    console.log(err);
+    // return err;
+    return { props: {} };
+  }
+}
+
+export default function Home(props) {
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -19,9 +47,11 @@ export default function Home() {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      <SectioBlogs />
+      {props.blog && <SectioBlogs blog={props.blog} />}
+
       <SectionVideos />
-      <SectionUsers />
+      {props.user && <SectionUsers user={props.user} />}
+
       <SectionEvents />
       <SectionSwag />
       <SiteFooter />

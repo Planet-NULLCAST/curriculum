@@ -8,6 +8,7 @@ const postUrl = "api/post";
 const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
+const userUrl = "api/user";
 
 export {
   baseUrl,
@@ -19,5 +20,6 @@ export {
   allPostsUrl,
   changeStatusUrl,
   subscribeUrl,
-  editorUrl
+  editorUrl,
+  userUrl
 };
