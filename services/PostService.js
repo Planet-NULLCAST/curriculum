@@ -23,7 +23,6 @@ async function getPostsByUserId(userCookie, reqData) {
 
 async function getPostById(userCookie, postId) {
   try {
-    console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`

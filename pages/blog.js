@@ -5,8 +5,28 @@ import Listing from "../component/layout/BlogListing/Listing";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
+import PostService from "../services/PostService";
 
-export default function BlogListing() {
+export async function getServerSideProps(context) {
+  try {
+    const postParams = {
+      fieldName: 'publishedAt',
+      order:-1,
+      limit:9,
+      skip:0
+    }
+    const responsePost = await PostService.getLatestPosts(postParams);
+
+    return {
+      props: { blog: responsePost.data.blog }
+    }
+  } catch (err) {
+    console.log('Error => ', err);
+    return err;
+  }
+}
+
+export default function BlogListing(props) {
   return (
     <div>
       <Head>
@@ -14,8 +34,12 @@ export default function BlogListing() {
       </Head>
       <SiteHeader />
       <ListingHeader />
-      <ListingFeatured />
-      <Listing />
+      <ListingFeatured 
+        blog={props.blog}
+      />
+      <Listing 
+        blog={props.blog}
+      />
       <SectionSwag />
       <SiteFooter />
     </div>
