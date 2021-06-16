@@ -8,10 +8,9 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
   const [pageNo, setpageNo] = useState(1);
   const [middle, setmiddle] = useState(false);
   const [valuePage, setvaluePage] = useState("");
-  const [limit, setlimit] = useState(2);
+  const [limit, setlimit] = useState(10);
 
   useEffect(() => {
-    console.log(TotalCount);
     setTotalPages(Math.ceil(TotalCount / limit));
     if (CurrentPage) {
       setpageNo(CurrentPage);
@@ -29,7 +28,6 @@ export default function Pagination({ TotalCount, CurrentPage, changedPage }) {
       for (let step = 0; step < TotalPages; step++) {
         temp.push(step + 1);
       }
-      console.log(temp);
       setFirstThree(temp);
     }
   }, [TotalPages]);

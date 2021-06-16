@@ -46,7 +46,6 @@ export async function getServerSideProps(context) {
 const Admin = (props) => {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  // console.log(userCookie);
 
   //   state
   const [postData, setPostData] = useState({
@@ -55,7 +54,7 @@ const Admin = (props) => {
   });
   const [pagination, setPagination] = useState({
     pageNo: 1,
-    limit: 2,
+    limit: 10,
     skip: 0,
     optionsCategory: "",
     optionsStatus: "",
@@ -74,8 +73,12 @@ const Admin = (props) => {
 
   // user functions
 
+  /**
+   * Function to get posts
+   * @param {*} reqData data for pagination and filter
+   * @author athulraj2002
+   */
   async function getPosts(reqData) {
-    console.log("called");
     try {
       const data = await PostService.adminGetLatestPosts(reqData);
 
@@ -87,16 +90,28 @@ const Admin = (props) => {
     }
   }
 
+  /**
+   * page change event
+   * @param {*} pageNo new page change
+   * @param {*} limit limit of posts
+   * @author athulraj2002
+   */
   const pageChange = (pageNo, limit) => {
     const data = {
       ...pagination,
       pageNo,
-      skip: pageNo == 1 ? 0 : (pageNo - 1) * 2
+      skip: pageNo == 1 ? 0 : (pageNo - 1) * 10
     };
     setPagination(data);
     getPosts(data);
   };
 
+
+  /**
+   * Function to get posts when category changes
+   * @param {*} category new category
+   * @author athulraj2002
+   */
   const filterCategoryPosts = (category) => {
     const data = {
       ...pagination,
@@ -117,6 +132,13 @@ const Admin = (props) => {
       getPosts(data);
     }, 100);
   };
+
+
+  /**
+   * Function to get posts when status changes
+   * @param {*} status new status
+   * @author athulraj2002
+   */
   const filterStatusPosts = (status) => {
     const data = { ...pagination, optionsStatus: status, pageNo: 1, skip: 0 };
     setPagination((previousState) => {

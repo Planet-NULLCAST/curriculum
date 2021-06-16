@@ -5,8 +5,6 @@ import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
 
 export default function AdminNavbar({ changeCategory, changeStatus }) {
-  const [tagOptions, setTagOptions] = useState([]);
-  //get tag data from db with same structure - and value should be the id
 
   const statusOptions = [
     { label: "ALL POSTS", value: "" },
@@ -15,6 +13,9 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
     { label: "REJECTED", value: "rejected" },
     { label: "PUBLISHED", value: "published" }
   ];
+  const [tagOptions, setTagOptions] = useState([]);
+
+
   useEffect(() => {
     getSettingsTags();
   }, []);
@@ -46,12 +47,22 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
     setTagOptions(resTagOptions);
   }
 
-  const selectCategory = (e) => {
-    changeCategory(e.value);
-  };
-  const selectStatus = (e) => {
-    changeStatus(e.value);
-  };
+
+  /**
+   * Prop Function called when new category is choosen
+   * @param {*} e new category
+   * @returns new category
+   * @author athulraj2002
+   */
+  const selectCategory = (e) => changeCategory(e.value);
+
+  /**
+   * Prop Function called when new status is choosen
+   * @param {*} e new status
+   * @returns new category
+   * @author athulraj2002
+   */
+  const selectStatus = (e) => changeStatus(e.value);
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
