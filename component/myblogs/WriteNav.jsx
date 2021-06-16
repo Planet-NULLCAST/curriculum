@@ -63,15 +63,17 @@ export default function WriteNav({
   async function getSettingsTags() {
     const res = await TagService.getTags();
     // console.log("get tags response", res);
-    const resTagOptions = res.map((tag) => {
-      return {
-        label: `${tag.name.toUpperCase()}`,
-        value: `${tag.name}`
-      };
-    });
-    // setTagOptions;
-    console.log({ resTagOptions });
-    setTagOptions(resTagOptions);
+    if (res && res.length) {
+      const resTagOptions = res.map((tag) => {
+        return {
+          label: `${tag.name.toUpperCase()}`,
+          value: `${tag.name}`
+        };
+      });
+      // setTagOptions;
+      console.log({ resTagOptions });
+      setTagOptions(resTagOptions);
+    }
   }
 
   /**
@@ -287,7 +289,7 @@ export default function WriteNav({
           </div>
           <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
             <Link href={`/p/${currentPost._id}`}>
-              <a>Preview Url</a>
+              <a>Preview</a>
             </Link>
           </div>
         </div>
