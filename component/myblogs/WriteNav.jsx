@@ -406,32 +406,7 @@ export default function WriteNav({
                         <span className="text-gray-300 text-xs">160</span>
                       </div>
                     </div>
-                    <div className="w-full mt-3 relative h-20 mb-0">
-                      <textarea
-                        maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
-                        placeholder="Description"
-                        name="metaDescription"
-                        value={currentPost.metaDescription}
-                        onChange={handleChange}
-                      />
-                      <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
-                        <span className="text-gray-300 text-xs">160</span>
-                      </div>
-                    </div>
-                    <div className="w-full mt-3 relative h-20 mb-0">
-                      <textarea
-                        maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
-                        placeholder="Description"
-                        name="metaDescription"
-                        value={currentPost.metaDescription}
-                        onChange={handleChange}
-                      />
-                      <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
-                        <span className="text-gray-300 text-xs">160</span>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
                 <div className="px-5 bg-white flex flex-col justify-center items-center h-24 absolute w-full border-l bottom-0 right-0">
