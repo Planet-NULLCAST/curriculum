@@ -10,6 +10,7 @@ const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
 const adminUrl = "api/admin";
+const tagUrl = "api/tags";
 
 export {
   baseUrl,
@@ -23,5 +24,6 @@ export {
   subscribeUrl,
   editorUrl,
   userUrl,
-  adminUrl
+  adminUrl,
+  tagUrl
 };

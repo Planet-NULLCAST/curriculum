@@ -46,6 +46,7 @@
     "react-select": "^4.3.1",
     "react-slick": "^0.28.1",
     "react-toastify": "^7.0.4",
+    "reactjs-popup": "^2.0.4",
     "remark": "^13.0.0",
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",

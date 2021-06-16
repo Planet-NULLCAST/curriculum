@@ -20,7 +20,6 @@ export default function AdminBlogsList({ posts, updated }) {
       blog._id,
       "published"
     );
-    console.log(response);
     updated();
   };
 
@@ -30,13 +29,12 @@ export default function AdminBlogsList({ posts, updated }) {
    * @author athulraj2002
    * @returns null
    */
-  const rejectBlog = async(blog) => {
+  const rejectBlog = async (blog) => {
     const response = await PostService.adminChangePostStatus(
       userCookie,
       blog._id,
       "rejected"
     );
-    console.log(response);
     updated();
   };
   return (
@@ -52,7 +50,10 @@ export default function AdminBlogsList({ posts, updated }) {
               >
                 <div className="">
                   <Link
-                    href={`${item.slug}`}
+                    href={{
+                      pathname: `/posts/write`,
+                      query: { post_id: `${item._id}` }
+                    }}
                     className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
                   >
                     <a
@@ -66,19 +67,23 @@ export default function AdminBlogsList({ posts, updated }) {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <div
-                    className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogsstyles.draftedBg}`}
-                  >
+                  <Link href={`/p/${item._id}`}>
                     <div
-                      className={`w-2 h-2 mr-2 rounded-full  ${MyBlogsstyles.draftedDot}`}
-                    ></div>
-
-                    <span
-                      className={`capitalize  ${MyBlogsstyles.draftedText} `}
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogsstyles.draftedBg}`}
                     >
-                      Preview
-                    </span>
-                  </div>
+                      <>
+                        <div
+                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogsstyles.draftedDot}`}
+                        ></div>
+
+                        <span
+                          className={`capitalize  ${MyBlogsstyles.draftedText} `}
+                        >
+                          Preview
+                        </span>
+                      </>
+                    </div>
+                  </Link>
                   {item.status == "published" ? (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogsstyles.publishedBg} `}
@@ -91,16 +96,15 @@ export default function AdminBlogsList({ posts, updated }) {
                     </div>
                   ) : item.status == "rejected" ? (
                     <div
-            
-                    className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 
                  ${MyBlogsstyles.dangerBg}`}
-                  >
-                    <span
-                      className={`capitalize  ${MyBlogsstyles.dangerText}`}
                     >
-                      Declined
-                    </span>
-                  </div>
+                      <span
+                        className={`capitalize  ${MyBlogsstyles.dangerText}`}
+                      >
+                        Declined
+                      </span>
+                    </div>
                   ) : (
                     <div className="flex items-center">
                       <div

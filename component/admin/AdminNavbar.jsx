@@ -2,55 +2,65 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Select from "react-select";
 import styles from "../myblogs/blogs.module.scss";
+import TagService from "../../services/TagService";
 
-export default function AdminNavbar({changeCategory , changeStatus}) {
-
-
+export default function AdminNavbar({ changeCategory, changeStatus }) {
+  const [tagOptions, setTagOptions] = useState([]);
   //get tag data from db with same structure - and value should be the id
-  const optionsCategory = [
-    { label: "All Category", value: "all" },
-    { label: "HTML", value: "html" },
-    { label: "CSS", value: "css" },
-    { label: "JavaScript", value: "js" },
-    { label: "Angular", value: "angular" },
-    { label: "React", value: "react" },
-    { label: "NodeJS", value: "node" },
-    { label: "Database", value: "database" },
-    { label: "Python", value: "python" },
-    { label: "Testing", value: "testing" }
+
+  const statusOptions = [
+    { label: "ALL POSTS", value: "" },
+    { label: "APPROVED", value: "approved" },
+    { label: "PENDING", value: "pending" },
+    { label: "REJECTED", value: "rejected" },
+    { label: "PUBLISHED", value: "published" }
   ];
+  useEffect(() => {
+    getSettingsTags();
+  }, []);
 
-  const optionsStatus = [
-    { label: "All Posts", value: "" },
-    { label: "Approved", value: "approved" },
-    { label: "Pending", value: "pending" },
-    { label: "Rejected", value: "rejected" },
-    { label: "Published", value: "published" },
-    //published, drafted
-  ];
+  /**
+   * gets tags from db and sets the tags
+   * options in label and value format
+   * @author athulraj2002
+   */
+  async function getSettingsTags() {
+    const res = await TagService.getTags();
+    let resTagOptions = [];
+    if (res) {
+      resTagOptions = res.map((tag) => {
+        return {
+          label: `${tag.name.toUpperCase()}`,
+          value: `${tag.name}`
+        };
+      });
+    }
 
-  // useEffect(() => {
-  //   console.log(window.innerWidth, "innerwidth");
-  // }, []);
-const selectCategory = (e)=>{
+    // setTagOptions;
+    const allOption = {
+      label: "ALL TAGS",
+      value: ""
+    };
+    resTagOptions = [allOption, ...resTagOptions];
+    console.log({ resTagOptions });
+    setTagOptions(resTagOptions);
+  }
 
-  changeCategory(e.value)
-  
-}
-const selectStatus = (e)=>{
-
-  changeStatus(e.value)
-}
-
+  const selectCategory = (e) => {
+    changeCategory(e.value);
+  };
+  const selectStatus = (e) => {
+    changeStatus(e.value);
+  };
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-end items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="flex items-center py-3">
           <Select
-            options={optionsCategory}
+            options={tagOptions}
             isMulti={false}
-            onChange={(e)=>selectCategory(e)}
+            onChange={(e) => selectCategory(e)}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
@@ -58,9 +68,9 @@ const selectStatus = (e)=>{
             // closeMenuOnSelect={false}
           />
           <Select
-            options={optionsStatus}
+            options={statusOptions}
             isMulti={false}
-            onChange={(e)=>selectStatus(e)}
+            onChange={(e) => selectStatus(e)}
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}

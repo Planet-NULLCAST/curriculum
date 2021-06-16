@@ -9,6 +9,39 @@ import withAuth from "../component/withAuth/withAuth";
 import PostService from "../services/PostService";
 import AdminNavbar from "../component/admin/AdminNavbar";
 import AdminBlogsList from "../component/admin/AdminBlogsList";
+import { getCookieValue } from "../lib/cookie";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      const res = await PostService.isAdmin(cookie.id, cookie.accessToken);
+      if (res.data) {
+        return {
+          props: { admin: cookie }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/login"
+          }
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    console.log("Error => ", err);
+  }
+}
 
 const Admin = (props) => {
   const cookies = new Cookies();
@@ -34,12 +67,6 @@ const Admin = (props) => {
   //   effects
   useEffect(() => {
     if (userCookie) {
-      // const reqData = {
-      //   pageNo: 1,
-      //   limit: 10
-      // };
-      // getPosts(reqData);
-      //   pageChange(1, 10);
       getPosts(pagination);
       setLoaded(true);
     }
@@ -51,9 +78,9 @@ const Admin = (props) => {
     console.log("called");
     try {
       const data = await PostService.adminGetLatestPosts(reqData);
-      //   console.log(data);
+
       const { posts, count } = data.data;
-      console.log(count);
+
       setPostData({ posts, count });
     } catch (err) {
       console.log(err);
@@ -61,12 +88,10 @@ const Admin = (props) => {
   }
 
   const pageChange = (pageNo, limit) => {
-    console.log(pageNo, limit);
-    // console.log();
     const data = {
       ...pagination,
       pageNo,
-      skip: pageNo == 1 ? 0 : pagination.pageNo * 2
+      skip: pageNo == 1 ? 0 : (pageNo - 1) * 2
     };
     setPagination(data);
     getPosts(data);

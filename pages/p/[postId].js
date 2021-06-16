@@ -7,7 +7,7 @@ import SectionSwag from "../../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 
 import PostService from "../../services/PostService";
-
+import { getCookieValue } from "../../lib/cookie";
 
 // unsure on using getServerSideProps
 // if facing SEO issues refer 
@@ -18,12 +18,8 @@ export async function getServerSideProps(context) {
   try {
     const postId = context.params['postId'];
     if (context.req.headers.cookie) {
-      console.log(context.req.headers);
-        const cookie = context.req.headers.cookie.split(";");
-        const index = cookie.indexOf("userNullcast");
-        const token =  JSON.parse(cookie[index + 1]);
-        const response = await PostService.getPostById(token, postId);
-        console.log(response);
+      const cookie = JSON.parse(getCookieValue(context.req.headers.cookie, 'userNullcast'));
+      const response = await PostService.getPostById(cookie, postId);
       if(!response) {
         return {
           redirect: {
@@ -45,16 +41,13 @@ export async function getServerSideProps(context) {
         }
     }
   } catch (err) {
-
-      console.log(err.message);
-      return err;
+      console.log('Error => ', err);
   }
   
 }
 
 export default function BlogListing(props) {
   const { html, primaryAuthor, title, bannerImage, createdAt } = props.posts;
-  // console.log(props.blog);
   return (
     <>
       <SiteHeader />

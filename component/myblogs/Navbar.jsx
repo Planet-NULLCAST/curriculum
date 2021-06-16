@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Select from "react-select";
 import styles from "./blogs.module.scss";
-import tagOptions from "../../utils/tags";
+// import tagOptions from "../../utils/tags";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
+import TagService from "../../services/TagService";
 
 export default function Navbar(props) {
   const { currentNav, getPosts } = props;
@@ -13,16 +14,45 @@ export default function Navbar(props) {
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
   const [tag, setTag] = useState("");
+  const [tagOptions, setTagOptions] = useState([]);
   const [status, setStatus] = useState("");
 
   const statusOptions = [
-    { label: "All Posts", value: "" },
-    { label: "Approved", value: "approved" },
-    { label: "Pending", value: "pending" },
-    { label: "Rejected", value: "rejected" },
-    { label: "Published", value: "published" },
-    { label: "Drafted", value: "drafted" }
+    { label: "ALL POSTS", value: "" },
+    { label: "APPROVED", value: "approved" },
+    { label: "PENDING", value: "pending" },
+    { label: "REJECTED", value: "rejected" },
+    { label: "PUBLISHED", value: "published" },
+    { label: "DRAFTED", value: "drafted" }
   ];
+
+  useEffect(() => {
+    getSettingsTags();
+  }, []);
+
+  /**
+   * gets tags from db and sets the tags
+   * options in label and value format
+   * @author akhilalekha
+   */
+  async function getSettingsTags() {
+    const res = await TagService.getTags();
+    // console.log("get tags response", res);
+    let resTagOptions = res.map((tag) => {
+      return {
+        label: `${tag.name.toUpperCase()}`,
+        value: `${tag.name}`
+      };
+    });
+    // setTagOptions;
+    const allOption = {
+      label: "ALL TAGS",
+      value: ""
+    };
+    resTagOptions = [allOption, ...resTagOptions];
+    console.log({ resTagOptions });
+    setTagOptions(resTagOptions);
+  }
 
   function handleTagSelect(e) {
     // console.log(e);

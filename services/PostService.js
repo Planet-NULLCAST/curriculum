@@ -24,7 +24,7 @@ async function getPostsByUserId(userCookie, reqData) {
 
 async function getPostById(userCookie, postId) {
   try {
-    console.log(postId);
+    // console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
@@ -187,6 +187,27 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     return;
   }
 }
+
+const isAdmin = async(id,token)=>{
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/${adminUrl}/me`,
+      {
+        headers: {
+          "x-access-token": `${token}`
+        }
+      }
+    );
+    console.log(data);
+    // console.log(data.message);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -198,7 +219,8 @@ const PostService = {
   getLatestPosts,
   changePostStatus,
   adminChangePostStatus,
-  adminGetLatestPosts
+  adminGetLatestPosts,
+  isAdmin
 };
 
 module.exports = PostService;
