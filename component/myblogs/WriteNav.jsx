@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 const axios = require("axios");
-import Select from "react-select";
+// import Select from "react-select";
 import PostService from "../../services/PostService";
+import TagService from "../../services/TagService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreatableSelect from "react-select/creatable";
 import { clientUrl } from "../../config/config";
-import tagOptions from "../../utils/tags";
+// import tagOptions from "../../utils/tags";
+import UserState from "../../context/user/UserState";
 
-tagOptions.shift();
 // console.log(tagOptions);
 
 export default function WriteNav({
@@ -24,9 +26,13 @@ export default function WriteNav({
   const userCookie = cookies.get("userNullcast");
   const [openSettings, setOpenSettings] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [tagOptions, setTagOptions] = useState([]);
+  const [newTags, setNewTags] = useState();
   const router = useRouter();
-  // const [tagData, setTagData] = useState();
-  // const [imageSrc, setImageSrc] = useState();
+
+  // const userState = useContext(UserState);
+  // console.log(userState);
+
   const [currentPost, setCurrentPost] = useState({
     _id: "",
     bannerImage: "",
@@ -39,10 +45,67 @@ export default function WriteNav({
   });
 
   useEffect(() => {
-    console.log({ post });
+    console.log("writenavprop", { post });
     setCurrentPost({ ...post });
+    // userState.setTags();
   }, [post]);
 
+  useEffect(() => {
+    getSettingsTags();
+  }, []);
+
+  /**
+   * gets tags from db and sets the tags
+   * options in label and value format
+   * @author akhilalekha
+   */
+  async function getSettingsTags() {
+    const res = await TagService.getTags();
+    // console.log("get tags response", res);
+    const resTagOptions = res.map((tag) => {
+      return {
+        label: `${tag.name.toUpperCase()}`,
+        value: `${tag.name}`
+      };
+    });
+    // setTagOptions;
+    console.log({ resTagOptions });
+    setTagOptions(resTagOptions);
+  }
+
+  /**
+   * posts tags to db and sets state for user tags
+   * @param e react select handle change event
+   * @author akhilalekha
+   */
+  const handleTags = async (e) => {
+    console.log("handle tags", e);
+    const newTag = e
+      .filter((tag) => {
+        if (tag.__isNew__ === true) {
+          // console.log(tag);
+          return tag;
+        }
+      })
+      .map((fTag) => fTag.value);
+    console.log(newTag);
+
+    const res = await TagService.postTags(userCookie, newTag);
+    console.log({ res });
+
+    setCurrentPost((prevValue) => {
+      return {
+        ...prevValue,
+        tags: e.map((i) => i.value)
+      };
+    });
+  };
+
+  /**
+   * gets form data and passes to parent getsettings function
+   * @param e form submit event
+   * @author akhilalekha
+   */
   async function formSubmit(e) {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
@@ -83,16 +146,14 @@ export default function WriteNav({
     getSettings(settingsData);
   }
 
-  function handleTags(e) {
-    console.log(e);
-    setCurrentPost((prevValue) => {
-      return {
-        ...prevValue,
-        tags: e.map((i) => i.value)
-      };
-    });
-  }
-  function handleChange(e) {
+  /**
+   * gets form data and passes to parent getsettings function
+   * @param e handle change event for other fields
+   * except tags and image
+   * @author akhilalekha
+   */
+
+  const handleChange = (e) => {
     // console.log(e.target);
     const { name, value } = e.target;
     // console.log(name, value);
@@ -103,9 +164,14 @@ export default function WriteNav({
         [name]: value
       };
     });
-  }
+  };
 
-  async function handleImageUpload(e) {
+  /**
+   * gets img data and uploads to s3 bucket
+   * @param e handle change event for file upload field
+   * @author akhilalekha
+   */
+  const handleImageUpload = async (e) => {
     // console.log(e.target.files[0]);
     // const imageUrl = URL.createObjectURL(e.target.files[0]);
     // console.log(imageUrl);
@@ -131,10 +197,15 @@ export default function WriteNav({
       };
     });
     setLoading(false);
-  }
+  };
 
   const imgRef = useRef(null);
-  function handleImageDelete(e) {
+  /**
+   * resets banner image state when user clicks on delete
+   * @param e handle change event for img delete button
+   * @author akhilalekha
+   */
+  const handleImageDelete = async (e) => {
     // console.log(imgRef);
     // imgRef.current.value = null;
     // setImageSrc("");
@@ -144,8 +215,12 @@ export default function WriteNav({
         bannerImage: ""
       };
     });
-  }
+  };
 
+  /**
+   * deletes post by id
+   * @author akhilalekha
+   */
   async function deletePost() {
     // console.log({ currentPost });
     const { msg, data } = await PostService.deletePostById(
@@ -335,7 +410,7 @@ export default function WriteNav({
                     </div>
                   </div>
                   <div className="w-full mt-3">
-                    <Select
+                    <CreatableSelect
                       options={tagOptions}
                       isMulti
                       className="basic-multi-select w-full m-0 outline-none focus:outline-none text-sm bg-gray-100 border rounded px-0 cursor-pointer"
@@ -346,7 +421,7 @@ export default function WriteNav({
                       name="tags"
                       value={currentPost.tags.map((tag) => {
                         return {
-                          label: `${tag}`,
+                          label: `${tag.toUpperCase()}`,
                           value: `${tag}`
                         };
                       })}
@@ -395,8 +470,11 @@ export default function WriteNav({
                 <div className="w-full flex mb-3">
                   <div className="w-1/2 pr-1">
                     <button
-                      className="w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
+                      className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
+                        loading ? "disabled:opacity-50" : ""
+                      }`}
                       type="submit"
+                      disabled={loading}
                     >
                       Save
                     </button>
