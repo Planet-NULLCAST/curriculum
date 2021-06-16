@@ -14,6 +14,7 @@ import { clientUrl } from "../../config/config";
 import UserState from "../../context/user/UserState";
 import ModalConfirm from "../../component/popup/ModalConfirm";
 import Slide from "react-reveal/Slide";
+import Fade from "react-reveal/Fade";
 const axios = require("axios");
 
 export default function WriteNav({
@@ -409,23 +410,30 @@ export default function WriteNav({
                   >
                     Delete Image
                   </div> */}
-                    <div className="w-full mt-3">
-                      <div className="flex w-full border rounded overflow-hidden">
-                        <div className="w-4/12 border border-black text-white bg-black h-10 flex justify-center items-center text-xs font-semibold">
+                    <div className="w-full mt-4">
+                      <div className="flex w-full border rounded">
+                        <div className="w-4/12 border rounded-l border-black text-white bg-black h-10 flex justify-center items-center text-xs font-semibold">
                           nullcast.io/
                         </div>
-                        <input
-                          type="text"
-                          className="w-8/12 m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100"
-                          placeholder="Enter post URL"
-                          name="slug"
-                          value={currentPost.slug}
-                          onChange={handleChange}
-                        />
+                        <div className="floating_form w-8/12">
+                          <div className="floating-label">
+                            <input
+                              type="text"
+                              placeholder=" "
+                              className="floating-input urlInput w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded-r"
+                              name="slug"
+                              value={currentPost.slug}
+                              onChange={handleChange}
+                            />
+                            <label className="flex items-center top-0 h-full left-0 ml-3 text-sm">
+                              <span>Enter post URL</span>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       {/* one here */}
                     </div>
-                    <div className="w-full mt-3">
+                    <div className="w-full mt-4 relative">
                       <CreatableSelect
                         options={tagOptions}
                         isMulti
@@ -443,16 +451,30 @@ export default function WriteNav({
                         })}
                         onChange={(e) => handleTags(e)}
                       />
+                      {currentPost?.tags?.length > 0 && (
+                        <Fade duration={1000}>
+                          <label className="absolute -mt-3 selectFloat flex items-center top-0 h-6 left-0 ml-3 text-sm longPlaceholder">
+                            <span className="">Tags</span>
+                          </label>
+                        </Fade>
+                      )}
                     </div>
-                    <div className="w-full mt-3 relative h-20 mb-0">
-                      <textarea
-                        maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
-                        placeholder="Excerpt - short description about post"
-                        name="shortDescription"
-                        value={currentPost.shortDescription}
-                        onChange={handleChange}
-                      />
+                    <div className="w-full mt-4 relative h-20 mb-0">
+                      <div className="floating_form w-full h-full">
+                        <div className="floating-label h-full">
+                          <textarea
+                            maxLength="160"
+                            className="floating-input w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
+                            placeholder=" "
+                            name="shortDescription"
+                            value={currentPost.shortDescription}
+                            onChange={handleChange}
+                          />
+                          <label className="flex items-center top-0 h-10 left-0 ml-3 text-sm longPlaceholder">
+                            <span>Excerpt - short description about post</span>
+                          </label>
+                        </div>
+                      </div>
                       <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
                         <span className="text-gray-300 text-xs">160</span>
                       </div>
@@ -461,35 +483,35 @@ export default function WriteNav({
                       <div className="floating_form w-full">
                         <div className="floating-label">
                           <input
-                            className="floating-input w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
                             type="text"
                             placeholder=" "
+                            className="floating-input w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
+                            name="metaTitle"
+                            value={currentPost.metaTitle}
+                            onChange={handleChange}
                           />
                           <label className="flex items-center top-0 h-full left-0 ml-3 text-sm">
-                            <span>Placeholder</span>
+                            <span>Meta Title</span>
                           </label>
                         </div>
                       </div>
                     </div>
-                    <div className="w-full mt-3">
-                      <input
-                        type="text"
-                        className="w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
-                        placeholder="Meta Title"
-                        name="metaTitle"
-                        value={currentPost.metaTitle}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="w-full mt-3 relative h-20 mb-0">
-                      <textarea
-                        maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
-                        placeholder="Description"
-                        name="metaDescription"
-                        value={currentPost.metaDescription}
-                        onChange={handleChange}
-                      />
+                    <div className="w-full mt-4 relative h-20 mb-0">
+                      <div className="floating_form w-full h-full">
+                        <div className="floating-label h-full">
+                          <textarea
+                            maxLength="160"
+                            className="floating-input w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
+                            placeholder=" "
+                            name="metaDescription"
+                            value={currentPost.metaDescription}
+                            onChange={handleChange}
+                          />
+                          <label className="flex items-center top-0 h-10 left-0 ml-3 text-sm">
+                            <span>Description</span>
+                          </label>
+                        </div>
+                      </div>
                       <div className="absolute right-0 bottom-0 mb-1 mr-2 flex justify-center items-center">
                         <span className="text-gray-300 text-xs">160</span>
                       </div>
@@ -521,7 +543,7 @@ export default function WriteNav({
                   <div className="w-full flex justify-center">
                     <ModalConfirm
                       trigger={
-                        <div className="text-sm text-red-500 outline-none cursor-pointer">
+                        <div className="text-sm text-red-500 hover:text-red-700 outline-none cursor-pointer">
                           Delete Post
                         </div>
                       }

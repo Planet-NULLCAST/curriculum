@@ -337,6 +337,9 @@ h3 {
   .floating-label {
     position: relative;
   }
+  .urlInput {
+    border-left-color: black;
+  }
   .floating-input {
     display: block;
     &:focus {
@@ -345,6 +348,7 @@ h3 {
     &:focus ~ label {
       top: -18px;
       font-size: 10px;
+      margin-top: 0rem;
       span {
         background-color: #fff;
         border-radius: 0.25rem;
@@ -361,6 +365,7 @@ h3 {
     }
     &:not(:placeholder-shown) ~ label {
       top: -18px;
+      margin-top: 0rem;
       font-size: 10px;
       span {
         background-color: #fff;
@@ -384,5 +389,18 @@ h3 {
     transition: 0.4s ease all;
     -moz-transition: 0.4s ease all;
     -webkit-transition: 0.4s ease all;
+  }
+  .longPlaceholder {
+    margin-top: 0.5rem;
+  }
+}
+.selectFloat {
+  font-size: 10px;
+  span {
+    background-color: #fff;
+    border-radius: 0.25rem;
+    color: #000;
+    padding: 0 0.5rem;
+    border: 1px solid #e5e7eb;
   }
 }
