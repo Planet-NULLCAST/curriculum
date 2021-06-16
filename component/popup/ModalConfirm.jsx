@@ -44,10 +44,17 @@ const ModalConfirm = ({
           <div className="w-full flex mt-4 justify-center mb-3">
             <button
               className={`w-24 mr-2 capitalize border font-bold text-white hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
-                buttonColor === "red" && "border-red-500 hover:text-red-500 bg-red-500"
-              } ${buttonColor === "green" && "border-green-500 hover:text-green-500 bg-green-500"}`}
+                buttonColor === "red" &&
+                "border-red-500 hover:text-red-500 bg-red-500"
+              } ${
+                buttonColor === "green" &&
+                "border-green-500 hover:text-green-500 bg-green-500"
+              }`}
               type="button"
-              onClick={handleSubmit}
+              onClick={() => {
+                handleSubmit();
+                close();
+              }}
             >
               {purpose}
             </button>
