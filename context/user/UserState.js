@@ -1,14 +1,16 @@
 import React, { useReducer } from "react";
 import UserContext from "./userContext";
 import UserReducer from "./userReducer";
-import { SET_TESTS, SET_RUN, SET_PROGRESS } from "./types";
+import { SET_TESTS, SET_RUN, SET_PROGRESS, SET_TAGS } from "./types";
+import TagService from "../../services/TagService";
 
 const UserState = ({ children }) => {
   const initialState = {
     user: {},
     run: false,
     test: "",
-    progress: ""
+    progress: "",
+    tags: []
   };
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
@@ -37,6 +39,17 @@ const UserState = ({ children }) => {
     });
   };
 
+  async function setTags() {
+    const res = await TagService.getTags();
+    console.log(res);
+    console.log("get tags response", res);
+    // setCurrentPost.tags(res);
+    dispatch({
+      type: SET_TAGS,
+      payload: res
+    });
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -44,9 +57,11 @@ const UserState = ({ children }) => {
         run: state.run,
         test: state.test,
         progress: state.progress,
+        tags: state.tags,
         setTest,
         setRun,
-        setProgress
+        setProgress,
+        setTags
       }}
     >
       {children}
