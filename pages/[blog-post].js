@@ -17,8 +17,7 @@ export async function getServerSideProps(context) {
   try {
     const slug = context.params["blog-post"];
     const response = await PostService.getPostBySlug(slug);
-
-    if (response.data["blog"] === null) {
+    if (!response?.data) {
       return {
         redirect: {
           permanent: false,
@@ -30,7 +29,7 @@ export async function getServerSideProps(context) {
       props: { blog: response.data.blog}
     }
   } catch (err) {
-    console.log(err);
+    console.log('Error => ', err);
     return {
       redirect: {
         permanent: false,

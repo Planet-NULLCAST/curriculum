@@ -3,11 +3,48 @@ import Link from "next/link";
 import Image from "next/image";
 import Fade from 'react-reveal/Fade';
 import Details from './AuthorDetails';
+import moment from 'moment'
 
-export default function ListingItem() {
+export default function ListingItem(props) {
     return (
         <>
-        <div className={styles.listing__item}>
+            {props.blog.map((item, key) => (
+                <div className={styles.listing__item} key={key}>
+                <Fade>
+                    <figure className={styles.listing__figure}>
+                        <img 
+                            src={item.bannerImage}
+                            alt={item.title}
+                            width={350}
+                            height={370}
+                            layout="responsive"
+                        />
+                    </figure>
+                </Fade>
+                <div>
+                    <div className="tags">
+                        <Link href="/">
+                            <a className="tags__item">{item.tags[0]}</a>
+                        </Link>
+                    </div>
+                    <h3>
+                        <Link href={`/${item.slug}`}>
+                            <a>{item.title}</a>
+                        </Link>
+                    </h3>
+
+                    <p className={styles.time}>
+                        <span>{moment(item.publishedAt).format('MMMM Do, YYYY')}</span>
+                        {/* <span> 5 Min Read</span> */}
+                    </p>
+                </div>
+                <Details 
+                    username={item.primaryAuthor.username}
+                />
+            </div>
+            ))}
+            
+        {/* <div className={styles.listing__item}>
             <Fade>
             <figure className={styles.listing__figure}>
                 <Image 
@@ -310,7 +347,7 @@ export default function ListingItem() {
             </div>
             <Details />
 
-        </div>
+        </div> */}
 
 
         </>
