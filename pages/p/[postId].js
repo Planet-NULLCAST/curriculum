@@ -18,11 +18,12 @@ export async function getServerSideProps(context) {
   try {
     const postId = context.params['postId'];
     if (context.req.headers.cookie) {
-        const cookie = context.req.headers.cookie.split("=");;
+      console.log(context.req.headers);
+        const cookie = context.req.headers.cookie.split(";");
         const index = cookie.indexOf("userNullcast");
         const token =  JSON.parse(cookie[index + 1]);
         const response = await PostService.getPostById(token, postId);
-
+        console.log(response);
       if(!response) {
         return {
           redirect: {
@@ -35,6 +36,7 @@ export async function getServerSideProps(context) {
           props: { posts: response}
        }
     }  else {
+      console.log('else');
         return {
             redirect: {
               permanent: false,
@@ -43,7 +45,9 @@ export async function getServerSideProps(context) {
         }
     }
   } catch (err) {
-      console.log(err);
+
+      console.log(err.message);
+      return err;
   }
   
 }

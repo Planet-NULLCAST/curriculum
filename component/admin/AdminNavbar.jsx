@@ -3,8 +3,8 @@ import Link from "next/link";
 import Select from "react-select";
 import styles from "../myblogs/blogs.module.scss";
 
-export default function AdminNavbar(props) {
-  const { currentNav } = props;
+export default function AdminNavbar({changeCategory , changeStatus}) {
+
 
   //get tag data from db with same structure - and value should be the id
   const optionsCategory = [
@@ -32,6 +32,16 @@ export default function AdminNavbar(props) {
   // useEffect(() => {
   //   console.log(window.innerWidth, "innerwidth");
   // }, []);
+const selectCategory = (e)=>{
+
+  changeCategory(e.value)
+  
+}
+const selectStatus = (e)=>{
+
+  changeStatus(e.value)
+}
+
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
@@ -40,6 +50,7 @@ export default function AdminNavbar(props) {
           <Select
             options={optionsCategory}
             isMulti={false}
+            onChange={(e)=>selectCategory(e)}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
@@ -49,6 +60,7 @@ export default function AdminNavbar(props) {
           <Select
             options={optionsStatus}
             isMulti={false}
+            onChange={(e)=>selectStatus(e)}
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}

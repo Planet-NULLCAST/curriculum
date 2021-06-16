@@ -5,7 +5,8 @@ import {
   postUrl,
   s3Url,
   userUrl,
-  changeStatusUrl
+  changeStatusUrl,
+  adminUrl
 } from "../config/config";
 
 async function getPostsByUserId(userCookie, reqData) {
@@ -69,6 +70,26 @@ async function getLatestPosts(reqParams) {
         fieldName,
         limit,
         skip
+      }
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+async function adminGetLatestPosts(reqParams) {
+  try {
+    const { order, fieldName, limit, skip, optionsCategory, optionsStatus } =
+      reqParams;
+    const response = await axios.get(`${baseUrl}/${adminUrl}/getPosts`, {
+      params: {
+        order,
+        fieldName,
+        limit,
+        skip,
+        optionsCategory,
+        optionsStatus
       }
     });
     return response;
@@ -148,6 +169,24 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
   }
 }
 
+async function adminChangePostStatus(userCookie, postId, statusUpdate) {
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${adminUrl}/post/${postId}`,
+      { status: statusUpdate },
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    // console.log(data.message);
+    return data.message;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -157,7 +196,9 @@ const PostService = {
   deletePostById,
   uploadImage,
   getLatestPosts,
-  changePostStatus
+  changePostStatus,
+  adminChangePostStatus,
+  adminGetLatestPosts
 };
 
 module.exports = PostService;

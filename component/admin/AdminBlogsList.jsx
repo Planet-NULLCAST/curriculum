@@ -1,17 +1,27 @@
 import moment from "moment";
+import Cookies from "universal-cookie";
 import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import PostService from "../../services/PostService";
 
-export default function AdminBlogsList({ posts }) {
+export default function AdminBlogsList({ posts, updated }) {
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
   /**
    * Function to approve a blog
    * @param {*} blog
    * @author athulraj2002
    * @returns null
    */
-  const approveBlog = (blog) => {
-    console.log(blog);
+  const approveBlog = async (blog) => {
+    const response = await PostService.adminChangePostStatus(
+      userCookie,
+      blog._id,
+      "published"
+    );
+    console.log(response);
+    updated();
   };
 
   /**
@@ -20,8 +30,14 @@ export default function AdminBlogsList({ posts }) {
    * @author athulraj2002
    * @returns null
    */
-  const rejectBlog = (blog) => {
-    console.log(blog);
+  const rejectBlog = async(blog) => {
+    const response = await PostService.adminChangePostStatus(
+      userCookie,
+      blog._id,
+      "rejected"
+    );
+    console.log(response);
+    updated();
   };
   return (
     <div
@@ -63,25 +79,53 @@ export default function AdminBlogsList({ posts }) {
                       Preview
                     </span>
                   </div>
-                  <div
-                    onClick={() => approveBlog(item)}
-                    className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.successBg} `}
+                  {item.status == "published" ? (
+                    <div
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogsstyles.publishedBg} `}
+                    >
+                      <span
+                        className={`capitalize ${MyBlogsstyles.publishedText} `}
+                      >
+                        Published
+                      </span>
+                    </div>
+                  ) : item.status == "rejected" ? (
+                    <div
+            
+                    className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 
+                 ${MyBlogsstyles.dangerBg}`}
                   >
                     <span
-                      className={`capitalize ${MyBlogsstyles.successText} `}
+                      className={`capitalize  ${MyBlogsstyles.dangerText}`}
                     >
-                      Approve
+                      Declined
                     </span>
                   </div>
-                  <div
-                    onClick={() => rejectBlog(item)}
-                    className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500
+                  ) : (
+                    <div className="flex items-center">
+                      <div
+                        onClick={() => rejectBlog(item)}
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500
                      ${MyBlogsstyles.dangerBg}`}
-                  >
-                    <span className={`capitalize  ${MyBlogsstyles.dangerText}`}>
-                      Decline
-                    </span>
-                  </div>
+                      >
+                        <span
+                          className={`capitalize  ${MyBlogsstyles.dangerText}`}
+                        >
+                          Decline
+                        </span>
+                      </div>
+                      <div
+                        onClick={() => approveBlog(item)}
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.successBg} `}
+                      >
+                        <span
+                          className={`capitalize ${MyBlogsstyles.successText} `}
+                        >
+                          Publish
+                        </span>
+                      </div>
+                    </div>
+                  )}
 
                   <Link
                     href={{

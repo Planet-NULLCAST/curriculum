@@ -9,6 +9,7 @@ const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
+const adminUrl = "api/admin";
 
 export {
   baseUrl,
@@ -21,5 +22,6 @@ export {
   changeStatusUrl,
   subscribeUrl,
   editorUrl,
-  userUrl
+  userUrl,
+  adminUrl
 };
