@@ -343,7 +343,7 @@ export default function WriteNav({
                         </div>
                         <input
                           type="text"
-                          className="w-8/12 m-0 outline-none focus:outline-none px-2 text-sm bg-gray-100"
+                          className="w-8/12 m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100"
                           placeholder="Enter post URL"
                           name="slug"
                           value={currentPost.slug}
@@ -355,7 +355,7 @@ export default function WriteNav({
                       <Select
                         options={tagOptions}
                         isMulti
-                        className="basic-multi-select w-full m-0 outline-none focus:outline-none text-sm bg-gray-100 border rounded px-0 cursor-pointer"
+                        className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                         classNamePrefix="Tags"
                         clearValue={() => undefined}
                         placeholder="Tags"
@@ -373,7 +373,7 @@ export default function WriteNav({
                     <div className="w-full mt-3 relative h-20 mb-0">
                       <textarea
                         maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
+                        className="w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
                         placeholder="Excerpt - short description about post"
                         name="shortDescription"
                         value={currentPost.shortDescription}
@@ -383,10 +383,24 @@ export default function WriteNav({
                         <span className="text-gray-300 text-xs">160</span>
                       </div>
                     </div>
+                    <div className="w-full mt-4">
+                      <div className="floating_form w-full">
+                        <div className="floating-label">
+                          <input
+                            className="floating-input w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
+                            type="text"
+                            placeholder=" "
+                          />
+                          <label className="flex items-center top-0 h-full left-0 ml-3 text-sm">
+                            <span>Placeholder</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                     <div className="w-full mt-3">
                       <input
                         type="text"
-                        className="w-full m-0 h-10 outline-none focus:outline-none px-2 text-sm bg-gray-100 border rounded"
+                        className="w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
                         placeholder="Meta Title"
                         name="metaTitle"
                         value={currentPost.metaTitle}
@@ -396,7 +410,7 @@ export default function WriteNav({
                     <div className="w-full mt-3 relative h-20 mb-0">
                       <textarea
                         maxLength="160"
-                        className="w-full m-0 outline-none focus:outline-none p-2 text-sm bg-gray-100 border rounded h-full"
+                        className="w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black p-2 text-sm bg-gray-100 border rounded h-full"
                         placeholder="Description"
                         name="metaDescription"
                         value={currentPost.metaDescription}
@@ -406,7 +420,6 @@ export default function WriteNav({
                         <span className="text-gray-300 text-xs">160</span>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
                 <div className="px-5 bg-white flex flex-col justify-center items-center h-24 absolute w-full border-l bottom-0 right-0">

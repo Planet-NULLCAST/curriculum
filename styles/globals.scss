@@ -325,10 +325,64 @@ h3 {
   }
 }
 
-
 // settings for write
 
-.h-calcSettings{
+.h-calcSettings {
   height: calc(100vh - 10rem);
   overflow-y: auto;
+}
+
+// floating label input styles
+.floating_form {
+  .floating-label {
+    position: relative;
+  }
+  .floating-input {
+    display: block;
+    &:focus {
+      outline: none;
+    }
+    &:focus ~ label {
+      top: -18px;
+      font-size: 10px;
+      span {
+        background-color: #fff;
+        border-radius: 0.25rem;
+        color: #000;
+        padding: 0 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+    }
+    &:focus ~ .bar:before {
+      width: 50%;
+    }
+    &:focus ~ .bar:after {
+      width: 50%;
+    }
+    &:not(:placeholder-shown) ~ label {
+      top: -18px;
+      font-size: 10px;
+      span {
+        background-color: #fff;
+        border-radius: 0.25rem;
+        color: #000;
+        padding: 0 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+    }
+    &:focus ~ .highlight {
+      -webkit-animation: inputHighlighter 0.7s ease;
+      -moz-animation: inputHighlighter 0.7s ease;
+      animation: inputHighlighter 0.7s ease;
+    }
+  }
+  label {
+    color: #9ca3af;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    transition: 0.4s ease all;
+    -moz-transition: 0.4s ease all;
+    -webkit-transition: 0.4s ease all;
+  }
 }
