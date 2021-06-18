@@ -12,7 +12,8 @@ module.exports = {
     CLIENT_URL: process.env.CLIENT_URL,
     ENV: process.env.ENV,
     EDITOR_URL: process.env.EDITOR_URL,
-    BUCKET_URL: process.env.BUCKET_URL
+    BUCKET_URL: process.env.BUCKET_URL,
+    SERVER_URL : process.env.SERVER_URL
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")]

@@ -16,6 +16,7 @@ import ModalConfirm from "../../component/popup/ModalConfirm";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
 const axios = require("axios");
+import { getCookieValue } from "../../lib/cookie";
 
 export default function WriteNav({
   saveToDraft,
@@ -29,6 +30,7 @@ export default function WriteNav({
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
   const [newTags, setNewTags] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
   // const userState = useContext(UserState);
@@ -47,14 +49,23 @@ export default function WriteNav({
 
   useEffect(() => {
     console.log("writenavprop", { post });
+
     setCurrentPost({ ...post });
     // userState.setTags();
   }, [post]);
 
   useEffect(() => {
     getSettingsTags();
+    getIsAdmin();
   }, []);
 
+  const getIsAdmin = async () => {
+    const res = await PostService.isAdmin(
+      userCookie.id,
+      userCookie.accessToken
+    );
+    if (res.data) setIsAdmin(true);
+  };
   /**
    * gets tags from db and sets the tags
    * options in label and value format
@@ -71,7 +82,7 @@ export default function WriteNav({
         };
       });
       // setTagOptions;
-      console.log({ resTagOptions });
+      // console.log({ resTagOptions });
       setTagOptions(resTagOptions);
     }
   }
@@ -268,12 +279,15 @@ export default function WriteNav({
           </span>
         </div>
         <div className="items-center py-3 md:flex">
-          <div
-            onClick={submitForReview}
-            className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-          >
-            <p>Submit For Review</p>
-          </div>
+          {!isAdmin && (
+            <div
+              onClick={submitForReview}
+              className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+            >
+              <p>Submit For Review</p>
+            </div>
+          )}
+
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
