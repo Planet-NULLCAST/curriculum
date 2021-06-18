@@ -64,7 +64,7 @@ export default function WriteNav({
       userCookie.id,
       userCookie.accessToken
     );
-    if (res.data) setIsAdmin(true);
+    if (res?.data) setIsAdmin(true);
   };
   /**
    * gets tags from db and sets the tags
