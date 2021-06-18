@@ -1,8 +1,37 @@
+import React, { useState, useEffect } from "react";
 import styles from "./Profile.module.scss";
 import Link from "next/link";
 import Image from "next/image";
+import Cookies from "universal-cookie";
+import PostService from "../../../services/PostService";
+
 
 export default function Profile({ onLogout }) {
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+
+  // State
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Effects
+  useEffect(() => {
+    getIsAdmin();
+  }, []);
+
+  // Functions
+  /**
+   * Function to get if a user is asn admin
+   *
+   * @author athulraj2002
+   */
+  const getIsAdmin = async () => {
+    const res = await PostService.isAdmin(
+      userCookie.id,
+      userCookie.accessToken
+    );
+    if (res.data) setIsAdmin(true);
+  };
+
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
@@ -36,9 +65,19 @@ export default function Profile({ onLogout }) {
               </a>
             </Link>
           </li>
+          {isAdmin && (
+            <li>
+              <Link href="/admin">
+                <button className="linkUnderline">Admin Cosole</button>
+              </Link>
+            </li>
+          )}
+
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout} className="linkUnderline">Logout</button>
+            <button onClick={onLogout} className="linkUnderline">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
