@@ -5,7 +5,8 @@ import {
   postUrl,
   s3Url,
   userUrl,
-  changeStatusUrl
+  changeStatusUrl,
+  tagUrl
 } from "../config/config";
 
 async function getPostsByUserId(userCookie, reqData) {
@@ -148,6 +149,20 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
   }
 }
 
+async function getPostByTags(tagName, clickNo) {
+  const item = {
+    clickNo: clickNo
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${tagUrl}/${tagName}`, item);
+    // console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -157,7 +172,8 @@ const PostService = {
   deletePostById,
   uploadImage,
   getLatestPosts,
-  changePostStatus
+  changePostStatus,
+  getPostByTags
 };
 
 module.exports = PostService;
