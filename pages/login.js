@@ -142,7 +142,7 @@ export default function Login() {
         <SideLogin />
         <div className="flex justify-end w-full items-center">
           <div
-            className={`w-full lg:w-1/2 ${Loginstyles.bg_yellow_710} h-full flex flex-col items-center justify-center px-6 md:pl-28 md:pr-10 overflow-x-hidden`}
+            className={`${Loginstyles.bg_yellow_710} h-full flex flex-col items-center lg:items-end justify-center overflow-x-hidden greenLoginDiv`}
           >
             <div
               className={`rounded-xl w-full py-5 sm:py-10 px-5 sm:px-10 md:px-5 lg:px-20 max-w-xl flex items-start justify-center flex-col greenLogin relative overflow-y-auto ${Loginstyles.formCard}`}
@@ -151,7 +151,7 @@ export default function Login() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end p-6 w-full ${Loginstyles.bg_green_710}`}
                 >
-                  <p className={`font-semibold text-white text-sm flex mr-2`}>
+                  <p className={`font-semibold text-white text-sm flex mr-5`}>
                     Don’t have an Account ?
                   </p>
                   <Link
@@ -159,7 +159,7 @@ export default function Login() {
                       pathname: `/signup`
                     }}
                   >
-                    <div className="submitButtons cursor-pointer py-1">
+                    <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
                       Sign Up
                     </div>
                   </Link>
@@ -178,7 +178,7 @@ export default function Login() {
                       </label>
                       <input
                         placeholder="Enter email"
-                        className={`inputStyle ${Loginstyles.inputGreen}`}
+                        className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
                         type="text"
@@ -201,7 +201,7 @@ export default function Login() {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          className={`inputStyle w-full ${Loginstyles.inputGreen}`}
+                          className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"
                           onChange={handlePassword}
@@ -217,7 +217,7 @@ export default function Login() {
                       </div>
                     </div>
                     <button
-                      className={`submitButtons w-full py-2 ${
+                      className={`submitButtons w-full ${
                         !validEmail || !validPassword
                           ? "disabled:opacity-50"
                           : ""
