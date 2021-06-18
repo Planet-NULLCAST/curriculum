@@ -10,14 +10,20 @@ import PostService from "../services/PostService";
 import AdminNavbar from "../component/admin/AdminNavbar";
 import AdminBlogsList from "../component/admin/AdminBlogsList";
 import { getCookieValue } from "../lib/cookie";
+import { serverUrl } from "../config/config";
 
 export async function getServerSideProps(context) {
   try {
+    console.log('cookie' , context.req.headers.cookie);
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
       );
-      const res = await PostService.isAdmin(cookie.id, cookie.accessToken);
+      const res = await PostService.isAdmin(
+        cookie.id,
+        cookie.accessToken
+      );
+      console.log(res);
       if (res.data) {
         return {
           props: { admin: cookie }
@@ -106,7 +112,6 @@ const Admin = (props) => {
     getPosts(data);
   };
 
-
   /**
    * Function to get posts when category changes
    * @param {*} category new category
@@ -132,7 +137,6 @@ const Admin = (props) => {
       getPosts(data);
     }, 100);
   };
-
 
   /**
    * Function to get posts when status changes

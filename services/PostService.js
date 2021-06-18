@@ -6,7 +6,8 @@ import {
   s3Url,
   userUrl,
   changeStatusUrl,
-  adminUrl
+  adminUrl,
+  serverUrl
 } from "../config/config";
 
 async function getPostsByUserId(userCookie, reqData) {
@@ -62,9 +63,17 @@ async function createPost(userCookie, post) {
 }
 
 async function getLatestPosts(reqParams) {
+
+    // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+  
   try {
     const { order, fieldName, limit, skip } = reqParams;
-    const response = await axios.get(`${baseUrl}/${userUrl}/getPosts`, {
+    const response = await axios.get(`${url}/${userUrl}/getPosts`, {
       params: {
         order,
         fieldName,
@@ -187,26 +196,28 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     return;
   }
 }
+ 
+const isAdmin = async (id, token) => {
 
-const isAdmin = async(id,token)=>{
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+
   try {
-    const { data } = await axios.get(
-      `${baseUrl}/${adminUrl}/me`,
-      {
-        headers: {
-          "x-access-token": `${token}`
-        }
+    const { data } = await axios.get(`${url}/${adminUrl}/me`, {
+      headers: {
+        "x-access-token": `${token}`
       }
-    );
-    console.log(data);
-    // console.log(data.message);
+    });
     return data;
   } catch (err) {
     console.log(err);
     return;
   }
-}
-
+};
 
 const PostService = {
   getPostById,
