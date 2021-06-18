@@ -6,7 +6,9 @@ import {
   s3Url,
   userUrl,
   changeStatusUrl,
-  tagUrl
+  tagUrl,
+  adminUrl,
+  serverUrl
 } from "../config/config";
 
 async function getPostsByUserId(userCookie, reqData) {
@@ -62,14 +64,41 @@ async function createPost(userCookie, post) {
 }
 
 async function getLatestPosts(reqParams) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+
   try {
     const { order, fieldName, limit, skip } = reqParams;
-    const response = await axios.get(`${baseUrl}/${userUrl}/getPosts`, {
+    const response = await axios.get(`${url}/${userUrl}/getPosts`, {
       params: {
         order,
         fieldName,
         limit,
         skip
+      }
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+async function adminGetLatestPosts(reqParams) {
+  try {
+    const { order, fieldName, limit, skip, optionsCategory, optionsStatus } =
+      reqParams;
+    const response = await axios.get(`${baseUrl}/${adminUrl}/getPosts`, {
+      params: {
+        order,
+        fieldName,
+        limit,
+        skip,
+        optionsCategory,
+        optionsStatus
       }
     });
     return response;
@@ -163,6 +192,46 @@ async function getPostByTags(tagName, clickNo) {
   }
 }
 
+async function adminChangePostStatus(userCookie, postId, statusUpdate) {
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${adminUrl}/post/${postId}`,
+      { status: statusUpdate },
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    // console.log(data.message);
+    return data.message;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+const isAdmin = async (id, token) => {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+
+  try {
+    const { data } = await axios.get(`${url}/${adminUrl}/me`, {
+      headers: {
+        "x-access-token": `${token}`
+      }
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -173,7 +242,10 @@ const PostService = {
   uploadImage,
   getLatestPosts,
   changePostStatus,
-  getPostByTags
+  getPostByTags,
+  adminChangePostStatus,
+  adminGetLatestPosts,
+  isAdmin
 };
 
 module.exports = PostService;

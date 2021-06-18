@@ -32,6 +32,7 @@ export async function getServerSideProps(context) {
           props: { posts: response}
        }
     }  else {
+      console.log('else');
         return {
             redirect: {
               permanent: false,
