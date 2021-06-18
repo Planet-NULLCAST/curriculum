@@ -18,8 +18,8 @@ export default function Navbar(props) {
   const [status, setStatus] = useState("");
 
   const statusOptions = [
-    { label: "ALL POSTS", value: "" },
-    { label: "APPROVED", value: "approved" },
+    { label: "ALL STATUS", value: "" },
+    // { label: "APPROVED", value: "approved" },
     { label: "PENDING", value: "pending" },
     { label: "REJECTED", value: "rejected" },
     { label: "PUBLISHED", value: "published" },
@@ -46,7 +46,7 @@ export default function Navbar(props) {
     });
     // setTagOptions;
     const allOption = {
-      label: "ALL TAGS",
+      label: "ALL CATEGORY",
       value: ""
     };
     resTagOptions = [allOption, ...resTagOptions];
