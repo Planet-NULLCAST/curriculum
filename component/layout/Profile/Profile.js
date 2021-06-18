@@ -29,7 +29,7 @@ export default function Profile({ onLogout }) {
       userCookie.id,
       userCookie.accessToken
     );
-    if (res.data) setIsAdmin(true);
+    if (res?.data) setIsAdmin(true);
   };
 
   return (
