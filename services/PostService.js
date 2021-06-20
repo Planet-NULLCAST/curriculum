@@ -6,6 +6,7 @@ import {
   s3Url,
   userUrl,
   changeStatusUrl,
+  tagUrl,
   adminUrl,
   serverUrl
 } from "../config/config";
@@ -63,14 +64,13 @@ async function createPost(userCookie, post) {
 }
 
 async function getLatestPosts(reqParams) {
-
-    // set URL from where this function is executing
+  // set URL from where this function is executing
   // like server and client
   // if in server serverURL is applied else clientURL
   let url = "";
   if (typeof window == "undefined") url = serverUrl;
   else url = baseUrl;
-  
+
   try {
     const { order, fieldName, limit, skip } = reqParams;
     const response = await axios.get(`${url}/${userUrl}/getPosts`, {
@@ -178,6 +178,20 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
   }
 }
 
+async function getPostByTags(tagName, clickNo) {
+  const item = {
+    clickNo: clickNo
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${tagUrl}/${tagName}`, item);
+    // console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
 async function adminChangePostStatus(userCookie, postId, statusUpdate) {
   try {
     const { data } = await axios.post(
@@ -196,9 +210,8 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     return;
   }
 }
- 
-const isAdmin = async (id, token) => {
 
+const isAdmin = async (id, token) => {
   // set URL from where this function is executing
   // like server and client
   // if in server serverURL is applied else clientURL
@@ -229,6 +242,7 @@ const PostService = {
   uploadImage,
   getLatestPosts,
   changePostStatus,
+  getPostByTags,
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin

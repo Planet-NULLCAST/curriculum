@@ -23,8 +23,7 @@ export async function getServerSideProps(context) {
         cookie.id,
         cookie.accessToken
       );
-      console.log(res);
-      if (res.data) {
+      if (res?.data) {
         return {
           props: { admin: cookie }
         };

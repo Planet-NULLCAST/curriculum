@@ -21,3 +21,8 @@
   background-color: #051d1e;
   color: #fff;
 }
+.duck_login {
+  position: fixed;
+  left: 0;
+  width: calc(65% - 1.5rem);
+}
