@@ -5,7 +5,7 @@ import SectionAuthor from "../component/layout/BlogPost/SectionAuthor";
 import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
-
+import Head from "next/head";
 import PostService from "../services/PostService";
 
 // unsure on using getServerSideProps
@@ -26,16 +26,16 @@ export async function getServerSideProps(context) {
       };
     }
     return {
-      props: { blog: response.data.blog}
-    }
+      props: { blog: response.data.blog }
+    };
   } catch (err) {
-    console.log('Error => ', err);
+    console.log("Error => ", err);
     return {
       redirect: {
         permanent: false,
         destination: "/404"
       }
-    }
+    };
   }
 }
 
@@ -44,6 +44,9 @@ export default function BlogListing(props) {
   return (
     <>
       <SiteHeader />
+      <Head>
+        <title> {title}</title>
+      </Head>
       <BlogSpotlight
         title={title}
         bannerImage={bannerImage}

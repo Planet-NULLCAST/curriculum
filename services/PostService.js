@@ -25,9 +25,15 @@ async function getPostsByUserId(userCookie, reqData) {
 }
 
 async function getPostById(userCookie, postId) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
   try {
     // console.log(postId);
-    const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`, {
+    const { data } = await axios.get(`${url}/${postUrl}/${postId}`, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
@@ -40,8 +46,14 @@ async function getPostById(userCookie, postId) {
 }
 
 async function getPostBySlug(slug) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
   try {
-    const response = await axios.get(`${baseUrl}/${postUrl}/blog/${slug}`);
+    const response = await axios.get(`${url}/${postUrl}/blog/${slug}`);
     return response;
   } catch (err) {
     console.log(err);
@@ -81,6 +93,7 @@ async function getLatestPosts(reqParams) {
         skip
       }
     });
+    // console.log(response);
     return response;
   } catch (err) {
     console.log(err);
@@ -179,11 +192,18 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
 }
 
 async function getPostByTags(tagName, clickNo) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+
   const item = {
     clickNo: clickNo
   };
   try {
-    const { data } = await axios.post(`${baseUrl}/${tagUrl}/${tagName}`, item);
+    const { data } = await axios.post(`${url}/${tagUrl}/${tagName}`, item);
     // console.log(data);
     return data;
   } catch (err) {
@@ -227,7 +247,8 @@ const isAdmin = async (id, token) => {
     });
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("admin check err");
+    // console.log(err);
     return;
   }
 };
