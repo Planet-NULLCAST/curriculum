@@ -5,16 +5,14 @@ import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
 
 export default function AdminNavbar({ changeCategory, changeStatus }) {
-
   const statusOptions = [
     { label: "ALL POSTS", value: "" },
-    { label: "APPROVED", value: "approved" },
+    // { label: "APPROVED", value: "approved" },
     { label: "PENDING", value: "pending" },
     { label: "REJECTED", value: "rejected" },
     { label: "PUBLISHED", value: "published" }
   ];
   const [tagOptions, setTagOptions] = useState([]);
-
 
   useEffect(() => {
     getSettingsTags();
@@ -46,7 +44,6 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
     console.log({ resTagOptions });
     setTagOptions(resTagOptions);
   }
-
 
   /**
    * Prop Function called when new category is choosen
