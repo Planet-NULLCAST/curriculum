@@ -43,7 +43,7 @@ export async function getServerSideProps(context) {
 export default function TagName({ posts, params, count }) {
   // console.log(posts);
   // console.log(params);
-  console.log(count);
+  // console.log(count);
   const name = params.tagName;
   const [newBlogs, setNewBlogs] = useState(posts);
 
@@ -67,8 +67,18 @@ export default function TagName({ posts, params, count }) {
         <title> Tag: {name} | Nullcast</title>
       </Head>
       <SiteHeader />
-      <ListingHeader />
-      <Listing blog={newBlogs} currentCount={currentCount} blogCount={count} />
+      {/* <ListingHeader /> */}
+      {posts.length > 0 ? (
+        <Listing
+          blog={newBlogs}
+          currentCount={currentCount}
+          blogCount={count}
+        />
+      ) : (
+        <div className="h-60 text-center pt-20">
+          There's no published posts for this tag yet
+        </div>
+      )}
 
       <SectionSwag />
       <SiteFooter />
