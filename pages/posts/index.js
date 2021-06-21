@@ -17,21 +17,29 @@ const MyPost = () => {
     posts: [],
     count: 0
   });
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    if (userCookie) {
-      // const reqData = {
-      //   pageNo: 1,
-      //   limit: 10
-      // };
-      // getPosts(reqData);
-      pageChange(1, 10);
-      setLoaded(true);
-    }
-  }, []);
 
-  async function getPosts(reqData) {
+  const [tagFilter, setTagFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const pageNo = 1;
+  const limit = 10;
+
+  // useEffect(() => {
+  //   if (userCookie) {
+  //     const reqData = {
+  //       pageNo: pageNo,
+  //       limit: limit,
+  //       tag: tagFilter,
+  //       status: statusFilter
+  //     };
+  //     getPosts(reqData);
+  //     changePage(pageNo, limit);
+  //   }
+  // }, []);
+
+  async function getPosts(reqData, tag, status) {
     // console.log(reqData);
+    if (tag) setTagFilter(tag);
+    if (status) setStatusFilter(status);
     try {
       const data = await PostService.getPostsByUserId(userCookie, reqData);
       console.log(data);
@@ -46,12 +54,15 @@ const MyPost = () => {
     }
   }
 
-  const pageChange = (pageNo, limit) => {
+  const changePage = (newPageNo) => {
     // console.log(pageNo, limit);
     const newReqData = {
-      pageNo: pageNo,
-      limit: limit
+      pageNo: newPageNo,
+      limit: limit,
+      tag: tagFilter,
+      status: statusFilter
     };
+    console.log(newReqData);
     getPosts(newReqData);
   };
 
@@ -63,29 +74,38 @@ const MyPost = () => {
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
-          <Navbar getPosts={getPosts} />
+          <Navbar getPosts={getPosts} limit={limit} />
           {postData.posts.length ? (
             <div>
               <MyBlogs posts={postData.posts} />
-              <div
+              {/* <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
               >
                 <Pagination
                   TotalCount={postData.count}
                   // CurrentPage={3}
-                  changedPage={pageChange}
+                  changePage={changePage}
+                  pageNum={pageNo}
+                  limit={limit}
                 />
-              </div>
+              </div> */}
             </div>
           ) : (
             <div className="text-gray-700 text-center font-semibold mt-8">
               Oops ! You have not created any posts!
             </div>
-            // <MyBlogs
-            //   paginationData={pageChange}
-            //   posts={data}
-            // />
           )}
+          <div
+            className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
+          >
+            <Pagination
+              TotalCount={postData.count}
+              // CurrentPage={3}
+              changePage={changePage}
+              pageNum={pageNo}
+              limit={limit}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -422,3 +442,4 @@ const data = [
     __v: 0
   }
 ];
+// console.log(data.length);

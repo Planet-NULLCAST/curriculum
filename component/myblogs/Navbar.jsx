@@ -9,7 +9,8 @@ import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 
 export default function Navbar(props) {
-  const { currentNav, getPosts } = props;
+  const { currentNav, getPosts, limit } = props;
+  // console.log({ limit });
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
@@ -50,41 +51,41 @@ export default function Navbar(props) {
       value: ""
     };
     resTagOptions = [allOption, ...resTagOptions];
-    console.log({ resTagOptions });
+    // console.log({ resTagOptions });
     setTagOptions(resTagOptions);
   }
 
-  function handleTagSelect(e) {
+  const handleTagSelect = (e) => {
     // console.log(e);
     // const tag = e.value;
     // console.log(tag);
     setTag(e.value);
     const newReqData = {
       pageNo: 1,
-      limit: 10,
+      limit: limit,
       tag: e.value,
       status: status
     };
     // call getallposts
-    getPosts(newReqData);
-  }
+    getPosts(newReqData, tag, status);
+  };
 
-  function handleStatusSelect(e) {
+  const handleStatusSelect = (e) => {
     // console.log(e);
     const status = e.value;
     // console.log(status);
     setStatus(status);
     const newReqData = {
       pageNo: 1,
-      limit: 10,
+      limit: limit,
       tag: tag,
       status: status
     };
     // call getallposts
-    getPosts(newReqData);
-  }
+    getPosts(newReqData, tag, status);
+  };
 
-  async function createPost(createThisPost) {
+  const createPost = async (createThisPost) => {
     try {
       const { data } = await PostService.createPost(userCookie, createThisPost);
       const { post, msg } = data;
@@ -100,9 +101,9 @@ export default function Navbar(props) {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  function handleAddNewPost() {
+  const handleAddNewPost = () => {
     const newPost = {
       title: "[Untitled]",
       mobiledoc: {
@@ -115,7 +116,7 @@ export default function Navbar(props) {
       }
     };
     createPost(newPost);
-  }
+  };
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">

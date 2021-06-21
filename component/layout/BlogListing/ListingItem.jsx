@@ -6,6 +6,7 @@ import Details from "./AuthorDetails";
 import moment from "moment";
 
 export default function ListingItem(props) {
+  // console.log(props.blog);
   return (
     <>
       {props.blog.map((item, key) => (
@@ -23,7 +24,7 @@ export default function ListingItem(props) {
           </Fade>
           <div>
             <div className="tags">
-              <Link href={`/`}>
+              <Link href={`/tag/${item.tags[0]}`}>
                 <a className="tags__item">{item.tags[0]}</a>
               </Link>
             </div>
@@ -34,7 +35,7 @@ export default function ListingItem(props) {
             </h3>
 
             <p className={styles.time}>
-              <span>{moment(item.publishedAt).format("MMMM Do, YYYY")}</span>
+              <span>{moment(item.updatedAt).format("MMMM Do, YYYY")}</span>
               {/* <span> 5 Min Read</span> */}
             </p>
           </div>

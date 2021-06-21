@@ -6,20 +6,26 @@ import ListingItem from "./ListingItem";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function Listing({ blog, currentCount, blogCount }) {
+export default function Listing({ blog, currentCount, blogCount, tagsArray }) {
   // console.log({ blog });
   // console.log({ blogCount });
   const [count, setCount] = useState(0);
   const router = useRouter();
   // console.log(router);
+  let newTagsArray = [];
+  if (router.asPath === "/blog") {
+    // console.log({ tagsArray });
+    const size = 5;
+    newTagsArray = tagsArray.slice(0, size);
+  }
 
   const handleLoadMore = (e) => {
     // console.log("clicked");
-    if (router.asPath !== "/blog") {
-      let newCount = count + 1;
-      setCount(newCount);
-      currentCount(newCount);
-    }
+    // if (router.asPath !== "/blog") {
+    let newCount = count + 1;
+    setCount(newCount);
+    currentCount(newCount);
+    // }
   };
 
   return (
@@ -30,40 +36,17 @@ export default function Listing({ blog, currentCount, blogCount }) {
             <div className={styles.listing__tab}>
               <div className="overflow-auto mb-3 992:mb-5 w-full">
                 <ul className="tags tags--large">
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Latest Updates</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Web</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Mobile</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Javascript</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Algorithm</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/">
-                      <a className="tags__item">Angular</a>
-                    </Link>
-                  </li>
+                  {newTagsArray.map((tag) => (
+                    <li key={tag._id}>
+                      <Link href={`/tag/${tag.name}`}>
+                        <a className="tags__item">{tag.name}</a>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="mb-5 more">
-                <Link href="/">
+                {/* <Link href="/">
                   <a className="btn btn--blackborder">
                     Explore topics
                     <svg
@@ -77,7 +60,7 @@ export default function Listing({ blog, currentCount, blogCount }) {
                       <path d="M13.794 3.862L10.119.205a.703.703 0 00-.992.997l2.467 2.454H.704a.703.703 0 100 1.406h10.89L9.127 7.518a.703.703 0 10.992.997l3.674-3.656a.705.705 0 000-.996z" />
                     </svg>
                   </a>
-                </Link>
+                </Link> */}
               </div>
             </div>
           )}
