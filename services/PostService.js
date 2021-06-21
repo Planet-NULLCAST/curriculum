@@ -93,7 +93,7 @@ async function getLatestPosts(reqParams) {
         skip
       }
     });
-    // console.log(response);
+    // console.log(response.data);
     return response;
   } catch (err) {
     console.log(err);
@@ -101,10 +101,16 @@ async function getLatestPosts(reqParams) {
   }
 }
 async function adminGetLatestPosts(reqParams) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
   try {
     const { order, fieldName, limit, skip, optionsCategory, optionsStatus } =
       reqParams;
-    const response = await axios.get(`${baseUrl}/${adminUrl}/getPosts`, {
+    const response = await axios.get(`${url}/${adminUrl}/getPosts`, {
       params: {
         order,
         fieldName,
