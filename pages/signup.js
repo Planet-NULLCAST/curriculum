@@ -230,7 +230,7 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter full name"
-                            maxlength="30"
+                            maxlength="50"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
@@ -250,7 +250,7 @@ export default function SignUp() {
                           )}
                           {validName === "length" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Full name can only contain maximumm of 30
+                              Full name can only contain maximum of 30
                               characters
                             </span>
                           )}
