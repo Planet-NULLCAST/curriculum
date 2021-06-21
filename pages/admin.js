@@ -14,15 +14,12 @@ import { serverUrl } from "../config/config";
 
 export async function getServerSideProps(context) {
   try {
-    console.log('cookie' , context.req.headers.cookie);
+    console.log("cookie", context.req.headers.cookie);
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
       );
-      const res = await PostService.isAdmin(
-        cookie.id,
-        cookie.accessToken
-      );
+      const res = await PostService.isAdmin(cookie.id, cookie.accessToken);
       if (res?.data) {
         return {
           props: { admin: cookie }
@@ -174,7 +171,9 @@ const Admin = (props) => {
                 <Pagination
                   TotalCount={postData.count}
                   // CurrentPage={3}
-                  changedPage={(pageNo, limit) => pageChange(pageNo, limit)}
+                  changePage={(pageNo, limit) => pageChange(pageNo, limit)}
+                  pageNum={1}
+                  limit={10}
                 />
               </div>
             </div>
