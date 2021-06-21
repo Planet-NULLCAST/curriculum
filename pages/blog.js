@@ -47,7 +47,7 @@ export default function BlogListing({ blog, tagsArray, count }) {
   };
 
   const getNewPosts = async (clickNo) => {
-    const limit = 3;
+    const limit = 9;
     const postParams = {
       fieldName: "publishedAt",
       order: -1,
@@ -69,7 +69,7 @@ export default function BlogListing({ blog, tagsArray, count }) {
       </Head>
       <SiteHeader />
       <ListingHeader />
-      <ListingFeatured blog={blog} />
+      {blog[0] && <ListingFeatured blog={blog} />}
       <Listing
         blog={newBlogs}
         tagsArray={tagsArray}

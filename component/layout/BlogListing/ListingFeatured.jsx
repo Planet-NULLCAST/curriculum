@@ -30,7 +30,7 @@ export default function ListingFeatured(props) {
               </Link>
             </div>
             <h3>
-              <Link href={`/${props.blog[0].slug}`}>
+              <Link href={`/${props.blog[0]?.slug}`}>
                 <a>{props.blog[0]?.title}</a>
               </Link>
             </h3>
