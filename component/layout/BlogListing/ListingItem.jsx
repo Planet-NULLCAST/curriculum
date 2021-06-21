@@ -35,7 +35,7 @@ export default function ListingItem(props) {
             </h3>
 
             <p className={styles.time}>
-              <span>{moment(item.updatedAt).format("MMMM Do, YYYY")}</span>
+              <span>{moment(item.publishedAt).format("MMMM Do, YYYY")}</span>
               {/* <span> 5 Min Read</span> */}
             </p>
           </div>
