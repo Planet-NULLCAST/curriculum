@@ -37,7 +37,7 @@ export default function ListingFeatured(props) {
             <p>{props.blog[0]?.metaDescription}</p>
             <p className={styles.time}>
               <span>
-                {moment(props.blog[0]?.updatedAt).format("MMMM Do, YYYY")}
+                {moment(props.blog[0]?.publishedAt).format("MMMM Do, YYYY")}
               </span>
               {/* <span>5 Min Read</span> */}
             </p>
