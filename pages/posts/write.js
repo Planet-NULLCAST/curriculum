@@ -8,20 +8,40 @@ import PostService from "../../services/PostService";
 import { editorUrl } from "../../config/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import { getCookieValue } from "../../lib/cookie";
 
 const TARGET = editorUrl;
 
-Write.getInitialProps = async (ctx) => {
-  // console.log(ctx);
-  // console.log(ctx.query);
-  const post_Id = ctx.query.post_id;
-  //if ctx.query just pass the post id, else create new post - call api, title=untitled, dummy structure for mobiledoc
-  // if(post_Id) {
-
-  // }
-  return { post_Id: post_Id ? post_Id : "" };
-};
+export async function getServerSideProps(context) {
+  // console.log(context);
+  try {
+    console.log(context.query);
+    const post_Id = context.query.post_id;
+    let cookie = "";
+    if (context.req.headers.cookie) {
+      cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log(cookie);
+      return { props: { post_Id: post_Id ? post_Id : "" } };
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    console.log("Error =============== > ", err);
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
+  }
+}
 
 export default function Write({ post_Id }) {
   // console.log("postId if there's a post Id", post_Id);
