@@ -35,11 +35,16 @@ export async function getServerSideProps(context) {
 
 export default function SignUp() {
   const [validEmail, setEmailValid] = useState(true);
-  const [validPassword, setValidPassword] = useState(false);
+  const [validTerms, setTermsValid] = useState(true);
+  const [validPassword, setValidPassword] = useState("");
+  const [validUserName, setValidUserName] = useState("");
+  const [validName, setValidName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [terms, setTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const notify = (item) =>
-    toast(item.message, {
+    toast.success(item.message, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -54,7 +59,7 @@ export default function SignUp() {
     });
   };
   const eyeClick = (e) => {
-    setValidPassword((prevState) => {
+    setShowPassword((prevState) => {
       return !prevState;
     });
   };
@@ -70,8 +75,53 @@ export default function SignUp() {
       setEmailValid(false);
     }
   };
+  function handlePassword(e) {
+    const regexPass =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (e.target.value.match(regexPass)) {
+      setValidPassword("valid");
+    } else {
+      if (e.target.value.length === 0) {
+        setValidPassword("empty");
+      } else if (e.target.value?.length < 8 || e.target.value?.length > 15) {
+        setValidPassword("length");
+      } else {
+        setValidPassword("characters");
+      }
+    }
+  }
+  function handleUserName(e) {
+    const regexUser = /^[a-zA-Z0-9]/;
+    if (e.target.value.length === 0) {
+      setValidUserName("empty");
+    } else if (e.target.value?.length < 5 || e.target.value?.length > 15) {
+      setValidUserName("length");
+    } else {
+      if (e.target.value.match(regexUser)) {
+        setValidUserName("valid");
+      } else {
+        setValidUserName("characters");
+      }
+    }
+  }
+  function handleName(e) {
+    const regexName = /^[a-zA-Z]/;
+    if (e.target.value.length === 0) {
+      setValidName("empty");
+    } else if (e.target.value?.length > 30) {
+      setValidName("length");
+    } else {
+      if (e.target.value.match(regexName)) {
+        setValidName("valid");
+      } else {
+        setValidName("characters");
+      }
+    }
+  }
+
   const handleClick = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // const fName = document.querySelector("#fullName").value;
     // const email = document.querySelector("#email").value;
     // const user = document.querySelector("#username").value;
@@ -83,32 +133,59 @@ export default function SignUp() {
     const password = e.target.password.value;
     const updates = e.target.updates.value;
 
-    console.log(updates);
-    if (validEmail && terms) {
-      const signupData = {
-        fullName: fName,
-        email: email,
-        username: username,
-        password: password,
-        updates: updates
-      };
-      fetch(`${baseUrl}/api/auth/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signupData)
-      })
-        .then((response) => {
-          return response.json();
+    console.log(updates, terms);
+    if (validEmail) {
+      if (fName && password && email && username && terms) {
+        const signupData = {
+          fullName: fName,
+          email: email,
+          username: username,
+          password: password,
+          updates: updates
+        };
+        fetch(`${baseUrl}/api/auth/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(signupData)
         })
-        .then((data) => {
-          if (data.message === "User was registered successfully!") {
-            console.log(data);
-            window.location.replace("/login");
-          }
-          notify(data);
-        });
+          .then((response) => {
+            setIsLoading(false);
+            return response.json();
+          })
+          .then((data) => {
+            if (data.message === "User was registered successfully!") {
+              console.log(data);
+              setIsLoading(false);
+              window.location.replace("/login");
+              toast.success(data.message);
+            } else {
+              toast.error(data.message);
+            }
+            setIsLoading(false);
+            // notify(data);
+          });
+      } else {
+        setIsLoading(false);
+        if (!fName) {
+          setValidName("empty");
+        }
+        if (!password) {
+          setValidPassword("empty");
+        }
+        if (!email) {
+          setEmailValid(false);
+        }
+        if (!username) {
+          setValidUserName("empty");
+        }
+        if (!terms) {
+          setTermsValid(false);
+        }
+      }
+    } else {
+      // setIsLoading(false);
     }
   };
   return (
@@ -136,20 +213,26 @@ export default function SignUp() {
             >
               <Fade duration={2000}>
                 <div
-                  className={`absolute top-0 right-0 flex items-center justify-end px-6 pt-5 pb-3 w-full z-20 ${Loginstyles.bg_green_710}`}
+                  className={`absolute top-0 right-0 flex items-center justify-end px-6 pt-5 pb-2 w-full z-20 ${Loginstyles.bg_green_710}`}
                 >
                   <p className={`font-semibold text-white text-sm flex mr-5`}>
                     Already have an Account ?
                   </p>
-                  <Link
-                    href={{
-                      pathname: `/login`
-                    }}
-                  >
-                    <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                  {isLoading ? (
+                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Login
                     </div>
-                  </Link>
+                  ) : (
+                    <Link
+                      href={{
+                        pathname: `/login`
+                      }}
+                    >
+                      <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                        Login
+                      </div>
+                    </Link>
+                  )}
                 </div>
                 <div
                   className={`absolute bottom-0 right-0 py-3 w-full z-50 ${Loginstyles.bg_green_710}`}
@@ -173,11 +256,35 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter full name"
+                            maxLength="50"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
                             type="text"
+                            onBlur={(e) => handleName(e)}
+                            onChange={(e) => {
+                              if (validName !== "") {
+                                handleName(e);
+                              }
+                            }}
                           />
+                          {validName === "valid" && ""}
+                          {validName === "empty" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Please enter your name
+                            </span>
+                          )}
+                          {validName === "length" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Full name can only contain maximum of 30
+                              characters
+                            </span>
+                          )}
+                          {validName === "characters" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Full name can only contain alphabets
+                            </span>
+                          )}
                         </div>
                         <div className="mb-1 flex flex-col">
                           <label
@@ -188,11 +295,34 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter username"
+                            maxLength="15"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="username"
                             name="username"
                             type="text"
+                            onBlur={(e) => handleUserName(e)}
+                            onChange={(e) => {
+                              if (validUserName !== "") {
+                                handleUserName(e);
+                              }
+                            }}
                           />
+                          {validUserName === "valid" && ""}
+                          {validUserName === "empty" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Please enter username
+                            </span>
+                          )}
+                          {validUserName === "length" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Username must be between 5 to 15 characters
+                            </span>
+                          )}
+                          {validUserName === "characters" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Username can only contain alphabets and numbers
+                            </span>
+                          )}
                         </div>
                         <div className="mb-1 flex flex-col">
                           <label
@@ -203,16 +333,22 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter email"
+                            maxLength="30"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="email"
                             name="email"
                             type="email"
-                            onChange={(e) => emailValidator(e)}
+                            onBlur={(e) => emailValidator(e)}
+                            onChange={(e) => {
+                              if (!validEmail) {
+                                emailValidator(e);
+                              }
+                            }}
                           />
                           {validEmail ? (
                             ""
                           ) : (
-                            <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
                               Invalid email address !
                             </span>
                           )}
@@ -227,10 +363,17 @@ export default function SignUp() {
                           <div className="relative w-full">
                             <input
                               placeholder="Enter password"
+                              maxLength="50"
                               className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                               id="password"
                               name="password"
-                              type={`${validPassword ? "text" : "password"}`}
+                              onBlur={(e) => handlePassword(e)}
+                              onChange={(e) => {
+                                if (validPassword !== "") {
+                                  handlePassword(e);
+                                }
+                              }}
+                              type={`${showPassword ? "text" : "password"}`}
                             />
                             <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                               <img
@@ -240,6 +383,24 @@ export default function SignUp() {
                               ></img>
                             </div>
                           </div>
+                          {validPassword === "valid" && ""}
+                          {validPassword === "empty" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Please enter password
+                            </span>
+                          )}
+                          {validPassword === "length" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Your password must be between 8 to 15 characters
+                            </span>
+                          )}
+                          {validPassword === "characters" && (
+                            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                              Your password must include at least one uppercase
+                              letter, one lowercase letter, one special
+                              character and a number
+                            </span>
+                          )}
                         </div>
                         <div className="flex items-center text-xs mb-1">
                           <input
@@ -248,7 +409,10 @@ export default function SignUp() {
                             name="terms"
                             value="terms"
                             className="cursor-pointer"
-                            onClick={(e) => termsClick(e)}
+                            onClick={(e) => {
+                              termsClick(e);
+                              setTermsValid(e.target.checked);
+                            }}
                           />
                           <label
                             htmlFor="terms"
@@ -275,7 +439,46 @@ export default function SignUp() {
                             Send me latest updates
                           </label>
                         </div>
-                        <button className="submitButtons w-full" type="submit">
+                        {validTerms ? (
+                          ""
+                        ) : (
+                          <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-0 mb-2">
+                            You must accept our terms and conditions{" "}
+                          </span>
+                        )}
+                        <button
+                          className={`submitButtons w-full ${
+                            !validEmail ||
+                            validPassword === "length" ||
+                            validPassword === "characters" ||
+                            validPassword === "empty" ||
+                            validUserName === "length" ||
+                            validUserName === "characters" ||
+                            validUserName === "empty" ||
+                            validName === "length" ||
+                            validName === "characters" ||
+                            validName === "empty" ||
+                            !validTerms ||
+                            isLoading
+                              ? "opacity-50 cursor-not-allowed"
+                              : "hover:bg-transparent hover-text-pink-710"
+                          }`}
+                          type="submit"
+                          disabled={
+                            !validEmail ||
+                            validPassword === "length" ||
+                            validPassword === "characters" ||
+                            validPassword === "empty" ||
+                            validUserName === "length" ||
+                            validUserName === "characters" ||
+                            validUserName === "empty" ||
+                            validName === "length" ||
+                            validName === "characters" ||
+                            validName === "empty" ||
+                            !validTerms ||
+                            isLoading
+                          }
+                        >
                           Create account
                         </button>
                       </form>
