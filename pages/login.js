@@ -18,8 +18,9 @@ export default function Login() {
   const redirectTo = router.query.redirect;
 
   const [validEmail, setEmailValid] = useState(true);
-  const [validPassword, setValidPassword] = useState(false);
+  const [validPassword, setValidPassword] = useState(true);
   const [hidePassword, setHidePassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const eyeClick = (e) => {
     setHidePassword((prevState) => {
@@ -28,7 +29,6 @@ export default function Login() {
   };
   const emailValidator = (e) => {
     let emailAddress = e.target.value;
-    // console.log(emailAddress);
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (emailAddress.match(regexEmail)) {
       setEmailValid(true);
@@ -40,9 +40,10 @@ export default function Login() {
   };
 
   function handlePassword(e) {
-    // console.log(e.target);
     if (e.target.value) {
       setValidPassword(true);
+    } else {
+      setValidPassword(false);
     }
   }
 
@@ -58,70 +59,87 @@ export default function Login() {
     });
   const handleClick = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // console.log(e.target);
     if (validEmail && validPassword) {
       const password = document.querySelector("#password").value;
       const email = document.querySelector("#email").value;
-      const loginDetails = {
-        email: email,
-        password: password
-      };
-      // console.log({ loginDetails });
-      const err = axios({
-        method: "POST",
-        url: `${baseUrl}${authUrl}/signin`,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        data: loginDetails
-      })
-        .then((response) => {
-          return response.data;
+      if (password && email) {
+        const loginDetails = {
+          email: email,
+          password: password
+        };
+        // console.log({ loginDetails });
+        const err = axios({
+          method: "POST",
+          url: `${baseUrl}${authUrl}/signin`,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          data: loginDetails
         })
-        .then((data) => {
-          // console.log(data);
-          if (data.accessToken) {
-            document.cookie = `userNullcast=${JSON.stringify(data)}`;
-            sessionStorage.setItem("userNullcast", JSON.stringify(data));
+          .then((response) => {
+            setIsLoading(false);
+            return response.data;
+          })
+          .then((data) => {
+            setIsLoading(false);
+            if (data.accessToken) {
+              document.cookie = `userNullcast=${JSON.stringify(data)}`;
+              sessionStorage.setItem("userNullcast", JSON.stringify(data));
 
-            let progress = JSON.parse(
-              window.localStorage.getItem("progress")
-            ) || [{ courseName: "", completedChapter: [] }];
-            axios({
-              method: "post",
-              url: `${baseUrl}${enrolUrl}/progress`,
-              headers: {
-                "x-access-token": `${data.accessToken}`
-              },
-              data: progress
-            }).then((response) => {
-              // console.log(response);
-            });
-            axios({
-              method: "post",
-              url: `${baseUrl}/api/progress/all`,
-              headers: {
-                "x-access-token": `${data.accessToken}`
-              }
-            })
-              .then((response) => {
-                window.localStorage.setItem(
-                  "progress",
-                  JSON.stringify(response.data)
-                );
-              })
-              .catch((err) => {
-                console.log(err.message);
+              let progress = JSON.parse(
+                window.localStorage.getItem("progress")
+              ) || [{ courseName: "", completedChapter: [] }];
+              axios({
+                method: "post",
+                url: `${baseUrl}${enrolUrl}/progress`,
+                headers: {
+                  "x-access-token": `${data.accessToken}`
+                },
+                data: progress
+              }).then((response) => {
+                // console.log(response);
               });
-            if (redirectTo) {
-              router.push(redirectTo);
+              axios({
+                method: "post",
+                url: `${baseUrl}/api/progress/all`,
+                headers: {
+                  "x-access-token": `${data.accessToken}`
+                }
+              })
+                .then((response) => {
+                  window.localStorage.setItem(
+                    "progress",
+                    JSON.stringify(response.data)
+                  );
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+              if (redirectTo) {
+                router.push(redirectTo);
+              } else {
+                router.push("/");
+              }
             } else {
-              router.push("/");
+              setIsLoading(false);
+              notify(data);
             }
-          } else {
-            notify(data);
-          }
-        });
+          });
+      } else {
+        // if(!email && !password){
+        //   setEmailValid(false);
+
+        // }
+        setIsLoading(false);
+        if (!email) {
+          setEmailValid(false);
+        }
+        if (!password) {
+          setValidPassword(false);
+        }
+      }
     }
   };
   return (
@@ -154,15 +172,21 @@ export default function Login() {
                   <p className={`font-semibold text-white text-sm flex mr-5`}>
                     Don’t have an Account ?
                   </p>
-                  <Link
-                    href={{
-                      pathname: `/signup`
-                    }}
-                  >
-                    <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                  {isLoading ? (
+                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Sign Up
                     </div>
-                  </Link>
+                  ) : (
+                    <Link
+                      href={{
+                        pathname: `/signup`
+                      }}
+                    >
+                      <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                        Sign Up
+                      </div>
+                    </Link>
+                  )}
                 </div>
                 <h1 className="text-white font-extrabold text-2xl">Login</h1>
                 <p className={`text-white mt-2 text-sm font-bold mb-3`}>
@@ -178,16 +202,22 @@ export default function Login() {
                       </label>
                       <input
                         placeholder="Enter email"
+                        maxlength="30"
                         className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
                         type="text"
-                        onChange={(e) => emailValidator(e)}
+                        onBlur={(e) => emailValidator(e)}
+                        onChange={(e) => {
+                          if (!validEmail) {
+                            emailValidator(e);
+                          }
+                        }}
                       />
                       {validEmail ? (
                         ""
                       ) : (
-                        <span className="flex items-center font-medium tracking-wide text-red-600 text-xs mt-1 ml-1">
+                        <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
                           Invalid email field !
                         </span>
                       )}
@@ -201,12 +231,25 @@ export default function Login() {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
+                          maxlength="50"
                           className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"
-                          onChange={handlePassword}
+                          onBlur={(e) => handlePassword(e)}
+                          onChange={(e) => {
+                            if (!validPassword) {
+                              handlePassword(e);
+                            }
+                          }}
                           type={`${hidePassword ? "text" : "password"}`}
                         />
+                        {validPassword ? (
+                          ""
+                        ) : (
+                          <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                            Please enter passworrd
+                          </span>
+                        )}
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                           <img
                             src="/images/eye.svg"
@@ -218,13 +261,15 @@ export default function Login() {
                     </div>
                     <button
                       className={`submitButtons w-full ${
-                        !validEmail || !validPassword
-                          ? "disabled:opacity-50"
-                          : ""
+                        !validEmail || !validPassword || isLoading
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-transparent hover-text-pink-710"
                       }`}
                       type="submit"
-                      onClick={(e) => handleClick(e)}
-                      // disabled={!validEmail || !validPassword ? true : false}
+                      onClick={(e) => {
+                        handleClick(e);
+                      }}
+                      disabled={!validEmail || !validPassword || isLoading}
                     >
                       Login
                     </button>
