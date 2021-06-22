@@ -11,9 +11,33 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 
 const axios = require("axios");
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log(cookie);
+      if (cookie) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    }
+  } catch (err) {
+    console.log("User not logged in");
+  }
+  return {
+    props: {}
+  };
+}
+
 export default function Login() {
   const router = useRouter();
-  const cookies = new Cookies();
   // console.log("redirect", router.query.redirect);
   const redirectTo = router.query.redirect;
 

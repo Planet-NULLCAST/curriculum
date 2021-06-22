@@ -7,6 +7,31 @@ import { baseUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { getCookieValue } from "../lib/cookie";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log(cookie);
+      if (cookie) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    }
+  } catch (err) {
+    console.log("User not logged in");
+  }
+  return {
+    props: {}
+  };
+}
 
 export default function SignUp() {
   const [validEmail, setEmailValid] = useState(true);
@@ -250,10 +275,7 @@ export default function SignUp() {
                             Send me latest updates
                           </label>
                         </div>
-                        <button
-                          className="submitButtons w-full"
-                          type="submit"
-                        >
+                        <button className="submitButtons w-full" type="submit">
                           Create account
                         </button>
                       </form>
