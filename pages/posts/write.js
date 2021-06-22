@@ -17,23 +17,15 @@ export async function getServerSideProps(context) {
   try {
     console.log(context.query);
     const post_Id = context.query.post_id;
-    let cookie = "";
     if (context.req.headers.cookie) {
-      cookie = JSON.parse(
+      const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
       );
       // console.log(cookie);
       return { props: { post_Id: post_Id ? post_Id : "" } };
-    } else {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/login"
-        }
-      };
     }
   } catch (err) {
-    console.log("Error =============== > ", err);
+    console.log("User not logged in ");
     return {
       redirect: {
         permanent: false,
