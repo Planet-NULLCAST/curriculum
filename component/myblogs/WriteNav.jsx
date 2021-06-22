@@ -61,8 +61,8 @@ export default function WriteNav({
 
   const getIsAdmin = async () => {
     const res = await PostService.isAdmin(
-      userCookie.id,
-      userCookie.accessToken
+      userCookie?.id,
+      userCookie?.accessToken
     );
     if (res?.data) setIsAdmin(true);
   };
