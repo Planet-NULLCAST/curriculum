@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { authCheck } from "../../../lib/authCheck";
+import Cookies from "universal-cookie";
 
 export default function HomeSpotlight() {
+  const _cookies = new Cookies();
+  const userCookie = _cookies.get("userNullcast");
   const [menu, setMenu] = useState(false);
   const ShowMenu = () => {
     setMenu(menu);
@@ -18,8 +20,9 @@ export default function HomeSpotlight() {
   const currentPath = router.asPath;
   const [cookies, setCookies] = useState("");
   useEffect(() => {
-    let cook = authCheck();
-    cook && setCookies(cook);
+    if (userCookie) {
+      setCookies(userCookie);
+    }
   }, []);
 
   useEffect(() => {

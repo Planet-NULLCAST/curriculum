@@ -11,9 +11,33 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 
 const axios = require("axios");
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log(cookie);
+      if (cookie) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    }
+  } catch (err) {
+    console.log("User not logged in");
+  }
+  return {
+    props: {}
+  };
+}
+
 export default function Login() {
   const router = useRouter();
-  const cookies = new Cookies();
   // console.log("redirect", router.query.redirect);
   const redirectTo = router.query.redirect;
 
@@ -173,7 +197,7 @@ export default function Login() {
                     Don’t have an Account ?
                   </p>
                   {isLoading ? (
-                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
+                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Sign Up
                     </div>
                   ) : (
@@ -202,7 +226,7 @@ export default function Login() {
                       </label>
                       <input
                         placeholder="Enter email"
-                        maxlength="30"
+                        maxLength="30"
                         className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
@@ -231,7 +255,7 @@ export default function Login() {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          maxlength="50"
+                          maxLength="50"
                           className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"

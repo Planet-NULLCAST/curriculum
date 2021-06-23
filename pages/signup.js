@@ -7,6 +7,31 @@ import { baseUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { getCookieValue } from "../lib/cookie";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log(cookie);
+      if (cookie) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    }
+  } catch (err) {
+    console.log("User not logged in");
+  }
+  return {
+    props: {}
+  };
+}
 
 export default function SignUp() {
   const [validEmail, setEmailValid] = useState(true);
@@ -51,7 +76,8 @@ export default function SignUp() {
     }
   };
   function handlePassword(e) {
-    const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regexPass =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (e.target.value.match(regexPass)) {
       setValidPassword("valid");
     } else {
@@ -193,7 +219,7 @@ export default function SignUp() {
                     Already have an Account ?
                   </p>
                   {isLoading ? (
-                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
+                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Login
                     </div>
                   ) : (
@@ -230,7 +256,7 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter full name"
-                            maxlength="50"
+                            maxLength="50"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
@@ -269,7 +295,7 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter username"
-                            maxlength="15"
+                            maxLength="15"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="username"
                             name="username"
@@ -307,7 +333,7 @@ export default function SignUp() {
                           </label>
                           <input
                             placeholder="Enter email"
-                            maxlength="30"
+                            maxLength="30"
                             className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="email"
                             name="email"
@@ -337,7 +363,7 @@ export default function SignUp() {
                           <div className="relative w-full">
                             <input
                               placeholder="Enter password"
-                              maxlength="50"
+                              maxLength="50"
                               className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                               id="password"
                               name="password"

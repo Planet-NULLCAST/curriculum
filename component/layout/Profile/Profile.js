@@ -5,7 +5,6 @@ import Image from "next/image";
 import Cookies from "universal-cookie";
 import PostService from "../../../services/PostService";
 
-
 export default function Profile({ onLogout }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
@@ -68,7 +67,7 @@ export default function Profile({ onLogout }) {
           {isAdmin && (
             <li>
               <Link href="/admin">
-                <button className="linkUnderline">Admin Cosole</button>
+                <button className="linkUnderline">Admin Console</button>
               </Link>
             </li>
           )}
