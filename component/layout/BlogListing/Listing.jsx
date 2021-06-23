@@ -4,11 +4,19 @@ import Image from "next/image";
 import Fade from "react-reveal/Fade";
 import ListingItem from "./ListingItem";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Listing({ blog, currentCount, blogCount, tagsArray }) {
+export default function Listing({
+  blog,
+  currentCount,
+  blogCount,
+  tagsArray,
+  clickNo,
+  resetCount
+}) {
   // console.log({ blog });
   // console.log({ blogCount });
+  // console.log({ clickNo });
   const [count, setCount] = useState(0);
   const router = useRouter();
   // console.log(router);
@@ -21,11 +29,10 @@ export default function Listing({ blog, currentCount, blogCount, tagsArray }) {
 
   const handleLoadMore = (e) => {
     // console.log("clicked");
-    // if (router.asPath !== "/blog") {
     let newCount = count + 1;
+    if (resetCount) newCount = count;
     setCount(newCount);
     currentCount(newCount);
-    // }
   };
 
   return (
@@ -70,7 +77,6 @@ export default function Listing({ blog, currentCount, blogCount, tagsArray }) {
           <ListingItem blog={blog} />
         </div>
         <div className={styles.wrapBtn}>
-          {/* <Link href="#"></Link> */}
           {blog.length !== blogCount && (
             <button className="btn btn--gray" onClick={handleLoadMore}>
               <span className="btn__text">Load more</span>
