@@ -8,7 +8,8 @@ import {
   changeStatusUrl,
   tagUrl,
   adminUrl,
-  serverUrl
+  serverUrl,
+  searchUrl
 } from "../config/config";
 
 async function getPostsByUserId(userCookie, reqData) {
@@ -259,6 +260,26 @@ const isAdmin = async (id, token) => {
   }
 };
 
+async function getPostsByQuery(query, clickNo) {
+  // set URL from where this function is executing
+  // like server and client
+  // if in server serverURL is applied else clientURL
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+
+  try {
+    const { data } = await axios.get(`${url}/${searchUrl}`, {
+      params: { q: query, clickNo: clickNo }
+    });
+    // console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -270,6 +291,7 @@ const PostService = {
   getLatestPosts,
   changePostStatus,
   getPostByTags,
+  getPostsByQuery,
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin
