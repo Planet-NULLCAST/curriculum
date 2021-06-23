@@ -12,7 +12,7 @@ const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
 const adminUrl = "api/admin";
 const tagUrl = "api/tags";
-
+const searchUrl = "api/search";
 
 export {
   baseUrl,
@@ -28,5 +28,6 @@ export {
   userUrl,
   adminUrl,
   tagUrl,
-  serverUrl
+  serverUrl,
+  searchUrl
 };

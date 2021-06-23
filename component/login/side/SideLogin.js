@@ -13,7 +13,7 @@ export default function Login() {
         className="w-4/12"
       ></img>
       <h1
-        className={`text-5xl uppercase text-white font-black mt-4 GrotesqueFamily ${Loginstyles.text_green_710}`}
+        className={`text-5xl line-height-56px uppercase text-white font-black mt-4 GrotesqueFamily ${Loginstyles.text_green_710}`}
       >
         Planet Nullcast
       </h1>
