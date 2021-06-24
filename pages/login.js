@@ -279,7 +279,7 @@ export default function Login() {
                           ""
                         ) : (
                           <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                            Please enter passworrd
+                            Please enter password
                           </span>
                         )}
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
