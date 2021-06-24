@@ -22,14 +22,23 @@ export async function getServerSideProps(context) {
     };
     const responsePost = await PostService.getLatestPosts(postParams);
     // console.log(responsePost.data);
-
-    return {
-      props: {
-        blog: responsePost.data.blog,
-        tagsArray: tagsArray,
-        count: responsePost.data.count
-      }
-    };
+    if (responsePost.data.blog.length > 0) {
+      return {
+        props: {
+          blog: responsePost.data.blog,
+          tagsArray: tagsArray,
+          count: responsePost.data.count
+        }
+      };
+    } else {
+      return {
+        props: {
+          blog: [],
+          tagsArray: tagsArray,
+          count: 0
+        }
+      };
+    }
   } catch (err) {
     console.log("Error => ", err);
     return err;
@@ -70,12 +79,19 @@ export default function BlogListing({ blog, tagsArray, count }) {
       <SiteHeader />
       <ListingHeader />
       {blog[0] && <ListingFeatured blog={blog} />}
-      <Listing
-        blog={newBlogs}
-        tagsArray={tagsArray}
-        currentCount={currentCount}
-        blogCount={count}
-      />
+      {blog.length > 0 ? (
+        <Listing
+          blog={newBlogs}
+          tagsArray={tagsArray}
+          currentCount={currentCount}
+          blogCount={count}
+        />
+      ) : (
+        <div className="flex items-center justify-center m-9 font-semibold">
+          There's no published blogs yet!
+        </div>
+      )}
+
       <SectionSwag />
       <SiteFooter />
     </div>

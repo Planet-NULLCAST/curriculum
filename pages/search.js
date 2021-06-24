@@ -8,22 +8,36 @@ import Head from "next/head";
 import PostService from "../services/PostService";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 
 export async function getServerSideProps(context) {
   try {
     // console.log("query", context.query);
+
     if (context.query.q) {
       const { msg, posts, count } = await PostService.getPostsByQuery(
         context.query.q,
         context.query.clickNo
       );
       // console.log(posts);
+      //get latest posts
+      const latestPostsParams = {
+        order: -1,
+        fieldName: "publishedAt",
+        limit: 4,
+        skip: 0
+      };
+      const latestPostResponse = await PostService.getLatestPosts(
+        latestPostsParams
+      );
+      // console.log(latestPostResponse.data.blog);
       return {
         props: {
           posts: posts,
           count: count,
           existingQuery: context.query.q,
-          clickNum: parseInt(context.query.clickNo, 10)
+          clickNum: parseInt(context.query.clickNo, 10),
+          latestPosts: latestPostResponse.data.blog
         }
       };
     } else {
@@ -44,7 +58,13 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Search({ posts, count, existingQuery, clickNum }) {
+export default function Search({
+  posts,
+  count,
+  existingQuery,
+  clickNum,
+  latestPosts
+}) {
   const [newBlogs, setNewBlogs] = useState(posts);
   const [query, setQuery] = useState("");
   const [clickNo, setClickNo] = useState(clickNum);
@@ -56,6 +76,10 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
   useEffect(() => {
     setNewBlogs(posts);
   }, [posts]);
+
+  useEffect(() => {
+    setQuery(existingQuery);
+  }, [existingQuery]);
 
   const currentCount = (count) => {
     // console.log(count);
@@ -93,6 +117,11 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
     });
   };
 
+  const handleInputChange = (e) => {
+    // console.log(e.target.value);
+    setQuery(e.target.value);
+  };
+
   return (
     <div>
       <Head>
@@ -106,9 +135,11 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
         >
           <input
             type="text"
-            placeholder="Search here"
+            placeholder="Search for blogs"
             className="h-12 w-96"
             name="search"
+            value={query}
+            onChange={handleInputChange}
           />
           <button type="submit">
             <svg
@@ -126,13 +157,21 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
           </button>
         </form>
       </div>
-      <Listing
-        blog={newBlogs}
-        currentCount={currentCount}
-        blogCount={count}
-        // clickNo={clickNo}
-        resetCount={resetCount}
-      />
+      {posts.length ? (
+        <Listing
+          blog={newBlogs}
+          currentCount={currentCount}
+          blogCount={count}
+          // clickNo={clickNo}
+          resetCount={resetCount}
+        />
+      ) : (
+        <div className="flex justify-center items-center m-9 font-semibold">
+          We couldn't find any blogs for this query!
+        </div>
+      )}
+
+      <SectionRelated title="Latest Blogs" posts={latestPosts} />
       <SectionSwag />
       <SiteFooter />
     </div>
