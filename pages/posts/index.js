@@ -62,7 +62,6 @@ const MyPost = () => {
       tag: tagFilter,
       status: statusFilter
     };
-    console.log(newReqData);
     getPosts(newReqData);
   };
 
