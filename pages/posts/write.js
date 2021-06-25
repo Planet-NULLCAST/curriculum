@@ -36,8 +36,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Write({ post_Id }) {
-  // console.log("postId if there's a post Id", post_Id);
-  // console.log({ post_Id });
   const [postId, setPostId] = useState("");
   const [post, setPost] = useState();
   const iframeRef = useRef();
@@ -49,7 +47,7 @@ export default function Write({ post_Id }) {
 
   useEffect(() => {
     const currentPostId = router.query.post_id;
-    console.log({ currentPostId });
+    // console.log({ currentPostId });
 
     if (userCookie) {
       setPostId(currentPostId);
@@ -91,7 +89,7 @@ export default function Write({ post_Id }) {
         // console.log("listener removed");
       });
     };
-  }, [post_Id]); //previous post_Id
+  }, [post_Id]);
 
   async function getPostById(id) {
     const res = await PostService.getPostById(userCookie, id);
