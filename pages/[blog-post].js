@@ -16,6 +16,7 @@ import PostService from "../services/PostService";
 export async function getServerSideProps(context) {
   try {
     const slug = context.params["blog-post"];
+    console.log(context.params,"evde")
     const response = await PostService.getPostBySlug(slug);
     if (!response?.data) {
       return {

@@ -280,6 +280,19 @@ async function getPostsByQuery(query, clickNo) {
   }
 }
 
+async function getPostCountByUserId(userId) {
+  try {
+    const {data} = await axios.get(`${baseUrl}/${allPostsUrl}/count`, {
+      params: {userId:userId},
+    });
+    console.log(data, " getPostCountByUserId ")
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -294,7 +307,8 @@ const PostService = {
   getPostsByQuery,
   adminChangePostStatus,
   adminGetLatestPosts,
-  isAdmin
+  isAdmin,
+  getPostCountByUserId
 };
 
 module.exports = PostService;
