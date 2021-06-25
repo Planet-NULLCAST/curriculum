@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
+import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 
 export async function getServerSideProps(context) {
   try {
@@ -43,6 +44,9 @@ export default function SignUp() {
   const [terms, setTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    document.getElementById("fullName").focus();
+  }, []);
   // const notify = (item) =>
   //   toast.success(item.message, {
   //     position: "top-right",
@@ -265,7 +269,7 @@ export default function SignUp() {
                 ></div>
                 <div className="w-full max-h-full flex flex-col justify-center ">
                   <div className="w-full mt-14 mb-6 h-full flex flex-col justify-start overflow-y-auto  px-5 sm:px-10 md:px-5 lg:px-20 py-2">
-                    <h1 className="font-extrabold text-2xl text-white ">
+                    <h1 className="font-bold text-2xl text-white leading-10">
                       Sign Up
                     </h1>
                     <p className={`font-bold mt-2 text-white text-sm`}>
@@ -283,7 +287,7 @@ export default function SignUp() {
                           <input
                             placeholder="Enter full name"
                             maxLength="50"
-                            className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
+                            className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
                             type="text"
@@ -322,7 +326,7 @@ export default function SignUp() {
                           <input
                             placeholder="Enter username"
                             maxLength="15"
-                            className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
+                            className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="username"
                             name="username"
                             type="text"
@@ -360,7 +364,7 @@ export default function SignUp() {
                           <input
                             placeholder="Enter email"
                             maxLength="30"
-                            className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
+                            className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="email"
                             name="email"
                             type="email"
@@ -389,8 +393,8 @@ export default function SignUp() {
                           <div className="relative w-full">
                             <input
                               placeholder="Enter password"
-                              maxLength="50"
-                              className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
+                              maxLength="15"
+                              className={`inputStyle pr-10 placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                               id="password"
                               name="password"
                               onBlur={(e) => handlePassword(e)}
@@ -417,14 +421,16 @@ export default function SignUp() {
                           )}
                           {validPassword === "length" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Your password must be between 8 to 15 characters
+                              Your password must contain 8-15 characters,
+                              uppercase and lowercase letters, number and
+                              special characters
                             </span>
                           )}
                           {validPassword === "characters" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Your password must include at least one uppercase
-                              letter, one lowercase letter, one special
-                              character and a number
+                              Your password must contain 8-15 characters,
+                              uppercase and lowercase letters, number and
+                              special characters
                             </span>
                           )}
                         </div>
@@ -473,18 +479,7 @@ export default function SignUp() {
                           </span>
                         )}
                         <button
-                          className={`submitButtons w-full ${
-                            !validEmail ||
-                            validPassword === "length" ||
-                            validPassword === "characters" ||
-                            validPassword === "empty" ||
-                            validUserName === "length" ||
-                            validUserName === "characters" ||
-                            validUserName === "empty" ||
-                            validName === "length" ||
-                            validName === "characters" ||
-                            validName === "empty" ||
-                            !validTerms ||
+                          className={`submitButtons w-full flex items-center justify-center ${
                             isLoading
                               ? "opacity-50 cursor-not-allowed"
                               : "hover:bg-transparent hover-text-pink-710"
@@ -505,6 +500,7 @@ export default function SignUp() {
                             isLoading
                           }
                         >
+                          {isLoading && <LoadIcon color="#fff" height="23px" />}
                           Create account
                         </button>
                       </form>

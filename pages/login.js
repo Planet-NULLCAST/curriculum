@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
+import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
+
 import Head from "next/head";
 import Cookies from "universal-cookie";
 import Link from "next/link";
@@ -45,6 +47,10 @@ export default function Login() {
   const [validPassword, setValidPassword] = useState(true);
   const [hidePassword, setHidePassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.getElementById("email").focus();
+  }, []);
 
   const eyeClick = (e) => {
     setHidePassword((prevState) => {
@@ -212,7 +218,9 @@ export default function Login() {
                     </Link>
                   )}
                 </div>
-                <h1 className="text-white font-extrabold text-2xl">Login</h1>
+                <h1 className="text-white font-bold text-2xl leading-10">
+                  Login
+                </h1>
                 <p className={`text-white mt-2 text-sm font-bold mb-3`}>
                   Welcome Back!
                 </p>
@@ -227,7 +235,7 @@ export default function Login() {
                       <input
                         placeholder="Enter email"
                         maxLength="30"
-                        className={`inputStyle placeholder-gray-600 ${Loginstyles.inputGreen}`}
+                        className={`inputStyle placeholder-gray-600 pr-3 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
                         type="text"
@@ -256,7 +264,7 @@ export default function Login() {
                         <input
                           placeholder="Enter password"
                           maxLength="50"
-                          className={`inputStyle placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
+                          className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"
                           onBlur={(e) => handlePassword(e)}
@@ -271,7 +279,7 @@ export default function Login() {
                           ""
                         ) : (
                           <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                            Please enter passworrd
+                            Please enter password
                           </span>
                         )}
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
@@ -284,8 +292,8 @@ export default function Login() {
                       </div>
                     </div>
                     <button
-                      className={`submitButtons w-full ${
-                        !validEmail || !validPassword || isLoading
+                      className={`submitButtons w-full flex items-center justify-center ${
+                        isLoading
                           ? "opacity-50 cursor-not-allowed"
                           : "hover:bg-transparent hover-text-pink-710"
                       }`}
@@ -295,6 +303,7 @@ export default function Login() {
                       }}
                       disabled={!validEmail || !validPassword || isLoading}
                     >
+                      {isLoading && <LoadIcon color="#fff" height="23px" />}
                       Login
                     </button>
                   </form>
