@@ -14,7 +14,9 @@ export default function Profile({ onLogout }) {
 
   // Effects
   useEffect(() => {
-    getIsAdmin();
+    if (userCookie?.role === "admin") {
+      getIsAdmin();
+    }
   }, []);
 
   // Functions

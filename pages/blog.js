@@ -10,7 +10,6 @@ import TagService from "../services/TagService";
 import { useState } from "react";
 
 export async function getServerSideProps(context) {
-  const clickNo = 0;
   const tagsArray = await TagService.getTags();
   // console.log(tagsArray);
   try {
