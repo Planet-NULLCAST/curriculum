@@ -51,17 +51,23 @@ export default function Write({ post_Id }) {
 
     if (userCookie) {
       setPostId(currentPostId);
-      getPostById(currentPostId);
       try {
         // errors on refresh
-        // console.log(iframeRef.current.contentWindow);
+        // !START
+        // *IMPORTANT: Don't remove the below block of code
+        const iframeElement = iframeRef.current;
+        iframeElement.contentWindow.innerWidth;
+        // *IMPORTANT: It's the reason the control goes to the catch block on refresh
+        // !END
 
-        iframeRef.current.onload = function () {
+        iframeElement.onload = function () {
+
           if (currentPostId) {
             getPostById(currentPostId);
           }
         };
       } catch (error) {
+        console.log("error blaaaah==>", error)
         getPostById(currentPostId);
       }
     }
