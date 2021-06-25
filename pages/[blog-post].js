@@ -17,6 +17,28 @@ export async function getServerSideProps(context) {
   try {
     const slug = context.params["blog-post"];
     const response = await PostService.getPostBySlug(slug);
+    // console.log(response.data.blog.tags[0]);
+    const relatedPostsTag = response.data.blog.tags[0]
+      ? response.data.blog.tags[0]
+      : "";
+    let relatedPostsResponse = "";
+    if (relatedPostsTag) {
+      relatedPostsResponse = await PostService.getPostByTags(
+        relatedPostsTag,
+        0
+      );
+      // console.log(relatedPostsResponse);
+    }
+
+    // const latestPostsParams = {
+    //   order: -1,
+    //   fieldName: "publishedAt",
+    //   limit: 4,
+    //   skip: 0
+    // };
+    // const latestPostResponse = await PostService.getLatestPosts(
+    //   latestPostsParams
+    // );
     if (!response?.data) {
       return {
         redirect: {
@@ -26,7 +48,10 @@ export async function getServerSideProps(context) {
       };
     }
     return {
-      props: { blog: response.data.blog }
+      props: {
+        blog: response.data.blog,
+        relatedPosts: relatedPostsResponse.posts
+      }
     };
   } catch (err) {
     console.log("Error => ", err);
@@ -39,8 +64,9 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing(props) {
-  const { html, primaryAuthor, title, bannerImage, createdAt } = props.blog;
+export default function BlogListing({ blog, relatedPosts }) {
+  const { html, primaryAuthor, title, bannerImage, createdAt } = blog;
+  // console.log(relatedPosts);
   return (
     <>
       <SiteHeader />
@@ -55,7 +81,7 @@ export default function BlogListing(props) {
       />
       <BlogPost html={html} />
       <SectionAuthor primaryAuthor={primaryAuthor} />
-      <SectionRelated title="Related Blogs" />
+      <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />
       <SiteFooter />
     </>

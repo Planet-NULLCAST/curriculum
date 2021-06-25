@@ -80,7 +80,7 @@ export default function SignUp() {
     }
   };
   function handlePassword(e) {
-    const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.-^*()%!])[A-Za-z\d$&+,:;=?@#|'<>.-^*()%!]{8,}$/;
     if (e.target.value.match(regexPass)) {
       setValidPassword("valid");
     } else {
