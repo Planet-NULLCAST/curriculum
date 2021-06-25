@@ -43,16 +43,16 @@ export default function SignUp() {
   const [terms, setTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const notify = (item) =>
-    toast.success(item.message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  // const notify = (item) =>
+  //   toast.success(item.message, {
+  //     position: "top-right",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined
+  //   });
   const termsClick = (e) => {
     setTerms((prevState) => {
       return !prevState;
@@ -77,7 +77,7 @@ export default function SignUp() {
   };
   function handlePassword(e) {
     const regexPass =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.-^*()%!])[A-Za-z\d$&+,:;=?@#|'<>.-^*()%!]{8,}$/;
     if (e.target.value.match(regexPass)) {
       setValidPassword("valid");
     } else {
@@ -90,6 +90,32 @@ export default function SignUp() {
       }
     }
   }
+  // const validatePassword = (value) => {
+  //   const count = {
+  //     lower: 0,
+  //     upper: 0,
+  //     digit: 0,
+  //     special: 0
+  //   };
+
+  //   for (const char of value) {
+  //     if (/[a-z]/.test(char)) {
+  //       count.lower++;
+  //     } else if (/[A-Z]/.test(char)) {
+  //       count.upper++;
+  //     } else if (/\d/.test(char)) {
+  //       count.digit++;
+  //     } else if (/\S/.test(char)) {
+  //       count.special++;
+  //     }
+  //   }
+
+  //   if (Object.values(count).filter(Boolean).length < 4) {
+  //     return "A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.";
+  //   }
+
+  //   return true;
+  // };
   function handleUserName(e) {
     const regexUser = /^[a-zA-Z0-9]/;
     if (e.target.value.length === 0) {
