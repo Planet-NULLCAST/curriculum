@@ -80,7 +80,8 @@ export default function SignUp() {
     }
   };
   function handlePassword(e) {
-    const regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regexPass =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.-^*()%!])[A-Za-z\d$&+,:;=?@#|'<>.-^*()%!]{8,}$/;
     if (e.target.value.match(regexPass)) {
       setValidPassword("valid");
     } else {
@@ -93,6 +94,32 @@ export default function SignUp() {
       }
     }
   }
+  // const validatePassword = (value) => {
+  //   const count = {
+  //     lower: 0,
+  //     upper: 0,
+  //     digit: 0,
+  //     special: 0
+  //   };
+
+  //   for (const char of value) {
+  //     if (/[a-z]/.test(char)) {
+  //       count.lower++;
+  //     } else if (/[A-Z]/.test(char)) {
+  //       count.upper++;
+  //     } else if (/\d/.test(char)) {
+  //       count.digit++;
+  //     } else if (/\S/.test(char)) {
+  //       count.special++;
+  //     }
+  //   }
+
+  //   if (Object.values(count).filter(Boolean).length < 4) {
+  //     return "A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.";
+  //   }
+
+  //   return true;
+  // };
   function handleUserName(e) {
     const regexUser = /^[a-zA-Z0-9]/;
     if (e.target.value.length === 0) {

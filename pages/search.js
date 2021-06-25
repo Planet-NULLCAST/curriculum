@@ -1,9 +1,8 @@
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import ListingHeader from "../component/layout/ListingHeader/ListingHeader";
-import ListingFeatured from "../component/layout/BlogListing/ListingFeatured";
 import Listing from "../component/layout/BlogListing/Listing";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
+import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 import Head from "next/head";
 import PostService from "../services/PostService";
 import { useState, useEffect } from "react";
@@ -18,12 +17,24 @@ export async function getServerSideProps(context) {
         context.query.clickNo
       );
       // console.log(posts);
+      //get latest posts
+      const latestPostsParams = {
+        order: -1,
+        fieldName: "publishedAt",
+        limit: 4,
+        skip: 0
+      };
+      const latestPostResponse = await PostService.getLatestPosts(
+        latestPostsParams
+      );
+      // console.log(latestPostResponse.data.blog);
       return {
         props: {
           posts: posts,
           count: count,
           existingQuery: context.query.q,
-          clickNum: parseInt(context.query.clickNo, 10)
+          clickNum: parseInt(context.query.clickNo, 10),
+          latestPosts: latestPostResponse.data.blog
         }
       };
     } else {
@@ -40,11 +51,22 @@ export async function getServerSideProps(context) {
     }
   } catch (err) {
     console.log("Error => ", err);
-    return err;
+    return {
+      props: {
+        posts: [],
+        count: 0
+      }
+    };
   }
 }
 
-export default function Search({ posts, count, existingQuery, clickNum }) {
+export default function Search({
+  posts,
+  count,
+  existingQuery,
+  clickNum,
+  latestPosts
+}) {
   const [newBlogs, setNewBlogs] = useState(posts);
   const [query, setQuery] = useState("");
   const [clickNo, setClickNo] = useState(clickNum);
@@ -56,6 +78,10 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
   useEffect(() => {
     setNewBlogs(posts);
   }, [posts]);
+
+  useEffect(() => {
+    setQuery(existingQuery);
+  }, [existingQuery]);
 
   const currentCount = (count) => {
     // console.log(count);
@@ -93,6 +119,11 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
     });
   };
 
+  const handleInputChange = (e) => {
+    // console.log(e.target.value);
+    setQuery(e.target.value);
+  };
+
   return (
     <div>
       <Head>
@@ -106,9 +137,11 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
         >
           <input
             type="text"
-            placeholder="Search here"
+            placeholder="Search for blogs"
             className="h-12 w-96"
             name="search"
+            value={query}
+            onChange={handleInputChange}
           />
           <button type="submit">
             <svg
@@ -126,13 +159,21 @@ export default function Search({ posts, count, existingQuery, clickNum }) {
           </button>
         </form>
       </div>
-      <Listing
-        blog={newBlogs}
-        currentCount={currentCount}
-        blogCount={count}
-        // clickNo={clickNo}
-        resetCount={resetCount}
-      />
+      {posts.length ? (
+        <Listing
+          blog={newBlogs}
+          currentCount={currentCount}
+          blogCount={count}
+          // clickNo={clickNo}
+          resetCount={resetCount}
+        />
+      ) : (
+        <div className="flex justify-center items-center m-9 font-semibold">
+          We couldn't find any blogs for this query!
+        </div>
+      )}
+
+      <SectionRelated title="Latest Blogs" posts={latestPosts} />
       <SectionSwag />
       <SiteFooter />
     </div>
