@@ -1,11 +1,31 @@
 import styles from "./BlogPost.module.scss";
 import Link from "next/link";
 import Slider from "react-slick";
+import { useState, useEffect } from "react";
 
 export default function BlogPost(props) {
-  const createMarkup = (props) => {
-    return { __html: props };
+  const createMarkup = (value) => {
+    return { __html: value };
   };
+  const [headings, setHeadings] = useState();
+  useEffect(() => {
+    // const htmlString = String(createMarkup(props.html).__html);
+    // console.log(htmlString);
+    // const res = htmlString.match(/<h2[^>]+>(.*?)<\/h2>/g);
+    // console.log({ res });
+    // const res2 = res.map((i) => i.match(/\>(.*?)\</));
+    // console.log({ res2 });
+    const h2Tags = Array.from(
+      document.getElementById("component").getElementsByTagName("h2")
+    ).map((item) => {
+      return {
+        id: item.id,
+        text: item.innerHTML
+      };
+    });
+    // console.log({ h2Tags });
+    setHeadings(h2Tags);
+  }, []);
 
   return (
     <>
@@ -79,25 +99,14 @@ export default function BlogPost(props) {
                 <div className={styles.index}>
                   <h3>Page Index</h3>
                   <ol>
-                    <li>
-                      <Link href="#post1">
-                        <a className="linkUnderline">What is null?</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#post2">
-                        <a className="linkUnderline">
-                          Why do we need null safety?
-                        </a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#post3">
-                        <a className="linkUnderline">
-                          Declaring Non-Nullable Variables
-                        </a>
-                      </Link>
-                    </li>
+                    {headings &&
+                      headings.map((heading) => (
+                        <li key={heading.id}>
+                          <a href={`#${heading.id}`}>
+                            <p className="linkUnderline">{heading.text}</p>
+                          </a>
+                        </li>
+                      ))}
                   </ol>
                 </div>
                 <div className={styles.social}>
@@ -169,7 +178,10 @@ export default function BlogPost(props) {
               </div>
             </div>
             <div className={styles.postContent}>
-              <div dangerouslySetInnerHTML={createMarkup(props.html)} />
+              <div
+                dangerouslySetInnerHTML={createMarkup(props.html)}
+                id="component"
+              />
               {/* 
 
                         <p>He wrote this in 2007, but it is still valid today, especially in the case of tech startups.
