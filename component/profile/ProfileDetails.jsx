@@ -1,8 +1,10 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Trails from "../profile/Trails";
 import Profilestyles from "../../styles/Profile.module.css";
 
-export default function ProfileDetails() {
+
+export default function ProfileDetails({userData}) {
+  
   return (
     <div className="bg-white shadow-sm rounded px-4 py-3">
       <div className="flex flex-wrap h-auto">
@@ -35,7 +37,7 @@ export default function ProfileDetails() {
               {/* details */}
               <div className="px-6">
                 <h3 className="mb-1 font-semibold text-lg text-gray-900">
-                  DataTurks
+                  {userData.user.username}
                 </h3>
                 <h3 className="my-1 text-sm font-medium">@dataturks</h3>
                 <div className="flex flex-row my-1">
