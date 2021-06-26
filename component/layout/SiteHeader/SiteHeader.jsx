@@ -156,7 +156,7 @@ export default function HomeSpotlight() {
           <div className={styles.wrapBtn}>
             {cookies ? (
               <div className="flex flex-row justify-center items-center">
-                <Profile onLogout={() => logout()} />
+                <Profile username={cookies.username} onLogout={() => logout()} />
                 {/* <div>
                 <button onClick={() => logout()}>Logout</button>
               </div> */}

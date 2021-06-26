@@ -23,18 +23,18 @@ const MyPost = () => {
   const pageNo = 1;
   const limit = 10;
 
-  // useEffect(() => {
-  //   if (userCookie) {
-  //     const reqData = {
-  //       pageNo: pageNo,
-  //       limit: limit,
-  //       tag: tagFilter,
-  //       status: statusFilter
-  //     };
-  //     getPosts(reqData);
-  //     changePage(pageNo, limit);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userCookie) {
+      const reqData = {
+        pageNo: pageNo,
+        limit: limit,
+        tag: tagFilter,
+        status: statusFilter
+      };
+      getPosts(reqData);
+      changePage(pageNo, limit);
+    }
+  }, []);
 
   async function getPosts(reqData, tag, status) {
     // console.log(reqData);

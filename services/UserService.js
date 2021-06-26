@@ -28,8 +28,22 @@ async function getLatestUsers(reqParams) {
     }
 }
 
+async function getUserById(userCookie) {
+    try {
+      const {data} = await axios.get(`${baseUrl}/${userUrl}/getUserById/${userCookie.id}`, {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      });
+      return data;
+    } catch (err) {
+      return;
+    }
+}
+
 const UserService = {
-    getLatestUsers
+    getLatestUsers,
+    getUserById
 };
 
 module.exports = UserService;
