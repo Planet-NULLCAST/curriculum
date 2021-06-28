@@ -80,18 +80,15 @@ export default function SignUp() {
     }
   };
   function handlePassword(e) {
-    const regexPass =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.-^*()%!])[A-Za-z\d$&+,:;=?@#|'<>.-^*()%!]{8,}$/;
-    if (e.target.value.match(regexPass)) {
+    const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+    if (e.target.value.length === 0) {
+      setValidPassword("empty");
+    } else if (e.target.value?.length < 8) {
+      setValidPassword("length");
+    } else if (e.target.value.match(regexPassword)) {
       setValidPassword("valid");
     } else {
-      if (e.target.value.length === 0) {
-        setValidPassword("empty");
-      } else if (e.target.value?.length < 8 || e.target.value?.length > 15) {
-        setValidPassword("length");
-      } else {
-        setValidPassword("characters");
-      }
+      setValidPassword("characters");
     }
   }
   // const validatePassword = (value) => {
@@ -245,11 +242,11 @@ export default function SignUp() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end px-6 pt-5 pb-2 w-full z-20 ${Loginstyles.bg_green_710}`}
                 >
-                  <p className={`font-semibold text-white text-sm flex mr-5`}>
+                  <p className={`sm:flex hidden font-semibold text-white text-sm flex mr-2 md:mr-5`}>
                     Already have an Account ?
                   </p>
                   {isLoading ? (
-                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
+                    <div className="md:mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Login
                     </div>
                   ) : (
@@ -258,7 +255,7 @@ export default function SignUp() {
                         pathname: `/login`
                       }}
                     >
-                      <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                      <div className="md:mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
                         Login
                       </div>
                     </Link>
@@ -393,7 +390,7 @@ export default function SignUp() {
                           <div className="relative w-full">
                             <input
                               placeholder="Enter password"
-                              maxLength="15"
+                              // maxLength=""
                               className={`inputStyle pr-10 placeholder-gray-600 w-full ${Loginstyles.inputGreen}`}
                               id="password"
                               name="password"
@@ -408,7 +405,7 @@ export default function SignUp() {
                             <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                               <img
                                 src="/images/eye.svg"
-                                className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                                className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700 focus-visible:outline-none"
                                 onClick={(e) => eyeClick(e)}
                               ></img>
                             </div>
@@ -421,16 +418,18 @@ export default function SignUp() {
                           )}
                           {validPassword === "length" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Your password must contain 8-15 characters,
-                              uppercase and lowercase letters, number and
-                              special characters
+                              Your password must contain minimum eight
+                              characters, at least one uppercase letter, one
+                              lowercase letter, one number and one special
+                              character
                             </span>
                           )}
                           {validPassword === "characters" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Your password must contain 8-15 characters,
-                              uppercase and lowercase letters, number and
-                              special characters
+                              Your password must contain minimum eight
+                              characters, at least one uppercase letter, one
+                              lowercase letter, one number and one special
+                              character
                             </span>
                           )}
                         </div>
@@ -451,7 +450,10 @@ export default function SignUp() {
                             className="ml-2 cursor-pointer text-white"
                           >
                             I agree to the{" "}
-                            <a href="#" className="text-blue-700">
+                            <a
+                              href="#"
+                              className="text-blue-700 focus:outline-none"
+                            >
                               terms and conditions
                             </a>
                           </label>
