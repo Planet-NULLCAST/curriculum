@@ -9,7 +9,7 @@ export default function Details(props) {
     <>
       <div className={styles.authorDetails}>
         <div className={styles.authorDetails__icon}>
-          <Link href={`/${username}/u`}>
+          <Link href={`u/${username}`}>
             <a>
               <Image
                 src="/images/temp/avatar1.png"
@@ -37,7 +37,7 @@ export default function Details(props) {
         </div>
         <div className={styles.authorDetails__text}>
           <h4 className={styles.authorDetails__title}>
-            <Link href={`/${username}/u`}>
+            <Link href={`u/${username}`}>
               <a>{username}</a>
             </Link>
           </h4>
