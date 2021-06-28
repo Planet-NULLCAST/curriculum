@@ -15,19 +15,17 @@ import PostService from "../../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
-      );
-      const userData = await UserService.getUserById(cookie);
-      const blogCount = await PostService.getPostCountByUserId(cookie.id);
-      return {
-        props: {
-          userData: userData,
-          blogCount: blogCount.count
-        }
-      };
-    }
+    let username = context.params.username;
+    const userData = await UserService.getUserByUsername(username);
+    const blogCount = await PostService.getPostCountByUserName(username);
+    const blogs = await PostService.getAllPostsByUsername(username);
+    return {
+      props: {
+        userData: userData,
+        blogCount : blogCount.count,
+        blogs : blogs.allPosts,
+      }
+    };
   } catch (err) {
     return {
       props: {}
@@ -56,7 +54,7 @@ export default function Username(props) {
             {currentNav === "profile" && (
               <>
                 <Activity />
-                <BlogList />
+                <BlogList blogs={props.blogs} />
               </>
             )}
             {currentNav === "store" && <LuckEgg />}

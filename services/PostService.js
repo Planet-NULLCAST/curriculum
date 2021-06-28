@@ -280,15 +280,29 @@ async function getPostsByQuery(query, clickNo) {
   }
 }
 
-async function getPostCountByUserId(userId) {
+async function getPostCountByUserName(username) {
   let url = "";
   if (typeof window == "undefined") url = serverUrl;
   else url = baseUrl;
   try {
     const { data } = await axios.get(`${url}/${allPostsUrl}/count`, {
-      params: { userId: userId }
+      params: { username: username }
     });
-    // console.log(data, " getPostCountByUserId ")
+    return data;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+async function getAllPostsByUsername(username) {
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
+  try {
+    const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
+      params: { username: username }
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -311,7 +325,8 @@ const PostService = {
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin,
-  getPostCountByUserId
+  getPostCountByUserName,
+  getAllPostsByUsername
 };
 
 module.exports = PostService;
