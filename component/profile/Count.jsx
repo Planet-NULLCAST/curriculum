@@ -1,9 +1,11 @@
 import React from "react";
 import Profilestyles from "../../styles/Profile.module.css";
 
-export default function Count() {
+
+export default function Count(props) {
+  
   const counts = {
-    blogs: 1122,
+    blogs: `${props.blogCount}`,
     followers: 12,
     following: 15
   };

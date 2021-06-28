@@ -23,6 +23,13 @@ export async function getServerSideProps(context) {
       );
       // console.log(cookie);
       return { props: { post_Id: post_Id ? post_Id : "" } };
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
     }
   } catch (err) {
     console.log("User not logged in ");
@@ -36,8 +43,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Write({ post_Id }) {
-  // console.log("postId if there's a post Id", post_Id);
-  // console.log({ post_Id });
   const [postId, setPostId] = useState("");
   const [post, setPost] = useState();
   const iframeRef = useRef();
@@ -49,21 +54,26 @@ export default function Write({ post_Id }) {
 
   useEffect(() => {
     const currentPostId = router.query.post_id;
-    console.log({ currentPostId });
+    // console.log({ currentPostId });
 
     if (userCookie) {
       setPostId(currentPostId);
-      getPostById(currentPostId);
       try {
         // errors on refresh
-        // console.log(iframeRef.current.contentWindow);
+        // !START
+        // *IMPORTANT: Don't remove the below block of code
+        const iframeElement = iframeRef.current;
+        iframeElement.contentWindow.innerWidth;
+        // *IMPORTANT: It's the reason the control goes to the catch block on refresh
+        // !END
 
-        iframeRef.current.onload = function () {
+        iframeElement.onload = function () {
           if (currentPostId) {
             getPostById(currentPostId);
           }
         };
       } catch (error) {
+        console.log("error blaaaah==>", error);
         getPostById(currentPostId);
       }
     }
@@ -91,7 +101,7 @@ export default function Write({ post_Id }) {
         // console.log("listener removed");
       });
     };
-  }, [post_Id]); //previous post_Id
+  }, [post_Id]);
 
   async function getPostById(id) {
     const res = await PostService.getPostById(userCookie, id);

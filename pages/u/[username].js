@@ -9,8 +9,33 @@ import BlogList from "../../component/profile/BlogList";
 import LuckEgg from "../../component/profile/LuckEgg";
 import Profilestyles from "../../styles/Profile.module.css";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
+import UserService from "../../services/UserService";
+import { getCookieValue } from "../../lib/cookie";
+import PostService from "../../services/PostService";
 
-export default function Username() {
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      const userData = await UserService.getUserById(cookie);
+      const blogCount = await PostService.getPostCountByUserId(cookie.id);
+      return {
+        props: {
+          userData: userData,
+          blogCount: blogCount.count
+        }
+      };
+    }
+  } catch (err) {
+    return {
+      props: {}
+    };
+  }
+}
+
+export default function Username(props) {
   const [currentNav, setcurrentNav] = useState("profile");
 
   const changeNav = (data) => {
@@ -18,7 +43,7 @@ export default function Username() {
   };
 
   return (
-    <>
+    <div>
       <Head>
         <title>Profile | Nullcast</title>
       </Head>
@@ -27,7 +52,7 @@ export default function Username() {
         <Navbar changeNav={changeNav} currentNav={currentNav} />
         <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
-            <ProfileDetails />
+            <ProfileDetails userData={props.userData} />
             {currentNav === "profile" && (
               <>
                 <Activity />
@@ -39,11 +64,11 @@ export default function Username() {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            <Count />
+            <Count blogCount={props.blogCount} />
             <FollowersList />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

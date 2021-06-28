@@ -4,12 +4,45 @@ import MyBlogs from "../../component/myblogs/MyBlogs";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import Cookies from "universal-cookie";
-import withAuth from "../../component/withAuth/withAuth";
 import PostService from "../../services/PostService";
 import Pagination from "../../component/pagination/pagination";
 import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import { getCookieValue } from "../../lib/cookie";
 
-const MyPost = () => {
+export async function getServerSideProps(context) {
+  // console.log(context.req.headers.cookie);
+  try {
+    if (context.req.headers.cookie) {
+      // console.log(context.req.headers.cookie);
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      // console.log({ cookie });
+      return {
+        props: {}
+      };
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    console.log("User not logged in ");
+    console.log(err);
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+      // props: {}
+    };
+  }
+}
+
+export default function Posts() {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   // console.log(userCookie);
@@ -23,18 +56,18 @@ const MyPost = () => {
   const pageNo = 1;
   const limit = 10;
 
-  // useEffect(() => {
-  //   if (userCookie) {
-  //     const reqData = {
-  //       pageNo: pageNo,
-  //       limit: limit,
-  //       tag: tagFilter,
-  //       status: statusFilter
-  //     };
-  //     getPosts(reqData);
-  //     changePage(pageNo, limit);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userCookie) {
+      const reqData = {
+        pageNo: pageNo,
+        limit: limit,
+        tag: tagFilter,
+        status: statusFilter
+      };
+      getPosts(reqData);
+      changePage(pageNo, limit);
+    }
+  }, []);
 
   async function getPosts(reqData, tag, status) {
     // console.log(reqData);
@@ -62,7 +95,6 @@ const MyPost = () => {
       tag: tagFilter,
       status: statusFilter
     };
-    console.log(newReqData);
     getPosts(newReqData);
   };
 
@@ -99,6 +131,6 @@ const MyPost = () => {
       </div>
     </div>
   );
-};
+}
 
-export default withAuth(MyPost);
+// export default withAuth(MyPost);

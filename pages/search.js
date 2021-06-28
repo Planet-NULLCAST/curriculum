@@ -1,19 +1,16 @@
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import ListingHeader from "../component/layout/ListingHeader/ListingHeader";
-import ListingFeatured from "../component/layout/BlogListing/ListingFeatured";
 import Listing from "../component/layout/BlogListing/Listing";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
+import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 import Head from "next/head";
 import PostService from "../services/PostService";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 
 export async function getServerSideProps(context) {
   try {
     // console.log("query", context.query);
-
     if (context.query.q) {
       const { msg, posts, count } = await PostService.getPostsByQuery(
         context.query.q,
@@ -54,7 +51,12 @@ export async function getServerSideProps(context) {
     }
   } catch (err) {
     console.log("Error => ", err);
-    return err;
+    return {
+      props: {
+        posts: [],
+        count: 0
+      }
+    };
   }
 }
 

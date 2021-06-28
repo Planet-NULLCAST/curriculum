@@ -15,7 +15,8 @@ import PostService from "../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    const slug = context.params["blog-post"];
+    const slug = context.params.blogPost;
+    // console.log({ slug });
     const response = await PostService.getPostBySlug(slug);
     // console.log(response.data.blog.tags[0]);
     const relatedPostsTag = response.data.blog.tags[0]
@@ -30,15 +31,6 @@ export async function getServerSideProps(context) {
       // console.log(relatedPostsResponse);
     }
 
-    // const latestPostsParams = {
-    //   order: -1,
-    //   fieldName: "publishedAt",
-    //   limit: 4,
-    //   skip: 0
-    // };
-    // const latestPostResponse = await PostService.getLatestPosts(
-    //   latestPostsParams
-    // );
     if (!response?.data) {
       return {
         redirect: {

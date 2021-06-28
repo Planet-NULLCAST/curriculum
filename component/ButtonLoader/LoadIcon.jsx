@@ -1,21 +1,21 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from "react";
 
 export const LoadIcon = (props) => {
   const { color, height } = props;
   const divStyle = {
-    margin: 'auto',
-    background: 'none',
-    display: 'block',
-    'shape-rendering': 'auto',
+    margin: "auto",
+    background: "none",
+    display: "block",
+    shapeRendering: "auto"
   };
   return (
     <div className="mr-2 -mt-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         style={divStyle}
-        width={height || '20px'}
-        height={height || '20px'}
+        width={height || "20px"}
+        height={height || "20px"}
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
       >

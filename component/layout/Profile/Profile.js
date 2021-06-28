@@ -5,7 +5,7 @@ import Image from "next/image";
 import Cookies from "universal-cookie";
 import PostService from "../../../services/PostService";
 
-export default function Profile({ onLogout }) {
+export default function Profile({ onLogout, username }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
 
@@ -14,7 +14,9 @@ export default function Profile({ onLogout }) {
 
   // Effects
   useEffect(() => {
-    getIsAdmin();
+    if (userCookie?.roles === "admin") {
+      getIsAdmin();
+    }
   }, []);
 
   // Functions
@@ -38,7 +40,7 @@ export default function Profile({ onLogout }) {
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>DataTurks</h4>
+          <h4>{username}</h4>
           <p>
             <img src="/images/smallduck.svg" alt="" />
             22000
@@ -46,7 +48,7 @@ export default function Profile({ onLogout }) {
         </div>
         <ul>
           <li>
-            <Link href="/u/abc">
+            <Link href={`/u/${userCookie.username}`}>
               <a className="linkUnderline">
                 Profile
                 <svg
