@@ -9,9 +9,9 @@ export default function HomeSpotlight() {
   const _cookies = new Cookies();
   const userCookie = _cookies.get("userNullcast");
   const [menu, setMenu] = useState(false);
-  const ShowMenu = () => {
-    setMenu(menu);
-  };
+  // const ShowMenu = () => {
+  //   setMenu(menu);
+  // };
   useEffect(() => {
     document.body.classList.toggle("menuOpen", menu);
   }, [menu]);
@@ -114,24 +114,24 @@ export default function HomeSpotlight() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
-                      {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                      <a onClick={() => setMenu(true)}>
-                        Explore
-                        <span className={styles.downArrow}>
-                          <svg
-                            width="8"
-                            height="5"
-                            viewBox="0 0 8 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#1B1B1B"
-                          >
-                            <path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" />
-                          </svg>
-                        </span>
-                      </a>
-                    </Link>
+                    {/* <Link href="#"> */}
+                    {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                    <a onClick={() => setMenu(true)}>
+                      Explore
+                      <span className={styles.downArrow}>
+                        <svg
+                          width="8"
+                          height="5"
+                          viewBox="0 0 8 5"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#1B1B1B"
+                        >
+                          <path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" />
+                        </svg>
+                      </span>
+                    </a>
+                    {/* </Link> */}
                     <ul>
                       <li>
                         <Link href="/blog">
@@ -156,7 +156,10 @@ export default function HomeSpotlight() {
           <div className={styles.wrapBtn}>
             {cookies ? (
               <div className="flex flex-row justify-center items-center">
-                <Profile username={cookies.username} onLogout={() => logout()} />
+                <Profile
+                  username={cookies.username}
+                  onLogout={() => logout()}
+                />
                 {/* <div>
                 <button onClick={() => logout()}>Logout</button>
               </div> */}

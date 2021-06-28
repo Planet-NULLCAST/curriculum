@@ -281,14 +281,14 @@ async function getPostsByQuery(query, clickNo) {
 }
 
 async function getPostCountByUserId(userId) {
-let url = "";
-if (typeof window == "undefined") url = serverUrl;
-else url = baseUrl;
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
   try {
-    const {data} = await axios.get(`${url}/${allPostsUrl}/count`, {
-      params: {userId:userId},
+    const { data } = await axios.get(`${url}/${allPostsUrl}/count`, {
+      params: { userId: userId }
     });
-    console.log(data, " getPostCountByUserId ")
+    // console.log(data, " getPostCountByUserId ")
     return data;
   } catch (err) {
     console.log(err);

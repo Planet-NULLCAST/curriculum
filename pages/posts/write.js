@@ -23,6 +23,13 @@ export async function getServerSideProps(context) {
       );
       // console.log(cookie);
       return { props: { post_Id: post_Id ? post_Id : "" } };
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
     }
   } catch (err) {
     console.log("User not logged in ");
@@ -61,13 +68,12 @@ export default function Write({ post_Id }) {
         // !END
 
         iframeElement.onload = function () {
-
           if (currentPostId) {
             getPostById(currentPostId);
           }
         };
       } catch (error) {
-        console.log("error blaaaah==>", error)
+        console.log("error blaaaah==>", error);
         getPostById(currentPostId);
       }
     }

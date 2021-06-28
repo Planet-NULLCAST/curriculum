@@ -11,7 +11,7 @@ export default function SectionAuthor(props) {
         <div className="flex items-center justify-between mb-7">
           <h2>About the Author</h2>
           <span>
-            <Link href={`${username}/u`}>
+            <Link href={`/u/${username}`}>
               <a className={`${styles.profileLink} linkUnderline`}>
                 View Profile
               </a>

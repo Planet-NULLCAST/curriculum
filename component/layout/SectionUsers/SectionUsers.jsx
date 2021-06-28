@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import styles from "./SectionUsers.module.scss";
+import Link from "next/link";
 
 export default class SimpleSlider extends Component {
   render() {
+    // console.log(this.props.user);
     const settings = {
       dots: false,
       arrows: false,
@@ -24,104 +26,16 @@ export default class SimpleSlider extends Component {
                 <div key={key}>
                   <div className={styles.item}>
                     <div className={styles.icon}>
-                      <img src="/images/temp/avatar1.png" alt="" />
+                      <img src="/images/temp/avatar1.png" alt="user" />
                     </div>
                     <h4 className={styles.min_w_10rem}>
-                      <a href="">{item.fullName}</a>
+                      <Link href={`/u/${item.username}`}>
+                        <a>{item.fullName}</a>
+                      </Link>
                     </h4>
                   </div>
                 </div>
               ))}
-
-              {/* <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Allie Grater</a></h4>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Paige Turner</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Percy Kewshun</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Allie Grater</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Paige Turner</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Percy Kewshun</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Allie Grater</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Paige Turner</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Percy Kewshun</a></h4>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div className={styles.item}>
-                                    <div className={styles.icon}>
-                                        <img src="/images/temp/avatar1.png" alt=""/>
-                                    </div>
-                                    <h4><a href="">Allie Grater</a></h4>
-                                </div>
-                            </div> */}
             </Slider>
           </div>
         </div>

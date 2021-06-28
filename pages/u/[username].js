@@ -11,32 +11,31 @@ import Profilestyles from "../../styles/Profile.module.css";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import UserService from "../../services/UserService";
 import { getCookieValue } from "../../lib/cookie";
-import PostService from "../../services/PostService"
+import PostService from "../../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-      if (context.req.headers.cookie) {
-        const cookie = JSON.parse(getCookieValue(context.req.headers.cookie, "userNullcast"));
-        const userData = await UserService.getUserById(cookie);
-        const blogCount = await PostService.getPostCountByUserId(cookie.id);
-        return {
-          props: {
-            userData : userData,
-            blogCount : blogCount.count,
-          }
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      const userData = await UserService.getUserById(cookie);
+      const blogCount = await PostService.getPostCountByUserId(cookie.id);
+      return {
+        props: {
+          userData: userData,
+          blogCount: blogCount.count
         }
       };
-    
+    }
   } catch (err) {
     return {
-      props: ""
-    }
+      props: {}
+    };
   }
 }
 
 export default function Username(props) {
-  
-
   const [currentNav, setcurrentNav] = useState("profile");
 
   const changeNav = (data) => {
@@ -44,7 +43,7 @@ export default function Username(props) {
   };
 
   return (
-    <>
+    <div>
       <Head>
         <title>Profile | Nullcast</title>
       </Head>
@@ -70,6 +69,6 @@ export default function Username(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

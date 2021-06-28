@@ -3,20 +3,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
-// import Select from "react-select";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreatableSelect from "react-select/creatable";
 import { clientUrl } from "../../config/config";
-// import tagOptions from "../../utils/tags";
 import UserState from "../../context/user/UserState";
 import ModalConfirm from "../../component/popup/ModalConfirm";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
-const axios = require("axios");
-import { getCookieValue } from "../../lib/cookie";
 
 export default function WriteNav({
   saveToDraft,
@@ -261,7 +257,7 @@ export default function WriteNav({
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
-          <Link href={`/posts`}>
+          <Link href={`${isAdmin ? "/admin" : "/posts"}`}>
             <div className="flex items-center">
               <Image
                 src="/images/svgs/left-arrow.svg"
@@ -275,7 +271,7 @@ export default function WriteNav({
             </div>
           </Link>
           <span className="text-gray-500 ml-1">
-            {router.query.post_id ? "/ Edits" : "/ Create"}
+            {router.query.post_id ? "/ Edit" : "/ Create"}
           </span>
         </div>
         <div className="items-center py-3 md:flex">
@@ -294,7 +290,6 @@ export default function WriteNav({
           >
             <p>Save</p>
           </div>
-          {/* {post && <div className="flex flex-row"></div>} */}
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
             onClick={() => setOpenSettings(true)}
@@ -448,7 +443,6 @@ export default function WriteNav({
                           </div>
                         </div>
                       </div>
-                      {/* one here */}
                     </div>
                     <div className="w-full mt-4 relative">
                       <CreatableSelect
