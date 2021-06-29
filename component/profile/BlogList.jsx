@@ -3,34 +3,8 @@ import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function BlogList() {
-  const blogs = [
-    {
-      name: "Null Safety in Flutter",
-      image: "",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Active Tab Animation using HTML, CSS and JS",
-      image: "/images/dummy_Blog4.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "All you need to know about Supabase",
-      image: "/images/dummy_Blog3.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Creative Search Bar and Input Field Design Inspiration",
-      image: "/images/dummy_Blog2.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Introduction to Rapid HTML Development using Tailwind CSS",
-      image: "/images/dummy_Blog3.png",
-      date: "2021-05-04T03:59:48.157Z"
-    }
-  ];
+export default function BlogList({blogs}) {
+  
   return (
     <div className="bg-white shadow-sm rounded p-4 mt-4 h-72">
       <div className="flex justify-between items-center">
@@ -63,12 +37,12 @@ export default function BlogList() {
                 </div>
               )}
               <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
-                {moment(data?.date).format("LL")}
+                {moment(data?.publishedAt).format("LL")}
               </p>
               <p
                 className={`multi-line-truncate font-bold underline text-sm cursor-pointer ${Profilestyles.a_green_210}`}
               >
-                {data?.name}
+                {data?.primaryAuthor.username}
               </p>
               {/* <p className="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
             </div>

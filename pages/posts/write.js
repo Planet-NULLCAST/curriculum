@@ -1,14 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
-import WriteNav from "../../component/myblogs/WriteNav";
 import Head from "next/head";
-import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
+import { ToastContainer, toast } from "react-toastify";
+
+import WriteNav from "../../component/myblogs/WriteNav";
+import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import PostService from "../../services/PostService";
 import { editorUrl } from "../../config/config";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { getCookieValue } from "../../lib/cookie";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const TARGET = editorUrl;
 
@@ -45,8 +47,10 @@ export async function getServerSideProps(context) {
 export default function Write({ post_Id }) {
   const [postId, setPostId] = useState("");
   const [post, setPost] = useState();
+
   const iframeRef = useRef();
   const postElement = useRef();
+
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
