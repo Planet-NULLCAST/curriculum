@@ -15,7 +15,7 @@ import PostService from "../../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    let username = context.params.username;
+    const username = context.params.username;
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
     const blogs = await PostService.getAllPostsByUsername(username);

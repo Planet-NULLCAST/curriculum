@@ -8,9 +8,9 @@ import {
   changeStatusUrl,
   tagUrl,
   adminUrl,
-  serverUrl,
   searchUrl
 } from "../config/config";
+import {getUrl} from "../lib/getUrl"
 
 async function getPostsByUserId(userCookie, reqData) {
   try {
@@ -21,17 +21,13 @@ async function getPostsByUserId(userCookie, reqData) {
     });
     return data;
   } catch (err) {
-    return;
+    return err.message;
   }
 }
 
 async function getPostById(userCookie, postId) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
+
   try {
     // console.log(postId);
     const { data } = await axios.get(`${url}/${postUrl}/${postId}`, {
@@ -42,23 +38,19 @@ async function getPostById(userCookie, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
 async function getPostBySlug(slug) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
+
   try {
     const response = await axios.get(`${url}/${postUrl}/blog/${slug}`);
     return response;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -72,17 +64,12 @@ async function createPost(userCookie, post) {
     return response;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
 async function getLatestPosts(reqParams) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
 
   try {
     const { order, fieldName, limit, skip } = reqParams;
@@ -98,16 +85,12 @@ async function getLatestPosts(reqParams) {
     return response;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 async function adminGetLatestPosts(reqParams) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
+
   try {
     const { order, fieldName, limit, skip, optionsCategory, optionsStatus } =
       reqParams;
@@ -124,7 +107,7 @@ async function adminGetLatestPosts(reqParams) {
     return response;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -138,7 +121,7 @@ async function updatePostById(userCookie, post, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -152,7 +135,7 @@ async function deletePostById(userCookie, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -175,7 +158,7 @@ async function uploadImage(imageFile, imageData) {
     return imageUrl;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -194,17 +177,12 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
     return data.message;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
 async function getPostByTags(tagName, clickNo) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
 
   const item = {
     clickNo: clickNo
@@ -215,7 +193,7 @@ async function getPostByTags(tagName, clickNo) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -234,17 +212,12 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     return data.message;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
 const isAdmin = async (id, token) => {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
 
   try {
     const { data } = await axios.get(`${url}/${adminUrl}/me`, {
@@ -256,17 +229,12 @@ const isAdmin = async (id, token) => {
   } catch (err) {
     console.log("admin check err");
     // console.log(err);
-    return;
+    return err.message;
   }
 };
 
 async function getPostsByQuery(query, clickNo) {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
 
   try {
     const { data } = await axios.get(`${url}/${searchUrl}`, {
@@ -276,14 +244,13 @@ async function getPostsByQuery(query, clickNo) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
 async function getPostCountByUserName(username) {
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
+
   try {
     const { data } = await axios.get(`${url}/${allPostsUrl}/count`, {
       params: { username: username }
@@ -291,14 +258,19 @@ async function getPostCountByUserName(username) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
+/**
+ * Api call for fetching all publlished posts related to a user
+ * 
+ * @param {String} username 
+ * @returns {Promise}
+ */
 async function getAllPostsByUsername(username) {
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  const url = getUrl();
+
   try {
     const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
       params: { username: username }
@@ -306,7 +278,7 @@ async function getAllPostsByUsername(username) {
     return data;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 

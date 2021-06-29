@@ -1,20 +1,17 @@
 const axios = require("axios");
-import { baseUrl, serverUrl, tagUrl } from "../config/config";
+import { baseUrl, tagUrl } from "../config/config";
+import {getUrl} from "../lib/getUrl"
 
 async function getTags() {
-  // set URL from where this function is executing
-  // like server and client
-  // if in server serverURL is applied else clientURL
-  let url = "";
-  if (typeof window == "undefined") url = serverUrl;
-  else url = baseUrl;
+  let url = getUrl();
+  
   try {
     const { data } = await axios.get(`${url}/${tagUrl}`);
     // console.log(data.tags);
     return data.tags;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
@@ -33,7 +30,7 @@ async function postTags(userCookie, newTag) {
     return data.msg;
   } catch (err) {
     console.log(err);
-    return;
+    return err.message;
   }
 }
 
