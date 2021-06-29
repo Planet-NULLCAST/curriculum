@@ -29,8 +29,11 @@ async function getLatestUsers(reqParams) {
 }
 
 async function getUserById(userCookie) {
+  let url = "";
+  if (typeof window == "undefined") url = serverUrl;
+  else url = baseUrl;
     try {
-      const {data} = await axios.get(`${baseUrl}/${userUrl}/getUserById/${userCookie.id}`, {
+      const {data} = await axios.get(`${url}/${userUrl}/getUserById/${userCookie.id}`, {
         headers: {
           "x-access-token": `${userCookie.accessToken}`
         }

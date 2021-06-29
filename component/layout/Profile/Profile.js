@@ -14,7 +14,7 @@ export default function Profile({ onLogout, username }) {
 
   // Effects
   useEffect(() => {
-    if (userCookie?.role === "admin") {
+    if (userCookie?.roles === "admin") {
       getIsAdmin();
     }
   }, []);
@@ -48,7 +48,7 @@ export default function Profile({ onLogout, username }) {
         </div>
         <ul>
           <li>
-            <Link href="/u/abc">
+            <Link href={`/u/${userCookie.username}`}>
               <a className="linkUnderline">
                 Profile
                 <svg
