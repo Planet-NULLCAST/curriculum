@@ -21,7 +21,7 @@ async function getPostsByUserId(userCookie, reqData) {
     });
     return data;
   } catch (err) {
-    return err.message;
+    throw err;
   }
 }
 
@@ -38,7 +38,7 @@ async function getPostById(userCookie, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -50,7 +50,7 @@ async function getPostBySlug(slug) {
     return response;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -64,7 +64,7 @@ async function createPost(userCookie, post) {
     return response;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -85,7 +85,7 @@ async function getLatestPosts(reqParams) {
     return response;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 async function adminGetLatestPosts(reqParams) {
@@ -107,7 +107,7 @@ async function adminGetLatestPosts(reqParams) {
     return response;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -121,7 +121,7 @@ async function updatePostById(userCookie, post, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -135,7 +135,7 @@ async function deletePostById(userCookie, postId) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -158,7 +158,7 @@ async function uploadImage(imageFile, imageData) {
     return imageUrl;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -177,7 +177,7 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
     return data.message;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -193,7 +193,7 @@ async function getPostByTags(tagName, clickNo) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -212,7 +212,7 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     return data.message;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -229,7 +229,7 @@ const isAdmin = async (id, token) => {
   } catch (err) {
     console.log("admin check err");
     // console.log(err);
-    return err.message;
+    throw err;
   }
 };
 
@@ -244,7 +244,7 @@ async function getPostsByQuery(query, clickNo) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -258,7 +258,7 @@ async function getPostCountByUserName(username) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -278,7 +278,7 @@ async function getAllPostsByUsername(username) {
     return data;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 

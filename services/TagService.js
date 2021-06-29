@@ -11,7 +11,7 @@ async function getTags() {
     return data.tags;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 
@@ -30,7 +30,7 @@ async function postTags(userCookie, newTag) {
     return data.msg;
   } catch (err) {
     console.log(err);
-    return err.message;
+    throw err;
   }
 }
 

@@ -1,17 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../../component/profile/Navbar";
-import ProfileDetails from "../../component/profile/ProfileDetails";
 import Head from "next/head";
+
 import Activity from "../../component/profile/Activity";
+import ProfileDetails from "../../component/profile/ProfileDetails";
 import Count from "../../component/profile/Count";
 import FollowersList from "../../component/profile/FollowersList";
 import BlogList from "../../component/profile/BlogList";
 import LuckEgg from "../../component/profile/LuckEgg";
-import Profilestyles from "../../styles/Profile.module.css";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import UserService from "../../services/UserService";
-import { getCookieValue } from "../../lib/cookie";
 import PostService from "../../services/PostService";
+
+import Profilestyles from "../../styles/Profile.module.css";
 
 export async function getServerSideProps(context) {
   try {
@@ -27,8 +28,12 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
+    //Redirect to 404 page if there is any kind of error
     return {
-      props: {}
+      redirect: {
+        permanent: false,
+        destination: "/404"
+      }
     };
   }
 }

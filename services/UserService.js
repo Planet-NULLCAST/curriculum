@@ -20,7 +20,7 @@ async function getLatestUsers(reqParams) {
         return response;
     } catch (err) {
         console.log(err);
-        return err.message;
+        throw err;
     }
 }
 
@@ -32,7 +32,7 @@ async function getUserByUsername(username) {
       const {data} = await axios.get(`${url}/${userUrl}/getUserByUsername/${username}`);
       return data;
     } catch (err) {
-      return;
+      throw err;
     }
 }
 
