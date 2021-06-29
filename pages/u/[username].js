@@ -20,6 +20,14 @@ export async function getServerSideProps(context) {
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
     const blogs = await PostService.getAllPostsByUsername(username);
+    if (!userData || blogCount == "") {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/404"
+        }
+      };
+    }
     return {
       props: {
         userData: userData,
