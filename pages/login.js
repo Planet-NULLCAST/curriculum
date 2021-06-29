@@ -6,9 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
-
 import Head from "next/head";
-import Cookies from "universal-cookie";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 
