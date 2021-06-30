@@ -1,48 +1,38 @@
-import React, { useState } from "react";
 import Head from "next/head";
-import AuthService from "../services/AuthService";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import AuthService from "../services/AuthService";
 import validateEmail from "../lib/validateEmail";
 
+import "react-toastify/dist/ReactToastify.css";
+
 export default function forgotPassword() {
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState("");
-
-  const handleOnBlur = (e) => {
-    emailCheck(e.target.value);
-  };
-
-  const emailCheck = (newVal) => {
-    const isValidEmail = validateEmail(newVal);
-    // console.log({ isValidEmail });
-    if (isValidEmail) {
-      setValidEmail(true);
-    } else {
-      setValidEmail(false);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    // console.log(e.target.value);
-    setEmail(e.target.value);
-    if (validEmail !== "") {
-      emailCheck(e.target.value);
-    }
-  };
+  const [isValidEmail, setIsValidEmail] = useState();
 
   const sendEmail = async (email) => {
     // console.log({ email });
-    const { message } = await AuthService.sendEmail(email);
-    // console.log(message);
-    notify(message);
+    try {
+      const { message } = await AuthService.sendEmail(email);
+      // console.log(message);
+      notify(message);
+    } catch (err) {
+      // console.log(err.response.data.message);
+      notify(err.response.data.message);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("handleSubmit", e.target.email.value);
-    // console.log({ validEmail });
-    if (validEmail) {
+    const isValid = validateEmail(e.target.email.value);
+    console.log({ isValid });
+    if (isValid) {
+      setIsValidEmail(true);
+    } else {
+      setIsValidEmail(false);
+    }
+    if (isValid) {
       sendEmail(e.target.email.value);
     }
   };
@@ -80,11 +70,8 @@ export default function forgotPassword() {
             name="email"
             id="email"
             className="border border-purple-600 py-3 h-11 w-2/3"
-            onChange={handleInputChange}
-            onBlur={handleOnBlur}
-            value={email}
           />
-          {validEmail !== "" && validEmail === false && (
+          {isValidEmail === false && (
             <p className="text-sm text-red-400 text-left w-2/3">
               Please enter a valid email
             </p>
