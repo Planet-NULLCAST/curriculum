@@ -10,8 +10,8 @@ async function sendEmail(email) {
     // console.log(data);
     return data;
   } catch (err) {
-    console.log(err);
-    return;
+    // console.log(err);
+    throw err;
   }
 }
 
