@@ -113,7 +113,6 @@ export default function Login() {
             return response.data;
           })
           .then((data) => {
-            setIsLoading(false);
             if (data.accessToken) {
               document.cookie = `userNullcast=${JSON.stringify(data)}`;
               sessionStorage.setItem("userNullcast", JSON.stringify(data));
@@ -199,11 +198,11 @@ export default function Login() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end p-6 w-full ${Loginstyles.bg_green_710}`}
                 >
-                  <p className={`font-semibold text-white text-sm flex mr-5`}>
+                  <p className={`sm:flex hidden font-semibold text-white text-sm flex mr-2 md:mr-5`}>
                     Don’t have an Account ?
                   </p>
                   {isLoading ? (
-                    <div className="mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
+                    <div className="md:mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
                       Sign Up
                     </div>
                   ) : (
@@ -212,7 +211,7 @@ export default function Login() {
                         pathname: `/signup`
                       }}
                     >
-                      <div className="mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                      <div className="md:mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
                         Sign Up
                       </div>
                     </Link>
@@ -275,13 +274,6 @@ export default function Login() {
                           }}
                           type={`${hidePassword ? "text" : "password"}`}
                         />
-                        {validPassword ? (
-                          ""
-                        ) : (
-                          <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                            Please enter password
-                          </span>
-                        )}
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                           <img
                             src="/images/eye.svg"
@@ -290,6 +282,13 @@ export default function Login() {
                           ></img>
                         </div>
                       </div>
+                      {validPassword ? (
+                        ""
+                      ) : (
+                        <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          Please enter password
+                        </span>
+                      )}
                     </div>
                     <button
                       className={`submitButtons w-full flex items-center justify-center ${
