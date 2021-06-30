@@ -32,7 +32,7 @@ export default function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <ToastContainer />
+        <ToastContainer newestOnTop={false} />
         <div className="md:flex items-center">
           <div className="md:w-7/12 lg:w-1/2">
             <h2 className="font-darker font-black text-3xl lg:text-44 xl:text-64 leading-none mb-12">
