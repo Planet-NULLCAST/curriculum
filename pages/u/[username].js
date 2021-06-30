@@ -1,36 +1,47 @@
 import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../../component/profile/Navbar";
-import ProfileDetails from "../../component/profile/ProfileDetails";
 import Head from "next/head";
+
 import Activity from "../../component/profile/Activity";
+import ProfileDetails from "../../component/profile/ProfileDetails";
 import Count from "../../component/profile/Count";
 import FollowersList from "../../component/profile/FollowersList";
 import BlogList from "../../component/profile/BlogList";
 import LuckEgg from "../../component/profile/LuckEgg";
-import Profilestyles from "../../styles/Profile.module.css";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import UserService from "../../services/UserService";
-import { getCookieValue } from "../../lib/cookie";
 import PostService from "../../services/PostService";
+
+import Profilestyles from "../../styles/Profile.module.css";
 
 export async function getServerSideProps(context) {
   try {
-    if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
-      );
-      const userData = await UserService.getUserById(cookie);
-      const blogCount = await PostService.getPostCountByUserId(cookie.id);
+    const username = context.params.username;
+    const userData = await UserService.getUserByUsername(username);
+    const blogCount = await PostService.getPostCountByUserName(username);
+    const blogs = await PostService.getAllPostsByUsername(username);
+    if (!userData || blogCount == "") {
       return {
-        props: {
-          userData: userData,
-          blogCount: blogCount.count
+        redirect: {
+          permanent: false,
+          destination: "/404"
         }
       };
     }
-  } catch (err) {
     return {
-      props: {}
+      props: {
+        userData: userData,
+        blogCount : blogCount.count,
+        blogs : blogs.allPosts,
+      }
+    };
+  } catch (err) {
+    //Redirect to 404 page if there is any kind of error
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404"
+      }
     };
   }
 }
@@ -56,7 +67,7 @@ export default function Username(props) {
             {currentNav === "profile" && (
               <>
                 <Activity />
-                <BlogList />
+                <BlogList blogs={props.blogs} />
               </>
             )}
             {currentNav === "store" && <LuckEgg />}
