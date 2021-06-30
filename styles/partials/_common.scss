@@ -4,7 +4,7 @@ a, button {
     transition: all ease .3s;
     outline: none;
     &:focus, &:active {
-        @apply outline-none;
+        outline: none;
     }
 }
 input {
