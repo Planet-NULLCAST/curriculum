@@ -20,7 +20,7 @@ export default function BlogPost(props) {
     ).map((item) => {
       return {
         id: item.id,
-        text: item.innerHTML
+        text: item.innerText
       };
     });
     // console.log({ h2Tags });

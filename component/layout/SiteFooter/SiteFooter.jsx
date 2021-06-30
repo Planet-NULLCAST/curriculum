@@ -1,17 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./SiteFooter.module.scss";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
 import { baseUrl, subscribeUrl } from "../../../config/config";
+import validateEmail from "../../../lib/validateEmail";
+
+import styles from "./SiteFooter.module.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SiteFooter() {
+  const [isValidEmail, setIsValidEmail] = useState();
+
   const notify = (msg) => {
     // console.log(msg);
     toast(msg, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -22,17 +28,24 @@ export default function SiteFooter() {
   const addSubscriber = async (e) => {
     e.preventDefault();
     const newEmail = e.target.email.value;
-    const emailData = {
-      email: newEmail
-    };
-    const { data } = await axios.post(`${baseUrl}/${subscribeUrl}`, emailData);
-    // console.log(data);
-    notify(data.msg);
+    const isValid = validateEmail(newEmail);
+    setIsValidEmail(isValid);
+    if (isValid) {
+      const emailData = {
+        email: newEmail
+      };
+      const { data } = await axios.post(
+        `${baseUrl}/${subscribeUrl}`,
+        emailData
+      );
+      // console.log(data);
+      notify(data.msg);
+    }
   };
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <ToastContainer />
+        <ToastContainer newestOnTop={false} />
         <div className="md:flex items-center">
           <div className="md:w-7/12 lg:w-1/2">
             <h2 className="font-darker font-black text-3xl lg:text-44 xl:text-64 leading-none mb-12">
@@ -47,10 +60,17 @@ export default function SiteFooter() {
                 id="#email"
                 name="email"
               />
+
               <button className="btn btn--subscribe" type="submit">
                 <span className="btn__text">Subscribe</span>
               </button>
             </form>
+            {!isValidEmail && (
+              <p className="text-sm text-red-400 text-left">
+                Please enter a valid email
+              </p>
+            )}
+
             <ul className={styles.nevFooter}>
               <li>
                 <Link href="/">
