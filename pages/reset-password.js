@@ -87,6 +87,8 @@ export default function resetPassword({ query }) {
     const newPass = e.target.newPassword.value;
     const confirmPass = e.target.confirmPassword.value;
     // console.log({ password });
+    passwordCheck(e.target.newPassword.name, newPass);
+    passwordCheck(e.target.confirmPassword.name, confirmPass);
     if (
       newPass === confirmPass &&
       validNewPassword === "valid" &&
