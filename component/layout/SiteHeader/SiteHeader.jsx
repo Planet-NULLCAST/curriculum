@@ -147,9 +147,9 @@ export default function HomeSpotlight() {
                   </li>
                 </ul>
               </nav>
-              <a href="" className="btn btn--whiteBorder">
+              {/* <a href="" className="btn btn--whiteBorder">
                 <span className="btn__text">Donate</span>
-              </a>
+              </a> */}
             </div>
           </div>
 
