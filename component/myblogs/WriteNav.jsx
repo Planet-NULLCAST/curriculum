@@ -98,10 +98,10 @@ export default function WriteNav({
         }
       })
       .map((fTag) => fTag.value);
-    console.log(newTag);
+    // console.log(newTag);
 
     const res = await TagService.postTags(userCookie, newTag);
-    console.log({ res });
+    // console.log({ res });
 
     setCurrentPost((prevValue) => {
       return {
