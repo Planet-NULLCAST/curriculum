@@ -19,7 +19,8 @@ export async function getServerSideProps(context) {
     const username = context.params.username;
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
-    const blogs = await PostService.getAllPostsByUsername(username);
+    const limit = 5;
+    const blogs = await PostService.getAllPostsByUsername(username, limit);
     if (!userData || blogCount == "") {
       return {
         redirect: {

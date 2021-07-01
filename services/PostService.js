@@ -268,12 +268,15 @@ async function getPostCountByUserName(username) {
  * @param {String} username 
  * @returns {Promise}
  */
-async function getAllPostsByUsername(username) {
+async function getAllPostsByUsername(username, limit) {
   const url = getUrl();
 
   try {
     const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
-      params: { username: username }
+      params: {
+        username: username,
+        limit: limit,
+      }
     });
     return data;
   } catch (err) {

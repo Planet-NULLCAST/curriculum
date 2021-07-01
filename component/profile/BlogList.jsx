@@ -15,14 +15,14 @@ export default function BlogList({blogs}) {
       </div>
       <div className="flex items-start w-full overflow-x-auto pb-2">
         {blogs?.map((data) => (
-          <div
+          <div key={data._id}
             className={`flex items-start w-1/5 mt-3 justify-between pr-6 ${Profilestyles.min_w_9}`}
           >
             <div className="flex flex-col w-full">
-              {data?.image ? (
+              {data?.bannerImage ? (
                 <div className="w-full h-32 overflow-hidden rounded-md flex items-center justify-center text-white">
                   <img
-                    src={data?.image}
+                    src={data?.bannerImage}
                     alt="img"
                     className="rounded-md w-full"
                   ></img>
@@ -39,11 +39,13 @@ export default function BlogList({blogs}) {
               <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
                 {moment(data?.publishedAt).format("LL")}
               </p>
-              <p
-                className={`multi-line-truncate font-bold underline text-sm cursor-pointer ${Profilestyles.a_green_210}`}
-              >
-                {data?.primaryAuthor.username}
-              </p>
+              <Link href={`/${data.slug}`}>
+                <a
+                  className={`multi-line-truncate font-bold underline text-sm cursor-pointer ${Profilestyles.a_green_210}`}
+                >
+                  {data?.title}
+                </a>
+              </Link>
               {/* <p className="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
             </div>
           </div>
