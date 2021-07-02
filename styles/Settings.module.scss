@@ -2,9 +2,16 @@
     width: 100%;
     max-width: 288px;
     li {
-        @apply p-4 font-bold;
+        @apply p-4 font-bold flex justify-between items-center;
         color: #7E7E7E;
         border-bottom: 1px solid #E9E9E9;
+        &:after {
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00Ljg0NiA0LjgyMUwuNzk5IDguODY3YS40NTMuNDUzIDAgMTEtLjY0My0uNjQyTDMuODgxIDQuNS4xNTYuNzc1QS40NTQuNDU0IDAgMTEuNzk5LjEzM2w0LjA0NyA0LjA0NmEuNDU5LjQ1OSAwIDAxMCAuNjQyeiIgZmlsbD0iIzAwMCIvPjwvc3ZnPg==') no-repeat;
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 9px;
+        }
     }
     @screen xl{
         @apply absolute left-0 top-0;
