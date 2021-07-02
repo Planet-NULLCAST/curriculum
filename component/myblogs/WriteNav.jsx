@@ -56,11 +56,15 @@ export default function WriteNav({
   }, []);
 
   const getIsAdmin = async () => {
-    const res = await PostService.isAdmin(
-      userCookie?.id,
-      userCookie?.accessToken
-    );
-    if (res?.data) setIsAdmin(true);
+    try {
+      const res = await PostService.isAdmin(
+        userCookie.id,
+        userCookie.accessToken
+      );
+      if (res.data) setIsAdmin(true);
+    } catch(err) {
+      return err;
+    }
   };
   /**
    * gets tags from db and sets the tags
