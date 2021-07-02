@@ -228,7 +228,6 @@ const isAdmin = async (id, token) => {
     return data;
   } catch (err) {
     console.log("admin check err");
-    // console.log(err);
     throw err;
   }
 };
@@ -264,7 +263,6 @@ async function getPostCountByUserName(username) {
 
 /**
  * Api call for fetching all publlished posts related to a user
- * 
  * @param {String} username 
  * @returns {Promise}
  */
