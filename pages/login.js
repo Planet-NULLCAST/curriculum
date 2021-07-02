@@ -6,9 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
-
 import Head from "next/head";
-import Cookies from "universal-cookie";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 
@@ -198,7 +196,9 @@ export default function Login() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end p-6 w-full ${Loginstyles.bg_green_710}`}
                 >
-                  <p className={`sm:flex hidden font-semibold text-white text-sm flex mr-2 md:mr-5`}>
+                  <p
+                    className={`sm:flex hidden font-semibold text-white text-sm mr-2 md:mr-5`}
+                  >
                     Don’t have an Account ?
                   </p>
                   {isLoading ? (
@@ -290,6 +290,7 @@ export default function Login() {
                         </span>
                       )}
                     </div>
+
                     <button
                       className={`submitButtons w-full flex items-center justify-center ${
                         isLoading
@@ -305,6 +306,11 @@ export default function Login() {
                       {isLoading && <LoadIcon color="#fff" height="23px" />}
                       Login
                     </button>
+                    <Link href="/forgot-password">
+                      <a className="text-white text-sm my-5">
+                        Forgot Password ?
+                      </a>
+                    </Link>
                   </form>
                   <ToastContainer />
                 </div>

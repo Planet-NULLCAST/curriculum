@@ -17,9 +17,13 @@ import Profilestyles from "../../styles/Profile.module.css";
 export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
+
+    const LIMIT = 5;
+
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
-    const blogs = await PostService.getAllPostsByUsername(username);
+    const blogs = await PostService.getAllPostsByUsername(username, LIMIT);
+    
     if (!userData || blogCount == "") {
       return {
         redirect: {
