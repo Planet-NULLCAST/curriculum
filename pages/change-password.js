@@ -6,7 +6,7 @@ export default function settings() {
         <>
         <SiteHeader />
         <section>
-            <div className="bg-gray-100 py-2 pb-6 px-6">
+            <div className={`${styles.settingsBg} bg-gray-100 py-2 pb-6 px-6`}>
 
                 <div className="bg-white h-12 my-3 flex flex-row items-center rounded shadow-sm max-w-panel">
                     <ul className="flex flex-row justify-start items-center font-semibold h-full">

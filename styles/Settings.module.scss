@@ -1,6 +1,18 @@
+.settingsBg {
+    min-height: calc(100vh - 60px);
+    @media (min-width: 1536px) {
+        min-height: calc(100vh - 80px);
+    }
+}
 .aside {
+    @apply mb-5;
     width: 100%;
-    max-width: 288px;
+    @screen sm {
+        max-width: 264px;   
+    }
+    @screen lg {
+        max-width: 288px;   
+    }
     li {
         @apply p-4 font-bold flex justify-between items-center;
         color: #7E7E7E;
@@ -18,8 +30,13 @@
     }
 }
 .formWrap {
-    @apply w-full text-sm;
-    max-width: 490px;
+    @apply w-full text-sm mb-5;
+    @screen sm {
+        max-width: 440px; 
+    }
+    @screen lg {
+        max-width: 490px; 
+    }
     figure {
         @apply rounded-full overflow-hidden m-auto relative cursor-pointer mb-2;
         width: 140px;
