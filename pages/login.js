@@ -312,13 +312,13 @@ export default function Login() {
                       </a>
                     </Link>
                   </form>
-                  <ToastContainer />
                 </div>
               </Fade>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
