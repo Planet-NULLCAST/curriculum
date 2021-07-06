@@ -10,6 +10,7 @@ const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
+const usersUrl = "api/users";
 const adminUrl = "api/admin";
 const tagUrl = "api/tags";
 const searchUrl = "api/search";
@@ -33,5 +34,6 @@ export {
   serverUrl,
   searchUrl,
   forgotPasswordUrl,
-  resetPasswordUrl
+  resetPasswordUrl,
+  usersUrl
 };
