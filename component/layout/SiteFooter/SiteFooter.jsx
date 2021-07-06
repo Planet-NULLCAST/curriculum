@@ -11,7 +11,7 @@ import styles from "./SiteFooter.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SiteFooter() {
-  const [isValidEmail, setIsValidEmail] = useState();
+  const [isValidEmail, setIsValidEmail] = useState("");
 
   const notify = (msg) => {
     // console.log(msg);
@@ -65,7 +65,7 @@ export default function SiteFooter() {
                 <span className="btn__text">Subscribe</span>
               </button>
             </form>
-            {!isValidEmail && (
+            {isValidEmail !== "" && isValidEmail === false && (
               <p className="text-sm text-red-400 text-left">
                 Please enter a valid email
               </p>
