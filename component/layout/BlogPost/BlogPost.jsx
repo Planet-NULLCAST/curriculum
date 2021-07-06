@@ -1,12 +1,51 @@
-import styles from "./BlogPost.module.scss";
-import Link from "next/link";
-import Slider from "react-slick";
 import { useState, useEffect } from "react";
+import Slider from "react-slick";
+import Link from "next/link";
+
+import PostService from "../../../services/PostService"
+
+import styles from "./BlogPost.module.scss";
+
 
 export default function BlogPost(props) {
   const createMarkup = (value) => {
     return { __html: value };
   };
+
+  /**
+   * To call setVotes on every change in votetypes by a user
+   * @author sNkr-10
+   */
+  const [type, setType] = useState("");
+  const [voteType, setVoteType] = useState(props.blog.votes.find((item)=> item.userId == props.userId).type);
+  const [voteCount, setVoteCount] = useState(props.blog.votes.filter((item)=> item.type == "up").length -
+  props.blog.votes.filter((item)=> item.type == "down").length)
+  
+  useEffect(() => {
+    setVotes();
+  }, [type]);
+  
+  /**
+   * function triggered during upvotes/downvotes
+   * @author sNkr-10
+   * @returns {Promise}
+   */
+  const setVotes = async ()=> {
+    try{
+      const response = await PostService.setVotes(type, props.blog._id, props.token);
+      if (response.posts != null) {
+        setVoteCount(response.posts.votes.filter((item)=> item.type == "up").length -
+        response.posts.votes.filter((item)=> item.type == "down").length);
+
+        setVoteType(response.posts.votes.find((item)=> item.userId == props.userId).type);
+      }
+      return response;
+    }
+    catch(err) {
+      return err;
+    }
+  }
+
   const [headings, setHeadings] = useState();
   useEffect(() => {
     // const htmlString = String(createMarkup(props.html).__html);
@@ -62,7 +101,7 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a href="" className="uo">
+                  <a onClick={()=>setType("up")} className="uo">
                     <svg
                       width="37"
                       height="28"
@@ -72,12 +111,12 @@ export default function BlogPost(props) {
                     >
                       <path
                         d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z"
-                        fill="#CFCFCF"
+                        fill={voteType=="up"?"#ff590f" : "#CFCFCF"}
                       />
                     </svg>
                   </a>
-                  <span className="count">10215</span>
-                  <a href="" className="down">
+                  <span className="count">{voteCount}</span>
+                  <a onClick={()=>setType("down")} className="down">
                     <svg
                       width="37"
                       height="28"
@@ -87,7 +126,7 @@ export default function BlogPost(props) {
                     >
                       <path
                         d="M14.805 25.751L.977 5.553C.338 4.62 0 3.68 0 2.899 0 1.389 1.212.454 3.241.454h29.886c2.027 0 3.237.933 3.237 2.44 0 .782-.339 1.707-.98 2.642L21.557 25.744c-.891 1.3-2.09 2.02-3.377 2.02-1.286 0-2.484-.712-3.375-2.013z"
-                        fill="#CFCFCF"
+                        fill={voteType=="down"?"#ff590f" : "#CFCFCF"}
                       />
                     </svg>
                   </a>
