@@ -8,7 +8,7 @@
     @apply relative mb-5;
 
     &:before {
-        @apply h-full absolute;
+        @apply h-full absolute pointer-events-none;
         content: '';
         background: #A8EAF5;
         left: -22.73%;

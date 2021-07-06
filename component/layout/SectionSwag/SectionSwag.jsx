@@ -18,7 +18,7 @@ export default function SectionSwag() {
         <div className="md:flex items-center justify-between mb-10 xl:mb-20">
           <Fade>
           <div className="md:w-8/12 xl:w-7/12 font-darker font-bold text-25 xl:text-34 text-gray-01 text-center md:text-left">
-            <p className="mb-10">
+            <p>
               Every month, One Lucky Duck gets free swag shipped to their
               doorstep, wherever in the world you are! All you have to do is
               join our Discord channel today and tweet about the amazing things
