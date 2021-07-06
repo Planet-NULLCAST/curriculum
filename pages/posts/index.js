@@ -37,7 +37,6 @@ export async function getServerSideProps(context) {
         permanent: false,
         destination: "/login"
       }
-      // props: {}
     };
   }
 }
@@ -55,19 +54,6 @@ export default function Posts() {
   const [statusFilter, setStatusFilter] = useState("");
   const pageNo = 1;
   const limit = 10;
-
-  useEffect(() => {
-    if (userCookie) {
-      const reqData = {
-        pageNo: pageNo,
-        limit: limit,
-        tag: tagFilter,
-        status: statusFilter
-      };
-      getPosts(reqData);
-      changePage(pageNo, limit);
-    }
-  }, []);
 
   async function getPosts(reqData, tag, status) {
     // console.log(reqData);
@@ -133,7 +119,6 @@ export default function Posts() {
           >
             <Pagination
               TotalCount={postData.count}
-              // CurrentPage={3}
               changePage={changePage}
               pageNum={pageNo}
               limit={limit}
@@ -144,5 +129,3 @@ export default function Posts() {
     </div>
   );
 }
-
-// export default withAuth(MyPost);
