@@ -452,7 +452,7 @@ export default function SignUp() {
                             I agree to the{" "}
                             <a
                               href="#"
-                              className="text-blue-700 focus:outline-none"
+                              className="text-white underline"
                             >
                               terms and conditions
                             </a>
