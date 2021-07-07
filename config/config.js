@@ -16,6 +16,7 @@ const tagUrl = "api/tags";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
+const changePasswordUrl = "api/auth/change-password";
 
 export {
   baseUrl,
@@ -35,5 +36,6 @@ export {
   searchUrl,
   forgotPasswordUrl,
   resetPasswordUrl,
-  usersUrl
+  usersUrl,
+  changePasswordUrl
 };
