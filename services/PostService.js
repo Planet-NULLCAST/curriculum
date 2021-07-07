@@ -283,6 +283,30 @@ async function getAllPostsByUsername(username, limit) {
   }
 }
 
+/**
+ * Service to call updatePostVote Api
+ * @author sNkr-10
+ * @param {String} type 
+ * @param {String} postId 
+ * @param {String} token 
+ * @returns {Promise}
+ */
+async function setVotes(type, postId, token) {
+  const url = getUrl();
+
+  try {
+    const { data } = await axios.put(`${url}/${postUrl}/vote/${postId}`, {type:type}, {
+      headers: {
+        "x-access-token": `${token}`
+      }
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -299,7 +323,8 @@ const PostService = {
   adminGetLatestPosts,
   isAdmin,
   getPostCountByUserName,
-  getAllPostsByUsername
+  getAllPostsByUsername,
+  setVotes
 };
 
 module.exports = PostService;

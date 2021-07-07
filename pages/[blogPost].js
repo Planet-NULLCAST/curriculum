@@ -6,6 +6,7 @@ import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
+import { getCookieValue } from "../lib/cookie";
 import PostService from "../services/PostService";
 
 // unsure on using getServerSideProps
@@ -15,6 +16,13 @@ import PostService from "../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
+    //To get accces-token from cookies
+    const cookie = JSON.parse(
+      getCookieValue(context.req.headers.cookie, "userNullcast")
+    );
+    const userId = cookie.id;
+    const token = cookie.accessToken;
+
     const slug = context.params.blogPost;
     // console.log({ slug });
     const response = await PostService.getPostBySlug(slug);
@@ -42,7 +50,9 @@ export async function getServerSideProps(context) {
     return {
       props: {
         blog: response.data.blog,
-        relatedPosts: relatedPostsResponse.posts
+        relatedPosts: relatedPostsResponse.posts,
+        token: token,
+        userId: userId
       }
     };
   } catch (err) {
@@ -56,7 +66,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing({ blog, relatedPosts }) {
+export default function BlogListing({ blog, relatedPosts, token, userId }) {
   const { html, primaryAuthor, title, bannerImage, createdAt } = blog;
   // console.log(relatedPosts);
   return (
@@ -71,7 +81,7 @@ export default function BlogListing({ blog, relatedPosts }) {
         createdAt={createdAt}
         primaryAuthor={primaryAuthor}
       />
-      <BlogPost html={html} />
+      <BlogPost userId={userId} token={token} blog={blog} html={html} />
       <SectionAuthor primaryAuthor={primaryAuthor} />
       <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />
