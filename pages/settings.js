@@ -5,6 +5,7 @@ import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.cookie);
@@ -150,13 +151,22 @@ export default function Settings({ profileData }) {
           <div className="flex flex-wrap relative lg:justify-center">
             <div className={`${styles.aside} bg-white md:mr-4`}>
               <ul>
-                <li>
-                  <span>Edit Profile</span>
-                </li>
+                <Link href="/settings">
+                  <a>
+                    <li>
+                      <span>Edit Profile</span>
+                    </li>
+                  </a>
+                </Link>
+                <Link href="/change-password">
+                  <a>
+                    <li>
+                      <span>Change Password</span>
+                    </li>
+                  </a>
+                </Link>
+
                 {/* <li>
-                  <span>Change Password</span>
-                </li>
-                <li>
                   <span>Notifications</span>
                 </li>
                 <li>
