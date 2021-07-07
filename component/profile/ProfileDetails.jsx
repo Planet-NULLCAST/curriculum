@@ -39,7 +39,7 @@ export default function ProfileDetails({userData}) {
                 <h3 className="mb-1 font-semibold text-lg text-gray-900">
                   {userData.user.fullName}
                 </h3>
-                <h3 className="my-1 text-sm font-medium">{userData.user.username}</h3>
+                <h3 className="my-1 text-sm font-medium">@{userData.user.username}</h3>
                 <div className="flex flex-row my-1">
                   <img
                     className="mr-2"
