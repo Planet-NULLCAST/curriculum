@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
+import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 
 import PostService from "../../../services/PostService"
 
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./BlogPost.module.scss";
 
 
@@ -25,7 +27,7 @@ export default function BlogPost(props) {
   useEffect(() => {
     setVotes();
   }, [type]);
-  
+ 
   /**
    * function triggered during upvotes/downvotes
    * @author sNkr-10
@@ -33,14 +35,16 @@ export default function BlogPost(props) {
    */
   const setVotes = async ()=> {
     try{
-      const response = await PostService.setVotes(type, props.blog._id, props.token);
-      if (response.posts != null) {
-        setVoteCount(response.posts.votes.filter((item)=> item.type == "up").length -
-        response.posts.votes.filter((item)=> item.type == "down").length);
+      if (props.userId) {
+        const response = await PostService.setVotes(type, props.blog._id, props.token); 
+        if (response.posts != null) {
+          setVoteCount(response.posts.votes.filter((item)=> item.type == "up").length -
+          response.posts.votes.filter((item)=> item.type == "down").length);
 
-        setVoteType(response.posts.votes.find((item)=> item.userId == props.userId).type);
+          setVoteType(response.posts.votes.find((item)=> item.userId == props.userId).type);
+        }
+        return response;
       }
-      return response;
     }
     catch(err) {
       return err;
@@ -67,8 +71,23 @@ export default function BlogPost(props) {
     setHeadings(h2Tags);
   }, []);
 
+  //Function definition for toast
+  const notify = (err) => {
+    console.log(err);
+    toast.dark(err, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+  };
+
   return (
     <>
+      <ToastContainer />
       <style jsx>{`
         .bg1 {
           background: #282828;
@@ -102,7 +121,7 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={()=>setType("up")} className="uo">
+                  <a onClick={()=>(setType("up"), !props.userId && notify("Please login for further actions"))} className="uo">
                     <svg
                       width="37"
                       height="28"
@@ -117,7 +136,7 @@ export default function BlogPost(props) {
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={()=>setType("down")} className="down">
+                  <a onClick={() => (setType("down"), !props.userId && notify("Please login for further actions"))} className="down">
                     <svg
                       width="37"
                       height="28"
