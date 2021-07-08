@@ -31,8 +31,8 @@ export async function getServerSideProps(context) {
       props: { blog: responsePost.data.blog, user: responseUser.data.user }
     };
   } catch (err) {
-    console.log('Error => ', err);
-    return err;
+    console.log("Error => ", err);
+    return { props: { blog: [], user: [] } };
   }
 }
 

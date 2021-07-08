@@ -10,11 +10,13 @@ const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const userUrl = "api/user";
+const usersUrl = "api/users";
 const adminUrl = "api/admin";
 const tagUrl = "api/tags";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
+const changePasswordUrl = "api/auth/change-password";
 
 export {
   baseUrl,
@@ -33,5 +35,7 @@ export {
   serverUrl,
   searchUrl,
   forgotPasswordUrl,
-  resetPasswordUrl
+  resetPasswordUrl,
+  usersUrl,
+  changePasswordUrl
 };

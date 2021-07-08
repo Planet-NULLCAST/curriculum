@@ -108,7 +108,7 @@ export default function HomeSpotlight() {
                   <li>
                     <Link href="/posts">
                       <a onClick={() => setMenu(true)}>
-                        Write{" "}
+                        Write
                         <img src="/images/hand.png" className="ml-1" alt="" />
                       </a>
                     </Link>

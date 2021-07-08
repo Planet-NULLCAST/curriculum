@@ -321,7 +321,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
 
           <div className="pr-5 ml-5 lg:ml-10 hidden md:block">
             <Link href="https://discord.com/invite/5byDDp2qbK">
-              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center">
+              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center" target="_blank">
                 Trouble? Join Discord
                 <svg
                   className="hidden lg:block ml-2"

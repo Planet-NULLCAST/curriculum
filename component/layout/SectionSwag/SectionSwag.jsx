@@ -42,7 +42,7 @@ export default function SectionSwag() {
             </Reveal>
         </div>
         <div className="cta text-center">
-          <a href="https://discord.com/invite/5byDDp2qbK" className="btn">
+          <a href="https://discord.com/invite/5byDDp2qbK" className="btn" target="_blank">
             <span className="btn__text">JOIN THE FLOCK</span>
           </a>
         </div>

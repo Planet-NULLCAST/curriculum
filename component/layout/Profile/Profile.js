@@ -73,7 +73,11 @@ export default function Profile({ onLogout, username }) {
               </Link>
             </li>
           )}
-
+          <li>
+            <Link href="/settings">
+              <button className="linkUnderline">Edit Profile</button>
+            </Link>
+          </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
             <button onClick={onLogout} className="linkUnderline">

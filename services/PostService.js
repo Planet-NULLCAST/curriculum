@@ -10,7 +10,7 @@ import {
   adminUrl,
   searchUrl
 } from "../config/config";
-import {getUrl} from "../lib/getUrl"
+import { getUrl } from "../lib/getUrl";
 
 async function getPostsByUserId(userCookie, reqData) {
   try {
@@ -263,7 +263,7 @@ async function getPostCountByUserName(username) {
 
 /**
  * Api call for fetching all publlished posts related to a user
- * @param {String} username 
+ * @param {String} username
  * @returns {Promise}
  */
 async function getAllPostsByUsername(username, limit) {
@@ -273,7 +273,7 @@ async function getAllPostsByUsername(username, limit) {
     const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
       params: {
         username: username,
-        limit: limit,
+        limit: limit
       }
     });
     return data;
