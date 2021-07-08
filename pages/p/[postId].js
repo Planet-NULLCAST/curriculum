@@ -16,11 +16,16 @@ import Head from "next/head";
 export async function getServerSideProps(context) {
   try {
     const postId = context.params.postId;
-    // console.log({ postId });
+    let userId = "";
+    let token = "";
+
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
       );
+      userId = cookie.id;
+      token = cookie.accessToken;
+
       const response = await PostService.getPostById(cookie, postId);
       if (!response) {
         return {
@@ -31,7 +36,11 @@ export async function getServerSideProps(context) {
         };
       }
       return {
-        props: { posts: response }
+        props: {
+          posts: response,
+          token: token,
+          userId: userId
+        }
       };
     } else {
       console.log("else");
@@ -64,7 +73,7 @@ export default function BlogListing(props) {
         createdAt={createdAt}
         primaryAuthor={primaryAuthor}
       />
-      <BlogPost html={html} />
+      <BlogPost userId={props.userId} token={props.token} blog={props.posts} html={html} />
       <SectionAuthor primaryAuthor={primaryAuthor} />
       <SectionSwag />
       <SiteFooter />

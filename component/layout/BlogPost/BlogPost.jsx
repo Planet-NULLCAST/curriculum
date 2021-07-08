@@ -18,22 +18,17 @@ export default function BlogPost(props) {
    * To call setVotes on every change in votetypes by a user
    * @author sNkr-10
    */
-  const [type, setType] = useState("");
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
   const [voteType, setVoteType] = useState(props.blog.votes?.find((item)=> item.userId == props.userId)?.type);
   const [voteCount, setVoteCount] = useState(props.blog.votes.filter((item)=> item.type == "up").length -
   props.blog.votes.filter((item)=> item.type == "down").length)
-  
-  useEffect(() => {
-    setVotes();
-  }, [type]);
  
   /**
    * function triggered during upvotes/downvotes
    * @author sNkr-10
    * @returns {Promise}
    */
-  const setVotes = async ()=> {
+  const setVotes = async (type)=> {
     try{
       if (props.userId) {
         const response = await PostService.setVotes(type, props.blog._id, props.token); 
@@ -121,7 +116,7 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={()=>(setType("up"), !props.userId && notify("Please login for further actions"))} className="uo">
+                  <a onClick={()=>(setVotes("up"), !props.userId && notify("Please login for further actions"))} className="uo">
                     <svg
                       width="37"
                       height="28"
@@ -136,7 +131,7 @@ export default function BlogPost(props) {
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={() => (setType("down"), !props.userId && notify("Please login for further actions"))} className="down">
+                  <a onClick={() => (setVotes("down"), !props.userId && notify("Please login for further actions"))} className="down">
                     <svg
                       width="37"
                       height="28"
