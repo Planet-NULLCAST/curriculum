@@ -52,11 +52,13 @@ export default function FollowersList() {
     <div>
       <div className="flex justify-between items-center mt-5">
         <span className="font-bold">Followers</span>
-        <a href="" className="underline text-sm font-semibold">
+        {/* <a href="" className="underline text-sm font-semibold">
           View All
-        </a>
+        </a> */}
       </div>
-      <div className="mt-4">
+      <p className="text-gray-500 mt-8">Coming Soon</p>
+
+      {/* <div className="mt-4">
         {followers?.map((data) => (
           <div className="flex items-center py-2" key={data.name + data.image}>
             {data?.image ? (
@@ -75,7 +77,7 @@ export default function FollowersList() {
             <span className="text-sm font-semibold">{data?.name}</span>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

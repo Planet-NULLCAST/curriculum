@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
     const blogs = await PostService.getAllPostsByUsername(username, LIMIT);
-    
+
     if (!userData || blogCount == "") {
       return {
         redirect: {
@@ -34,9 +34,9 @@ export async function getServerSideProps(context) {
     }
     return {
       props: {
-        userData: userData,
-        blogCount : blogCount.count,
-        blogs : blogs.allPosts,
+        userData: userData.user,
+        blogCount: blogCount.count,
+        blogs: blogs.allPosts
       }
     };
   } catch (err) {
@@ -51,6 +51,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Username(props) {
+  // console.log(props);
   const [currentNav, setcurrentNav] = useState("profile");
 
   const changeNav = (data) => {
@@ -70,7 +71,7 @@ export default function Username(props) {
             <ProfileDetails userData={props.userData} />
             {currentNav === "profile" && (
               <>
-                <Activity />
+                {/* <Activity /> */}
                 <BlogList blogs={props.blogs} />
               </>
             )}
