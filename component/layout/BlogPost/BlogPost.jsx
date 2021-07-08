@@ -46,6 +46,11 @@ export default function BlogPost(props) {
     }
   }
 
+  const handleClick = (value) => {
+    setVotes(value);
+    !props.userId && notify("Please login for further actions")
+  }
+
   const [headings, setHeadings] = useState();
   useEffect(() => {
     // const htmlString = String(createMarkup(props.html).__html);
@@ -116,7 +121,7 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={()=>(setVotes("up"), !props.userId && notify("Please login for further actions"))} className="uo">
+                  <a onClick={()=>handleClick("up")} className="uo">
                     <svg
                       width="37"
                       height="28"
@@ -131,7 +136,7 @@ export default function BlogPost(props) {
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={() => (setVotes("down"), !props.userId && notify("Please login for further actions"))} className="down">
+                  <a onClick={()=>handleClick("down")} className="down">
                     <svg
                       width="37"
                       height="28"
