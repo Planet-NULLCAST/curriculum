@@ -36,14 +36,19 @@ export default function Profile({ onLogout, username }) {
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
-        <Image src="/images/dummy.svg" alt="Profile" width={32} height={32} />
+        <img
+          src={userCookie.avatar}
+          alt="avatar"
+          width="32"
+          height="32"
+          className="rounded-full"
+        />
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{username}</h4>
+          <h4>{userCookie.username}</h4>
           <p>
-            <img src="/images/smallduck.svg" alt="" />
-            22000
+            <img src="/images/smallduck.svg" alt="coin" />0
           </p>
         </div>
         <ul>

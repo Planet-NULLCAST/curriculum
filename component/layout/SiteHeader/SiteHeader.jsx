@@ -114,7 +114,6 @@ export default function HomeSpotlight() {
                     </Link>
                   </li>
                   <li>
-                    {/* <Link href="#"> */}
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
                     <a onClick={() => setMenu(true)}>
                       Explore
@@ -131,7 +130,6 @@ export default function HomeSpotlight() {
                         </svg>
                       </span>
                     </a>
-                    {/* </Link> */}
                     <ul>
                       <li>
                         <Link href="/blog">
@@ -156,13 +154,7 @@ export default function HomeSpotlight() {
           <div className={styles.wrapBtn}>
             {cookies ? (
               <div className="flex flex-row justify-center items-center">
-                <Profile
-                  username={cookies.username}
-                  onLogout={() => logout()}
-                />
-                {/* <div>
-                <button onClick={() => logout()}>Logout</button>
-              </div> */}
+                <Profile onLogout={() => logout()} />
               </div>
             ) : (
               <a

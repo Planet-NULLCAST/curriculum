@@ -5,16 +5,11 @@ import validatePassword from "../lib/validatePassword";
 import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
-  try {
-    // console.log(context.query);
-    return {
-      props: {
-        query: context.query
-      }
-    };
-  } catch (err) {
-    console.log("Error => ", err);
-  }
+  return {
+    props: {
+      query: context.query
+    }
+  };
 }
 
 export default function resetPassword({ query }) {
@@ -108,7 +103,7 @@ export default function resetPassword({ query }) {
           className="flex flex-col items-center justify-center"
         >
           <label
-            htmlFor="password"
+            htmlFor="newPassword"
             className="font-semibold text-xl w-2/3 m-4 text-purple-600"
           >
             Enter new password
@@ -137,7 +132,7 @@ export default function resetPassword({ query }) {
           )}
 
           <label
-            htmlFor="email"
+            htmlFor="confirmPassword"
             className="font-semibold text-xl w-2/3 m-4 text-purple-600"
           >
             Confirm new password
