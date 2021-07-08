@@ -60,7 +60,7 @@ export default function Settings({ profileData }) {
   });
 
   useEffect(() => {
-    console.log({ profileData });
+    // console.log({ profileData });
     setProfile({ ...profileData });
   }, []);
 
