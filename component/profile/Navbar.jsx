@@ -19,7 +19,7 @@ export default function Navbar(props) {
             Profile
           </span>
         </li>
-        <li
+        {/* <li
           className={`mx-4 cursor-pointer border-b-4 h-full flex justify-center items-center ${
             currentNav === "store" ? "border-gray-600" : "border-white"
           }`}
@@ -32,8 +32,8 @@ export default function Navbar(props) {
           >
             My Store
           </span>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           className={`mx-4 cursor-pointer border-b-4 h-full flex justify-center items-center ${
             currentNav === "achievement" ? "border-gray-600" : "border-white"
           }`}
@@ -46,7 +46,7 @@ export default function Navbar(props) {
           >
             Achievements
           </span>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

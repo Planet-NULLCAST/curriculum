@@ -141,7 +141,7 @@ async function deletePostById(userCookie, postId) {
 
 async function uploadImage(imageFile, imageData) {
   // get url from s3url and send imagefile to that url
-  console.log(imageData);
+  // console.log(imageData);
   // console.log(s3Url);
   try {
     const response = await axios.post(
@@ -286,20 +286,24 @@ async function getAllPostsByUsername(username, limit) {
 /**
  * Service to call updatePostVote Api
  * @author sNkr-10
- * @param {String} type 
- * @param {String} postId 
- * @param {String} token 
+ * @param {String} type
+ * @param {String} postId
+ * @param {String} token
  * @returns {Promise}
  */
 async function setVotes(type, postId, token) {
   const url = getUrl();
 
   try {
-    const { data } = await axios.put(`${url}/${postUrl}/vote/${postId}`, {type:type}, {
-      headers: {
-        "x-access-token": `${token}`
+    const { data } = await axios.put(
+      `${url}/${postUrl}/vote/${postId}`,
+      { type: type },
+      {
+        headers: {
+          "x-access-token": `${token}`
+        }
       }
-    });
+    );
     return data;
   } catch (err) {
     console.log(err);
