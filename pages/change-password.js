@@ -26,7 +26,6 @@ export default function changePassword() {
   const passwordCheck = (name, value) => {
     if (name === "newPassword") {
       const validType = validatePassword(value);
-      // console.log("newPassword validType -", validType);
       if (validType) {
         setValidNewPassword(validType);
       }
@@ -34,7 +33,6 @@ export default function changePassword() {
 
     if (name === "confirmPassword") {
       const validType = validatePassword(value);
-      // console.log("confirmPassword validType -", validType);
       if (validType) {
         setValidConfirmPassword(validType);
       }
@@ -42,9 +40,7 @@ export default function changePassword() {
   };
 
   const handleInputChange = (e) => {
-    // console.log(e.target);
     const { name, value } = e.target;
-    // console.log(name, value);
     if (validNewPassword !== "" && name === "newPassword") {
       passwordCheck(name, value);
     }
@@ -62,7 +58,6 @@ export default function changePassword() {
   };
 
   const notify = (msg, type) => {
-    // console.log(msg);
     if (type) {
       toast.success(msg, {
         position: "top-center",
@@ -87,16 +82,13 @@ export default function changePassword() {
   };
 
   const resetPassword = async (passwords) => {
-    // console.log({ passwords });
     try {
       const { message, updatedUser } = await AuthService.changePassword(
         passwords,
         userCookie
       );
-      // console.log(message);
       notify(message, true);
     } catch (err) {
-      // console.log(err);
       notify(err.message, false);
     }
   };
@@ -104,7 +96,6 @@ export default function changePassword() {
     e.preventDefault();
     const newPass = e.target.newPassword.value;
     const confirmPass = e.target.confirmPassword.value;
-    // console.log({ password });
     passwordCheck(e.target.newPassword.name, newPass);
     passwordCheck(e.target.confirmPassword.name, confirmPass);
     if (
