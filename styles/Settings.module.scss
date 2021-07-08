@@ -1,86 +1,106 @@
 .settingsBg {
-    min-height: calc(100vh - 60px);
-    @media (min-width: 1536px) {
-        min-height: calc(100vh - 80px);
-    }
+  min-height: calc(100vh - 60px);
+  @media (min-width: 1536px) {
+    min-height: calc(100vh - 80px);
+  }
 }
 .aside {
-    @apply mb-5;
-    width: 100%;
-    @screen sm {
-        max-width: 264px;   
+  @apply mb-5;
+  width: 100%;
+  @screen sm {
+    max-width: 264px;
+  }
+  @screen lg {
+    max-width: 288px;
+  }
+  li {
+    @apply p-4 font-bold flex justify-between items-center;
+    color: #7e7e7e;
+    border-bottom: 1px solid #e9e9e9;
+    &:after {
+      background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00Ljg0NiA0LjgyMUwuNzk5IDguODY3YS40NTMuNDUzIDAgMTEtLjY0My0uNjQyTDMuODgxIDQuNS4xNTYuNzc1QS40NTQuNDU0IDAgMTEuNzk5LjEzM2w0LjA0NyA0LjA0NmEuNDU5LjQ1OSAwIDAxMCAuNjQyeiIgZmlsbD0iIzAwMCIvPjwvc3ZnPg==")
+        no-repeat;
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 9px;
     }
-    @screen lg {
-        max-width: 288px;   
-    }
-    li {
-        @apply p-4 font-bold flex justify-between items-center;
-        color: #7E7E7E;
-        border-bottom: 1px solid #E9E9E9;
-        &:after {
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00Ljg0NiA0LjgyMUwuNzk5IDguODY3YS40NTMuNDUzIDAgMTEtLjY0My0uNjQyTDMuODgxIDQuNS4xNTYuNzc1QS40NTQuNDU0IDAgMTEuNzk5LjEzM2w0LjA0NyA0LjA0NmEuNDU5LjQ1OSAwIDAxMCAuNjQyeiIgZmlsbD0iIzAwMCIvPjwvc3ZnPg==') no-repeat;
-            content: '';
-            display: inline-block;
-            width: 5px;
-            height: 9px;
-        }
-    }
-    @screen xl{
-        @apply absolute left-0 top-0;
-    }
+  }
+  @screen xl {
+    @apply absolute left-0 top-0;
+  }
 }
 .formWrap {
-    @apply w-full text-sm mb-5;
-    @screen sm {
-        max-width: 440px; 
+  @apply w-full text-sm mb-5;
+  @screen sm {
+    max-width: 440px;
+  }
+  @screen lg {
+    max-width: 490px;
+  }
+  figure {
+    @apply rounded-full overflow-hidden m-auto relative cursor-pointer mb-2;
+    width: 140px;
+    height: 140px;
+    img {
+      @apply w-full;
+      position: absolute;
+      z-index: 10;
     }
-    @screen lg {
-        max-width: 490px; 
+    &:before {
+      content: "";
+      @apply absolute left-0 top-0 w-full h-full;
+      background-color: rgba($color: #000000, $alpha: 0.5);
     }
-    figure {
-        @apply rounded-full overflow-hidden m-auto relative cursor-pointer mb-2;
-        width: 140px;
-        height: 140px;
-        img {
-            @apply w-full;
-        }
-        &:before {
-            content: '';
-            @apply absolute left-0 top-0 w-full h-full;
-            background-color: rgba($color: #000000, $alpha: .5)
-        }
+    // }
+    figcaption {
+      @apply absolute top-1/2 left-0 w-full text-white font-bold text-sm;
+      transform: translateY(-50%);
+    }
+    input {
+      width: 140px;
+      height: 140px;
+      z-index: 50;
+      position: absolute;
+      opacity: 0;
+    }
+    &:before {
+      content: "";
+      @apply absolute left-0 top-0 w-full h-full z-20;
+      background-color: rgba($color: #000000, $alpha: 0.5);
     }
     figcaption {
-        @apply absolute top-1/2 left-0 w-full text-white font-bold text-sm;
-        transform: translateY(-50%);
+      @apply absolute top-1/2 left-0 w-full text-white font-bold text-sm;
+      transform: translateY(-50%);
     }
-    .icon {
-        svg {
-            @apply mx-auto mb-2;
-        }
+  }
+  .icon {
+    svg {
+      @apply mx-auto mb-2;
     }
-    label {
-        @apply font-semibold block mb-1;
-    }
-    input, textarea {
-        @apply block w-full p-4 font-semibold;
-        border: 1px solid #DEDEDE;
-        background: #F8F7F7;
-        color: #131313;
-        border-radius: 3px;
-    }
-    textarea {
-        height: 120px;
-        resize: none;
-    }
-    button {
-        background: #242424;
-        @apply p-4 py-3 text-white;
-        border-radius: 3px;
-    }
-
+  }
+  label {
+    @apply font-semibold block mb-1;
+  }
+  input,
+  textarea {
+    @apply block w-full p-4 font-semibold;
+    border: 1px solid #dedede;
+    background: #f8f7f7;
+    color: #131313;
+    border-radius: 3px;
+  }
+  textarea {
+    height: 120px;
+    resize: none;
+  }
+  button {
+    background: #242424;
+    @apply p-4 py-3 text-white;
+    border-radius: 3px;
+  }
 }
 .delete {
-    @apply underline;
-    color: #E01919;
+  @apply underline;
+  color: #e01919;
 }

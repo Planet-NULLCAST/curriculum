@@ -52,7 +52,9 @@ export default function WriteNav({
 
   useEffect(() => {
     getSettingsTags();
-    getIsAdmin();
+    if (userCookie.roles === "admin") {
+      getIsAdmin();
+    }
   }, []);
 
   const getIsAdmin = async () => {
@@ -62,7 +64,7 @@ export default function WriteNav({
         userCookie.accessToken
       );
       if (res.data) setIsAdmin(true);
-    } catch(err) {
+    } catch (err) {
       return err;
     }
   };
@@ -153,10 +155,10 @@ export default function WriteNav({
       slug: postUrl
     };
 
-    // send prop
     // console.log(
     //   Object.values(settingsData).some((k) => k !== "" || k !== null)
     // );
+    // send prop
     getSettings(settingsData);
   }
 

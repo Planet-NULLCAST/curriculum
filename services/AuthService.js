@@ -1,5 +1,10 @@
 const axios = require("axios");
-import { baseUrl, forgotPasswordUrl, resetPasswordUrl } from "../config/config";
+import {
+  baseUrl,
+  forgotPasswordUrl,
+  resetPasswordUrl,
+  changePasswordUrl
+} from "../config/config";
 
 async function sendEmail(email) {
   const item = {
@@ -30,9 +35,32 @@ async function resetPassword(password, token) {
   }
 }
 
+async function changePassword(passwords, userCookie) {
+  // console.log({ passwords });
+  // console.log(userId);
+  const item = {
+    currentPassword: passwords.currentPassword,
+    newPassword: passwords.confirmPass,
+    userId: userCookie.id
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${changePasswordUrl}`, item, {
+      headers: {
+        "x-access-token": `${userCookie.accessToken}`
+      }
+    });
+    // console.log(data);
+    return data;
+  } catch (err) {
+    // console.log(err.response.data);
+    throw err.response.data;
+  }
+}
+
 const AuthService = {
   sendEmail,
-  resetPassword
+  resetPassword,
+  changePassword
 };
 
 module.exports = AuthService;
