@@ -17,14 +17,18 @@ import PostService from "../services/PostService";
 export async function getServerSideProps(context) {
   try {
     //To get accces-token from cookies
-    const cookie = JSON.parse(
-      getCookieValue(context.req.headers.cookie, "userNullcast")
-    );
-    const userId = cookie.id;
-    const token = cookie.accessToken;
+    let userId = "";
+    let token = "";
+    
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      userId = cookie.id;
+      token = cookie.accessToken;
+    }
 
     const slug = context.params.blogPost;
-    // console.log({ slug });
     const response = await PostService.getPostBySlug(slug);
     // console.log(response.data.blog.tags[0]);
     const relatedPostsTag = response.data.blog.tags[0]

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
+import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 
 import PostService from "../../../services/PostService"
 
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./BlogPost.module.scss";
 
 
@@ -16,35 +18,37 @@ export default function BlogPost(props) {
    * To call setVotes on every change in votetypes by a user
    * @author sNkr-10
    */
-  const [type, setType] = useState("");
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
   const [voteType, setVoteType] = useState(props.blog.votes?.find((item)=> item.userId == props.userId)?.type);
   const [voteCount, setVoteCount] = useState(props.blog.votes.filter((item)=> item.type == "up").length -
   props.blog.votes.filter((item)=> item.type == "down").length)
-  
-  useEffect(() => {
-    setVotes();
-  }, [type]);
-  
+ 
   /**
    * function triggered during upvotes/downvotes
    * @author sNkr-10
    * @returns {Promise}
    */
-  const setVotes = async ()=> {
+  const setVotes = async (type)=> {
     try{
-      const response = await PostService.setVotes(type, props.blog._id, props.token);
-      if (response.posts != null) {
-        setVoteCount(response.posts.votes.filter((item)=> item.type == "up").length -
-        response.posts.votes.filter((item)=> item.type == "down").length);
+      if (props.userId) {
+        const response = await PostService.setVotes(type, props.blog._id, props.token); 
+        if (response.posts != null) {
+          setVoteCount(response.posts.votes.filter((item)=> item.type == "up").length -
+          response.posts.votes.filter((item)=> item.type == "down").length);
 
-        setVoteType(response.posts.votes.find((item)=> item.userId == props.userId).type);
+          setVoteType(response.posts.votes.find((item)=> item.userId == props.userId).type);
+        }
+        return response;
       }
-      return response;
     }
     catch(err) {
       return err;
     }
+  }
+
+  const handleClick = (value) => {
+    setVotes(value);
+    !props.userId && notify("Please login for further actions")
   }
 
   const [headings, setHeadings] = useState();
@@ -67,8 +71,23 @@ export default function BlogPost(props) {
     setHeadings(h2Tags);
   }, []);
 
+  //Function definition for toast
+  const notify = (err) => {
+    console.log(err);
+    toast.dark(err, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+  };
+
   return (
     <>
+      <ToastContainer />
       <style jsx>{`
         .bg1 {
           background: #282828;
@@ -102,7 +121,7 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={()=>setType("up")} className="uo">
+                  <a onClick={()=>handleClick("up")} className="uo">
                     <svg
                       width="37"
                       height="28"
@@ -117,7 +136,7 @@ export default function BlogPost(props) {
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={()=>setType("down")} className="down">
+                  <a onClick={()=>handleClick("down")} className="down">
                     <svg
                       width="37"
                       height="28"
