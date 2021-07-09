@@ -10,14 +10,12 @@ import PostService from "../../services/PostService";
 import { editorUrl } from "../../config/config";
 import { getCookieValue } from "../../lib/cookie";
 
-import "react-toastify/dist/ReactToastify.css";
-
 const TARGET = editorUrl;
 
 export async function getServerSideProps(context) {
   // console.log(context);
   try {
-    console.log(context.query);
+    // console.log(context.query);
     const post_Id = context.query.post_id;
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
@@ -267,7 +265,7 @@ export default function Write({ post_Id }) {
             </p>
           </div> */}
         </div>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </>
   );

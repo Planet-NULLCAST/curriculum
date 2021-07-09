@@ -6,8 +6,8 @@ import SectionRelated from "../component/layout/BlogPost/SectionRelated";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
-import { getCookieValue } from "../lib/cookie";
 import PostService from "../services/PostService";
+import Cookies from "universal-cookie";
 
 // unsure on using getServerSideProps
 // if facing SEO issues refer
@@ -16,18 +16,6 @@ import PostService from "../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    //To get accces-token from cookies
-    let userId = "";
-    let token = "";
-    
-    if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
-      );
-      userId = cookie.id;
-      token = cookie.accessToken;
-    }
-
     const slug = context.params.blogPost;
     const response = await PostService.getPostBySlug(slug);
     // console.log(response.data.blog.tags[0]);
@@ -54,9 +42,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         blog: response.data.blog,
-        relatedPosts: relatedPostsResponse.posts,
-        token: token,
-        userId: userId
+        relatedPosts: relatedPostsResponse.posts
       }
     };
   } catch (err) {
@@ -70,9 +56,11 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing({ blog, relatedPosts, token, userId }) {
+export default function BlogListing({ blog, relatedPosts }) {
   const { html, primaryAuthor, title, bannerImage, createdAt } = blog;
   // console.log(relatedPosts);
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
   return (
     <>
       <SiteHeader />
@@ -85,7 +73,12 @@ export default function BlogListing({ blog, relatedPosts, token, userId }) {
         createdAt={createdAt}
         primaryAuthor={primaryAuthor}
       />
-      <BlogPost userId={userId} token={token} blog={blog} html={html} />
+      <BlogPost
+        userId={userCookie ? userCookie.id : ""}
+        token={userCookie ? userCookie.accessToken : ""}
+        blog={blog}
+        html={html}
+      />
       <SectionAuthor primaryAuthor={primaryAuthor} />
       <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />

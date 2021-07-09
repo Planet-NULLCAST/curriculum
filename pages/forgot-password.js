@@ -5,8 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import AuthService from "../services/AuthService";
 import validateEmail from "../lib/validateEmail";
 
-import "react-toastify/dist/ReactToastify.css";
-
 export default function forgotPassword() {
   const [isValidEmail, setIsValidEmail] = useState();
 
@@ -83,7 +81,7 @@ export default function forgotPassword() {
             Send Reset Mail
           </button>
         </form>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </div>
   );

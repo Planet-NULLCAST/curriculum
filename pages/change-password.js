@@ -1,11 +1,41 @@
 import { useState } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import styles from "../styles/Settings.module.scss";
 import AuthService from "../services/AuthService";
 import validatePassword from "../lib/validatePassword";
+import { getCookieValue } from "../lib/cookie";
 import Cookies from "universal-cookie";
 import { ToastContainer, toast } from "react-toastify";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        return {
+          props: {}
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/"
+        }
+      };
+    }
+  } catch (err) {
+    console.log("Error => ", err);
+    return {
+      props: {}
+    };
+  }
+}
 
 export default function changePassword() {
   const cookies = new Cookies();
@@ -114,6 +144,9 @@ export default function changePassword() {
   return (
     <>
       <SiteHeader />
+      <Head>
+        <title>Change Password</title>
+      </Head>
       <section>
         <div className={`${styles.settingsBg} bg-gray-100 py-2 pb-6 px-6`}>
           <div className="bg-white h-12 my-3 flex flex-row items-center rounded shadow-sm max-w-panel">
@@ -219,14 +252,14 @@ export default function changePassword() {
                     )}
                 </div>
                 <div className="text-right w-full">
-                  <button>Update Profile</button>
+                  <button>Update Password</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </section>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 }

@@ -20,30 +20,34 @@ export async function getServerSideProps(context) {
     let token = "";
 
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
-      userId = cookie.id;
-      token = cookie.accessToken;
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        userId = cookie.id;
+        token = cookie.accessToken;
 
-      const response = await PostService.getPostById(cookie, postId);
-      if (!response) {
+        const response = await PostService.getPostById(cookie, postId);
+        if (!response) {
+          return {
+            redirect: {
+              permanent: false,
+              destination: "/404"
+            }
+          };
+        }
         return {
-          redirect: {
-            permanent: false,
-            destination: "/404"
+          props: {
+            posts: response,
+            token: token,
+            userId: userId
           }
         };
       }
-      return {
-        props: {
-          posts: response,
-          token: token,
-          userId: userId
-        }
-      };
     } else {
-      console.log("else");
+      // console.log("else");
       return {
         redirect: {
           permanent: false,
@@ -73,7 +77,12 @@ export default function BlogListing(props) {
         createdAt={createdAt}
         primaryAuthor={primaryAuthor}
       />
-      <BlogPost userId={props.userId} token={props.token} blog={props.posts} html={html} />
+      <BlogPost
+        userId={props.userId}
+        token={props.token}
+        blog={props.posts}
+        html={html}
+      />
       <SectionAuthor primaryAuthor={primaryAuthor} />
       <SectionSwag />
       <SiteFooter />

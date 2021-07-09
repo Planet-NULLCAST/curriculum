@@ -7,10 +7,13 @@ import {
   TwitterShareButton
 } from "react-share";
 
+import Link from "next/link";
+import hljs from "highlight.js";
+
 import PostService from "../../../services/PostService";
 import { clientUrl } from "../../../config/config";
 
-import "react-toastify/dist/ReactToastify.css";
+import "highlight.js/styles/tomorrow-night-blue.css";
 import styles from "./BlogPost.module.scss";
 
 export default function BlogPost(props) {
@@ -69,12 +72,6 @@ export default function BlogPost(props) {
 
   const [headings, setHeadings] = useState();
   useEffect(() => {
-    // const htmlString = String(createMarkup(props.html).__html);
-    // console.log(htmlString);
-    // const res = htmlString.match(/<h2[^>]+>(.*?)<\/h2>/g);
-    // console.log({ res });
-    // const res2 = res.map((i) => i.match(/\>(.*?)\</));
-    // console.log({ res2 });
     const h2Tags = Array.from(
       document.getElementById("component").getElementsByTagName("h2")
     ).map((item) => {
@@ -85,6 +82,8 @@ export default function BlogPost(props) {
     });
     // console.log({ h2Tags });
     setHeadings(h2Tags);
+
+    hljs.highlightAll();
   }, []);
 
   //Function definition for toast
@@ -103,7 +102,7 @@ export default function BlogPost(props) {
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <style jsx>{`
         .bg1 {
           background: #282828;

@@ -77,13 +77,15 @@ input:-webkit-autofill:active {
 @import "./partials/fonts";
 @import "./partials/common";
 
-html {
-  // scroll-behavior: smooth;
-}
-
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 1em;
+}
+.Toastify__toast--error {
+  background: #ef4444;
+}
+.Toastify__toast--success {
+  background: #10b981;
 }
 
 h2,
@@ -99,14 +101,15 @@ h3 {
   margin-top: 1rem;
   margin-bottom: 1rem;
   overflow: auto;
+  background-color: #22202c;
 }
 
 .codeClass :not(pre) code {
   display: unset;
   border: 1px solid grey;
-  /* color: #880000; */
   padding: 1px 5px;
   border-radius: 5px;
+  background-color: transparent;
 }
 
 .codeClass h1,
