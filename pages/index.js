@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Home(props) {
+export default function Home({ blog, user }) {
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -45,10 +45,10 @@ export default function Home(props) {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      {props.blog && <SectioBlogs blog={props.blog} />}
+      {blog && <SectioBlogs blog={blog} />}
 
       <SectionVideos />
-      {props.user && <SectionUsers user={props.user} />}
+      {user && <SectionUsers user={user} />}
 
       <SectionEvents />
       <SectionSwag />

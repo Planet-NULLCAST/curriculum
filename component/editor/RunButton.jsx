@@ -4,7 +4,6 @@ import UserContext from "../../context/user/userContext";
 import { courses } from "../../courses/meta";
 const axios = require("axios");
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "../../config/config";
 import Cookies from "universal-cookie";
 
