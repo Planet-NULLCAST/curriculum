@@ -64,12 +64,12 @@ export default function SiteFooter() {
               <button className="btn btn--subscribe" type="submit">
                 <span className="btn__text">Subscribe</span>
               </button>
+              {isValidEmail !== "" && isValidEmail === false && (
+                <p className="text-sm text-red-400 text-left">
+                  Please enter a valid email
+                </p>
+              )}
             </form>
-            {isValidEmail !== "" && isValidEmail === false && (
-              <p className="text-sm text-red-400 text-left">
-                Please enter a valid email
-              </p>
-            )}
 
             <ul className={styles.nevFooter}>
               <li>
