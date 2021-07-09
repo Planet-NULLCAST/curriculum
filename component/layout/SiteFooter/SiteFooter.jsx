@@ -8,7 +8,6 @@ import { baseUrl, subscribeUrl } from "../../../config/config";
 import validateEmail from "../../../lib/validateEmail";
 
 import styles from "./SiteFooter.module.scss";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function SiteFooter() {
   const [isValidEmail, setIsValidEmail] = useState("");
@@ -45,7 +44,6 @@ export default function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <ToastContainer newestOnTop={false} />
         <div className="md:flex items-center">
           <div className="md:w-7/12 lg:w-1/2">
             <h2 className="font-darker font-black text-3xl lg:text-44 xl:text-64 leading-none mb-12">
@@ -54,7 +52,7 @@ export default function SiteFooter() {
             <form className={styles.form} onSubmit={addSubscriber}>
               <label htmlFor="email"></label>
               <input
-                type="email"
+                type="text"
                 className={styles.email}
                 placeholder="Enter your mail"
                 id="#email"

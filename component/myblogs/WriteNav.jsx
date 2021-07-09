@@ -6,7 +6,6 @@ import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import CreatableSelect from "react-select/creatable";
 import { clientUrl } from "../../config/config";
 import UserState from "../../context/user/UserState";
@@ -281,15 +280,12 @@ export default function WriteNav({
           </span>
         </div>
         <div className="items-center py-3 md:flex">
-          {!isAdmin && (
-            <div
-              onClick={submitForReview}
-              className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-            >
-              <p>Submit For Review</p>
-            </div>
-          )}
-
+          <div
+            onClick={submitForReview}
+            className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+          >
+            <p>Submit For Review</p>
+          </div>
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
@@ -578,7 +574,7 @@ export default function WriteNav({
           </div>
         </Slide>
       )}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

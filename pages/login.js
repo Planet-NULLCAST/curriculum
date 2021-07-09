@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../config/config";
-import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
@@ -318,7 +317,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

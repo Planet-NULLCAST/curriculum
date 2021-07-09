@@ -62,8 +62,15 @@ export default function AdminBlogsList({ posts, updated }) {
                       {item.title}
                     </a>
                   </Link>
-                  <div className={`text-xs text-gray-400`}>
+                  <div className={`text-xs text-gray-400 pt-2`}>
                     {moment(item?.createdAt).format("LL")}
+                    {" - "}
+                    <Link href={`/u/${item.primaryAuthor.username}`}>
+                      <a className="text-blue-500">
+                        {/* <p className="text- text-gray-600"></p> */}
+                        {item.primaryAuthor.username}
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex items-center">

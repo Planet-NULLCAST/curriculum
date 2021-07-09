@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 const axios = require("axios");
 import Cookies from "universal-cookie";
+import "highlight.js/styles/tomorrow-night-blue.css";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -68,27 +69,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           }
         });
       }
-      // let index = 0;
-      // let progress =
-      //   JSON.parse(window.localStorage.getItem("progress")).length > 0
-      //     ? JSON.parse(window.localStorage.getItem("progress"))
-      //     : [{ courseName: "", completedChapter: [] }];
-      // const Course = progress.find((post, index) => {
-      //   if (post.courseName === courseName) {
-      //     return true;
-      //   }
-      // });
-      // if (Course) {
-      //   const index = progress.indexOf(Course);
-      // }
-      // let chapterList = new Set(progress[index].completedChapter);
-      // chapterList.add(chapterName);
-      // chapterList = [...chapterList];
-      // let progressItem = {
-      //   courseName: courseName,
-      //   completedChapter: chapterList
-      // };
-      // progress[index] = progressItem;
+
       let progress = JSON.parse(window.localStorage.getItem("progress"));
       console.log(progress);
       const Course = progress.find((post, index) => {
@@ -321,7 +302,10 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
 
           <div className="pr-5 ml-5 lg:ml-10 hidden md:block">
             <Link href="https://discord.com/invite/5byDDp2qbK">
-              <a className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center" target="_blank">
+              <a
+                className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center"
+                target="_blank"
+              >
                 Trouble? Join Discord
                 <svg
                   className="hidden lg:block ml-2"
