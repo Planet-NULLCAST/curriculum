@@ -1,30 +1,45 @@
 import { useState, useEffect } from "react";
+import Head from "next/head";
+import Link from "next/link";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import styles from "../styles/Settings.module.scss";
 import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
-import Link from "next/link";
+
+import { toast } from "react-toastify";
+import styles from "../styles/Settings.module.scss";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.cookie);
   try {
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
-      // console.log(cookie);
-      const response = await UserService.getProfileByUserId(cookie);
-      // console.log(response);
-      return {
-        props: {
-          profileData: response.data
-        }
-      };
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        // console.log(cookie);
+        const response = await UserService.getProfileByUserId(cookie);
+        // console.log(response);
+        return {
+          props: {
+            profileData: response.data
+          }
+        };
+      } else {
+        console.log("User not logged in");
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
     } else {
+      console.log("User not logged in");
       return {
-        props: { profileData: [] },
         redirect: {
           permanent: false,
           destination: "/"
@@ -70,8 +85,8 @@ export default function Settings({ profileData }) {
         userCookie,
         profile
       );
-      console.log(response);
-      // notify(message);
+      // console.log(response);
+      notify(response.message);
     } catch (err) {
       // console.log(err.response.data.message);
       // notify(err.response.data.message);
@@ -135,9 +150,23 @@ export default function Settings({ profileData }) {
     }
   };
 
+  const notify = (msg) =>
+    toast(msg, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+
   return (
     <>
       <SiteHeader />
+      <Head>
+        <title>Settings</title>
+      </Head>
       <section>
         <div className="bg-gray-100 py-2 pb-6 px-6">
           <div className="bg-white h-12 my-3 flex flex-row items-center rounded shadow-sm max-w-panel">
