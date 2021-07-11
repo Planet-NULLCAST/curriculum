@@ -12,6 +12,7 @@ export default function ListingItem(props) {
       {props.blog.map((item, key) => (
         <div className={styles.listing__item} key={key}>
           <Fade>
+          <a href={`/${item.slug}`}>
             <figure className={styles.listing__figure}>
               <img
                 src={item.bannerImage}
@@ -21,6 +22,7 @@ export default function ListingItem(props) {
                 layout="responsive"
               />
             </figure>
+          </a>
           </Fade>
           <div>
             {item.tags.length > 0 ? (
