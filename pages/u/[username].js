@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import Navbar from "../../component/profile/Navbar";
 import Head from "next/head";
 
+import Navbar from "../../component/profile/Navbar";
+import { getCookieValue } from "../../lib/cookie";
 import Activity from "../../component/profile/Activity";
 import ProfileDetails from "../../component/profile/ProfileDetails";
 import Count from "../../component/profile/Count";
@@ -17,13 +18,27 @@ import Profilestyles from "../../styles/Profile.module.css";
 export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
+    let isThisUserTheCurrentLogined = false
 
+    
     const LIMIT = 5;
 
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
     const blogs = await PostService.getAllPostsByUsername(username, LIMIT);
-
+    // isThisUserTheCurrentLogined is used to show/hide the edit icon
+    // in the profile details section 
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        isThisUserTheCurrentLogined = cookie.id === userData.user._id
+        userData.user.isThisUserTheCurrentLogined = isThisUserTheCurrentLogined
+      }
+    }
     if (!userData || blogCount == "") {
       return {
         redirect: {
