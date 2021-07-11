@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import Pagination from "../component/pagination/pagination";
 import Navbar from "../component/myblogs/Navbar";
 import MyBlogs from "../component/myblogs/MyBlogs";
 import MyBlogsstyles from "../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
-import withAuth from "../component/withAuth/withAuth";
 import PostService from "../services/PostService";
 import AdminNavbar from "../component/admin/AdminNavbar";
 import AdminBlogsList from "../component/admin/AdminBlogsList";
@@ -14,7 +14,6 @@ import { serverUrl } from "../config/config";
 
 export async function getServerSideProps(context) {
   try {
-    console.log("cookie", context.req.headers.cookie);
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
@@ -42,6 +41,12 @@ export async function getServerSideProps(context) {
     }
   } catch (err) {
     console.log("Error => ", err);
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
   }
 }
 
@@ -150,6 +155,9 @@ const Admin = (props) => {
   };
   return (
     <div>
+      <Head>
+        <title>Admin | Nullcast</title>
+      </Head>
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">

@@ -1,233 +1,234 @@
 .post {
-
-    @apply text-lg relative py-10 lg:py-20;
-    color: #202020;
-
+  @apply text-lg relative py-10 lg:py-20;
+  color: #202020;
 }
 
 .postContent {
+  @apply lg:text-lg;
+  line-height: 2.2;
 
-    @apply lg:text-lg;
-    line-height: 2.2;
+  p,
+  img,
+  iframe,
+  ul,
+  ol,
+  blockquote,
+  h2,
+  h3,
+  h4,
+  pre,
+  figure {
+    @apply mb-6 xl:mb-10;
+  }
 
-    p, img, iframe, ul, ol, blockquote, h2, h3, h4, pre, figure {
-        @apply mb-6 xl:mb-10;
+  img {
+    @apply max-w-full m-auto mb-5 xl:mb-10;
+  }
+
+  pre {
+    @apply max-w-full;
+  }
+
+  code {
+    @apply block max-w-full overflow-auto p-5 rounded-sm rounded-md text-base;
+    background-color: #22202c;
+  }
+
+  blockquote {
+    @apply p-5 lg:p-10 rounded-md;
+    background: #f9f6e3;
+
+    p:last-child {
+      @apply m-0;
     }
+  }
 
-    img{
+  h2,
+  h3 {
+    @apply font-bold text-xl xl:text-2xl 2xl:text-25;
+  }
 
-        @apply max-w-full m-auto mb-5 xl:mb-10;
+  ul {
+    @apply ml-7;
+
+    li {
+      list-style-image: url("../../../public/images/arrow.svg");
     }
+  }
 
-    pre {
-
-        @apply max-w-full;
-    }
-
-    code {
-        @apply block max-w-full overflow-auto p-5 rounded-sm bg-black text-white rounded-md;
-    }
-
-
-
-    blockquote {
-        
-        @apply p-5 lg:p-10 rounded-md;
-        background: #F9F6E3;
-
-        p:last-child{
-            @apply m-0;
-        }
-        
-    }
-
-    h3 {
-        @apply font-bold text-xl xl:text-2xl 2xl:text-25;
-    }
-
-    ul {
-        
-        @apply ml-7;
-
-        li {
-            list-style-image: url('../../../public/images/arrow.svg');
-        }
-    }
-
-    iframe {
-        @apply max-w-full m-auto;
-    }
-
+  iframe {
+    @apply max-w-full m-auto;
+  }
 }
 .postWrap {
-    @apply relative mx-auto;
-    max-width: 1700px;
+  @apply relative mx-auto;
+  max-width: 1700px;
 }
 .title {
-    @apply lg:text-center mb-12 ml-5 md:ml-10 lg:ml-0;
-    color: #353535;
-    h2 {
-        @apply leading-snug mb-5;
-    }
-    h3 {
-        @apply text-xl m-0 font-bold;
-        color: #717171;
-    }
+  @apply lg:text-center mb-12 ml-5 md:ml-10 lg:ml-0;
+  color: #353535;
+  h2 {
+    @apply leading-snug mb-5;
+  }
+  h3 {
+    @apply text-xl m-0 font-bold;
+    color: #717171;
+  }
 }
 .postHeader {
-    @media (max-width: 1023px) {
-        @apply flex;
-    }
+  @media (max-width: 1023px) {
+    @apply flex;
+  }
 }
 .wrapVote {
-    @apply hidden md:block;
-    @screen md{
-        @apply absolute h-full;
-        margin-left: -12vw;
-    }
+  @apply hidden md:block;
+  @screen md {
+    @apply absolute h-full;
+    margin-left: -12vw;
+  }
 }
 .vote {
-    @apply md:sticky top-20  flex flex-col items-center font-black font-darker text-xl w-20;
+  @apply md:sticky top-20  flex flex-col items-center font-black font-darker text-xl w-20;
 
-    span {
-        @apply block my-2;
-    }
+  span {
+    @apply block my-2;
+  }
+  svg {
+    @apply m-auto;
+  }
+  @media (max-width: 1023px) {
+    @apply static;
+  }
+  a:hover {
     svg {
-        @apply m-auto;
+      stroke: #333;
     }
-    @media (max-width: 1023px) {
-        @apply static;
-    }
-    a:hover {
-        svg {
-            stroke: #333;
-        }
-    }
+  }
 }
 
 .sidebar {
-    @apply absolute top-0 h-full right-0;
-    // margin-left: 0.73rem;
+  @apply absolute top-0 h-full right-0;
+  // margin-left: 0.73rem;
 }
 .widget {
-    @apply sticky p-4 py-6 lg:p-5 lg:py-7 top-1/3;
-    width: min(290px, 18vw);
-    background: #242424;
-    color: #AFAFAF;
-    @screen xl {
-        top: 80px;
-        width: min(350px, 20vw);
-    }
-    @screen 2xl {
-        width: min(350px, 23vw);
-    }
-    @media (max-width: 1200px) {
-        @apply p-0 w-auto rounded-sm;
-    }
+  @apply sticky p-4 py-6 lg:p-5 lg:py-7 top-1/3;
+  width: min(290px, 18vw);
+  background: #242424;
+  color: #afafaf;
+  @screen xl {
+    top: 80px;
+    width: min(350px, 20vw);
+  }
+  @screen 2xl {
+    width: min(350px, 23vw);
+  }
+  @media (max-width: 1200px) {
+    @apply p-0 w-auto rounded-sm;
+  }
 }
 
 .index {
-    counter-reset: count;
-    h3 {
-        @apply text-xl text-white mb-3 font-bold;
+  counter-reset: count;
+  h3 {
+    @apply text-xl text-white mb-3 font-bold;
+  }
+  ol {
+    @apply mb-5;
+  }
+  li {
+    @apply leading-snug py-4 -mx-5 px-5 text-sm font-semibold flex;
+    border-bottom: 1px solid #3e3e3e;
+    &:before {
+      @apply mr-4;
+      counter-increment: count;
+      content: "0" counter(count);
     }
-    ol {
-        @apply mb-5;
+  }
+  [class*="linkUnderline"] {
+    background-size: 0 1px;
+    &:hover {
+      background-size: 30px 1px;
+      color: #fafafa;
     }
-    li {
-        @apply leading-snug py-4 -mx-5 px-5 text-sm font-semibold flex;
-        border-bottom: 1px solid #3E3E3E;
-        &:before {
-            @apply mr-4;
-            counter-increment: count;
-            content: '0' counter(count);
-        }
-    }
-    [class*="linkUnderline"]  {
-        background-size: 0 1px;
-        &:hover {
-            background-size: 30px 1px;
-            color: #fafafa;
-        }
-    }
-    @media (max-width: 1200px) {
-        display: none;
-    }
+  }
+  @media (max-width: 1200px) {
+    display: none;
+  }
 }
 .social {
-    h3 {
-        @apply font-semibold mb-3;
-        font-size: 13px;
-    }
-    ul{
-        @apply m-0 flex items-center;
-    }
-    li{
-        @apply lg:mr-3;
-    }
+  h3 {
+    @apply font-semibold mb-3;
+    font-size: 13px;
+  }
+  ul {
+    @apply m-0 flex items-center;
+  }
+  li {
+    @apply lg:mr-3;
+  }
 
+  a {
+    @apply flex items-center justify-center;
+    width: 22px;
+    height: 18px;
+  }
+  @media (max-width: 1200px) {
+    @apply md:p-3;
+    h3 {
+      @apply hidden;
+    }
+    ul {
+      @apply block w-auto;
+      a {
+        @apply block p-2 py-4 w-auto h-auto;
+      }
+      svg {
+        @apply m-auto;
+      }
+    }
+  }
+  .facebook {
     a {
-        @apply flex items-center justify-center;
-        width: 22px;
-        height: 18px;
-    }
-    @media (max-width: 1200px) {
-        @apply md:p-3;
-        h3 {
-            @apply hidden;
+      &:hover {
+        svg {
+          @screen lg {
+            fill: #4267b2;
+          }
         }
-        ul {
-            @apply block w-auto;
-            a {
-                @apply block p-2 py-4 w-auto h-auto;
-            }
-            svg {
-                @apply m-auto;
-            }
-        }
+      }
     }
-    .facebook {
-        a {
-            &:hover {
-                svg {
-                    @screen lg {
-                        fill: #4267B2;
-                    }
-                }
-            }
+  }
+  .linkedin {
+    a {
+      &:hover {
+        svg {
+          @screen lg {
+            fill: #0e76a8;
+          }
         }
+      }
     }
-    .linkedin {
-        a {
-            &:hover {
-                svg {
-                    @screen lg {
-                        fill: #0e76a8;
-                    }
-                }
-            }
+  }
+  .twitter {
+    a {
+      &:hover {
+        svg {
+          @screen lg {
+            fill: #00acee;
+          }
         }
+      }
     }
-    .twitter {
-        a {
-            &:hover {
-                svg {
-                    @screen lg {
-                        fill: #00acee;
-                    }
-                }
-            }
+  }
+  .instagram {
+    a {
+      &:hover {
+        svg {
+          @screen lg {
+            fill: #3f729b;
+          }
         }
+      }
     }
-    .instagram {
-        a {
-            &:hover {
-                svg {
-                    @screen lg {
-                        fill: #3f729b;
-                    }
-                }
-            }
-        }
-    }
+  }
 }

@@ -64,6 +64,8 @@ $animationSpeed: 15s;
 
 .icon {
     @apply mr-3 flex-shrink-0;
+    width: 70px;
+    height: 70px;
 }
 
 @screen xl {

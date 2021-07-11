@@ -24,15 +24,17 @@ export default function SectionBlogs(props) {
             <div className={styles.blogItem} key={key}>
               <Fade>
                 <figure className={styles.blogImage}>
-                  <a href={`/${item.slug}`}>
-                    <img
-                      src={item.bannerImage}
-                      alt={item.title}
-                      width={528}
-                      height={548}
-                      className="w-full"
-                    />
-                  </a>
+                  <Link href={`/${item.slug}`}>
+                    <a>
+                      <img
+                        src={item.bannerImage}
+                        alt={item.title}
+                        width={528}
+                        height={548}
+                        className="w-full"
+                      />
+                    </a>
+                  </Link>
                 </figure>
               </Fade>
               <h3>

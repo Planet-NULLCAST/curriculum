@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
@@ -80,7 +79,8 @@ export default function SignUp() {
     }
   };
   function handlePassword(e) {
-    const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+    const regexPassword =
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
     if (e.target.value.length === 0) {
       setValidPassword("empty");
     } else if (e.target.value?.length < 8) {
@@ -149,18 +149,12 @@ export default function SignUp() {
   const handleClick = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // const fName = document.querySelector("#fullName").value;
-    // const email = document.querySelector("#email").value;
-    // const user = document.querySelector("#username").value;
-    // const pass = document.querySelector("#password").value;
-    // const update = document.querySelector("#updates").value;
     const fName = e.target.fullName.value;
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
     const updates = e.target.updates.value;
 
-    console.log(updates, terms);
     if (validEmail) {
       if (fName && password && email && username && terms) {
         const signupData = {
@@ -242,7 +236,9 @@ export default function SignUp() {
                 <div
                   className={`absolute top-0 right-0 flex items-center justify-end px-6 pt-5 pb-2 w-full z-20 ${Loginstyles.bg_green_710}`}
                 >
-                  <p className={`sm:flex hidden font-semibold text-white text-sm flex mr-2 md:mr-5`}>
+                  <p
+                    className={`sm:flex hidden font-semibold text-white text-sm flex mr-2 md:mr-5`}
+                  >
                     Already have an Account ?
                   </p>
                   {isLoading ? (
@@ -450,10 +446,7 @@ export default function SignUp() {
                             className="ml-2 cursor-pointer text-white"
                           >
                             I agree to the{" "}
-                            <a
-                              href="#"
-                              className="text-white underline"
-                            >
+                            <a href="#" className="text-white underline">
                               terms and conditions
                             </a>
                           </label>
@@ -514,7 +507,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

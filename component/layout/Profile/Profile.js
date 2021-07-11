@@ -80,7 +80,7 @@ export default function Profile({ onLogout, username }) {
           )}
           <li>
             <Link href="/settings">
-              <button className="linkUnderline">Edit Profile</button>
+              <button className="linkUnderline">Settings</button>
             </Link>
           </li>
           <li>

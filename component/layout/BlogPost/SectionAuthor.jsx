@@ -2,9 +2,8 @@ import styles from "./SectionAuthor.module.scss";
 import Link from "next/link";
 import AuthorDetails from "../BlogListing/AuthorDetails";
 
-export default function SectionAuthor(props) {
-  const { bio, username } = props.primaryAuthor;
-
+export default function SectionAuthor({ primaryAuthor }) {
+  const { bio, username } = primaryAuthor;
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
       <div className="container container--post">
