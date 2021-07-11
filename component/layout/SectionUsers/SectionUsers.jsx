@@ -26,7 +26,7 @@ export default class SimpleSlider extends Component {
                 <div key={key}>
                   <div className={styles.item}>
                     <div className={styles.icon}>
-                      <img src="/images/temp/avatar1.png" alt="user" />
+                      <img src={item.avatar?item.avatar:"/images/temp/avatar1.png"} alt="user" />
                     </div>
                     <h4 className={styles.min_w_10rem}>
                       <Link href={`/u/${item.username}`}>
