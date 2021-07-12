@@ -6,11 +6,10 @@ import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
-import ImageCropper from "../component/popup/ImageCropper"
+import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
-
 
 export async function getServerSideProps(context) {
   try {
@@ -72,22 +71,19 @@ export default function Settings({ profileData }) {
   });
   const [image, setImage] = useState("");
 
-
   useEffect(() => {
     setProfile({ ...profileData });
-    setImage(profileData.avatar)
+    setImage(profileData.avatar);
   }, []);
 
   const updateProfile = async (newProfile) => {
-
     try {
       const response = await UserService.updateProfileByUserId(
         userCookie,
-        newProfile ? newProfile:profile
+        newProfile ? newProfile : profile
       );
       notify(response.message);
       setLoading(false);
-
     } catch (err) {
       setLoading(false);
       notify(err.response.data.message);
@@ -113,41 +109,35 @@ export default function Settings({ profileData }) {
     if (image) {
       const imageData = {
         stage: "dev",
-        fileName: userCookie.username + '.png',
+        fileName: userCookie.username + ".png",
         id: userCookie.id,
         category: "profiles",
-        ContentType: 'image/png'
+        ContentType: "image/png"
       };
       setLoading(true);
-    notify('Uploading image in progress')
+      notify("Uploading image in progress");
       try {
         let s3ImageUrl = await PostService.uploadImage(image, imageData);
-        s3ImageUrl += '?bustcache=' + new Date().getTime()
-        setImage(s3ImageUrl)
+        s3ImageUrl += "?bustcache=" + new Date().getTime();
+        setImage(s3ImageUrl);
 
-        setProfile(
-            {...profile,
-            avatar: s3ImageUrl
-        });
+        setProfile({ ...profile, avatar: s3ImageUrl });
         const cookies = new Cookies();
         const userCookie = cookies.get("userNullcast");
-        userCookie.avatar = s3ImageUrl
+        userCookie.avatar = s3ImageUrl;
         document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
-          updateProfile({...profile,
-            avatar: s3ImageUrl
-        })
+        updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify('Image upload failed')
+        notify("Image upload failed");
       }
-
     }
 
     setLoading(false);
   };
   const closeTrigerred = () => {
-    setImage(profile.avatar)
-  }
+    setImage(profile.avatar);
+  };
   const deletePhoto = () => {
     setProfile((prevValue) => {
       return {
@@ -157,7 +147,7 @@ export default function Settings({ profileData }) {
     });
     const cookies = new Cookies();
     const userCookie = cookies.get("userNullcast");
-    userCookie.avatar = ''
+    userCookie.avatar = "";
     document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
   };
 
@@ -177,7 +167,6 @@ export default function Settings({ profileData }) {
       reader.readAsDataURL(files[0]);
     }
   };
-
 
   const notify = (msg) =>
     toast(msg, {
@@ -252,7 +241,10 @@ export default function Settings({ profileData }) {
                       }
                       handleSubmit={uploadImage}
                     />
-                    <img src={profile.avatar} alt="profile" />
+                    <img
+                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      alt="profile"
+                    />
                     <figcaption className="z-40">
                       <div className={styles.icon}>
                         <svg
@@ -271,27 +263,30 @@ export default function Settings({ profileData }) {
                             fill="#fff"
                           />
                         </svg>
-                        Change Photo
+                        {`${profile.avatar ? "Change" : "Add"} Photo`}
                       </div>
                     </figcaption>
                   </figure>
                 </div>
-                <div>
-                  <ModalConfirm
-                    trigger={
-                      <button className={`${styles.delete}`}>
-                        Delete Photo
-                      </button>
-                    }
-                    handleSubmit={deletePhoto}
-                    purpose={"delete"}
-                    buttonColor={"red"}
-                    heading={"Are you sure"}
-                    text="Are you sure you want to delete this image?"
-                  // secondaryText="This cannot be undone"
-                  />
-
-                </div>
+                {profile.avatar && (
+                  <div>
+                    <ModalConfirm
+                      trigger={
+                        <div
+                          className={`cursor-pointer hover:opacity-50 duration-500 ${styles.delete}`}
+                        >
+                          Delete Photo
+                        </div>
+                      }
+                      handleSubmit={deletePhoto}
+                      purpose={"delete"}
+                      buttonColor={"red"}
+                      heading={"Are you sure"}
+                      text="Are you sure you want to delete this image?"
+                      // secondaryText="This cannot be undone"
+                    />
+                  </div>
+                )}
               </div>
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
@@ -373,7 +368,13 @@ export default function Settings({ profileData }) {
                   />
                 </div>
                 <div className="text-right w-full">
-                  <button disabled={loading} className={`${loading && "disabled:opacity-50"}`} type="submit">Update Profile</button>
+                  <button
+                    disabled={loading}
+                    className={`${loading && "disabled:opacity-50"}`}
+                    type="submit"
+                  >
+                    Update Profile
+                  </button>
                 </div>
               </form>
             </div>

@@ -248,7 +248,7 @@ export default function WriteNav({
   }
 
   const notify = (msg) =>
-    toast(msg, {
+    toast.success(msg, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,

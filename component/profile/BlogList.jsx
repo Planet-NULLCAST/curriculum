@@ -3,8 +3,7 @@ import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function BlogList({blogs}) {
-  
+export default function BlogList({ blogs }) {
   return (
     <div className="bg-white shadow-sm rounded p-4 mt-4 h-72">
       <div className="flex justify-between items-center">
@@ -15,7 +14,8 @@ export default function BlogList({blogs}) {
       </div>
       <div className="flex items-start w-full overflow-x-auto pb-2">
         {blogs?.map((blog) => (
-          <div key={blog._id}
+          <div
+            key={blog._id}
             className={`flex items-start w-1/5 mt-3 justify-between pr-6 ${Profilestyles.min_w_9}`}
           >
             <div className="flex flex-col w-full">

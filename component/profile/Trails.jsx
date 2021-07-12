@@ -66,7 +66,7 @@ export default function Trails() {
                 </div>
               </>
             )} */}
-            <p className="text-gray-500 mt-8">Coming Soon</p>
+            <p className="text-gray-300 mt-8">Coming Soon</p>
           </div>
         </div>
       ))}

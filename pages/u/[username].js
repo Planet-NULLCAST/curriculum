@@ -14,6 +14,7 @@ import UserService from "../../services/UserService";
 import PostService from "../../services/PostService";
 
 import Profilestyles from "../../styles/Profile.module.css";
+import SkillSet from "../../component/profile/SkillSet";
 
 export async function getServerSideProps(context) {
   try {
@@ -84,6 +85,7 @@ export default function Username(props) {
         <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
             <ProfileDetails userData={props.userData} />
+            <SkillSet userData={props.userData} />
             {currentNav === "profile" && (
               <>
                 {/* <Activity /> */}
