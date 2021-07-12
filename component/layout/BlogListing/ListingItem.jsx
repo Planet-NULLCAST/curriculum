@@ -44,7 +44,10 @@ export default function ListingItem(props) {
               {/* <span> 5 Min Read</span> */}
             </p>
           </div>
-          <Details username={item.primaryAuthor.username} />
+          <Details
+            username={item.primaryAuthor.username}
+            avatar={item.primaryAuthor.avatar}
+          />
         </div>
       ))}
     </>

@@ -85,7 +85,14 @@ export default function Settings({ profileData }) {
         userCookie,
         profile
       );
-      // console.log(response);
+
+      // if (profile.avatar) {
+      document.cookie = `userNullcast=${JSON.stringify({
+        ...userCookie,
+        avatar: profile.avatar
+      })}`;
+      // console.log(cookies.get("userNullcast"));
+      // }
       notify(response.message);
     } catch (err) {
       // console.log(err.response.data.message);
@@ -94,8 +101,6 @@ export default function Settings({ profileData }) {
   };
   const handleSettings = (e) => {
     e.preventDefault();
-    // console.log(e.target);
-    // console.log({ profile });
     updateProfile();
   };
 
