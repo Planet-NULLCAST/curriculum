@@ -52,7 +52,6 @@ export default function Home({ blog, user }) {
           content="nullcast is a series of blogs, podcasts and short videos for everything web related."
         />
         <link rel="canonical" href={url} />
-        <meta property="og:site_name" content="nullcast" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="nullcast" />
         <meta
@@ -61,10 +60,6 @@ export default function Home({ blog, user }) {
         />
         <meta property="og:url" content={url} />
         <meta property="og:image" content={logoPath} />
-        <meta
-          property="article:publisher"
-          content="https://www.facebook.com/nullcast"
-        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="nullcast" />
         <meta
@@ -73,7 +68,6 @@ export default function Home({ blog, user }) {
         />
         <meta name="twitter:url" content={url} />
         <meta name="twitter:image" content={logoPath} />
-        <meta name="twitter:site" content="@nullcast_io" />
         <meta property="og:image:width" content="352" />
         <meta property="og:image:height" content="212" />
       </Head>

@@ -124,7 +124,6 @@ export default function BlogListing({ blog, relatedPosts }) {
         <title>{title}</title>
         <meta name="description" content={blog.metaDescription} />
         <link rel="canonical" href={blog.canonicalUrl} />
-        <meta property="og:site_name" content="nullcast" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={blog.title} />
         <meta property="og:description" content={blog.metaDescription} />
@@ -133,18 +132,14 @@ export default function BlogListing({ blog, relatedPosts }) {
         <meta property="article:published_time" content={blog.publishedAt} />
         <meta property="article:modified_time" content={blog.updatedAt} />
         <meta property="article:tag" content={blog.tags[0]} />
-        <meta
-          property="article:publisher"
-          content="https://www.facebook.com/nullcast"
-        />
+
         <meta name="twitter:card" content={blog.bannerImage} />
         <meta name="twitter:title" content={blog.title} />
         <meta name="twitter:description" content={blog.metaDescription} />
         <meta name="twitter:url" content={blog.canonicalUrl} />
         <meta name="twitter:image" content={blog.bannerImage} />
-        <meta name="twitter:label1" content={blog.primaryAuthor.fullName} />
+        <meta name="twitter:label1" content="Written By" />
         <meta name="twitter:data1" content={blog.primaryAuthor.fullName} />
-        <meta name="twitter:site" content="@nullcast_io" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
