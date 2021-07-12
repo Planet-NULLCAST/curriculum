@@ -6,11 +6,11 @@ import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
-import ImageCropper from "../component/popup/ImageCropper"
+import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
-
+import CreatableSelect from "react-select/creatable";
 
 export async function getServerSideProps(context) {
   try {
@@ -72,22 +72,19 @@ export default function Settings({ profileData }) {
   });
   const [image, setImage] = useState("");
 
-
   useEffect(() => {
     setProfile({ ...profileData });
-    setImage(profileData.avatar)
+    setImage(profileData.avatar);
   }, []);
 
   const updateProfile = async (newProfile) => {
-
     try {
       const response = await UserService.updateProfileByUserId(
         userCookie,
-        newProfile ? newProfile:profile
+        newProfile ? newProfile : profile
       );
       notify(response.message);
       setLoading(false);
-
     } catch (err) {
       setLoading(false);
       notify(err.response.data.message);
@@ -113,53 +110,49 @@ export default function Settings({ profileData }) {
     if (image) {
       const imageData = {
         stage: "dev",
-        fileName: userCookie.username + '.png',
+        fileName: userCookie.username + ".png",
         id: userCookie.id,
         category: "profiles",
-        ContentType: 'image/png'
+        ContentType: "image/png"
       };
       setLoading(true);
-    notify('Uploading image in progress')
+      notify("Uploading image in progress");
       try {
         let s3ImageUrl = await PostService.uploadImage(image, imageData);
-        s3ImageUrl += '?bustcache=' + new Date().getTime()
-        setImage(s3ImageUrl)
+        s3ImageUrl += "?bustcache=" + new Date().getTime();
+        setImage(s3ImageUrl);
 
-        setProfile(
-            {...profile,
-            avatar: s3ImageUrl
-        });
+        setProfile({ ...profile, avatar: s3ImageUrl });
         const cookies = new Cookies();
         const userCookie = cookies.get("userNullcast");
-        userCookie.avatar = s3ImageUrl
+        userCookie.avatar = s3ImageUrl;
         document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
-          updateProfile({...profile,
-            avatar: s3ImageUrl
-        })
+        updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify('Image upload failed')
+        notify("Image upload failed");
       }
-
     }
 
     setLoading(false);
   };
+
   const closeTrigerred = () => {
-    setImage(profile.avatar)
-  }
-  const deletePhoto = () => {
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        avatar: ""
-      };
-    });
-    const cookies = new Cookies();
-    const userCookie = cookies.get("userNullcast");
-    userCookie.avatar = ''
-    document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+    setImage(profile.avatar);
   };
+
+  // const deletePhoto = () => {
+  //   setProfile((prevValue) => {
+  //     return {
+  //       ...prevValue,
+  //       avatar: ""
+  //     };
+  //   });
+  //   const cookies = new Cookies();
+  //   const userCookie = cookies.get("userNullcast");
+  //   userCookie.avatar = "";
+  //   document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+  // };
 
   const handleImage = (e) => {
     e.preventDefault();
@@ -177,7 +170,6 @@ export default function Settings({ profileData }) {
       reader.readAsDataURL(files[0]);
     }
   };
-
 
   const notify = (msg) =>
     toast(msg, {
@@ -276,7 +268,7 @@ export default function Settings({ profileData }) {
                     </figcaption>
                   </figure>
                 </div>
-                <div>
+                {/* <div>
                   <ModalConfirm
                     trigger={
                       <button className={`${styles.delete}`}>
@@ -288,10 +280,9 @@ export default function Settings({ profileData }) {
                     buttonColor={"red"}
                     heading={"Are you sure"}
                     text="Are you sure you want to delete this image?"
-                  // secondaryText="This cannot be undone"
+                    // secondaryText="This cannot be undone"
                   />
-
-                </div>
+                </div> */}
               </div>
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
@@ -317,6 +308,25 @@ export default function Settings({ profileData }) {
                     value={profile.bio}
                   ></textarea>
                 </div>
+                <label htmlFor="skills">Skills</label>
+                <CreatableSelect
+                  // options={tagOptions}
+                  isMulti
+                  className="w-full mb-4 h-8"
+                  classNamePrefix="Skills"
+                  clearValue={() => undefined}
+                  placeholder="Skills"
+                  closeMenuOnSelect={false}
+                  name="skills"
+                  id="skills"
+                  // value={currentPost?.tags?.map((tag) => {
+                  //   return {
+                  //     label: `${tag.toUpperCase()}`,
+                  //     value: `${tag}`
+                  //   };
+                  // })}
+                  // onChange={(e) => handleTags(e)}
+                />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter</label>
                   <input
@@ -373,7 +383,13 @@ export default function Settings({ profileData }) {
                   />
                 </div>
                 <div className="text-right w-full">
-                  <button disabled={loading} className={`${loading && "disabled:opacity-50"}`} type="submit">Update Profile</button>
+                  <button
+                    disabled={loading}
+                    className={`${loading && "disabled:opacity-50"}`}
+                    type="submit"
+                  >
+                    Update Profile
+                  </button>
                 </div>
               </form>
             </div>

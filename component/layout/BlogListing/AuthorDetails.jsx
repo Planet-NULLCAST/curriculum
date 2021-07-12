@@ -2,17 +2,15 @@ import styles from "./AuthorDetails.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Details(props) {
-  const { username } = props;
-  // console.log(username);
+export default function Details({ username, avatar }) {
   return (
     <>
       <div className={styles.authorDetails}>
         <div className={styles.authorDetails__icon}>
           <Link href={`/u/${username}`}>
             <a>
-              <Image
-                src="/images/temp/avatar1.png"
+              <img
+                src={avatar ? avatar : "/images/dummy-profile.png"}
                 alt="Author"
                 width={150}
                 height={150}
