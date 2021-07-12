@@ -149,18 +149,12 @@ export default function SignUp() {
   const handleClick = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // const fName = document.querySelector("#fullName").value;
-    // const email = document.querySelector("#email").value;
-    // const user = document.querySelector("#username").value;
-    // const pass = document.querySelector("#password").value;
-    // const update = document.querySelector("#updates").value;
     const fName = e.target.fullName.value;
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
     const updates = e.target.updates.value;
 
-    console.log(updates, terms);
     if (validEmail) {
       if (fName && password && email && username && terms) {
         const signupData = {

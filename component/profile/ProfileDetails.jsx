@@ -12,7 +12,7 @@ export default function ProfileDetails({ userData }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
           >
             <div className="flex">
-              <Link href="/settings">
+              {userData.isThisUserTheCurrentLogined &&<Link href="/settings">
                 <a>
                   <img
                     className="absolute top-4 right-4"
@@ -20,7 +20,7 @@ export default function ProfileDetails({ userData }) {
                     alt="edit profile"
                   />{" "}
                 </a>
-              </Link>
+              </Link>}
 
               {/* picture */}
               <div className="relative">

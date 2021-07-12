@@ -6,12 +6,12 @@ import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
-
+import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
+import ModalConfirm from "../component/popup/ModalConfirm";
 
 export async function getServerSideProps(context) {
-  // console.log(context.req.headers.cookie);
   try {
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
@@ -20,16 +20,13 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-        // console.log(cookie);
         const response = await UserService.getProfileByUserId(cookie);
-        // console.log(response);
         return {
           props: {
             profileData: response.data
           }
         };
       } else {
-        console.log("User not logged in");
         return {
           redirect: {
             permanent: false,
@@ -38,7 +35,6 @@ export async function getServerSideProps(context) {
         };
       }
     } else {
-      console.log("User not logged in");
       return {
         redirect: {
           permanent: false,
@@ -47,7 +43,6 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("User not logged in");
     return {
       props: {
         profileData: []
@@ -63,6 +58,7 @@ export async function getServerSideProps(context) {
 export default function Settings({ profileData }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
+  const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState({
     fullName: "",
     bio: "",
@@ -73,19 +69,19 @@ export default function Settings({ profileData }) {
     github: "",
     website: ""
   });
+  const [image, setImage] = useState("");
 
   useEffect(() => {
-    // console.log({ profileData });
     setProfile({ ...profileData });
+    setImage(profileData.avatar);
   }, []);
 
-  const updateProfile = async () => {
+  const updateProfile = async (newProfile) => {
     try {
       const response = await UserService.updateProfileByUserId(
         userCookie,
-        profile
+        newProfile ? newProfile : profile
       );
-
       // if (profile.avatar) {
       document.cookie = `userNullcast=${JSON.stringify({
         ...userCookie,
@@ -94,9 +90,10 @@ export default function Settings({ profileData }) {
       // console.log(cookies.get("userNullcast"));
       // }
       notify(response.message);
+      setLoading(false);
     } catch (err) {
-      // console.log(err.response.data.message);
-      // notify(err.response.data.message);
+      setLoading(false);
+      notify(err.response.data.message);
     }
   };
   const handleSettings = (e) => {
@@ -105,9 +102,7 @@ export default function Settings({ profileData }) {
   };
 
   const handleOnChange = (e) => {
-    // console.log(e.target.value);
     const { name, value } = e.target;
-    // console.log(name, value);
 
     setProfile((prevValue) => {
       return {
@@ -117,20 +112,39 @@ export default function Settings({ profileData }) {
     });
   };
 
-  const uploadImage = async (imageFile, imageData) => {
-    // setLoading(true);
-    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    // console.log(s3ImageUrl);
-
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        avatar: s3ImageUrl
+  const uploadImage = async (image) => {
+    if (image) {
+      const imageData = {
+        stage: "dev",
+        fileName: userCookie.username + ".png",
+        id: userCookie.id,
+        category: "profiles",
+        ContentType: "image/png"
       };
-    });
-    // setLoading(false);
-  };
+      setLoading(true);
+      notify("Uploading image in progress");
+      try {
+        let s3ImageUrl = await PostService.uploadImage(image, imageData);
+        s3ImageUrl += "?bustcache=" + new Date().getTime();
+        setImage(s3ImageUrl);
 
+        setProfile({ ...profile, avatar: s3ImageUrl });
+        const cookies = new Cookies();
+        const userCookie = cookies.get("userNullcast");
+        userCookie.avatar = s3ImageUrl;
+        document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+        updateProfile({ ...profile, avatar: s3ImageUrl });
+      } catch (error) {
+        setLoading(false);
+        notify("Image upload failed");
+      }
+    }
+
+    setLoading(false);
+  };
+  const closeTrigerred = () => {
+    setImage(profile.avatar);
+  };
   const deletePhoto = () => {
     setProfile((prevValue) => {
       return {
@@ -138,20 +152,26 @@ export default function Settings({ profileData }) {
         avatar: ""
       };
     });
+    const cookies = new Cookies();
+    const userCookie = cookies.get("userNullcast");
+    userCookie.avatar = "";
+    document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
   };
-  const handleImage = (e) => {
-    // console.log(e.target.files[0]);
-    const imageFile = e.target.files[0];
-    if (imageFile) {
-      const imageData = {
-        stage: "dev",
-        fileName: imageFile.name,
-        id: userCookie.id,
-        category: "profiles",
-        ContentType: imageFile.type
-      };
 
-      uploadImage(imageFile, imageData);
+  const handleImage = (e) => {
+    e.preventDefault();
+    if (e.target.files.length) {
+      let files;
+      if (e.dataTransfer) {
+        files = e.dataTransfer.files;
+      } else if (e.target) {
+        files = e.target.files;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
     }
   };
 
@@ -213,13 +233,20 @@ export default function Settings({ profileData }) {
               <div className="text-center mb-8">
                 <div>
                   <figure>
-                    <input
-                      type="file"
-                      id="avatar"
-                      name="avatar"
-                      accept="image/png, image/jpeg"
-                      onInput={handleImage}
-                      className="cursor-pointer"
+                    <ImageCropper
+                      image={image}
+                      closeTrigerred={closeTrigerred}
+                      trigger={
+                        <input
+                          type="file"
+                          id="avatar"
+                          name="avatar"
+                          accept="image/png, image/jpeg"
+                          onInput={handleImage}
+                          className="cursor-pointer"
+                        />
+                      }
+                      handleSubmit={uploadImage}
                     />
                     <img src={profile.avatar} alt="profile" />
                     <figcaption className="z-40">
@@ -246,9 +273,19 @@ export default function Settings({ profileData }) {
                   </figure>
                 </div>
                 <div>
-                  <button onClick={deletePhoto} className={`${styles.delete}`}>
-                    Delete Photo
-                  </button>
+                  <ModalConfirm
+                    trigger={
+                      <button className={`${styles.delete}`}>
+                        Delete Photo
+                      </button>
+                    }
+                    handleSubmit={deletePhoto}
+                    purpose={"delete"}
+                    buttonColor={"red"}
+                    heading={"Are you sure"}
+                    text="Are you sure you want to delete this image?"
+                    // secondaryText="This cannot be undone"
+                  />
                 </div>
               </div>
 
@@ -331,7 +368,13 @@ export default function Settings({ profileData }) {
                   />
                 </div>
                 <div className="text-right w-full">
-                  <button type="submit">Update Profile</button>
+                  <button
+                    disabled={loading}
+                    className={`${loading && "disabled:opacity-50"}`}
+                    type="submit"
+                  >
+                    Update Profile
+                  </button>
                 </div>
               </form>
             </div>
