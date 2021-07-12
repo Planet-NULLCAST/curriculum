@@ -10,6 +10,7 @@ import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
+import CreatableSelect from "react-select/creatable";
 
 export async function getServerSideProps(context) {
   try {
@@ -82,13 +83,6 @@ export default function Settings({ profileData }) {
         userCookie,
         newProfile ? newProfile : profile
       );
-      // if (profile.avatar) {
-      document.cookie = `userNullcast=${JSON.stringify({
-        ...userCookie,
-        avatar: profile.avatar
-      })}`;
-      // console.log(cookies.get("userNullcast"));
-      // }
       notify(response.message);
       setLoading(false);
     } catch (err) {
@@ -142,21 +136,23 @@ export default function Settings({ profileData }) {
 
     setLoading(false);
   };
+
   const closeTrigerred = () => {
     setImage(profile.avatar);
   };
-  const deletePhoto = () => {
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        avatar: ""
-      };
-    });
-    const cookies = new Cookies();
-    const userCookie = cookies.get("userNullcast");
-    userCookie.avatar = "";
-    document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
-  };
+
+  // const deletePhoto = () => {
+  //   setProfile((prevValue) => {
+  //     return {
+  //       ...prevValue,
+  //       avatar: ""
+  //     };
+  //   });
+  //   const cookies = new Cookies();
+  //   const userCookie = cookies.get("userNullcast");
+  //   userCookie.avatar = "";
+  //   document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+  // };
 
   const handleImage = (e) => {
     e.preventDefault();
@@ -272,7 +268,7 @@ export default function Settings({ profileData }) {
                     </figcaption>
                   </figure>
                 </div>
-                <div>
+                {/* <div>
                   <ModalConfirm
                     trigger={
                       <button className={`${styles.delete}`}>
@@ -286,7 +282,7 @@ export default function Settings({ profileData }) {
                     text="Are you sure you want to delete this image?"
                     // secondaryText="This cannot be undone"
                   />
-                </div>
+                </div> */}
               </div>
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
@@ -312,6 +308,25 @@ export default function Settings({ profileData }) {
                     value={profile.bio}
                   ></textarea>
                 </div>
+                <label htmlFor="skills">Skills</label>
+                <CreatableSelect
+                  // options={tagOptions}
+                  isMulti
+                  className="w-full mb-4 h-8"
+                  classNamePrefix="Skills"
+                  clearValue={() => undefined}
+                  placeholder="Skills"
+                  closeMenuOnSelect={false}
+                  name="skills"
+                  id="skills"
+                  // value={currentPost?.tags?.map((tag) => {
+                  //   return {
+                  //     label: `${tag.toUpperCase()}`,
+                  //     value: `${tag}`
+                  //   };
+                  // })}
+                  // onChange={(e) => handleTags(e)}
+                />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter</label>
                   <input
