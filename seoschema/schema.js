@@ -1,4 +1,5 @@
-export const url = "https://nullcast.io";
+import { clientUrl } from "../config/config";
+export const url = clientUrl;
 export const logoPath = "images/nullcast.png";
 export const homePageSchema = {
   "@context": "https://schema.org",
