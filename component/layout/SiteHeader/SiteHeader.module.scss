@@ -3,7 +3,7 @@
   @media (min-width: 1536px) {
     height: 80px;
   }
-  @apply bg-white relative left-0 top-0 w-full z-50 px-3 md:px-10 sticky flex items-center;
+  @apply bg-white relative left-0 top-0 w-full z-50 sticky flex items-center;
   // border: 1px solid rgb(255, 255, 255);
   // border: 1px solid rgba(255, 255, 255, 0.15);
   transition: all ease 0.3s;
@@ -124,7 +124,7 @@
 .wrap {
   @apply flex items-center justify-between pl-14;
   @media (min-width: 992px) {
-    @apply pl-0;
+    @apply lg:pl-0;
   }
 }
 

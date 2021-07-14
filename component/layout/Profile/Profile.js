@@ -41,7 +41,7 @@ export default function Profile({ onLogout, username }) {
           alt="avatar"
           width="32"
           height="32"
-          className="rounded-full"
+          className="rounded-full border"
         />
       </div>
       <div className={styles.profile__dropdown}>

@@ -68,12 +68,13 @@ export default function ProfileDetails({ userData }) {
       {(userData.facebook ||
         userData.twitter ||
         userData.github ||
+        userData.linkedin ||
         userData.website) && (
         <div className="bg-white w-full flex flex-wrap items-center justify-between border-t border-gray-100 pt-4 px-4 mt-4">
           <div className="flex flex-wrap items-center">
             {userData.facebook && (
               <Link href={`https://www.facebook.com/${userData.facebook}`}>
-                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                <a target="_blank" rel="noopener noreferrer" className="mr-8">
                   <div className="flex items-center">
                     <Image
                       src="/images/svgs/fb.svg"
@@ -83,16 +84,16 @@ export default function ProfileDetails({ userData }) {
                       layout="fixed"
                       margin={0}
                     />
-                    <span
-                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                    >{`/${userData.facebook}`}</span>
+                    <div
+                      className={`font-medium truncate text-sm robotoFamily ml-1 underline ${Profilestyles?.a_green_210} ${Profilestyles?.urlWidth}`}
+                    >{`/${userData.facebook}`}</div>
                   </div>
                 </a>
               </Link>
             )}
             {userData.twitter && (
               <Link href={`https://twitter.com/${userData.twitter}`}>
-                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                <a target="_blank" rel="noopener noreferrer" className="mr-8">
                   <div className="flex items-center">
                     <Image
                       src="/images/svgs/twitter.svg"
@@ -102,16 +103,16 @@ export default function ProfileDetails({ userData }) {
                       layout="fixed"
                       margin={0}
                     />
-                    <span
-                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                    >{`/${userData.twitter}`}</span>
+                    <div
+                      className={`font-medium truncate text-sm robotoFamily ml-1 underline ${Profilestyles?.a_green_210} ${Profilestyles?.urlWidth}`}
+                    >{`/${userData.twitter}`}</div>
                   </div>
                 </a>
               </Link>
             )}
             {userData.github && (
               <Link href={`https://github.com/${userData.github}`}>
-                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                <a target="_blank" rel="noopener noreferrer" className="mr-8">
                   <div className="flex items-center">
                     <Image
                       src="/images/svgs/git.svg"
@@ -121,9 +122,28 @@ export default function ProfileDetails({ userData }) {
                       layout="fixed"
                       margin={0}
                     />
-                    <span
-                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                    >{`/${userData.github}`}</span>
+                    <div
+                      className={`font-medium truncate text-sm robotoFamily ml-1 underline ${Profilestyles?.a_green_210} ${Profilestyles?.urlWidth}`}
+                    >{`/${userData.github}`}</div>
+                  </div>
+                </a>
+              </Link>
+            )}
+            {userData.linkedin && (
+              <Link href={`https://www.linkedin.com/in/${userData.linkedin}`}>
+                <a target="_blank" rel="noopener noreferrer" className="mr-8">
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/linkedin.svg"
+                      alt="edit"
+                      width={14}
+                      height={14}
+                      layout="fixed"
+                      margin={0}
+                    />
+                    <div
+                      className={`font-medium truncate text-sm robotoFamily ml-1 underline ${Profilestyles?.a_green_210} ${Profilestyles?.urlWidth}`}
+                    >{`/${userData.linkedin}`}</div>
                   </div>
                 </a>
               </Link>
@@ -146,11 +166,11 @@ export default function ProfileDetails({ userData }) {
                     layout="fixed"
                     margin={0}
                   />
-                  <span
-                    className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
+                  <div
+                    className={`font-medium truncate text-sm robotoFamily ml-1 underline ${Profilestyles?.a_green_210} ${Profilestyles?.urlWebWidth}`}
                   >
                     {userData.website}
-                  </span>
+                  </div>
                 </div>
               </a>
             )}

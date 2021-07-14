@@ -71,7 +71,7 @@ export default function HomeSpotlight() {
       id="header"
     >
       <div
-        className={`${styles.wrap} flex items-center justify-between w-full`}
+        className={`${styles.wrap} flex items-center justify-between w-full px-3 lg:px-0 max-w-panel`}
       >
         <div id="logo">
           <Link href="/">

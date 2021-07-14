@@ -46,3 +46,9 @@
 .skillCard {
   background-color: #e8f9ff;
 }
+.urlWidth{
+  max-width: 7rem;
+}
+.urlWebWidth{
+  max-width: 14rem;
+}

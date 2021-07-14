@@ -225,7 +225,7 @@ export default function Settings({ profileData, _skills }) {
             </ul>
           </div>
 
-          <div className="flex flex-wrap relative lg:justify-center">
+          <div className="flex flex-wrap relative lg:justify-center max-w-panel">
             <div className={`${styles.aside} bg-white md:mr-4`}>
               <ul>
                 <Link href="/settings">
@@ -293,7 +293,7 @@ export default function Settings({ profileData, _skills }) {
                             fill="#fff"
                           />
                         </svg>
-                        {`${profile.avatar ? "Change" : "Add"} Photo`}
+                        Change Photo
                       </div>
                     </figcaption>
                   </figure>
@@ -340,6 +340,7 @@ export default function Settings({ profileData, _skills }) {
                     cols="30"
                     rows="10"
                     onChange={handleOnChange}
+                    placeholder="Enter bio"
                     value={profile.bio}
                   ></textarea>
                 </div>
@@ -352,7 +353,7 @@ export default function Settings({ profileData, _skills }) {
                     };
                   })}
                   isMulti
-                  className="w-full mb-4 h-8"
+                  className="w-full mb-4"
                   classNamePrefix="Skills"
                   clearValue={() => undefined}
                   placeholder="Skills"
@@ -368,45 +369,45 @@ export default function Settings({ profileData, _skills }) {
                   onChange={handleSkills}
                 />
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="twitter">Twitter</label>
+                  <label htmlFor="twitter">Twitter Username</label>
                   <input
                     type="text"
                     id="twitter"
                     name="twitter"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.twitter}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="linkedin">Linkedin</label>
+                  <label htmlFor="linkedin">Linkedin Username</label>
                   <input
                     type="text"
                     id="linkedin"
                     name="linkedin"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.linkedin}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="facebook">Facebook</label>
+                  <label htmlFor="facebook">Facebook Username</label>
                   <input
                     type="text"
                     id="facebook"
                     name="facebook"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.facebook}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github</label>
+                  <label htmlFor="github">Github Username</label>
                   <input
                     id="github"
                     name="github"
                     type="text"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.github}
                   />
@@ -415,7 +416,7 @@ export default function Settings({ profileData, _skills }) {
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
-                    placeholder="Enter Website"
+                    placeholder="Enter Website URL"
                     id="website"
                     name="website"
                     onChange={handleOnChange}
