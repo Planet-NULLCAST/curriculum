@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
 import CreatableSelect from "react-select/creatable";
+import SkillService from "../services/SkillService";
 
 export async function getServerSideProps(context) {
   try {
@@ -22,9 +23,11 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
         const response = await UserService.getProfileByUserId(cookie);
+        const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: response.data
+            profileData: response.data,
+            _skills: skillsRes
           }
         };
       } else {
@@ -56,14 +59,16 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Settings({ profileData }) {
+export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
+  const [allSkills, setAllSkills] = useState(_skills);
   const [profile, setProfile] = useState({
     fullName: "",
     bio: "",
     avatar: "",
+    skills: [],
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -75,6 +80,9 @@ export default function Settings({ profileData }) {
   useEffect(() => {
     setProfile({ ...profileData });
     setImage(profileData.avatar);
+    // console.log(profileData);
+    // console.log(_skills);
+    setAllSkills(_skills);
   }, []);
 
   const updateProfile = async (newProfile) => {
@@ -93,6 +101,25 @@ export default function Settings({ profileData }) {
   const handleSettings = (e) => {
     e.preventDefault();
     updateProfile();
+  };
+
+  const handleSkills = (e) => {
+    console.log(e);
+    const newSkill = e
+      .filter((skill) => {
+        if (skill.__isNew__ === true) {
+          return skill;
+        }
+      })
+      .map((fSkill) => fSkill.value);
+
+    SkillService.postSkills(userCookie, newSkill);
+    setProfile((prevValue) => {
+      return {
+        ...prevValue,
+        skills: e.map((i) => i.value)
+      };
+    });
   };
 
   const handleOnChange = (e) => {
@@ -318,7 +345,12 @@ export default function Settings({ profileData }) {
                 </div>
                 <label htmlFor="skills">Skills</label>
                 <CreatableSelect
-                  // options={tagOptions}
+                  options={allSkills.map((a) => {
+                    return {
+                      label: `${a.name.toUpperCase()}`,
+                      value: `${a.name}`
+                    };
+                  })}
                   isMulti
                   className="w-full mb-4 h-8"
                   classNamePrefix="Skills"
@@ -327,13 +359,13 @@ export default function Settings({ profileData }) {
                   closeMenuOnSelect={false}
                   name="skills"
                   id="skills"
-                  // value={currentPost?.tags?.map((tag) => {
-                  //   return {
-                  //     label: `${tag.toUpperCase()}`,
-                  //     value: `${tag}`
-                  //   };
-                  // })}
-                  // onChange={(e) => handleTags(e)}
+                  value={profile.skills.map((a) => {
+                    return {
+                      label: `${a.toUpperCase()}`,
+                      value: `${a}`
+                    };
+                  })}
+                  onChange={handleSkills}
                 />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter</label>

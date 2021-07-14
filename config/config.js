@@ -13,6 +13,7 @@ const userUrl = "api/user";
 const usersUrl = "api/users";
 const adminUrl = "api/admin";
 const tagUrl = "api/tags";
+const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
@@ -37,5 +38,6 @@ export {
   forgotPasswordUrl,
   resetPasswordUrl,
   usersUrl,
-  changePasswordUrl
+  changePasswordUrl,
+  skillUrl
 };
