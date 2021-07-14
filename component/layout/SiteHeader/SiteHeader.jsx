@@ -12,9 +12,9 @@ export default function HomeSpotlight() {
   // const ShowMenu = () => {
   //   setMenu(menu);
   // };
-  useEffect(() => {
-    document.body.classList.toggle("menuOpen", menu);
-  }, [menu]);
+  // useEffect(() => {
+  //   document.body.classList.toggle("menuOpen", menu);
+  // }, [menu]);
   const router = useRouter();
   // console.log("aspath", router.asPath);
   const currentPath = router.asPath;
@@ -109,13 +109,17 @@ export default function HomeSpotlight() {
                     <Link href="/posts">
                       <a onClick={() => setMenu(true)}>
                         Write
-                        <img src="/images/hand.png" className="ml-1" alt="" />
+                        <img
+                          src="/images/hand.png"
+                          className="ml-1"
+                          alt="hand"
+                        />
                       </a>
                     </Link>
                   </li>
                   <li>
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)}>
+                    <a onClick={() => setMenu(true)} className="w-full">
                       Explore
                       <span className={styles.downArrow}>
                         <svg
@@ -133,12 +137,16 @@ export default function HomeSpotlight() {
                     <ul>
                       <li>
                         <Link href="/blog">
-                          <a onClick={() => setMenu(true)}>Blog</a>
+                          <a onClick={() => setMenu(true)} className="w-full">
+                            Blog
+                          </a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/code-of-conduct">
-                          <a onClick={() => setMenu(true)}>Code of conduct</a>
+                          <a onClick={() => setMenu(true)} className="w-full">
+                            Code of conduct
+                          </a>
                         </Link>
                       </li>
                     </ul>
