@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
 import CreatableSelect from "react-select/creatable";
+import SkillService from "../services/SkillService";
 
 export async function getServerSideProps(context) {
   try {
@@ -22,9 +23,11 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
         const response = await UserService.getProfileByUserId(cookie);
+        const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: response.data
+            profileData: response.data,
+            _skills: skillsRes
           }
         };
       } else {
@@ -56,14 +59,16 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Settings({ profileData }) {
+export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
+  const [allSkills, setAllSkills] = useState(_skills);
   const [profile, setProfile] = useState({
     fullName: "",
     bio: "",
     avatar: "",
+    skills: [],
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -75,6 +80,9 @@ export default function Settings({ profileData }) {
   useEffect(() => {
     setProfile({ ...profileData });
     setImage(profileData.avatar);
+    // console.log(profileData);
+    // console.log(_skills);
+    setAllSkills(_skills);
   }, []);
 
   const updateProfile = async (newProfile) => {
@@ -93,6 +101,25 @@ export default function Settings({ profileData }) {
   const handleSettings = (e) => {
     e.preventDefault();
     updateProfile();
+  };
+
+  const handleSkills = (e) => {
+    console.log(e);
+    const newSkill = e
+      .filter((skill) => {
+        if (skill.__isNew__ === true) {
+          return skill;
+        }
+      })
+      .map((fSkill) => fSkill.value);
+
+    SkillService.postSkills(userCookie, newSkill);
+    setProfile((prevValue) => {
+      return {
+        ...prevValue,
+        skills: e.map((i) => i.value)
+      };
+    });
   };
 
   const handleOnChange = (e) => {
@@ -198,7 +225,7 @@ export default function Settings({ profileData }) {
             </ul>
           </div>
 
-          <div className="flex flex-wrap relative lg:justify-center">
+          <div className="flex flex-wrap relative lg:justify-center max-w-panel">
             <div className={`${styles.aside} bg-white md:mr-4`}>
               <ul>
                 <Link href="/settings">
@@ -244,7 +271,10 @@ export default function Settings({ profileData }) {
                       }
                       handleSubmit={uploadImage}
                     />
-                    <img src={profile.avatar} alt="profile" />
+                    <img
+                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      alt="profile"
+                    />
                     <figcaption className="z-40">
                       <div className={styles.icon}>
                         <svg
@@ -268,21 +298,26 @@ export default function Settings({ profileData }) {
                     </figcaption>
                   </figure>
                 </div>
-                {/* <div>
-                  <ModalConfirm
-                    trigger={
-                      <button className={`${styles.delete}`}>
-                        Delete Photo
-                      </button>
-                    }
-                    handleSubmit={deletePhoto}
-                    purpose={"delete"}
-                    buttonColor={"red"}
-                    heading={"Are you sure"}
-                    text="Are you sure you want to delete this image?"
-                    // secondaryText="This cannot be undone"
-                  />
-                </div> */}
+
+                {/* {profile.avatar && (
+                  <div>
+                    <ModalConfirm
+                      trigger={
+                        <div
+                          className={`cursor-pointer hover:opacity-50 duration-500 ${styles.delete}`}
+                        >
+                          Delete Photo
+                        </div>
+                      }
+                      handleSubmit={deletePhoto}
+                      purpose={"delete"}
+                      buttonColor={"red"}
+                      heading={"Are you sure"}
+                      text="Are you sure you want to delete this image?"
+                      // secondaryText="This cannot be undone"
+                    />
+                  </div>
+                )} */}
               </div>
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
@@ -305,68 +340,74 @@ export default function Settings({ profileData }) {
                     cols="30"
                     rows="10"
                     onChange={handleOnChange}
+                    placeholder="Enter bio"
                     value={profile.bio}
                   ></textarea>
                 </div>
                 <label htmlFor="skills">Skills</label>
                 <CreatableSelect
-                  // options={tagOptions}
+                  options={allSkills.map((a) => {
+                    return {
+                      label: `${a.name.toUpperCase()}`,
+                      value: `${a.name}`
+                    };
+                  })}
                   isMulti
-                  className="w-full mb-4 h-8"
+                  className="w-full mb-4"
                   classNamePrefix="Skills"
                   clearValue={() => undefined}
                   placeholder="Skills"
                   closeMenuOnSelect={false}
                   name="skills"
                   id="skills"
-                  // value={currentPost?.tags?.map((tag) => {
-                  //   return {
-                  //     label: `${tag.toUpperCase()}`,
-                  //     value: `${tag}`
-                  //   };
-                  // })}
-                  // onChange={(e) => handleTags(e)}
+                  value={profile.skills.map((a) => {
+                    return {
+                      label: `${a.toUpperCase()}`,
+                      value: `${a}`
+                    };
+                  })}
+                  onChange={handleSkills}
                 />
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="twitter">Twitter</label>
+                  <label htmlFor="twitter">Twitter Username</label>
                   <input
                     type="text"
                     id="twitter"
                     name="twitter"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.twitter}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="linkedin">Linkedin</label>
+                  <label htmlFor="linkedin">Linkedin Username</label>
                   <input
                     type="text"
                     id="linkedin"
                     name="linkedin"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.linkedin}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="facebook">Facebook</label>
+                  <label htmlFor="facebook">Facebook Username</label>
                   <input
                     type="text"
                     id="facebook"
                     name="facebook"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.facebook}
                   />
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github</label>
+                  <label htmlFor="github">Github Username</label>
                   <input
                     id="github"
                     name="github"
                     type="text"
-                    placeholder="Enter URL"
+                    placeholder="Enter username"
                     onChange={handleOnChange}
                     value={profile.github}
                   />
@@ -375,7 +416,7 @@ export default function Settings({ profileData }) {
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
-                    placeholder="Enter Website"
+                    placeholder="Enter Website URL"
                     id="website"
                     name="website"
                     onChange={handleOnChange}

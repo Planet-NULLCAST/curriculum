@@ -37,13 +37,11 @@ export default function Profile({ onLogout, username }) {
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
         <img
-          src={
-            userCookie.avatar ? userCookie.avatar : "/images/dummy-profile.png"
-          }
+          src={userCookie.avatar || "/images/svgs/avatar.svg"}
           alt="avatar"
-          width="32px"
-          height="32px"
-          className="rounded-full"
+          width="32"
+          height="32"
+          className="rounded-full border"
         />
       </div>
       <div className={styles.profile__dropdown}>
@@ -56,7 +54,7 @@ export default function Profile({ onLogout, username }) {
         <ul>
           <li>
             <Link href={`/u/${userCookie.username}`}>
-              <a className="linkUnderline">
+              <a className="linkUnderline w-full">
                 Profile
                 <svg
                   className="ml-3"
@@ -76,18 +74,18 @@ export default function Profile({ onLogout, username }) {
           {isAdmin && (
             <li>
               <Link href="/admin">
-                <button className="linkUnderline">Admin Console</button>
+                <a className="linkUnderline w-full">Admin Console</a>
               </Link>
             </li>
           )}
           <li>
             <Link href="/settings">
-              <button className="linkUnderline">Settings</button>
+              <a className="linkUnderline w-full">Settings</a>
             </Link>
           </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout} className="linkUnderline">
+            <button onClick={onLogout} className="linkUnderline w-full">
               Logout
             </button>
           </li>
