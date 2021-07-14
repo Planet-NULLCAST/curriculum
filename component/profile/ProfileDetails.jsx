@@ -110,7 +110,7 @@ export default function ProfileDetails({ userData }) {
               </Link>
             )}
             {userData.github && (
-              <Link href={`https://github.com/${userData.twitter}`}>
+              <Link href={`https://github.com/${userData.github}`}>
                 <a target="_blank" rel="noopener noreferrer" className="mr-9">
                   <div className="flex items-center">
                     <Image
