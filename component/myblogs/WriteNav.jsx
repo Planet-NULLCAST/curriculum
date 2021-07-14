@@ -94,7 +94,7 @@ export default function WriteNav({
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    console.log("handle tags", e);
+    // console.log("handle tags", e);
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -121,7 +121,7 @@ export default function WriteNav({
    * @param e form submit event
    * @author akhilalekha
    */
-  async function formSubmit(e) {
+  const formSubmit = (e) => {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
     // console.log(e.target);
@@ -159,7 +159,7 @@ export default function WriteNav({
     // );
     // send prop
     getSettings(settingsData);
-  }
+  };
 
   /**
    * gets form data and passes to parent getsettings function

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ProfileDetails({ userData }) {
+  // console.log(userData);
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -19,7 +20,7 @@ export default function ProfileDetails({ userData }) {
                       className="absolute top-4 right-4"
                       src="/images/profileedit.svg"
                       alt="edit profile"
-                    />{" "}
+                    />
                   </a>
                 </Link>
               )}
@@ -71,70 +72,61 @@ export default function ProfileDetails({ userData }) {
         <div className="bg-white w-full flex flex-wrap items-center justify-between border-t border-gray-100 pt-4 px-4 mt-4">
           <div className="flex flex-wrap items-center">
             {userData.facebook && (
-              <a
-                href={userData.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mr-9"
-              >
-                <div className="flex items-center">
-                  <Image
-                    src="/images/svgs/fb.svg"
-                    alt="edit"
-                    width={7}
-                    height={14}
-                    layout="fixed"
-                    margin={0}
-                  />
-                  <span
-                    className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                  >{`/${userData.fullName}`}</span>
-                </div>
-              </a>
+              <Link href={`https://www.facebook.com/${userData.facebook}`}>
+                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/fb.svg"
+                      alt="edit"
+                      width={7}
+                      height={14}
+                      layout="fixed"
+                      margin={0}
+                    />
+                    <span
+                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
+                    >{`/${userData.facebook}`}</span>
+                  </div>
+                </a>
+              </Link>
             )}
             {userData.twitter && (
-              <a
-                href={userData.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mr-9"
-              >
-                <div className="flex items-center">
-                  <Image
-                    src="/images/svgs/twitter.svg"
-                    alt="edit"
-                    width={17}
-                    height={14}
-                    layout="fixed"
-                    margin={0}
-                  />
-                  <span
-                    className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                  >{`/${userData.fullName}`}</span>
-                </div>
-              </a>
+              <Link href={`https://twitter.com/${userData.twitter}`}>
+                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/twitter.svg"
+                      alt="edit"
+                      width={17}
+                      height={14}
+                      layout="fixed"
+                      margin={0}
+                    />
+                    <span
+                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
+                    >{`/${userData.twitter}`}</span>
+                  </div>
+                </a>
+              </Link>
             )}
             {userData.github && (
-              <a
-                href={userData.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mr-9"
-              >
-                <div className="flex items-center">
-                  <Image
-                    src="/images/svgs/git.svg"
-                    alt="edit"
-                    width={17}
-                    height={16}
-                    layout="fixed"
-                    margin={0}
-                  />
-                  <span
-                    className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                  >{`/${userData.fullName}`}</span>
-                </div>
-              </a>
+              <Link href={`https://github.com/${userData.twitter}`}>
+                <a target="_blank" rel="noopener noreferrer" className="mr-9">
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/git.svg"
+                      alt="edit"
+                      width={17}
+                      height={16}
+                      layout="fixed"
+                      margin={0}
+                    />
+                    <span
+                      className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
+                    >{`/${userData.github}`}</span>
+                  </div>
+                </a>
+              </Link>
             )}
           </div>
           <div className="flex items-center">
@@ -156,7 +148,9 @@ export default function ProfileDetails({ userData }) {
                   />
                   <span
                     className={`font-medium text-base robotoFamily ml-1 underline ${Profilestyles?.a_green_210}`}
-                  >{`/${userData.fullName}`}</span>
+                  >
+                    {userData.website}
+                  </span>
                 </div>
               </a>
             )}

@@ -19,16 +19,15 @@ import SkillSet from "../../component/profile/SkillSet";
 export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
-    let isThisUserTheCurrentLogined = false
+    let isThisUserTheCurrentLogined = false;
 
-    
     const LIMIT = 5;
 
     const userData = await UserService.getUserByUsername(username);
     const blogCount = await PostService.getPostCountByUserName(username);
     const blogs = await PostService.getAllPostsByUsername(username, LIMIT);
     // isThisUserTheCurrentLogined is used to show/hide the edit icon
-    // in the profile details section 
+    // in the profile details section
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
         context.req.headers.cookie,
@@ -36,8 +35,8 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-        isThisUserTheCurrentLogined = cookie.id === userData.user._id
-        userData.user.isThisUserTheCurrentLogined = isThisUserTheCurrentLogined
+        isThisUserTheCurrentLogined = cookie.id === userData.user._id;
+        userData.user.isThisUserTheCurrentLogined = isThisUserTheCurrentLogined;
       }
     }
     if (!userData || blogCount == "") {
@@ -66,7 +65,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Username(props) {
+export default function Username({ userData, blogCount, blogs }) {
   // console.log(props);
   const [currentNav, setcurrentNav] = useState("profile");
 
@@ -84,12 +83,12 @@ export default function Username(props) {
         <Navbar changeNav={changeNav} currentNav={currentNav} />
         <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
-            <ProfileDetails userData={props.userData} />
-            <SkillSet userData={props.userData} />
+            <ProfileDetails userData={userData} />
+            <SkillSet userData={userData} />
             {currentNav === "profile" && (
               <>
                 {/* <Activity /> */}
-                <BlogList blogs={props.blogs} />
+                <BlogList blogs={blogs} />
               </>
             )}
             {currentNav === "store" && <LuckEgg />}
@@ -97,7 +96,7 @@ export default function Username(props) {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            <Count blogCount={props.blogCount} />
+            <Count blogCount={blogCount} />
             <FollowersList />
           </div>
         </div>
