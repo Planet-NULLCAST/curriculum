@@ -157,7 +157,7 @@ export default function changePassword() {
             </ul>
           </div>
 
-          <div className="flex flex-wrap relative lg:justify-center">
+          <div className="flex flex-wrap relative lg:justify-center max-w-panel">
             <div className={`${styles.aside} bg-white md:mr-4`}>
               <ul>
                 <Link href="/settings">

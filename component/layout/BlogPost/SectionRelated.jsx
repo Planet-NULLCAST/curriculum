@@ -43,7 +43,10 @@ export default function SectionRelated({ title, posts }) {
                       </a>
                     </Link>
                   </h3>
-                  <AuthorDetails username={post.primaryAuthor.username} />
+                  <AuthorDetails
+                    username={post.primaryAuthor.username}
+                    avatar={post.primaryAuthor.avatar}
+                  />
                 </div>
               </div>
             ))

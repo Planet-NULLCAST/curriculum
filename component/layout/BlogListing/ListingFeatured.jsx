@@ -42,54 +42,13 @@ export default function ListingFeatured(props) {
               {/* <span>5 Min Read</span> */}
             </p>
 
-            <Details username={props.blog[0]?.primaryAuthor.username} />
+            <Details
+              username={props.blog[0]?.primaryAuthor.username}
+              avatar={props.blog[0]?.primaryAuthor.avatar}
+            />
           </div>
         </Fade>
       </div>
-      {/* <div className="container container--small md:flex">
-        <div className="md:w-1/3 md:pr-6">
-          <Fade>
-            <figure>
-              <Image
-                src="/images/temp/blog-featured.png"
-                alt="Blog image"
-                width={380}
-                height={318}
-                layout="responsive"
-              />
-            </figure>
-          </Fade>
-        </div>
-        <Fade>
-          <div className={` ${styles.text} md:w-2/3 md:pl-6`}>
-            <div className="tags">
-              <a href="" className="tags__item">
-                Development
-              </a>
-              <a href="" className="tags__item">
-                Latest Updates
-              </a>
-            </div>
-            <h3>
-              <Link href="/">
-                <a>Creative Search Bar and Input Field Design Inspiration</a>
-              </Link>
-            </h3>
-            <p>
-              A successful UI design can attract new customers, increase
-              customer engagement and enhance business. A well-designed search
-              bar and input field will enhance user experience.Styled Search Bar
-              Design with Code LinkIn the
-            </p>
-            <p className={styles.time}>
-                <span>February 26,2021</span>
-                <span>5 Min Read</span>
-            </p>
-
-            <Details />
-          </div>
-        </Fade>
-      </div> */}
     </section>
   );
 }
