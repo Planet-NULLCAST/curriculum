@@ -41,7 +41,10 @@ export default function SectionBlogs(props) {
                 <a href={`/${item.slug}`}>{item.title}</a>
               </h3>
 
-              <AuthorDetails username={item.primaryAuthor.username} />
+              <AuthorDetails
+                username={item.primaryAuthor.username}
+                avatar={item.primaryAuthor.avatar}
+              />
             </div>
           ))}
         </div>
