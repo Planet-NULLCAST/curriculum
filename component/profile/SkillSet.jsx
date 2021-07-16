@@ -15,36 +15,37 @@ export default function SkillSet({ userData }) {
         <div className="flex flex-wrap h-auto mt-2">
           {userData?.skills?.length > 0 ? (
             <>
-              {userData?.skills?.map((skill, index) => (
-                <>
-                  {index < 10 && (
+              {userData?.skills?.map(
+                (skill, index) =>
+                  index < 10 && (
                     <div
                       className={`px-5 h-7 rounded flex justify-center items-center mr-2 text-sm mb-2 font-semibold	${Profilestyles?.skillCard}`}
                       key={skill}
                     >
                       {skill.toUpperCase()}
                     </div>
-                  )}
-                </>
-              ))}
-              {showTenPlus && userData?.skills && userData?.skills?.length > 10 && (
-                <>
-                  <Fade>
-                    {userData?.skills?.map((skill, index) => (
-                      <>
-                        {index >= 10 && (
-                          <div
-                            className={`px-5 h-7 rounded flex justify-center items-center mr-2 text-sm mb-2 font-semibold	${Profilestyles?.skillCard}`}
-                            key={skill}
-                          >
-                            {skill.toUpperCase()}
-                          </div>
-                        )}
-                      </>
-                    ))}
-                  </Fade>
-                </>
+                  )
               )}
+              {showTenPlus &&
+                userData?.skills &&
+                userData?.skills?.length > 10 && (
+                  <>
+                    <Fade>
+                      {userData?.skills?.map((skill, index) => (
+                        <>
+                          {index >= 10 && (
+                            <div
+                              className={`px-5 h-7 rounded flex justify-center items-center mr-2 text-sm mb-2 font-semibold	${Profilestyles?.skillCard}`}
+                              key={skill}
+                            >
+                              {skill.toUpperCase()}
+                            </div>
+                          )}
+                        </>
+                      ))}
+                    </Fade>
+                  </>
+                )}
               {!showTenPlus && userData?.skills?.length > 10 && (
                 <button
                   className="text-blue-600 text-sm hover:text-blue-900 font-bold duration-700"
@@ -65,13 +66,11 @@ export default function SkillSet({ userData }) {
               )}
             </>
           ) : (
-            <>
-              <div className="w-full h-12 flex justify-start items-center">
-                <span className="text-gray-400 text-sm">
-                  Currently, you haven't added any skills
-                </span>
-              </div>
-            </>
+            <div className="w-full h-12 flex justify-start items-center">
+              <span className="text-gray-400 text-sm">
+                Currently, you haven't added any skills
+              </span>
+            </div>
           )}
         </div>
       </div>
