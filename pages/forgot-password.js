@@ -24,12 +24,8 @@ export default function forgotPassword() {
     e.preventDefault();
     // console.log("handleSubmit", e.target.email.value);
     const isValid = validateEmail(e.target.email.value);
-    console.log({ isValid });
-    if (isValid) {
-      setIsValidEmail(true);
-    } else {
-      setIsValidEmail(false);
-    }
+    // console.log({ isValid });
+    setIsValidEmail(isValid);
     if (isValid) {
       sendEmail(e.target.email.value);
     }
