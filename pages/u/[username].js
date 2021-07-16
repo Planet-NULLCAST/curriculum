@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
 
 import Navbar from "../../component/profile/Navbar";
@@ -21,11 +21,9 @@ export async function getServerSideProps(context) {
     const username = context.params.username;
     let isThisUserTheCurrentLogined = false;
 
-    const LIMIT = 5;
+    const LIMIT = 2;
+    const CLICK_N0 = 0;
 
-    const userData = await UserService.getUserByUsername(username);
-    const blogCount = await PostService.getPostCountByUserName(username);
-    const blogs = await PostService.getAllPostsByUsername(username, LIMIT);
     // isThisUserTheCurrentLogined is used to show/hide the edit icon
     // in the profile details section
     if (context.req.headers.cookie) {
@@ -35,11 +33,33 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
+        const userData = await UserService.getUserByUsername(username);
+        const blogs = await PostService.getAllPostsByUsername(
+          username,
+          LIMIT,
+          CLICK_N0
+        );
+
         isThisUserTheCurrentLogined = cookie.id === userData.user._id;
         userData.user.isThisUserTheCurrentLogined = isThisUserTheCurrentLogined;
+
+        return {
+          props: {
+            userData: userData.user,
+            blogCount: blogs.count,
+            blogs: blogs.allPosts,
+            limit: LIMIT
+          }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/404"
+          }
+        };
       }
-    }
-    if (!userData || blogCount == "") {
+    } else {
       return {
         redirect: {
           permanent: false,
@@ -47,15 +67,9 @@ export async function getServerSideProps(context) {
         }
       };
     }
-    return {
-      props: {
-        userData: userData.user,
-        blogCount: blogCount.count,
-        blogs: blogs.allPosts
-      }
-    };
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
+    console.log(err);
     return {
       redirect: {
         permanent: false,
@@ -65,12 +79,28 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Username({ userData, blogCount, blogs }) {
-  // console.log(props);
+export default function Username({ userData, blogCount, blogs, limit }) {
   const [currentNav, setcurrentNav] = useState("profile");
+  const [newBlogs, setNewBlogs] = useState(blogs);
 
   const changeNav = (data) => {
     setcurrentNav(data);
+  };
+
+  const getNewPostsWithCount = (count) => {
+    getNewPosts(count);
+  };
+
+  const getNewPosts = async (clickNo) => {
+    const responsePost = await PostService.getAllPostsByUsername(
+      userData.username,
+      limit,
+      clickNo
+    );
+
+    setNewBlogs((prevValue) => {
+      return [...prevValue, ...responsePost.allPosts];
+    });
   };
 
   return (
@@ -88,7 +118,11 @@ export default function Username({ userData, blogCount, blogs }) {
             {currentNav === "profile" && (
               <>
                 {/* <Activity /> */}
-                <BlogList blogs={blogs} />
+                <BlogList
+                  blogs={newBlogs}
+                  getNewPostsWithCount={getNewPostsWithCount}
+                  blogCount={blogCount}
+                />
               </>
             )}
             {currentNav === "store" && <LuckEgg />}
