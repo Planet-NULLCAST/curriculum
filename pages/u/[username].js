@@ -19,12 +19,19 @@ import SkillSet from "../../component/profile/SkillSet";
 export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
-    let isThisUserTheCurrentLogined = false;
+    let isThisUserTheCurrentLoggedIn = false;
 
     const LIMIT = 2;
     const CLICK_N0 = 0;
 
-    // isThisUserTheCurrentLogined is used to show/hide the edit icon
+    const userData = await UserService.getUserByUsername(username);
+    const blogs = await PostService.getAllPostsByUsername(
+      username,
+      LIMIT,
+      CLICK_N0
+    );
+
+    // isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
     // in the profile details section
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
@@ -33,40 +40,20 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-        const userData = await UserService.getUserByUsername(username);
-        const blogs = await PostService.getAllPostsByUsername(
-          username,
-          LIMIT,
-          CLICK_N0
-        );
 
-        isThisUserTheCurrentLogined = cookie.id === userData.user._id;
-        userData.user.isThisUserTheCurrentLogined = isThisUserTheCurrentLogined;
-
-        return {
-          props: {
-            userData: userData.user,
-            blogCount: blogs.count,
-            blogs: blogs.allPosts,
-            limit: LIMIT
-          }
-        };
-      } else {
-        return {
-          redirect: {
-            permanent: false,
-            destination: "/404"
-          }
-        };
+        isThisUserTheCurrentLoggedIn = cookie.id === userData.user._id;
+        userData.user.isThisUserTheCurrentLoggedIn =
+          isThisUserTheCurrentLoggedIn;
       }
-    } else {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
-        }
-      };
     }
+    return {
+      props: {
+        userData: userData.user,
+        blogCount: blogs.count,
+        blogs: blogs.allPosts,
+        limit: LIMIT
+      }
+    };
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
     console.log(err);
@@ -106,7 +93,7 @@ export default function Username({ userData, blogCount, blogs, limit }) {
   return (
     <div>
       <Head>
-        <title>Profile | Nullcast</title>
+        <title> @{userData.username} | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 py-2 pb-6 px-6">
