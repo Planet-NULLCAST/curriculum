@@ -24,11 +24,14 @@ export default function SiteFooter() {
       progress: undefined
     });
   };
+
   const addSubscriber = async (e) => {
     e.preventDefault();
     const newEmail = e.target.email.value;
+
     const isValid = validateEmail(newEmail);
     setIsValidEmail(isValid);
+
     if (isValid) {
       const emailData = {
         email: newEmail
@@ -39,6 +42,14 @@ export default function SiteFooter() {
       );
       // console.log(data);
       notify(data.msg);
+    }
+  };
+
+  const handleChangeEmail = (e) => {
+    // console.log(e.target.value);
+    if (isValidEmail === false) {
+      const isValid = validateEmail(e.target.value);
+      setIsValidEmail(isValid);
     }
   };
   return (
@@ -57,6 +68,7 @@ export default function SiteFooter() {
                 placeholder="Enter your mail"
                 id="#email"
                 name="email"
+                onChange={handleChangeEmail}
               />
 
               <button className="btn btn--subscribe" type="submit">
