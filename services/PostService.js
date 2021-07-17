@@ -247,21 +247,6 @@ async function getPostsByQuery(query, clickNo) {
   }
 }
 
-//this doesn't work because now we are using populate to get primaryAuthor
-// async function getPostCountByUserName(username) {
-//   let url = getUrl();
-
-//   try {
-//     const { data } = await axios.get(`${url}/${allPostsUrl}/count`, {
-//       params: { username: username }
-//     });
-//     return data;
-//   } catch (err) {
-//     console.log(err);
-//     throw err;
-//   }
-// }
-
 /**
  * Api call for fetching all publlished posts related to a user
  * @param {String} username

@@ -13,7 +13,7 @@ export default function ProfileDetails({ userData }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
           >
             <div className="flex">
-              {userData.isThisUserTheCurrentLogined && (
+              {userData.isThisUserTheCurrentLoggedIn && (
                 <Link href="/settings">
                   <a>
                     <img

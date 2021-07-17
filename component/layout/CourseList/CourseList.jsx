@@ -10,7 +10,7 @@ export default function CourseList({ courses }) {
       title: "Learn JavaScript",
       url: "/curriculum/javascript",
       description:
-        "Our online program is an amazing way for children to learn coding from the comfort of your home.",
+        "Learn JavaScript and Javascript arrays to build interactive websites and pages that adapt to every device.  This curriculum can help designers to upgrade their careers and starting point for front-end engineers.",
       linktext: "Learn more"
     },
     {
@@ -21,7 +21,7 @@ export default function CourseList({ courses }) {
       title: "Learn HTML",
       url: "/",
       description:
-        "Our online program is an amazing way for children to learn coding from the comfort of your home.",
+        "HTML Tutorial - HTML stands for HyperText Markup Language, which is the most widely used language on the Web to develop web pages. HTML was created by Berners-Lee in late 1991.",
       linktext: ""
     },
     {
@@ -32,14 +32,17 @@ export default function CourseList({ courses }) {
       title: "Learn CSS",
       url: "/",
       description:
-        "Our online program is an amazing way for children to learn coding from the comfort of your home.",
+        "In this CSS curriculum, you’ll set up file structures, beautify text and colors using CSS selectors to create the layouts and webpages.",
       linktext: ""
     }
   ];
   return (
     <section className="pb-10 lg:pb-20" style={{ scrollBehavior: "smooth" }}>
       <div className="container">
-        <div id="courses" className="md:grid gap-3 lg:gap-8 grid-cols-3 pb-10 pb-4 lg:pb-20">
+        <div
+          id="courses"
+          className="md:grid gap-3 lg:gap-8 grid-cols-3 pb-10 lg:pb-20"
+        >
           {contents.map((content) => (
             <CourseItem key={content.alt} content={content} />
           ))}

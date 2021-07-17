@@ -16,8 +16,6 @@ export default function HomeSpotlight() {
   //   document.body.classList.toggle("menuOpen", menu);
   // }, [menu]);
   const router = useRouter();
-  // console.log("aspath", router.asPath);
-  const currentPath = router.asPath;
   const [cookies, setCookies] = useState("");
   useEffect(() => {
     if (userCookie) {
@@ -165,10 +163,7 @@ export default function HomeSpotlight() {
                 <Profile onLogout={() => logout()} />
               </div>
             ) : (
-              <a
-                href={`/login/?redirect=${currentPath}`}
-                className="btn btn--black"
-              >
+              <a href="/login" className="btn btn--black">
                 <span className="btn__text">Login</span>
                 <svg
                   className="btn__arrow"
