@@ -46,9 +46,15 @@ export default function Profile({ onLogout, username }) {
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{userCookie.username}</h4>
+          <h4>{userCookie.fullName}</h4>
           <p>
-            <img src="/images/smallduck.svg" alt="coin" />0
+            <img
+              src="/images/smallduck.svg"
+              alt="coin"
+              height="18rem"
+              width="18rem"
+            />
+            0
           </p>
         </div>
         <ul>
