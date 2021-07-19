@@ -1,0 +1,35 @@
+.main {
+  background: #f6e049;
+  @apply flex justify-between items-stretch mt-5 mx-3 lg:px-10 md:mx-10 py-10;
+}
+
+.main__left {
+  @apply flex justify-center items-baseline flex-col lg:pl-20 md:pl-10;
+
+  h1 {
+    font-size: 37px;
+    font-weight: 700;
+    line-height: 1.15;
+    @apply mb-3 xl:w-10/12;
+    @media screen and (min-width: 1280px) {
+      font-size: 48px;
+    }
+    @media screen and (min-width: 1024px) {
+      font-size: 41px;
+    }
+  }
+  p {
+    @apply xl:w-10/12;
+    @media screen and (max-width: 1024px) {
+      font-size: 15px;
+    }
+  }
+}
+
+.main__right {
+  @apply flex justify-center lg:pr-10 md:pr-0;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
