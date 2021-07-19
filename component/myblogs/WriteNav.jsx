@@ -221,9 +221,6 @@ export default function WriteNav({
    * @author akhilalekha
    */
   const handleImageDelete = async (e) => {
-    // console.log(imgRef);
-    // imgRef.current.value = null;
-    // setImageSrc("");
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
@@ -247,10 +244,14 @@ export default function WriteNav({
     router.push("/posts");
   }
 
+  // const handleBackOption = () => {
+  //   router.back();
+  // };
+
   const notify = (msg) =>
     toast.success(msg, {
-      position: "top-right",
-      autoClose: 3000,
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -299,10 +300,9 @@ export default function WriteNav({
             <p>Settings</p>
           </div>
           <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
-            {/* <Link href={`/p/${currentPost._id}`}></Link> */}
-            <a href={`/p/${currentPost._id}`} target="_blank">
-              Preview
-            </a>
+            <Link href={`/p/${currentPost._id}`}>
+              <a target="_blank">Preview</a>
+            </Link>
           </div>
         </div>
       </div>
