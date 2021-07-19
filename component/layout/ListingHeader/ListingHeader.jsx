@@ -52,7 +52,12 @@ export default function ListingHeader() {
         <Fade>
           <div className="md:w-5/12 lg:w-1/2 md:flex items-center justify-end">
             <figure>
-              <img src="/images/duck.svg" alt="" />
+              <img
+                src="/images/duck.svg"
+                alt="duck"
+                height="250rem"
+                width="259rem"
+              />
             </figure>
           </div>
         </Fade>

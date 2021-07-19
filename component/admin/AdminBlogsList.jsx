@@ -44,7 +44,7 @@ export default function AdminBlogsList({ posts, updated }) {
       blog._id,
       "pending"
     );
-    console.log(response);
+    // console.log(response);
     updated();
   };
   return (
@@ -53,7 +53,7 @@ export default function AdminBlogsList({ posts, updated }) {
     >
       <div className="w-full">
         {posts &&
-          posts.map((item, index) => (
+          posts.map((item) => (
             <div className={`${MyBlogStyles.oddBg} w-full`} key={item._id}>
               <div
                 className={`flex flex-col md:flex-row md:items-center justify-between p-4`}
@@ -73,11 +73,10 @@ export default function AdminBlogsList({ posts, updated }) {
                     </a>
                   </Link>
                   <div className={`text-xs text-gray-400 pt-2`}>
-                    {moment(item?.createdAt).format("LL")}
+                    {moment(item.updatedAt).format("LL")}
                     {" - "}
                     <Link href={`/u/${item.primaryAuthor.username}`}>
                       <a className="text-blue-500">
-                        {/* <p className="text- text-gray-600"></p> */}
                         {item.primaryAuthor.username}
                       </a>
                     </Link>

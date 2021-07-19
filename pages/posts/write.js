@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import WriteNav from "../../component/myblogs/WriteNav";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
@@ -139,24 +139,6 @@ export default function Write({ post_Id }) {
     }
   }
 
-  // async function createPost(createThisPost) {
-  //   try {
-  //     const { data } = await PostService.createPost(userCookie, createThisPost);
-  //     const { post, msg } = data;
-  //     notify(msg);
-  //     // console.log(post, msg);
-  //     //TO DO: compare our user id and the posts's user id
-  //     // setPostId(post._id);
-  //     router.push({
-  //       pathname: "/posts/write",
-  //       query: { post_id: post._id }
-  //     });
-  //     // getPostById(post._id);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   const saveToDraft = () => {
     // Send a post message to the iframe
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
@@ -179,15 +161,6 @@ export default function Write({ post_Id }) {
         };
         updatePostById(newUpdatedPost, newPostId);
       }
-      // else {
-      //   const createThisPost = {
-      //     mobiledoc: newMobiledoc,
-      //     title: title,
-      //     type: "blog"
-      //   };
-      //   console.log(createThisPost);
-      //   createPost(createThisPost);
-      // }
     }, 500);
   };
 
@@ -218,15 +191,12 @@ export default function Write({ post_Id }) {
       // console.log("update");
       updatePostById(settingsData, postId);
     }
-    // else {
-    //   createPost(settingsData);
-    // }
   };
 
   const notify = (msg) =>
     toast(msg, {
-      position: "top-right",
-      autoClose: 3000,
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -265,7 +235,6 @@ export default function Write({ post_Id }) {
             </p>
           </div> */}
         </div>
-        {/* <ToastContainer /> */}
       </div>
     </>
   );

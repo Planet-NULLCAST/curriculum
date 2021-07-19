@@ -10,7 +10,7 @@ export default function CourseList({ courses }) {
       title: "Learn JavaScript",
       url: "/curriculum/javascript",
       description:
-        "Learn JavaScript and Javascript arrays to build interactive websites and pages that adapt to every device.  This curriculum can help designers to upgrade their careers and starting point for front-end engineers.",
+        "Once the foundation is set, it’s time to step up your game and create the interactive side of your website. Kick things off with Javascript to learn the basic fundamentals of programming and achieve advanced JS mastery.",
       linktext: "Learn more"
     },
     {
@@ -21,7 +21,7 @@ export default function CourseList({ courses }) {
       title: "Learn HTML",
       url: "/",
       description:
-        "HTML Tutorial - HTML stands for HyperText Markup Language, which is the most widely used language on the Web to develop web pages. HTML was created by Berners-Lee in late 1991.",
+        "A step-by-step guide to understanding the how-to's of HTML rather than hovering around the why's. Learn the practical skills needed to master the basics of HTML and start building your website.",
       linktext: ""
     },
     {
@@ -32,7 +32,7 @@ export default function CourseList({ courses }) {
       title: "Learn CSS",
       url: "/",
       description:
-        "In this CSS curriculum, you’ll set up file structures, beautify text and colors using CSS selectors to create the layouts and webpages.",
+        "Add life, colours and style to the contents of the website you created by practising alongside the best way to learn CSS. This guide is suitable for anyone eager to pave a path towards maintaining complex web pages with ease.",
       linktext: ""
     }
   ];
