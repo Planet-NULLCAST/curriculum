@@ -75,6 +75,14 @@ export default function Settings({ profileData, _skills }) {
     github: "",
     website: ""
   });
+  const [errors, setErrors] = useState({
+    fullName: "",
+    twitter: "",
+    facebook: "",
+    linkedin: "",
+    github: "",
+    website: ""
+  });
   const [image, setImage] = useState("");
 
   useEffect(() => {
@@ -100,11 +108,19 @@ export default function Settings({ profileData, _skills }) {
   };
   const handleSettings = (e) => {
     e.preventDefault();
-    updateProfile();
+    if (profile.fullName) {
+      updateProfile();
+    } else {
+      setErrors((prevValue) => {
+        return {
+          ...prevValue,
+          fullName: "Required"
+        };
+      });
+    }
   };
 
   const handleSkills = (e) => {
-    console.log(e);
     const newSkill = e
       .filter((skill) => {
         if (skill.__isNew__ === true) {
@@ -120,6 +136,67 @@ export default function Settings({ profileData, _skills }) {
         skills: e.map((i) => i.value)
       };
     });
+  };
+
+  const handleErrors = (e) => {
+    const { name, value } = e.target;
+    if (name === "fullName") {
+      if (value === "") {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "Required"
+          };
+        });
+      } else if (value) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      }
+    } else if (name === "website") {
+      if (value === "" || value.match(/^(ftp|http|https):\/\/[^ "]+$/)) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      } else {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "Please enter a valid URL"
+          };
+        });
+      }
+    } else if (
+      name === "twitter" ||
+      name === "facebook" ||
+      name === "linkedin" ||
+      name === "github"
+    ) {
+      if (
+        value === "" ||
+        (value.match(/^[a-zA-Z0-9]\S*$/) && value.length < 30)
+      ) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      } else {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: `Invalid ${name} username`
+          };
+        });
+      }
+    }
   };
 
   const handleOnChange = (e) => {
@@ -327,10 +404,25 @@ export default function Settings({ profileData, _skills }) {
                     type="text"
                     id="fullName"
                     name="fullName"
+                    maxLength="30"
                     placeholder="Name"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.fullName) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.fullName}
                   />
+
+                  {errors.fullName && errors.fullName !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.fullName}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full mb-4">
                   <label htmlFor="bio">Bio</label>
@@ -375,9 +467,22 @@ export default function Settings({ profileData, _skills }) {
                     id="twitter"
                     name="twitter"
                     placeholder="Enter username"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.twitter) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.twitter}
                   />
+                  {errors.twitter && errors.twitter !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.twitter}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
                   <label htmlFor="linkedin">Linkedin Username</label>
@@ -386,9 +491,22 @@ export default function Settings({ profileData, _skills }) {
                     id="linkedin"
                     name="linkedin"
                     placeholder="Enter username"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.linkedin) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.linkedin}
                   />
+                  {errors.linkedin && errors.linkedin !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.linkedin}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="facebook">Facebook Username</label>
@@ -397,9 +515,22 @@ export default function Settings({ profileData, _skills }) {
                     id="facebook"
                     name="facebook"
                     placeholder="Enter username"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.facebook) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.facebook}
                   />
+                  {errors.facebook && errors.facebook !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.facebook}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
                   <label htmlFor="github">Github Username</label>
@@ -408,9 +539,22 @@ export default function Settings({ profileData, _skills }) {
                     name="github"
                     type="text"
                     placeholder="Enter username"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.github) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.github}
                   />
+                  {errors.github && errors.github !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.github}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full mb-4">
                   <label htmlFor="website">Website</label>
@@ -419,14 +563,46 @@ export default function Settings({ profileData, _skills }) {
                     placeholder="Enter Website URL"
                     id="website"
                     name="website"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.website) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.website}
                   />
+                  {errors.website && errors.website !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.website}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right w-full">
                   <button
-                    disabled={loading}
-                    className={`${loading && "disabled:opacity-50"}`}
+                    disabled={
+                      loading ||
+                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.twitter !== "" && errors.twitter !== "valid") ||
+                      (errors.facebook !== "" && errors.facebook !== "valid") ||
+                      (errors.linkedin !== "" && errors.linkedin !== "valid") ||
+                      (errors.github !== "" && errors.github !== "valid") ||
+                      (errors.website !== "" && errors.website !== "valid")
+                      // !profile.fullName
+                    }
+                    className={`${
+                      loading ||
+                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.twitter !== "" && errors.twitter !== "valid") ||
+                      (errors.facebook !== "" && errors.facebook !== "valid") ||
+                      (errors.linkedin !== "" && errors.linkedin !== "valid") ||
+                      (errors.github !== "" && errors.github !== "valid") ||
+                      (errors.website !== "" && errors.website !== "valid")
+                        ? "opacity-50 hover:bg-black cursor-not-allowed"
+                        : ""
+                    } ${1 === 1 && ""}`}
                     type="submit"
                   >
                     Update Profile

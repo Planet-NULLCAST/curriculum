@@ -119,7 +119,7 @@ export default function HomeSpotlight() {
                   </li>
                   <li>
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)} className="w-full">
+                    <a onClick={() => setMenu(true)} className="w-full font-semibold">
                       Explore
                       <span className={styles.downArrow}>
                         <svg
@@ -137,14 +137,14 @@ export default function HomeSpotlight() {
                     <ul>
                       <li>
                         <Link href="/blog">
-                          <a onClick={() => setMenu(true)} className="w-full">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
                             Blog
                           </a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/code-of-conduct">
-                          <a onClick={() => setMenu(true)} className="w-full">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
                             Code of conduct
                           </a>
                         </Link>
