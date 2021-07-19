@@ -6,17 +6,19 @@ import Link from "next/link";
 import Cookies from "universal-cookie";
 
 export default function HomeSpotlight() {
+  const router = useRouter();
   const _cookies = new Cookies();
   const userCookie = _cookies.get("userNullcast");
   const [menu, setMenu] = useState(false);
+  const [cookies, setCookies] = useState("");
+
   // const ShowMenu = () => {
   //   setMenu(menu);
   // };
   // useEffect(() => {
   //   document.body.classList.toggle("menuOpen", menu);
   // }, [menu]);
-  const router = useRouter();
-  const [cookies, setCookies] = useState("");
+
   useEffect(() => {
     if (userCookie) {
       setCookies(userCookie);
@@ -63,6 +65,10 @@ export default function HomeSpotlight() {
       router.reload();
     }
   }
+  // const handleDropDown = () => {
+  //   // console.log("clicked");
+  //   setDropDown(!dropdown);
+  // };
   return (
     <header
       className={`${styles.header} ${menu ? "menu-open" : " "} w-full`}
@@ -74,7 +80,12 @@ export default function HomeSpotlight() {
         <div id="logo">
           <Link href="/">
             <a onClick={() => setMenu(true)}>
-              <img src="/images/nullcast.svg" alt="" />
+              <img
+                src="/images/nullcast.svg"
+                alt="logo"
+                height="120rem"
+                width="120rem"
+              />
             </a>
           </Link>
         </div>
@@ -111,13 +122,18 @@ export default function HomeSpotlight() {
                           src="/images/hand.png"
                           className="ml-1"
                           alt="hand"
+                          width="15rem"
+                          height="14rem"
                         />
                       </a>
                     </Link>
                   </li>
                   <li>
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)} className="w-full">
+                    <a
+                      onClick={() => setMenu(true)}
+                      className="w-full cursor-default"
+                    >
                       Explore
                       <span className={styles.downArrow}>
                         <svg
