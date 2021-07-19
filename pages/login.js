@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Loginstyles from "../styles/Login.module.css";
@@ -37,9 +37,6 @@ export async function getServerSideProps(context) {
 
 export default function Login() {
   const router = useRouter();
-  // console.log("redirect", router.query.redirect);
-  const redirectTo = router.query.redirect;
-
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [hidePassword, setHidePassword] = useState(false);
@@ -143,21 +140,13 @@ export default function Login() {
                 .catch((err) => {
                   console.log(err.message);
                 });
-              if (redirectTo) {
-                router.push(redirectTo);
-              } else {
-                router.push("/");
-              }
+              router.back();
             } else {
               setIsLoading(false);
               notify(data);
             }
           });
       } else {
-        // if(!email && !password){
-        //   setEmailValid(false);
-
-        // }
         setIsLoading(false);
         if (!email) {
           setEmailValid(false);
@@ -317,7 +306,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-      {/* <ToastContainer /> */}
     </div>
   );
 }

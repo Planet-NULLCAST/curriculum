@@ -44,7 +44,7 @@ export default function Pagination({
     } else if (pageNo >= TotalPages || pageNo <= 5) {
       setmiddle(false);
     }
-    console.log("changepage");
+    // console.log("changepage");
     changePage(pageNo);
   }, [pageNo]);
 

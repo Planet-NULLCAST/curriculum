@@ -21,10 +21,9 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Start with HTML</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              HTML Tutorial - HTML stands for HyperText Markup Language, which
+              is the most widely used language on the Web to develop web pages.
+              HTML was created by Berners-Lee in late 1991.{" "}
             </p>
           </div>
           <div className={styles.image}>
@@ -55,7 +54,7 @@ export default function CourseJourney() {
               stroke="#178cf3"
               strokeDasharray="10 10"
               clipPath="url(#box_1)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -69,10 +68,9 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>CSS</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              In this CSS curriculum, you’ll set up file structures, beautify
+              text and colors using CSS selectors to create the layouts and
+              webpages.
             </p>
           </div>
           <div className={styles.image}>
@@ -103,7 +101,7 @@ export default function CourseJourney() {
               stroke="#20d034"
               strokeDasharray="10 10"
               clipPath="url(#box_2)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -151,7 +149,7 @@ export default function CourseJourney() {
               stroke="#d8c00f"
               strokeDasharray="10 10"
               clipPath="url(#box_3)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -165,10 +163,10 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Javascript</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              Learn JavaScript and Javascript arrays to build interactive
+              websites and pages that adapt to every device. This curriculum can
+              help designers to upgrade their careers and starting point for
+              front-end engineers.
             </p>
           </div>
           <div className={styles.image}>

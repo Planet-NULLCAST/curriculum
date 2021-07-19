@@ -61,7 +61,7 @@ export default function Posts() {
     if (status) setStatusFilter(status);
     try {
       const data = await PostService.getPostsByUserId(userCookie, reqData);
-      console.log(data);
+      // console.log(data);
       const { posts, count } = data;
       // console.log({ posts });
       setPostData({
