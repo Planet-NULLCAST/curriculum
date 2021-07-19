@@ -21,9 +21,9 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Start with HTML</h3>
             <p>
-              HTML Tutorial - HTML stands for HyperText Markup Language, which
-              is the most widely used language on the Web to develop web pages.
-              HTML was created by Berners-Lee in late 1991.{" "}
+              A step-by-step guide to understanding the how-to's of HTML rather
+              than hovering around the why's. Learn the practical skills needed
+              to master the basics of HTML and start building your website.
             </p>
           </div>
           <div className={styles.image}>
@@ -68,9 +68,10 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>CSS</h3>
             <p>
-              In this CSS curriculum, you’ll set up file structures, beautify
-              text and colors using CSS selectors to create the layouts and
-              webpages.
+              Add life, colours and style to the contents of the website you
+              created by practising alongside the best way to learn CSS. This
+              guide is suitable for anyone eager to pave a path towards
+              maintaining complex web pages with ease.
             </p>
           </div>
           <div className={styles.image}>
@@ -115,10 +116,8 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Create Sample Projects</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              Practice makes perfect, isn’t it? Get started with the sample
+              projects to test yourself and show off your newly learned skills.
             </p>
           </div>
           <div className={styles.image}>
@@ -163,10 +162,10 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Javascript</h3>
             <p>
-              Learn JavaScript and Javascript arrays to build interactive
-              websites and pages that adapt to every device. This curriculum can
-              help designers to upgrade their careers and starting point for
-              front-end engineers.
+              Once the foundation is set, it’s time to step up your game and
+              create the interactive side of your website. Kick things off with
+              Javascript to learn the basic fundamentals of programming and
+              achieve advanced JS mastery.
             </p>
           </div>
           <div className={styles.image}>
