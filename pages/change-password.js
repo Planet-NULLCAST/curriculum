@@ -7,7 +7,7 @@ import AuthService from "../services/AuthService";
 import validatePassword from "../lib/validatePassword";
 import { getCookieValue } from "../lib/cookie";
 import Cookies from "universal-cookie";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export async function getServerSideProps(context) {
   try {
@@ -45,8 +45,14 @@ export default function changePassword() {
     newPassword: "",
     confirmPassword: ""
   });
+  const [validCurrentPassword, setValidCurrentPassword] = useState();
   const [validNewPassword, setValidNewPassword] = useState("");
   const [validConfirmPassword, setValidConfirmPassword] = useState("");
+  const [hidePassword, setHidePassword] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false
+  });
 
   const handleOnBlur = (e) => {
     const { name, value } = e.target;
@@ -87,6 +93,72 @@ export default function changePassword() {
     });
   };
 
+  const resetPassword = async (passwords) => {
+    try {
+      const { message } = await AuthService.changePassword(
+        passwords,
+        userCookie
+      );
+      notify(message, true);
+    } catch (err) {
+      notify(err.message, false);
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const currentPass = e.target.currentPassword.value;
+    const newPass = e.target.newPassword.value;
+    const confirmPass = e.target.confirmPassword.value;
+    passwordCheck(e.target.newPassword.name, newPass);
+    passwordCheck(e.target.confirmPassword.name, confirmPass);
+    if (currentPass === "") {
+      setValidCurrentPassword("empty");
+    }
+    if (
+      newPass === confirmPass &&
+      validNewPassword === "valid" &&
+      validConfirmPassword === "valid" &&
+      currentPass
+    ) {
+      const passwords = {
+        currentPassword: currentPass,
+        confirmPass
+      };
+      resetPassword(passwords);
+    }
+  };
+
+  const handleHidePassword = (e) => {
+    const { name } = e.target;
+    if (name === "currentPassword") {
+      console.log(hidePassword.currentPassword);
+      setHidePassword((prevValue) => {
+        return {
+          ...prevValue,
+          currentPassword: !hidePassword.currentPassword
+        };
+      });
+    }
+
+    if (name === "newPassword") {
+      setHidePassword((prevValue) => {
+        return {
+          ...prevValue,
+          newPassword: !hidePassword.newPassword
+        };
+      });
+    }
+
+    if (name === "confirmPassword") {
+      setHidePassword((prevValue) => {
+        return {
+          ...prevValue,
+          confirmPassword: !hidePassword.confirmPassword
+        };
+      });
+    }
+  };
+
   const notify = (msg, type) => {
     if (type) {
       toast.success(msg, {
@@ -108,36 +180,6 @@ export default function changePassword() {
         draggable: true,
         progress: undefined
       });
-    }
-  };
-
-  const resetPassword = async (passwords) => {
-    try {
-      const { message, updatedUser } = await AuthService.changePassword(
-        passwords,
-        userCookie
-      );
-      notify(message, true);
-    } catch (err) {
-      notify(err.message, false);
-    }
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newPass = e.target.newPassword.value;
-    const confirmPass = e.target.confirmPassword.value;
-    passwordCheck(e.target.newPassword.name, newPass);
-    passwordCheck(e.target.confirmPassword.name, confirmPass);
-    if (
-      newPass === confirmPass &&
-      validNewPassword === "valid" &&
-      validConfirmPassword === "valid"
-    ) {
-      const passwords = {
-        currentPassword: e.target.currentPassword.value,
-        confirmPass
-      };
-      resetPassword(passwords);
     }
   };
 
@@ -186,23 +228,50 @@ export default function changePassword() {
               <form onSubmit={handleSubmit} className="flex flex-wrap">
                 <div className="w-full mb-4">
                   <label htmlFor="currentPassword">Current Password</label>
-                  <input
-                    id="currentPassword"
-                    type="text"
-                    placeholder="Enter Current Password"
-                  />
+                  <div className="flex">
+                    <input
+                      id="currentPassword"
+                      type={`${
+                        hidePassword.currentPassword ? "text" : "password"
+                      }`}
+                      placeholder="Enter Current Password"
+                    />
+                    <img
+                      src="/images/eye.svg"
+                      className="relative top-4 -left-10 w-6 h-6 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                      onClick={handleHidePassword}
+                      name="currentPassword"
+                      alt="eye-icon"
+                    ></img>
+                  </div>
+                  {validCurrentPassword === "empty" && (
+                    <p className="text-sm text-red-400 text-left">
+                      Please enter a password
+                    </p>
+                  )}
                 </div>
+
                 <div className="w-full mb-4">
                   <label htmlFor="newPassword">New Password</label>
-                  <input
-                    id="newPassword"
-                    name="newPassword"
-                    type="text"
-                    onChange={handleInputChange}
-                    onBlur={handleOnBlur}
-                    value={password.newPassword}
-                    placeholder="Enter New Password"
-                  />
+                  <div className="flex">
+                    <input
+                      id="newPassword"
+                      name="newPassword"
+                      type={`${hidePassword.newPassword ? "text" : "password"}`}
+                      onChange={handleInputChange}
+                      onBlur={handleOnBlur}
+                      value={password.newPassword}
+                      placeholder="Enter New Password"
+                    />
+                    <img
+                      src="/images/eye.svg"
+                      className="relative top-4 -left-10 w-6 h-6 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                      onClick={handleHidePassword}
+                      name="newPassword"
+                      alt="eye-icon"
+                    ></img>
+                  </div>
+
                   {validNewPassword === "empty" && (
                     <p className="text-sm text-red-400 text-left">
                       Please enter a password
@@ -219,15 +288,27 @@ export default function changePassword() {
                 </div>
                 <div className="w-full mb-4">
                   <label htmlFor="confirmPassword">Confirm Password</label>
-                  <input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type="text"
-                    onBlur={handleOnBlur}
-                    onChange={handleInputChange}
-                    value={password.confirmPassword}
-                    placeholder="Confirm Password"
-                  />
+                  <div className="flex">
+                    <input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type={`${
+                        hidePassword.confirmPassword ? "text" : "password"
+                      }`}
+                      onBlur={handleOnBlur}
+                      onChange={handleInputChange}
+                      value={password.confirmPassword}
+                      placeholder="Confirm Password"
+                    />
+                    <img
+                      src="/images/eye.svg"
+                      className="relative top-4 -left-10 w-6 h-6 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                      onClick={handleHidePassword}
+                      name="confirmPassword"
+                      alt="eye-icon"
+                    ></img>
+                  </div>
+
                   {validConfirmPassword === "empty" && (
                     <p className="text-sm text-red-400 text-left">
                       Please enter a password
@@ -259,7 +340,6 @@ export default function changePassword() {
           </div>
         </div>
       </section>
-      {/* <ToastContainer /> */}
     </>
   );
 }
