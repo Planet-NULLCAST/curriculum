@@ -60,7 +60,7 @@ export default function Profile({ onLogout, username }) {
         <ul>
           <li>
             <Link href={`/u/${userCookie.username}`}>
-              <a className="linkUnderline w-full">
+              <a className="linkUnderline w-full font-semibold">
                 Profile
                 <svg
                   className="ml-3"
@@ -80,18 +80,18 @@ export default function Profile({ onLogout, username }) {
           {isAdmin && (
             <li>
               <Link href="/admin">
-                <a className="linkUnderline w-full">Admin Console</a>
+                <a className="linkUnderline w-full font-semibold">Admin Console</a>
               </Link>
             </li>
           )}
           <li>
             <Link href="/settings">
-              <a className="linkUnderline w-full">Settings</a>
+              <a className="linkUnderline w-full font-semibold">Settings</a>
             </Link>
           </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout} className="linkUnderline w-full">
+            <button onClick={onLogout} className="linkUnderline w-full font-semibold">
               Logout
             </button>
           </li>

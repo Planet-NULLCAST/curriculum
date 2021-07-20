@@ -97,6 +97,10 @@
       background: #fff;
       color: #242424;
     }
+    &:disabled {
+      background: #242424;
+      color: #fff;
+    }
   }
 }
 .delete {

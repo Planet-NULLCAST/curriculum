@@ -118,7 +118,7 @@ export default function SignUp() {
   //   return true;
   // };
   function handleUserName(e) {
-    const regexUser = /^[a-zA-Z0-9]/;
+    const regexUser = /^[a-zA-Z0-9]\S*$/;
     if (e.target.value.length === 0) {
       setValidUserName("empty");
     } else if (e.target.value?.length < 5 || e.target.value?.length > 15) {
@@ -343,7 +343,7 @@ export default function SignUp() {
                           )}
                           {validUserName === "characters" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Username can only contain alphabets and numbers
+                              Username can only contain alphabets, numbers and cannot contain spaces
                             </span>
                           )}
                         </div>
