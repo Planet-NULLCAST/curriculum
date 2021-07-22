@@ -113,7 +113,7 @@ export default function BlogListing({ blog, tagsArray, count }) {
       </Head>
       <SiteHeader />
       <ListingHeader />
-      {blog[0] && <ListingFeatured blog={blog} />}
+      {blog[0] && <ListingFeatured blog={blog[0]} />}
       {blog.length > 0 ? (
         <Listing
           blog={newBlogs}
