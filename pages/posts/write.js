@@ -13,16 +13,32 @@ import { getCookieValue } from "../../lib/cookie";
 const TARGET = editorUrl;
 
 export async function getServerSideProps(context) {
-  // console.log(context);
   try {
-    // console.log(context.query);
-    const post_Id = context.query.post_id;
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
-      // console.log(cookie);
-      return { props: { post_Id: post_Id ? post_Id : "" } };
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        const post_Id = context.query.post_id;
+        const res = await PostService.getPostById(cookie, post_Id);
+        // console.log("get post response", res);
+        const resPost = {
+          mobiledoc: res.mobiledoc,
+          title: res.title
+        };
+        return {
+          props: { post_Id: post_Id ? post_Id : "", resPost: resPost, res: res }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/login"
+          }
+        };
+      }
     } else {
       return {
         redirect: {
@@ -32,7 +48,6 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("User not logged in ");
     return {
       redirect: {
         permanent: false,
@@ -42,8 +57,8 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Write({ post_Id }) {
-  const [postId, setPostId] = useState("");
+export default function Write({ post_Id, resPost, res }) {
+  const [postId, setPostId] = useState(post_Id);
   const [post, setPost] = useState();
 
   const iframeRef = useRef();
@@ -55,11 +70,11 @@ export default function Write({ post_Id }) {
   // console.log(userCookie);
 
   useEffect(() => {
-    const currentPostId = router.query.post_id;
+    // const currentPostId = router.query.post_id;
     // console.log({ currentPostId });
-
     if (userCookie) {
-      setPostId(currentPostId);
+      setPost(res);
+      setPostId(post_Id);
       try {
         // errors on refresh
         // !START
@@ -70,13 +85,29 @@ export default function Write({ post_Id }) {
         // !END
 
         iframeElement.onload = function () {
-          if (currentPostId) {
-            getPostById(currentPostId);
+          if (post_Id) {
+            // getPostById(currentPostId);
+            // ---- to show the post in iframe ----
+            iframeRef.current.contentWindow.postMessage(
+              {
+                msg: "providePost",
+                post: resPost
+              },
+              TARGET
+            );
           }
         };
       } catch (error) {
         console.log("error blaaaah==>", error);
-        getPostById(currentPostId);
+        // getPostById(currentPostId);
+        // ---- to show the post in iframe ----
+        iframeRef.current.contentWindow.postMessage(
+          {
+            msg: "providePost",
+            post: resPost
+          },
+          TARGET
+        );
       }
     }
 
@@ -105,23 +136,23 @@ export default function Write({ post_Id }) {
     };
   }, [post_Id]);
 
-  async function getPostById(id) {
-    const res = await PostService.getPostById(userCookie, id);
-    console.log("get post response", res);
-    const resPost = {
-      mobiledoc: res.mobiledoc,
-      title: res.title
-    };
-    setPost(res);
-    // ---- to show the post in iframe
-    iframeRef.current.contentWindow.postMessage(
-      {
-        msg: "providePost",
-        post: resPost
-      },
-      TARGET
-    );
-  }
+  // async function getPostById(id) {
+  //   const res = await PostService.getPostById(userCookie, id);
+  //   console.log("get post response", res);
+  //   const resPost = {
+  //     mobiledoc: res.mobiledoc,
+  //     title: res.title
+  //   };
+  //   setPost(res);
+  //   // ---- to show the post in iframe
+  //   iframeRef.current.contentWindow.postMessage(
+  //     {
+  //       msg: "providePost",
+  //       post: resPost
+  //     },
+  //     TARGET
+  //   );
+  // }
 
   async function updatePostById(updateData, newPostId) {
     try {
@@ -130,7 +161,7 @@ export default function Write({ post_Id }) {
         updateData,
         newPostId
       );
-      console.log("updated post response", data);
+      // console.log("updated post response", data);
       if (msg) {
         notify(msg);
       }
@@ -144,28 +175,24 @@ export default function Write({ post_Id }) {
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
       // wait for the response post message to get the post from the state
-      console.log({ postElement });
+      // console.log({ postElement });
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement.current.scratch;
       const title = postElement.current.titleScratch || "[Untitled]";
-      // console.log("title: ", title);
-      // createPost or updatePost -  if post id - update, else create
-      console.log({ router });
-      const newPostId = router.query.post_id;
-      console.log({ newPostId });
-      if (newPostId) {
+
+      if (postId) {
         //updatePost
         const newUpdatedPost = {
           title: title,
           mobiledoc: newMobiledoc
         };
-        updatePostById(newUpdatedPost, newPostId);
+        updatePostById(newUpdatedPost, postId);
       }
     }, 500);
   };
 
   async function submitForReview() {
-    //status pending if submitted for review
+    //change status to "pending" if submitted for review
     // console.log(postId);
     try {
       const statusUpdate = {
@@ -186,9 +213,7 @@ export default function Write({ post_Id }) {
   }
 
   const getSettings = async (settingsData) => {
-    // console.log("in settings");
     if (postId) {
-      // console.log("update");
       updatePostById(settingsData, postId);
     }
   };

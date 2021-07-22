@@ -11,18 +11,12 @@ export default function Listing({
   currentCount,
   blogCount,
   tagsArray,
-  clickNo,
   resetCount
 }) {
-  // console.log({ blog });
-  // console.log({ blogCount });
-  // console.log({ clickNo });
   const [count, setCount] = useState(0);
   const router = useRouter();
-  // console.log(router);
   let newTagsArray = [];
   if (router.asPath === "/blog") {
-    // console.log({ tagsArray });
     const size = 5;
     newTagsArray = tagsArray.slice(0, size);
   }
