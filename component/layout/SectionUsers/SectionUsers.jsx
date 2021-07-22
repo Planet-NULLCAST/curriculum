@@ -26,9 +26,9 @@ export default class SimpleSlider extends Component {
                 <div key={key}>
                   <div className={styles.item}>
                     <div className={styles.icon}>
-                      <Image
+                    <Image
                         className="rounded-full"
-                        src={item.avatar}
+                        src={item.avatar||`/images/dummy${key%4}.png`}
                         alt="user"
                         height="70rem"
                         width="70rem"
