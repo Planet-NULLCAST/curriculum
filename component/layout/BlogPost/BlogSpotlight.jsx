@@ -19,10 +19,7 @@ export default function BlogSpotlight(props) {
       </section>
       <section className={styles.section}>
         <div className={styles.postWrap}>
-          <figure>
-            {!bannerImage && <img src="/images/temp/blogmain.png" alt="" />}
-            <img src={bannerImage} alt="blog" />
-          </figure>
+          <figure>{bannerImage && <img src={bannerImage} alt="blog" />}</figure>
           <div className={styles.author}>
             <div className={styles.item}>
               <AuthorDetails username={username} avatar={avatar} />

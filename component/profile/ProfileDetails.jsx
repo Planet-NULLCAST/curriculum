@@ -13,7 +13,7 @@ export default function ProfileDetails({ userData }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
           >
             <div className="flex">
-              {userData.isThisUserTheCurrentLogined && (
+              {userData.isThisUserTheCurrentLoggedIn && (
                 <Link href="/settings">
                   <a>
                     <img
@@ -28,10 +28,11 @@ export default function ProfileDetails({ userData }) {
               {/* picture */}
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
-                  <img
-                    src={userData.avatar || "/images/svgs/avatar.svg"}
+                  <Image
+                    src={userData.avatar}
                     alt="avatar"
                     className="rounded-full h-24 w-24"
+                    layout="fill"
                   />
                 </div>
                 {/* <img

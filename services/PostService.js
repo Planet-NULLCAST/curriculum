@@ -247,33 +247,20 @@ async function getPostsByQuery(query, clickNo) {
   }
 }
 
-async function getPostCountByUserName(username) {
-  let url = getUrl();
-
-  try {
-    const { data } = await axios.get(`${url}/${allPostsUrl}/count`, {
-      params: { username: username }
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-
 /**
  * Api call for fetching all publlished posts related to a user
  * @param {String} username
  * @returns {Promise}
  */
-async function getAllPostsByUsername(username, limit) {
+async function getAllPostsByUsername(username, limit, clickNo) {
   const url = getUrl();
 
   try {
     const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
       params: {
         username: username,
-        limit: limit
+        limit: limit,
+        clickNo: clickNo
       }
     });
     return data;
@@ -326,7 +313,6 @@ const PostService = {
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin,
-  getPostCountByUserName,
   getAllPostsByUsername,
   setVotes
 };

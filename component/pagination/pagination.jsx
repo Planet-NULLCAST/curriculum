@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import Styles from "./pagination.module.scss";
 
-export default function Pagination({
-  TotalCount,
-  // CurrentPage,
-  changePage,
-  pageNum,
-  limit
-}) {
+export default function Pagination({ TotalCount, changePage, pageNum, limit }) {
   const [TotalPages, setTotalPages] = useState();
   const [FirstThree, setFirstThree] = useState([]);
   const [LastThree, setLastThree] = useState([]);
@@ -18,11 +12,8 @@ export default function Pagination({
   // console.log("outside", pageNo);
   useEffect(() => {
     setTotalPages(Math.ceil(TotalCount / limit));
-    // if (CurrentPage) {
-    //   setpageNo(CurrentPage);
-    // } else {
-    //   setpageNo(1);
-    // }
+    // console.log({ pageNum });
+    setpageNo(pageNum);
   }, [TotalCount]);
   useEffect(() => {
     if (TotalPages >= 6) {
@@ -44,7 +35,7 @@ export default function Pagination({
     } else if (pageNo >= TotalPages || pageNo <= 5) {
       setmiddle(false);
     }
-    console.log("changepage");
+    // console.log("changepage");
     changePage(pageNo);
   }, [pageNo]);
 

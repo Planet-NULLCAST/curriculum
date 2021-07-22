@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import styles from "./SectionUsers.module.scss";
 import Link from "next/link";
-
+import Image from "next/image";
 export default class SimpleSlider extends Component {
   render() {
     // console.log(this.props.user);
@@ -26,7 +26,13 @@ export default class SimpleSlider extends Component {
                 <div key={key}>
                   <div className={styles.item}>
                     <div className={styles.icon}>
-                      <img src={item.avatar?item.avatar:"/images/temp/avatar1.png"} alt="user" />
+                      <Image
+                        className="rounded-full"
+                        src={item.avatar}
+                        alt="user"
+                        height="70rem"
+                        width="70rem"
+                      />
                     </div>
                     <h4 className={styles.min_w_10rem}>
                       <Link href={`/u/${item.username}`}>

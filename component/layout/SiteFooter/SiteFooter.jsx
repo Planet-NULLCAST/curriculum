@@ -24,11 +24,14 @@ export default function SiteFooter() {
       progress: undefined
     });
   };
+
   const addSubscriber = async (e) => {
     e.preventDefault();
     const newEmail = e.target.email.value;
+
     const isValid = validateEmail(newEmail);
     setIsValidEmail(isValid);
+
     if (isValid) {
       const emailData = {
         email: newEmail
@@ -39,6 +42,14 @@ export default function SiteFooter() {
       );
       // console.log(data);
       notify(data.msg);
+    }
+  };
+
+  const handleChangeEmail = (e) => {
+    // console.log(e.target.value);
+    if (isValidEmail === false) {
+      const isValid = validateEmail(e.target.value);
+      setIsValidEmail(isValid);
     }
   };
   return (
@@ -57,6 +68,7 @@ export default function SiteFooter() {
                 placeholder="Enter your mail"
                 id="#email"
                 name="email"
+                onChange={handleChangeEmail}
               />
 
               <button className="btn btn--subscribe" type="submit">
@@ -108,19 +120,20 @@ export default function SiteFooter() {
                 href="https://twitter.com/nullcast_io?lang=en"
                 className={styles.twitter}
                 target="_blank"
+                rel="noopener noreferer"
               >
                 <Image
                   src="/images/twitter-large.svg"
                   alt="twitter"
-                  width={268}
-                  height={268}
+                  width="268rem"
+                  height="268rem"
                 />
-                <img />
               </a>
               <a
                 href="https://www.linkedin.com/company/nullcast/?originalSubdomain=in"
                 className={styles.linkedin}
                 target="_blank"
+                rel="noopener noreferer"
               >
                 <Image
                   src="/images/linkedin-large.svg"
@@ -133,6 +146,7 @@ export default function SiteFooter() {
                 href="https://discord.com/invite/5byDDp2qbK"
                 className={styles.discord}
                 target="_blank"
+                rel="noopener noreferer"
               >
                 <Image
                   src="/images/discord-large.svg"

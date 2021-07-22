@@ -6,19 +6,19 @@ import Link from "next/link";
 import Cookies from "universal-cookie";
 
 export default function HomeSpotlight() {
+  const router = useRouter();
   const _cookies = new Cookies();
   const userCookie = _cookies.get("userNullcast");
   const [menu, setMenu] = useState(false);
+  const [cookies, setCookies] = useState("");
+
   // const ShowMenu = () => {
   //   setMenu(menu);
   // };
   // useEffect(() => {
   //   document.body.classList.toggle("menuOpen", menu);
   // }, [menu]);
-  const router = useRouter();
-  // console.log("aspath", router.asPath);
-  const currentPath = router.asPath;
-  const [cookies, setCookies] = useState("");
+
   useEffect(() => {
     if (userCookie) {
       setCookies(userCookie);
@@ -65,6 +65,10 @@ export default function HomeSpotlight() {
       router.reload();
     }
   }
+  // const handleDropDown = () => {
+  //   // console.log("clicked");
+  //   setDropDown(!dropdown);
+  // };
   return (
     <header
       className={`${styles.header} ${menu ? "menu-open" : " "} w-full`}
@@ -76,7 +80,12 @@ export default function HomeSpotlight() {
         <div id="logo">
           <Link href="/">
             <a onClick={() => setMenu(true)}>
-              <img src="/images/nullcast.svg" alt="" />
+              <img
+                src="/images/nullcast.svg"
+                alt="logo"
+                height="120rem"
+                width="120rem"
+              />
             </a>
           </Link>
         </div>
@@ -106,20 +115,27 @@ export default function HomeSpotlight() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/posts">
+                    <Link
+                      href={{
+                        pathname: "/posts",
+                        query: { pageNo: 1, tag: "", status: "" }
+                      }}
+                    >
                       <a onClick={() => setMenu(true)}>
                         Write
                         <img
                           src="/images/hand.png"
                           className="ml-1"
                           alt="hand"
+                          width="15rem"
+                          height="14rem"
                         />
                       </a>
                     </Link>
                   </li>
                   <li>
                     {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                    <a onClick={() => setMenu(true)} className="w-full">
+                    <a onClick={() => setMenu(true)} className="w-full cursor-default font-semibold">
                       Explore
                       <span className={styles.downArrow}>
                         <svg
@@ -137,14 +153,14 @@ export default function HomeSpotlight() {
                     <ul>
                       <li>
                         <Link href="/blog">
-                          <a onClick={() => setMenu(true)} className="w-full">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
                             Blog
                           </a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/code-of-conduct">
-                          <a onClick={() => setMenu(true)} className="w-full">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
                             Code of conduct
                           </a>
                         </Link>
@@ -165,10 +181,7 @@ export default function HomeSpotlight() {
                 <Profile onLogout={() => logout()} />
               </div>
             ) : (
-              <a
-                href={`/login/?redirect=${currentPath}`}
-                className="btn btn--black"
-              >
+              <a href="/login" className="btn btn--black">
                 <span className="btn__text">Login</span>
                 <svg
                   className="btn__arrow"
