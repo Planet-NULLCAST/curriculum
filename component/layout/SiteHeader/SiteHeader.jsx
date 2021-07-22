@@ -115,7 +115,12 @@ export default function HomeSpotlight() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/posts">
+                    <Link
+                      href={{
+                        pathname: "/posts",
+                        query: { pageNo: 1, tag: "", status: "" }
+                      }}
+                    >
                       <a onClick={() => setMenu(true)}>
                         Write
                         <img

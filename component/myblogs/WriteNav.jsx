@@ -203,7 +203,7 @@ export default function WriteNav({
     };
     setLoading(true);
     const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    console.log(s3ImageUrl);
+    // console.log(s3ImageUrl);
 
     setCurrentPost((prevValue) => {
       return {
@@ -241,12 +241,19 @@ export default function WriteNav({
     );
     // console.log(msg);
     notify("Post deleted successfully");
-    router.push("/posts");
+    router.push({
+      pathname: "/posts",
+      query: {
+        pageNo: 1,
+        tag: "",
+        status: ""
+      }
+    });
   }
 
-  // const handleBackOption = () => {
-  //   router.back();
-  // };
+  const handleBackOption = () => {
+    router.back();
+  };
 
   const notify = (msg) =>
     toast.success(msg, {
@@ -263,7 +270,8 @@ export default function WriteNav({
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
-          <Link href={`${isAdmin ? "/admin" : "/posts"}`}>
+          {/* <Link href={`${isAdmin ? "/admin" : "/posts"}`}> */}
+          <div onClick={handleBackOption}>
             <div className="flex items-center">
               <Image
                 src="/images/svgs/left-arrow.svg"
@@ -275,10 +283,9 @@ export default function WriteNav({
               />
               <span className="ml-2 text-gray-900">Posts</span>
             </div>
-          </Link>
-          <span className="text-gray-500 ml-1">
-            {router.query.post_id ? "/ Edit" : "/ Create"}
-          </span>
+          </div>
+          {/* </Link> */}
+          <span className="text-gray-500 ml-1">{"/ Edit"}</span>
         </div>
         <div className="items-center py-3 md:flex">
           <div
