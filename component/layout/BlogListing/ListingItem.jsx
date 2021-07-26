@@ -12,17 +12,19 @@ export default function ListingItem(props) {
     <div className={styles.listing__item} key={key}>
       <Fade>
         <a href={`/${item.slug}`}>
-          <figure className={styles.listing__figure}>
-            <Image
-              src={item.bannerImage}
-              alt={item.title}
-              width={350}
-              height={370}
-              layout="responsive"
-              placeholder="blur"
-              blurDataURL={item.bannerImage}
-            />
-          </figure>
+          {item.bannerImage && (
+            <figure className={styles.listing__figure}>
+              <Image
+                src={item.bannerImage}
+                alt={item.title}
+                width={350}
+                height={370}
+                layout="responsive"
+                placeholder="blur"
+                blurDataURL={item.bannerImage}
+              />
+            </figure>
+          )}
         </a>
       </Fade>
       <div>

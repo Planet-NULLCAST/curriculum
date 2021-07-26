@@ -3,7 +3,7 @@ import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function BlogList({ blogs, getNewPostsWithCount, blogCount }) {
+export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
   const [count, setCount] = useState(0);
 
   const handleViewMore = () => {
@@ -16,32 +16,18 @@ export default function BlogList({ blogs, getNewPostsWithCount, blogCount }) {
     <div className={`bg-white shadow-sm rounded p-4 mt-4 `}>
       <div className="flex justify-between items-center">
         <span className="font-bold">Blog</span>
-        {/* {blogs?.length > 0 && (
-          <Link href="/blog">
-            <a className="underline text-sm font-semibold">View All</a>
-          </Link>
-        )} */}
-        {blogs.length !== blogCount && (
-          <button
-            onClick={handleViewMore}
-            className="underline text-sm font-semibold w-20 hover:text-green-800"
-          >
-            View All
-          </button>
-        )}
       </div>
-      <div className="flex flex-wrap pb-2">
-        {blogs?.length > 0 ? (
-          <div className="flex flex-wrap">
-            {blogs.map((blog, index) => (
+      <div className="flex flex-wrap pb-2 w-full">
+        {posts?.length > 0 ? (
+          <div className="flex flex-wrap w-full">
+            {posts.map((blog, index) => (
               <div
-                className={`flex flex-wrap w-1/2 mt-4 ${
-                  index % 2 === 0 ? "pr-2" : "pl-2"
+                key={blog._id}
+                className={`flex flex-wrap w-full lg:w-1/2 mt-4 ${
+                  index % 2 === 0 ? "lg:pr-2" : "lg:pl-2"
                 }`}
               >
                 <div
-                  key={blog._id}
-                  // style={{ width: "24rem" }}
                   className={`flex justify-between rounded border p-3 w-full`}
                 >
                   {blog.bannerImage ? (
@@ -89,10 +75,20 @@ export default function BlogList({ blogs, getNewPostsWithCount, blogCount }) {
           <>
             <div className="w-full h-12 flex justify-start items-center">
               <span className="text-gray-400 text-sm">
-                Currently, you don't have any published blogs
+                Currently, you don't have any published posts
               </span>
             </div>
           </>
+        )}
+      </div>
+      <div className="w-full flex justify-center mt-8  items-center">
+        {posts.length !== postsCount && (
+          <button
+            onClick={handleViewMore}
+            className="py-1 px-6 text-sm font-semibold whitespace-nowrap border border-black bg-white text-black hover:bg-black hover:text-white duration-700 rounded"
+          >
+            View All
+          </button>
         )}
       </div>
     </div>

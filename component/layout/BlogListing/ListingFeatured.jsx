@@ -15,15 +15,17 @@ export default function ListingFeatured({ blog }) {
               <Link href={`/${blog?.slug}`}>
                 <a>
                   <figure>
-                    <Image
-                      src={blog?.bannerImage}
-                      alt={blog?.title}
-                      width={380}
-                      height={318}
-                      layout="responsive"
-                      placeholder="blur"
-                      blurDataURL={blog?.bannerImage}
-                    />
+                    {blog.bannerImage && (
+                      <Image
+                        src={blog.bannerImage}
+                        alt={blog?.title}
+                        width={380}
+                        height={318}
+                        layout="responsive"
+                        placeholder="blur"
+                        blurDataURL={blog?.bannerImage}
+                      />
+                    )}
                   </figure>
                 </a>
               </Link>
