@@ -8,10 +8,12 @@ import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { getCookieValue } from "../lib/cookie";
 
 const axios = require("axios");
 
 export async function getServerSideProps(context) {
+  // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
@@ -28,14 +30,23 @@ export async function getServerSideProps(context) {
       }
     }
   } catch (err) {
+    console.log(err);
     console.log("User not logged in");
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/"
+      }
+    };
   }
   return {
-    props: {}
+    props: {
+      referer: context.req.headers.referer ? context.req.headers.referer : ""
+    }
   };
 }
 
-export default function Login() {
+export default function Login({ referer }) {
   const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
@@ -140,7 +151,11 @@ export default function Login() {
                 .catch((err) => {
                   console.log(err.message);
                 });
-              router.back();
+              if (referer) {
+                router.back();
+              } else {
+                router.push("/");
+              }
             } else {
               setIsLoading(false);
               notify(data);
