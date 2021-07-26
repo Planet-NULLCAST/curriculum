@@ -18,8 +18,10 @@ const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
 const changePasswordUrl = "api/auth/change-password";
+const publishedPostsUrl = "api/posts/published";
+const publishedPostsCountUrl = "api/posts/published/count";
 
-export {
+const configVars = {
   baseUrl,
   clientUrl,
   s3Url,
@@ -39,5 +41,9 @@ export {
   resetPasswordUrl,
   usersUrl,
   changePasswordUrl,
-  skillUrl
+  skillUrl,
+  publishedPostsUrl,
+  publishedPostsCountUrl
 };
+
+module.exports = configVars;
