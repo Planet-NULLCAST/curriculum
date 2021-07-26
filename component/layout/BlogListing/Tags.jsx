@@ -14,8 +14,8 @@ export default function Tags({ _tags }) {
 
   return (
     <div>
-      {tags.map((tag) => (
-        <Link href={`/tag/${tag}`}>
+      {tags.map((tag, index) => (
+        <Link href={`/tag/${tag}`} key={index}>
           <a className="tags__item mr-2 my-2">{tag}</a>
         </Link>
       ))}

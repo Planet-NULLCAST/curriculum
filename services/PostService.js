@@ -8,7 +8,9 @@ import {
   changeStatusUrl,
   tagUrl,
   adminUrl,
-  searchUrl
+  searchUrl,
+  publishedPostsUrl,
+  publishedPostsCountUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
@@ -248,21 +250,36 @@ async function getPostsByQuery(query, clickNo) {
 }
 
 /**
- * Api call for fetching all publlished posts related to a user
+ * Api call for fetching all publlished posts of a user
  * @param {String} username
  * @returns {Promise}
  */
-async function getAllPostsByUsername(username, limit, clickNo) {
+async function getPublishedPostsByUserId(userId, limit, clickNo) {
+  // console.log({ userId });
   const url = getUrl();
 
   try {
-    const { data } = await axios.get(`${url}/${allPostsUrl}/all`, {
+    const { data } = await axios.get(`${url}/${publishedPostsUrl}/${userId}`, {
       params: {
-        username: username,
         limit: limit,
         clickNo: clickNo
       }
     });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function getPublishedPostsCountByUserId(userId) {
+  // console.log({ userId });
+  const url = getUrl();
+
+  try {
+    const { data } = await axios.get(
+      `${url}/${publishedPostsCountUrl}/${userId}`
+    );
     return data;
   } catch (err) {
     console.log(err);
@@ -313,7 +330,8 @@ const PostService = {
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin,
-  getAllPostsByUsername,
+  getPublishedPostsByUserId,
+  getPublishedPostsCountByUserId,
   setVotes
 };
 

@@ -27,14 +27,16 @@ export default function SectionBlogs(props) {
                 <figure className={styles.blogImage}>
                   <Link href={`/${item.slug}`}>
                     <a>
-                      <Image
-                        src={item.bannerImage}
-                        alt={item.title}
-                        width={528}
-                        height={548}
-                        placeholder="blur"
-                        blurDataURL={item.bannerImage}
-                      />
+                      {item.bannerImage && (
+                        <Image
+                          src={item.bannerImage}
+                          alt={item.title}
+                          width={528}
+                          height={548}
+                          placeholder="blur"
+                          blurDataURL={item.bannerImage}
+                        />
+                      )}
                     </a>
                   </Link>
                 </figure>

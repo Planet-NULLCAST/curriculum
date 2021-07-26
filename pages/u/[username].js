@@ -21,18 +21,22 @@ export async function getServerSideProps(context) {
     const username = context.params.username;
     let isThisUserTheCurrentLoggedIn = false;
 
-    const LIMIT = 2;
+    const LIMIT = 10; //should be 10
     const CLICK_N0 = 0;
 
-    const userData = await UserService.getUserByUsername(username);
-    const blogs = await PostService.getAllPostsByUsername(
-      username,
+    const { user } = await UserService.getUserByUsername(username);
+    const { posts, count } = await PostService.getPublishedPostsByUserId(
+      user._id,
       LIMIT,
       CLICK_N0
     );
+    // console.log(posts, count);
 
-    // isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
-    // in the profile details section
+    /**
+     * isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
+     * in the profile details section
+     */
+
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
         context.req.headers.cookie,
@@ -41,16 +45,15 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
 
-        isThisUserTheCurrentLoggedIn = cookie.id === userData.user._id;
-        userData.user.isThisUserTheCurrentLoggedIn =
-          isThisUserTheCurrentLoggedIn;
+        isThisUserTheCurrentLoggedIn = cookie.id === user._id;
+        user.isThisUserTheCurrentLoggedIn = isThisUserTheCurrentLoggedIn;
       }
     }
     return {
       props: {
-        userData: userData.user,
-        blogCount: blogs.count,
-        blogs: blogs.allPosts,
+        userData: user,
+        postsCount: count,
+        posts: posts,
         limit: LIMIT
       }
     };
@@ -66,9 +69,9 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Username({ userData, blogCount, blogs, limit }) {
+export default function Username({ userData, postsCount, posts, limit }) {
   const [currentNav, setcurrentNav] = useState("profile");
-  const [newBlogs, setNewBlogs] = useState(blogs);
+  const [newBlogs, setNewBlogs] = useState(posts);
 
   const changeNav = (data) => {
     setcurrentNav(data);
@@ -79,14 +82,14 @@ export default function Username({ userData, blogCount, blogs, limit }) {
   };
 
   const getNewPosts = async (clickNo) => {
-    const responsePost = await PostService.getAllPostsByUsername(
-      userData.username,
+    const responsePost = await PostService.getPublishedPostsByUserId(
+      userData._id,
       limit,
       clickNo
     );
 
     setNewBlogs((prevValue) => {
-      return [...prevValue, ...responsePost.allPosts];
+      return [...prevValue, ...responsePost.posts];
     });
   };
 
@@ -106,9 +109,9 @@ export default function Username({ userData, blogCount, blogs, limit }) {
               <>
                 {/* <Activity /> */}
                 <BlogList
-                  blogs={newBlogs}
+                  posts={newBlogs}
                   getNewPostsWithCount={getNewPostsWithCount}
-                  blogCount={blogCount}
+                  postsCount={postsCount}
                 />
               </>
             )}
@@ -117,7 +120,7 @@ export default function Username({ userData, blogCount, blogs, limit }) {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            <Count blogCount={blogCount} />
+            <Count postsCount={postsCount} />
             <FollowersList />
           </div>
         </div>

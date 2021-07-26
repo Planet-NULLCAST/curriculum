@@ -1,6 +1,6 @@
 import styles from "./BlogSpotlight.module.scss";
 import AuthorDetails from "../BlogListing/AuthorDetails";
-
+import Image from "next/image";
 import moment from "moment";
 
 export default function BlogSpotlight(props) {

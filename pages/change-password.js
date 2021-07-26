@@ -42,10 +42,11 @@ export default function changePassword() {
   const userCookie = cookies.get("userNullcast");
 
   const [password, setPassword] = useState({
+    currentPassword: "",
     newPassword: "",
     confirmPassword: ""
   });
-  const [validCurrentPassword, setValidCurrentPassword] = useState();
+  const [validCurrentPassword, setValidCurrentPassword] = useState("");
   const [validNewPassword, setValidNewPassword] = useState("");
   const [validConfirmPassword, setValidConfirmPassword] = useState("");
   const [hidePassword, setHidePassword] = useState({
@@ -83,6 +84,14 @@ export default function changePassword() {
 
     if (validConfirmPassword !== "" && name === "confirmPassword") {
       passwordCheck(name, value);
+    }
+
+    if (validCurrentPassword !== "" && name === "currentPassword") {
+      if (value === "") {
+        setValidCurrentPassword("empty");
+      } else {
+        setValidCurrentPassword("notempty");
+      }
     }
 
     setPassword((prevValue) => {
@@ -235,6 +244,9 @@ export default function changePassword() {
                         hidePassword.currentPassword ? "text" : "password"
                       }`}
                       placeholder="Enter Current Password"
+                      onChange={handleInputChange}
+                      value={password.currentPassword}
+                      name="currentPassword"
                     />
                     <img
                       src="/images/eye.svg"
@@ -246,7 +258,7 @@ export default function changePassword() {
                   </div>
                   {validCurrentPassword === "empty" && (
                     <p className="text-sm text-red-400 text-left">
-                      Please enter a password
+                      Please enter the current password
                     </p>
                   )}
                 </div>
@@ -274,7 +286,7 @@ export default function changePassword() {
 
                   {validNewPassword === "empty" && (
                     <p className="text-sm text-red-400 text-left">
-                      Please enter a password
+                      Please enter the new password
                     </p>
                   )}
                   {(validNewPassword === "length" ||
@@ -311,7 +323,7 @@ export default function changePassword() {
 
                   {validConfirmPassword === "empty" && (
                     <p className="text-sm text-red-400 text-left">
-                      Please enter a password
+                      Please enter the password
                     </p>
                   )}
                   {(validConfirmPassword === "length" ||
