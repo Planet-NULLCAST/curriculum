@@ -37,26 +37,30 @@ export default function Profile({ onLogout, username }) {
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
         <img
-          src={
-            userCookie.avatar ? userCookie.avatar : "/images/dummy-profile.png"
-          }
+          src={userCookie.avatar || "/images/svgs/avatar.svg"}
           alt="avatar"
-          width="32px"
-          height="32px"
-          className="rounded-full"
+          width="32"
+          height="32"
+          className="rounded-full border"
         />
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{userCookie.username}</h4>
+          <h4>{userCookie.fullName}</h4>
           <p>
-            <img src="/images/smallduck.svg" alt="coin" />0
+            <img
+              src="/images/smallduck.svg"
+              alt="coin"
+              height="18rem"
+              width="18rem"
+            />
+            0
           </p>
         </div>
         <ul>
           <li>
             <Link href={`/u/${userCookie.username}`}>
-              <a className="linkUnderline">
+              <a className="linkUnderline w-full font-semibold">
                 Profile
                 <svg
                   className="ml-3"
@@ -76,18 +80,18 @@ export default function Profile({ onLogout, username }) {
           {isAdmin && (
             <li>
               <Link href="/admin">
-                <button className="linkUnderline">Admin Console</button>
+                <a className="linkUnderline w-full font-semibold">Admin Console</a>
               </Link>
             </li>
           )}
           <li>
             <Link href="/settings">
-              <button className="linkUnderline">Settings</button>
+              <a className="linkUnderline w-full font-semibold">Settings</a>
             </Link>
           </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout} className="linkUnderline">
+            <button onClick={onLogout} className="linkUnderline w-full font-semibold">
               Logout
             </button>
           </li>

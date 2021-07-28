@@ -2,6 +2,7 @@ import styles from "./SectionBlogs.module.scss";
 import Fade from "react-reveal/Fade";
 import AuthorDetails from "../BlogListing/AuthorDetails";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SectionBlogs(props) {
   return (
@@ -26,13 +27,16 @@ export default function SectionBlogs(props) {
                 <figure className={styles.blogImage}>
                   <Link href={`/${item.slug}`}>
                     <a>
-                      <img
-                        src={item.bannerImage}
-                        alt={item.title}
-                        width={528}
-                        height={548}
-                        className="w-full"
-                      />
+                      {item.bannerImage && (
+                        <Image
+                          src={item.bannerImage}
+                          alt={item.title}
+                          width={528}
+                          height={548}
+                          placeholder="blur"
+                          blurDataURL={item.bannerImage}
+                        />
+                      )}
                     </a>
                   </Link>
                 </figure>

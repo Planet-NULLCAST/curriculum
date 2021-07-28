@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Loginstyles from "../styles/Login.module.css";
@@ -8,10 +8,12 @@ import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { getCookieValue } from "../lib/cookie";
 
 const axios = require("axios");
 
 export async function getServerSideProps(context) {
+  // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
@@ -28,18 +30,24 @@ export async function getServerSideProps(context) {
       }
     }
   } catch (err) {
+    console.log(err);
     console.log("User not logged in");
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/"
+      }
+    };
   }
   return {
-    props: {}
+    props: {
+      referer: context.req.headers.referer ? context.req.headers.referer : ""
+    }
   };
 }
 
-export default function Login() {
+export default function Login({ referer }) {
   const router = useRouter();
-  // console.log("redirect", router.query.redirect);
-  const redirectTo = router.query.redirect;
-
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [hidePassword, setHidePassword] = useState(false);
@@ -143,8 +151,8 @@ export default function Login() {
                 .catch((err) => {
                   console.log(err.message);
                 });
-              if (redirectTo) {
-                router.push(redirectTo);
+              if (referer) {
+                router.back();
               } else {
                 router.push("/");
               }
@@ -154,10 +162,6 @@ export default function Login() {
             }
           });
       } else {
-        // if(!email && !password){
-        //   setEmailValid(false);
-
-        // }
         setIsLoading(false);
         if (!email) {
           setEmailValid(false);
@@ -317,7 +321,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-      {/* <ToastContainer /> */}
     </div>
   );
 }

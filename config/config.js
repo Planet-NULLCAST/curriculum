@@ -13,12 +13,15 @@ const userUrl = "api/user";
 const usersUrl = "api/users";
 const adminUrl = "api/admin";
 const tagUrl = "api/tags";
+const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
 const changePasswordUrl = "api/auth/change-password";
+const publishedPostsUrl = "api/posts/published";
+const publishedPostsCountUrl = "api/posts/published/count";
 
-export {
+const configVars = {
   baseUrl,
   clientUrl,
   s3Url,
@@ -37,5 +40,10 @@ export {
   forgotPasswordUrl,
   resetPasswordUrl,
   usersUrl,
-  changePasswordUrl
+  changePasswordUrl,
+  skillUrl,
+  publishedPostsUrl,
+  publishedPostsCountUrl
 };
+
+module.exports = configVars;

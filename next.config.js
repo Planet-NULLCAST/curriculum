@@ -3,10 +3,7 @@ const path = require("path");
 module.exports = {
   productionBrowserSourceMaps: process.env.GENERATE_SOURCEMAP,
   images: {
-    domains: ['nullcast-assets.s3.amazonaws.com'],
-  },
-  future: {
-    webpack5: true
+    domains: ["nullcast-assets.s3.amazonaws.com"]
   },
   env: {
     BASE_URL: process.env.BASE_URL,
@@ -14,8 +11,7 @@ module.exports = {
     ENV: process.env.ENV,
     EDITOR_URL: process.env.EDITOR_URL,
     BUCKET_URL: process.env.BUCKET_URL,
-    SERVER_URL : process.env.SERVER_URL,
-
+    SERVER_URL: process.env.SERVER_URL
   },
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")]

@@ -9,7 +9,7 @@ export default function CodeConduct() {
     type: "courses",
     title: "Code of conduct",
     subtitle:
-      "Before you start reading off into the oblivion, let's just get one thing out into the open. We are a community of developers! With that said, nullcast's contributions come from from everyone who shares our goals and wants to contribute in a healthy and constructive manner within our community. This Code of conduct (guidelines) simply remains as a verbatim writing which could be used to help us create a safe and positive community experience for all. This document outlines both expected and prohibited behavior when taking part in the community.",
+      "Before you start reading off into the oblivion, let's just get one thing out into the open. We are a community of developers! With that said, nullcast's contributions come from everyone who shares our goals and wants to contribute in a healthy and constructive manner within our community. This Code of conduct (guidelines) simply remains as a verbatim writing which could be used to help us create a safe and positive community experience for all. This document outlines both expected and prohibited behavior when taking part in the community.",
     buttonText: "Get Started for free",
     image: "/images/bg-coursespotlight2.svg",
     alt: "Want to be a Mighty Duck?",
@@ -56,9 +56,7 @@ export default function CodeConduct() {
           listen carefully, apologize sincerely, and correct the behavior going
           forward.
         </p>
-        <h3 className="font-extrabold mb-4">
-          Be Direct but Professional
-        </h3>
+        <h3 className="font-extrabold mb-4">Be Direct but Professional</h3>
         <p className="mb-8 font-semibold">
           Seek diverse perspectives. Diversity of views and of people on teams
           powers innovation, even if it is not always comfortable. Encourage all
@@ -185,7 +183,14 @@ export default function CodeConduct() {
         <p className="mb-8 font-semibold">
           If you believe you’re experiencing unacceptable behavior that will not
           be tolerated as outlined above, report it immediately to
-          <a href="mailto:connect@nullcast.io" traget="/blank" className="pl-0 text-blue-600 hover:text-blue-400">{' '}connect@nullcast.io</a>
+          <a
+            href="mailto:connect@nullcast.io"
+            traget="/blank"
+            className="pl-0 text-blue-600 hover:text-blue-400"
+          >
+            {" "}
+            connect@nullcast.io
+          </a>
           <br />
           <br />
           Please also report to us if you observe a potentially dangerous

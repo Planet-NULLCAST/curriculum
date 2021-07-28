@@ -1,7 +1,8 @@
-import styles from "./SectionRelated.module.scss";
 import Link from "next/link";
+import Image from "next/image";
 import AuthorDetails from "../BlogListing/AuthorDetails";
 import moment from "moment";
+import styles from "./SectionRelated.module.scss";
 
 export default function SectionRelated({ title, posts }) {
   // console.log(posts.length);
