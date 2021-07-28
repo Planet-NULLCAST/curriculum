@@ -17,14 +17,14 @@ export default function WriteNav({
   saveToDraft,
   submitForReview,
   getSettings,
-  post
+  post,
+  previousUrl
 }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [openSettings, setOpenSettings] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
-  const [newTags, setNewTags] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
@@ -252,7 +252,8 @@ export default function WriteNav({
   }
 
   const handleBackOption = () => {
-    router.back();
+    // console.log(previousUrl);
+    router.push(previousUrl);
   };
 
   const notify = (msg) =>
