@@ -41,7 +41,7 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
       value: ""
     };
     resTagOptions = [allOption, ...resTagOptions];
-    console.log({ resTagOptions });
+    // console.log({ resTagOptions });
     setTagOptions(resTagOptions);
   }
 
@@ -72,7 +72,7 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
-            placeholder="Category"
+            placeholder="Select Tag"
             // closeMenuOnSelect={false}
           />
           <Select
@@ -82,7 +82,7 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
-            placeholder="Blog Status"
+            placeholder="Select Status"
             // closeMenuOnSelect={false}
           />
         </div>

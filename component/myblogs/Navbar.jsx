@@ -12,8 +12,8 @@ export default function Navbar() {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
-  const [tag, setTag] = useState("");
-  const [status, setStatus] = useState("");
+  const [tag, setTag] = useState(null);
+  const [status, setStatus] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
 
   const statusOptions = [
@@ -27,6 +27,11 @@ export default function Navbar() {
   useEffect(() => {
     getSettingsTags();
   }, []);
+
+  useEffect(() => {
+    setTag(router.query.tag);
+    setStatus(router.query.status);
+  }, [router.query.tag, router.query.status]);
 
   /**
    * gets tags from db and sets the tags
@@ -44,7 +49,7 @@ export default function Navbar() {
     });
     // setTagOptions;
     const allOption = {
-      label: "ALL CATEGORY",
+      label: "ALL TAGS",
       value: ""
     };
     resTagOptions = [allOption, ...resTagOptions];
@@ -113,22 +118,40 @@ export default function Navbar() {
         <div className="flex items-center py-3">
           <Select
             options={tagOptions}
-            // value={router.query.tag}
+            value={
+              tag && {
+                label: tag.toUpperCase(),
+                value: tag
+              }
+              // : {
+              //     label: "ALL TAGS",
+              //     value: tag
+              //   }
+            }
             isMulti={false}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
-            placeholder="Category"
+            placeholder="Select Tag"
             onChange={handleTagSelect}
           />
           <Select
             options={statusOptions}
-            // value={router.query.status}
+            value={
+              status && {
+                label: status.toUpperCase(),
+                value: status
+              }
+              // : {
+              //     label: "ALL STATUS",
+              //     value: status
+              //   }
+            }
             isMulti={false}
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
-            placeholder="Blog Status"
+            placeholder="Select Status"
             onChange={handleStatusSelect}
           />
 
