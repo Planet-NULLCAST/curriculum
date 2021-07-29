@@ -22,14 +22,21 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
         const post_Id = context.query.post_id;
-        const res = await PostService.getPostById(cookie, post_Id);
-        // console.log("get post response", res);
-        const resPost = {
-          mobiledoc: res.mobiledoc,
-          title: res.title
-        };
+        // const res = await PostService.getPostById(cookie, post_Id);
+        // // console.log("get post response", res);
+        // const resPost = {
+        //   mobiledoc: res.mobiledoc,
+        //   title: res.title
+        // };
         return {
-          props: { post_Id: post_Id ? post_Id : "", resPost: resPost, res: res }
+          props: {
+            post_Id: post_Id ? post_Id : "",
+            referer: context.req.headers.referer
+              ? context.req.headers.referer
+              : ""
+            // resPost: resPost,
+            // res: res
+          }
         };
       } else {
         return {
@@ -57,7 +64,12 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Write({ post_Id, resPost, res }) {
+export default function Write({
+  post_Id,
+  referer
+  // resPost,
+  // res
+}) {
   const [postId, setPostId] = useState(post_Id);
   const [post, setPost] = useState();
 
@@ -73,7 +85,6 @@ export default function Write({ post_Id, resPost, res }) {
     // const currentPostId = router.query.post_id;
     // console.log({ currentPostId });
     if (userCookie) {
-      setPost(res);
       setPostId(post_Id);
       try {
         // errors on refresh
@@ -86,28 +97,12 @@ export default function Write({ post_Id, resPost, res }) {
 
         iframeElement.onload = function () {
           if (post_Id) {
-            // getPostById(currentPostId);
-            // ---- to show the post in iframe ----
-            iframeRef.current.contentWindow.postMessage(
-              {
-                msg: "providePost",
-                post: resPost
-              },
-              TARGET
-            );
+            getPostById(post_Id);
           }
         };
       } catch (error) {
         console.log("error blaaaah==>", error);
-        // getPostById(currentPostId);
-        // ---- to show the post in iframe ----
-        iframeRef.current.contentWindow.postMessage(
-          {
-            msg: "providePost",
-            post: resPost
-          },
-          TARGET
-        );
+        getPostById(post_Id);
       }
     }
 
@@ -136,23 +131,23 @@ export default function Write({ post_Id, resPost, res }) {
     };
   }, [post_Id]);
 
-  // async function getPostById(id) {
-  //   const res = await PostService.getPostById(userCookie, id);
-  //   console.log("get post response", res);
-  //   const resPost = {
-  //     mobiledoc: res.mobiledoc,
-  //     title: res.title
-  //   };
-  //   setPost(res);
-  //   // ---- to show the post in iframe
-  //   iframeRef.current.contentWindow.postMessage(
-  //     {
-  //       msg: "providePost",
-  //       post: resPost
-  //     },
-  //     TARGET
-  //   );
-  // }
+  async function getPostById(id) {
+    const res = await PostService.getPostById(userCookie, id);
+    console.log("get post response", res);
+    const resPost = {
+      mobiledoc: res.mobiledoc,
+      title: res.title
+    };
+    setPost(res);
+    // ---- to show the post in iframe
+    iframeRef.current.contentWindow.postMessage(
+      {
+        msg: "providePost",
+        post: resPost
+      },
+      TARGET
+    );
+  }
 
   async function updatePostById(updateData, newPostId) {
     try {
@@ -238,6 +233,7 @@ export default function Write({ post_Id, resPost, res }) {
       <div className="bg-gray-100 px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <WriteNav
+            previousUrl={referer}
             saveToDraft={saveToDraft}
             submitForReview={submitForReview}
             getSettings={getSettings}
