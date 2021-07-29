@@ -62,7 +62,7 @@ export default function Posts() {
     posts: [],
     count: 0,
     pageNo: router.query.pageNo,
-    limit: 10
+    limit: 10 //should be 10
   });
 
   const [loaded, setLoaded] = useState(false);

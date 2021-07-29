@@ -24,7 +24,7 @@ export default function MyBlogs({ posts }) {
                     className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
                   >
                     <a
-                      // target="_blank"
+                      target="_blank"
                       className={`text-gray-900 text-xl hover:text-purple-600 font-semibold ${MyBlogsstyles.min_w_25rem}`}
                     >
                       {item.title}
@@ -82,9 +82,7 @@ export default function MyBlogs({ posts }) {
                       query: { post_id: `${item._id}` }
                     }}
                   >
-                    <a
-                    // target="_blank"
-                    >
+                    <a target="_blank">
                       <div
                         className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.linkBg}`}
                       >
