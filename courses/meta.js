@@ -38,26 +38,36 @@ let courses = [
       },
       {
         chapterId: 7,
+        chapterUrl: "switch-statement",
+        chapterName: "The switch Statement"
+      },
+      {
+        chapterId: 8,
         chapterUrl: "arithmetic-operators",
         chapterName: "Arithmetic Operators"
       },
       {
-        chapterId: 8,
+        chapterId: 9,
+        chapterUrl: "comparisons",
+        chapterName: "Comparisons"
+      },
+      {
+        chapterId: 10,
         chapterUrl: "prototypes",
         chapterName: "Prototypes"
       },
       {
-        chapterId: 9,
+        chapterId: 11,
         chapterUrl: "function",
         chapterName: "Function"
       },
       {
-        chapterId: 10,
+        chapterId: 12,
         chapterUrl: "type-conversion",
         chapterName: "Type Conversion"
       },
       {
-        chapterId: 11,
+        chapterId: 13,
         chapterUrl: "arrow-functions",
         chapterName: "Arrow Functions"
       }
