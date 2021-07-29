@@ -7,21 +7,12 @@ import PostService from "../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    const blogs = await PostService.getPostByTags("whats-new", 0);
-    if (!blogs?.data) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
-        }
-      };
-    }
-    console.log(blogs.posts, "-------");
+    const { posts, count } = await PostService.getPostByTags("whats-new", 0);
     return {
       props: {
-        blogs: blogs.posts
+        blogs: posts
       }
-    };
+    }
   } catch (err) {
     console.log("Error => ", err);
     return {
