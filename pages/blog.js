@@ -10,14 +10,16 @@ import TagService from "../services/TagService";
 import { useState } from "react";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
 
-export async function getServerSideProps(context) {
-  const tagsArray = await TagService.getTags();
-  // console.log(tagsArray);
+export async function getServerSideProps() {
+  const limit = 10; //should be 10
+  const filterWhatsNew = true;
+  const tagsArray = await TagService.getTags(filterWhatsNew);
+  console.log(tagsArray);
   try {
     const postParams = {
       fieldName: "publishedAt",
       order: -1,
-      limit: 9,
+      limit: limit,
       skip: 0
     };
     const responsePost = await PostService.getLatestPosts(postParams);
@@ -27,7 +29,8 @@ export async function getServerSideProps(context) {
         props: {
           blog: responsePost.data.blog,
           tagsArray: tagsArray,
-          count: responsePost.data.count
+          count: responsePost.data.count,
+          limit: limit
         }
       };
     } else {
@@ -47,7 +50,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing({ blog, tagsArray, count }) {
+export default function BlogListing({ blog, tagsArray, count, limit }) {
   // console.clear();
   // console.log(tagsArray);
   const [newBlogs, setNewBlogs] = useState(blog);
@@ -58,7 +61,6 @@ export default function BlogListing({ blog, tagsArray, count }) {
   };
 
   const getNewPosts = async (clickNo) => {
-    const limit = 9;
     const postParams = {
       fieldName: "publishedAt",
       order: -1,
@@ -113,7 +115,7 @@ export default function BlogListing({ blog, tagsArray, count }) {
       </Head>
       <SiteHeader />
       <ListingHeader />
-      {blog[0] && <ListingFeatured blog={blog[0]} />}
+      {blog && blog[0] && <ListingFeatured blog={blog[0]} />}
       {blog.length > 0 ? (
         <Listing
           blog={newBlogs}

@@ -1,12 +1,14 @@
 const axios = require("axios");
 import { baseUrl, tagUrl } from "../config/config";
-import {getUrl} from "../lib/getUrl"
+import { getUrl } from "../lib/getUrl";
 
-async function getTags() {
+async function getTags(filterWhatsNew) {
   let url = getUrl();
-  
+
   try {
-    const { data } = await axios.get(`${url}/${tagUrl}`);
+    const { data } = await axios.get(`${url}/${tagUrl}`, {
+      params: { filterWhatsNew }
+    });
     // console.log(data.tags);
     return data.tags;
   } catch (err) {
