@@ -307,11 +307,13 @@ export default function WriteNav({
           >
             <p>Settings</p>
           </div>
-          <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
-            <Link href={`/p/${currentPost._id}`}>
-              <a target="_blank">Preview</a>
-            </Link>
-          </div>
+          <Link href={`/p/${currentPost._id}`}>
+            <a target="_blank">
+              <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+                Preview
+              </div>
+            </a>
+          </Link>
         </div>
       </div>
       {openSettings && (
