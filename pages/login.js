@@ -16,11 +16,11 @@ export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
-      // console.log(cookie);
-      if (cookie) {
+      if (contextCookie) {
         return {
           redirect: {
             permanent: false,
@@ -29,21 +29,17 @@ export async function getServerSideProps(context) {
         };
       }
     }
-  } catch (err) {
-    console.log(err);
-    console.log("User not logged in");
     return {
-      redirect: {
-        permanent: false,
-        destination: "/"
+      props: {
+        referer: context.req.headers.referer ? context.req.headers.referer : ""
       }
     };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {}
+    };
   }
-  return {
-    props: {
-      referer: context.req.headers.referer ? context.req.headers.referer : ""
-    }
-  };
 }
 
 export default function Login({ referer }) {
