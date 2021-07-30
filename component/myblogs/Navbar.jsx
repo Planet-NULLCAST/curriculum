@@ -8,19 +8,16 @@ import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 
-export default function Navbar(props) {
-  const { currentNav, getPosts, limit } = props;
-  // console.log({ limit });
+export default function Navbar() {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState(null);
+  const [status, setStatus] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
-  const [status, setStatus] = useState("");
 
   const statusOptions = [
     { label: "ALL STATUS", value: "" },
-    // { label: "APPROVED", value: "approved" },
     { label: "PENDING", value: "pending" },
     { label: "REJECTED", value: "rejected" },
     { label: "PUBLISHED", value: "published" },
@@ -30,6 +27,11 @@ export default function Navbar(props) {
   useEffect(() => {
     getSettingsTags();
   }, []);
+
+  useEffect(() => {
+    setTag(router.query.tag);
+    setStatus(router.query.status);
+  }, [router.query.tag, router.query.status]);
 
   /**
    * gets tags from db and sets the tags
@@ -47,7 +49,7 @@ export default function Navbar(props) {
     });
     // setTagOptions;
     const allOption = {
-      label: "ALL CATEGORY",
+      label: "ALL TAGS",
       value: ""
     };
     resTagOptions = [allOption, ...resTagOptions];
@@ -56,33 +58,21 @@ export default function Navbar(props) {
   }
 
   const handleTagSelect = (e) => {
-    // console.log(e);
-    // const tag = e.value;
-    // console.log(tag);
-    setTag(e.value);
-    const newReqData = {
-      pageNo: 1,
-      limit: limit,
-      tag: e.value,
-      status: status
-    };
-    // call getallposts
-    getPosts(newReqData, tag, status);
+    const newTag = e.value;
+    setTag(newTag);
+    router.push({
+      pathname: "/posts",
+      query: { pageNo: 1, tag: newTag, status: status }
+    });
   };
 
   const handleStatusSelect = (e) => {
-    // console.log(e);
-    const status = e.value;
-    // console.log(status);
-    setStatus(status);
-    const newReqData = {
-      pageNo: 1,
-      limit: limit,
-      tag: tag,
-      status: status
-    };
-    // call getallposts
-    getPosts(newReqData, tag, status);
+    const newStatus = e.value;
+    setStatus(newStatus);
+    router.push({
+      pathname: "/posts",
+      query: { pageNo: 1, tag: tag, status: newStatus }
+    });
   };
 
   const createPost = async (createThisPost) => {
@@ -91,13 +81,13 @@ export default function Navbar(props) {
       const { post, msg } = data;
       // notify(msg);
       // console.log(post, msg);
-      //TO DO: compare our user id and the posts's user id
-      // setPostId(post._id);
-      router.push({
-        pathname: "/posts/write",
-        query: { post_id: post._id }
-      });
-      // getPostById(post._id);
+      // console.log(post.primaryAuthor._id, userCookie.id);
+      if (post.primaryAuthor._id === userCookie.id) {
+        router.push({
+          pathname: "/posts/write",
+          query: { post_id: post._id }
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -128,31 +118,44 @@ export default function Navbar(props) {
         <div className="flex items-center py-3">
           <Select
             options={tagOptions}
+            value={
+              tag && {
+                label: tag.toUpperCase(),
+                value: tag
+              }
+              // : {
+              //     label: "ALL TAGS",
+              //     value: tag
+              //   }
+            }
             isMulti={false}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
             classNamePrefix="Category"
             clearValue={() => undefined}
-            placeholder="Category"
+            placeholder="Select Tag"
             onChange={handleTagSelect}
           />
           <Select
             options={statusOptions}
+            value={
+              status && {
+                label: status.toUpperCase(),
+                value: status
+              }
+              // : {
+              //     label: "ALL STATUS",
+              //     value: status
+              //   }
+            }
             isMulti={false}
             className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
-            placeholder="Blog Status"
+            placeholder="Select Status"
             onChange={handleStatusSelect}
           />
-          {/* Add a New Post goes to /posts/write  */}
-          {/* <Link href="/posts/write">
-            <div
-              className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
-            >
-              <p>Add a New Post</p>
-            </div>
-          </Link> */}
 
+          {/* Add a New Post creates a new post and goes to /posts/write/:postId  */}
           <div
             onClick={handleAddNewPost}
             className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}

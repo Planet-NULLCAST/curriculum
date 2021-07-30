@@ -21,10 +21,9 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Start with HTML</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              A step-by-step guide to understanding the how-to's of HTML rather
+              than hovering around the why's. Learn the practical skills needed
+              to master the basics of HTML and start building your website.
             </p>
           </div>
           <div className={styles.image}>
@@ -55,7 +54,7 @@ export default function CourseJourney() {
               stroke="#178cf3"
               strokeDasharray="10 10"
               clipPath="url(#box_1)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -69,10 +68,10 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>CSS</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              Add life, colours and style to the contents of the website you
+              created by practising alongside the best way to learn CSS. This
+              guide is suitable for anyone eager to pave a path towards
+              maintaining complex web pages with ease.
             </p>
           </div>
           <div className={styles.image}>
@@ -103,7 +102,7 @@ export default function CourseJourney() {
               stroke="#20d034"
               strokeDasharray="10 10"
               clipPath="url(#box_2)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -117,10 +116,8 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Create Sample Projects</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              Practice makes perfect, isn’t it? Get started with the sample
+              projects to test yourself and show off your newly learned skills.
             </p>
           </div>
           <div className={styles.image}>
@@ -151,7 +148,7 @@ export default function CourseJourney() {
               stroke="#d8c00f"
               strokeDasharray="10 10"
               clipPath="url(#box_3)"
-              strokeWidth="3" 
+              strokeWidth="3"
               strokeLinecap="round"
             />
             <defs>
@@ -165,10 +162,10 @@ export default function CourseJourney() {
           <div className="md:w-8/12">
             <h3>Javascript</h3>
             <p>
-              Our online program is an amazing way for children to learn coding
-              from the comfort of your home. The convenience and attentiveness
-              you love about drop-in programs is combined with the extensive
-              coding curriculum of Mighty Coders.
+              Once the foundation is set, it’s time to step up your game and
+              create the interactive side of your website. Kick things off with
+              Javascript to learn the basic fundamentals of programming and
+              achieve advanced JS mastery.
             </p>
           </div>
           <div className={styles.image}>

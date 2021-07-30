@@ -17,14 +17,14 @@ export default function WriteNav({
   saveToDraft,
   submitForReview,
   getSettings,
-  post
+  post,
+  previousUrl
 }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [openSettings, setOpenSettings] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
-  const [newTags, setNewTags] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
@@ -94,7 +94,7 @@ export default function WriteNav({
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    console.log("handle tags", e);
+    // console.log("handle tags", e);
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -121,7 +121,7 @@ export default function WriteNav({
    * @param e form submit event
    * @author akhilalekha
    */
-  async function formSubmit(e) {
+  const formSubmit = (e) => {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
     // console.log(e.target);
@@ -159,7 +159,7 @@ export default function WriteNav({
     // );
     // send prop
     getSettings(settingsData);
-  }
+  };
 
   /**
    * gets form data and passes to parent getsettings function
@@ -203,7 +203,7 @@ export default function WriteNav({
     };
     setLoading(true);
     const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    console.log(s3ImageUrl);
+    // console.log(s3ImageUrl);
 
     setCurrentPost((prevValue) => {
       return {
@@ -221,9 +221,6 @@ export default function WriteNav({
    * @author akhilalekha
    */
   const handleImageDelete = async (e) => {
-    // console.log(imgRef);
-    // imgRef.current.value = null;
-    // setImageSrc("");
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
@@ -244,13 +241,25 @@ export default function WriteNav({
     );
     // console.log(msg);
     notify("Post deleted successfully");
-    router.push("/posts");
+    router.push({
+      pathname: "/posts",
+      query: {
+        pageNo: 1,
+        tag: "",
+        status: ""
+      }
+    });
   }
 
+  const handleBackOption = () => {
+    // console.log(previousUrl);
+    router.push(previousUrl);
+  };
+
   const notify = (msg) =>
-    toast(msg, {
-      position: "top-right",
-      autoClose: 3000,
+    toast.success(msg, {
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -262,7 +271,8 @@ export default function WriteNav({
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
-          <Link href={`${isAdmin ? "/admin" : "/posts"}`}>
+          {/* <Link href={`${isAdmin ? "/admin" : "/posts"}`}> */}
+          <div onClick={handleBackOption}>
             <div className="flex items-center">
               <Image
                 src="/images/svgs/left-arrow.svg"
@@ -274,10 +284,9 @@ export default function WriteNav({
               />
               <span className="ml-2 text-gray-900">Posts</span>
             </div>
-          </Link>
-          <span className="text-gray-500 ml-1">
-            {router.query.post_id ? "/ Edit" : "/ Create"}
-          </span>
+          </div>
+          {/* </Link> */}
+          <span className="text-gray-500 ml-1">{"/ Edit"}</span>
         </div>
         <div className="items-center py-3 md:flex">
           <div
@@ -298,12 +307,13 @@ export default function WriteNav({
           >
             <p>Settings</p>
           </div>
-          <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
-            {/* <Link href={`/p/${currentPost._id}`}></Link> */}
-            <a href={`/p/${currentPost._id}`} target="_blank">
-              Preview
+          <Link href={`/p/${currentPost._id}`}>
+            <a target="_blank">
+              <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
+                Preview
+              </div>
             </a>
-          </div>
+          </Link>
         </div>
       </div>
       {openSettings && (

@@ -1,6 +1,6 @@
 import moment from "moment";
 import Cookies from "universal-cookie";
-import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import MyBlogStyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import PostService from "../../services/PostService";
@@ -37,14 +37,24 @@ export default function AdminBlogsList({ posts, updated }) {
     );
     updated();
   };
+
+  const unpublishBlog = async (blog) => {
+    const response = await PostService.adminChangePostStatus(
+      userCookie,
+      blog._id,
+      "pending"
+    );
+    // console.log(response);
+    updated();
+  };
   return (
     <div
       className={`w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list`}
     >
       <div className="w-full">
         {posts &&
-          posts.map((item, index) => (
-            <div className={`${MyBlogsstyles.oddBg} w-full`} key={item._id}>
+          posts.map((item) => (
+            <div className={`${MyBlogStyles.oddBg} w-full`} key={item._id}>
               <div
                 className={`flex flex-col md:flex-row md:items-center justify-between p-4`}
               >
@@ -54,49 +64,55 @@ export default function AdminBlogsList({ posts, updated }) {
                       pathname: `/posts/write`,
                       query: { post_id: `${item._id}` }
                     }}
-                    className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
+                    className={`text-15 font-semibold mb-1 ${MyBlogStyles.color_blue_910}`}
                   >
                     <a
-                      className={`text-gray-900 text-xl hover:text-purple-600 font-semibold ${MyBlogsstyles.min_w_25rem}`}
+                      className={`text-gray-900 text-xl hover:text-purple-600 font-semibold ${MyBlogStyles.min_w_25rem}`}
                     >
                       {item.title}
                     </a>
                   </Link>
                   <div className={`text-xs text-gray-400 pt-2`}>
-                    {moment(item?.createdAt).format("LL")}
+                    {moment(item.updatedAt).format("LL")}
                     {" - "}
                     <Link href={`/u/${item.primaryAuthor.username}`}>
                       <a className="text-blue-500">
-                        {/* <p className="text- text-gray-600"></p> */}
                         {item.primaryAuthor.username}
                       </a>
                     </Link>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <Link href={`/p/${item._id}`}>
+                  <Link
+                    href={
+                      item.status === "published"
+                        ? `/${item.slug}`
+                        : `/p/${item._id}`
+                    }
+                  >
                     <div
-                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogsstyles.draftedBg}`}
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
                     >
                       <>
                         <div
-                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogsstyles.draftedDot}`}
+                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogStyles.draftedDot}`}
                         ></div>
 
                         <span
-                          className={`capitalize  ${MyBlogsstyles.draftedText} `}
+                          className={`capitalize  ${MyBlogStyles.draftedText} `}
                         >
-                          Preview
+                          {item.status === "published" ? "View" : "Preview"}
                         </span>
                       </>
                     </div>
                   </Link>
+
                   {item.status == "published" ? (
                     <div
-                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogsstyles.publishedBg} `}
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}
                     >
                       <span
-                        className={`capitalize ${MyBlogsstyles.publishedText} `}
+                        className={`capitalize ${MyBlogStyles.publishedText} `}
                       >
                         Published
                       </span>
@@ -104,12 +120,12 @@ export default function AdminBlogsList({ posts, updated }) {
                   ) : item.status == "rejected" ? (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 
-                 ${MyBlogsstyles.dangerBg}`}
+                 ${MyBlogStyles.dangerBg}`}
                     >
                       <span
-                        className={`capitalize  ${MyBlogsstyles.dangerText}`}
+                        className={`capitalize  ${MyBlogStyles.dangerText}`}
                       >
-                        Declined
+                        Rejected
                       </span>
                     </div>
                   ) : (
@@ -117,27 +133,38 @@ export default function AdminBlogsList({ posts, updated }) {
                       <div
                         onClick={() => rejectBlog(item)}
                         className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500
-                     ${MyBlogsstyles.dangerBg}`}
+                     ${MyBlogStyles.dangerBg}`}
                       >
                         <span
-                          className={`capitalize  ${MyBlogsstyles.dangerText}`}
+                          className={`capitalize  ${MyBlogStyles.dangerText}`}
                         >
-                          Decline
+                          Reject
                         </span>
                       </div>
                       <div
                         onClick={() => approveBlog(item)}
-                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.successBg} `}
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.successBg} `}
                       >
                         <span
-                          className={`capitalize ${MyBlogsstyles.successText} `}
+                          className={`capitalize ${MyBlogStyles.successText} `}
                         >
                           Publish
                         </span>
                       </div>
                     </div>
                   )}
-
+                  {item.status == "published" && (
+                    <div
+                      onClick={() => unpublishBlog(item)}
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.warningBg} `}
+                    >
+                      <span
+                        className={`capitalize ${MyBlogStyles.warningText} `}
+                      >
+                        Unpublish
+                      </span>
+                    </div>
+                  )}
                   <Link
                     href={{
                       pathname: `/posts/write`,
@@ -145,7 +172,7 @@ export default function AdminBlogsList({ posts, updated }) {
                     }}
                   >
                     <div
-                      className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.linkBg}`}
+                      className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.linkBg}`}
                     >
                       <div className="mr-1 mt-1 rounded-full">
                         <Image
@@ -157,7 +184,7 @@ export default function AdminBlogsList({ posts, updated }) {
                           margin={0}
                         />
                       </div>
-                      <span className={`capitalize  ${MyBlogsstyles.linkText}`}>
+                      <span className={`capitalize  ${MyBlogStyles.linkText}`}>
                         Edit
                       </span>
                     </div>

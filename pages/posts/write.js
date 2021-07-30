@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import WriteNav from "../../component/myblogs/WriteNav";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
@@ -13,16 +13,39 @@ import { getCookieValue } from "../../lib/cookie";
 const TARGET = editorUrl;
 
 export async function getServerSideProps(context) {
-  // console.log(context);
   try {
-    // console.log(context.query);
-    const post_Id = context.query.post_id;
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
-      // console.log(cookie);
-      return { props: { post_Id: post_Id ? post_Id : "" } };
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        const post_Id = context.query.post_id;
+        // const res = await PostService.getPostById(cookie, post_Id);
+        // // console.log("get post response", res);
+        // const resPost = {
+        //   mobiledoc: res.mobiledoc,
+        //   title: res.title
+        // };
+        return {
+          props: {
+            post_Id: post_Id ? post_Id : "",
+            referer: context.req.headers.referer
+              ? context.req.headers.referer
+              : ""
+            // resPost: resPost,
+            // res: res
+          }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/login"
+          }
+        };
+      }
     } else {
       return {
         redirect: {
@@ -32,7 +55,6 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("User not logged in ");
     return {
       redirect: {
         permanent: false,
@@ -42,8 +64,13 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Write({ post_Id }) {
-  const [postId, setPostId] = useState("");
+export default function Write({
+  post_Id,
+  referer
+  // resPost,
+  // res
+}) {
+  const [postId, setPostId] = useState(post_Id);
   const [post, setPost] = useState();
 
   const iframeRef = useRef();
@@ -55,11 +82,10 @@ export default function Write({ post_Id }) {
   // console.log(userCookie);
 
   useEffect(() => {
-    const currentPostId = router.query.post_id;
+    // const currentPostId = router.query.post_id;
     // console.log({ currentPostId });
-
     if (userCookie) {
-      setPostId(currentPostId);
+      setPostId(post_Id);
       try {
         // errors on refresh
         // !START
@@ -70,13 +96,13 @@ export default function Write({ post_Id }) {
         // !END
 
         iframeElement.onload = function () {
-          if (currentPostId) {
-            getPostById(currentPostId);
+          if (post_Id) {
+            getPostById(post_Id);
           }
         };
       } catch (error) {
         console.log("error blaaaah==>", error);
-        getPostById(currentPostId);
+        getPostById(post_Id);
       }
     }
 
@@ -130,7 +156,7 @@ export default function Write({ post_Id }) {
         updateData,
         newPostId
       );
-      console.log("updated post response", data);
+      // console.log("updated post response", data);
       if (msg) {
         notify(msg);
       }
@@ -139,60 +165,29 @@ export default function Write({ post_Id }) {
     }
   }
 
-  // async function createPost(createThisPost) {
-  //   try {
-  //     const { data } = await PostService.createPost(userCookie, createThisPost);
-  //     const { post, msg } = data;
-  //     notify(msg);
-  //     // console.log(post, msg);
-  //     //TO DO: compare our user id and the posts's user id
-  //     // setPostId(post._id);
-  //     router.push({
-  //       pathname: "/posts/write",
-  //       query: { post_id: post._id }
-  //     });
-  //     // getPostById(post._id);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   const saveToDraft = () => {
     // Send a post message to the iframe
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
       // wait for the response post message to get the post from the state
-      console.log({ postElement });
+      // console.log({ postElement });
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement.current.scratch;
       const title = postElement.current.titleScratch || "[Untitled]";
-      // console.log("title: ", title);
-      // createPost or updatePost -  if post id - update, else create
-      console.log({ router });
-      const newPostId = router.query.post_id;
-      console.log({ newPostId });
-      if (newPostId) {
+
+      if (postId) {
         //updatePost
         const newUpdatedPost = {
           title: title,
           mobiledoc: newMobiledoc
         };
-        updatePostById(newUpdatedPost, newPostId);
+        updatePostById(newUpdatedPost, postId);
       }
-      // else {
-      //   const createThisPost = {
-      //     mobiledoc: newMobiledoc,
-      //     title: title,
-      //     type: "blog"
-      //   };
-      //   console.log(createThisPost);
-      //   createPost(createThisPost);
-      // }
     }, 500);
   };
 
   async function submitForReview() {
-    //status pending if submitted for review
+    //change status to "pending" if submitted for review
     // console.log(postId);
     try {
       const statusUpdate = {
@@ -213,20 +208,15 @@ export default function Write({ post_Id }) {
   }
 
   const getSettings = async (settingsData) => {
-    // console.log("in settings");
     if (postId) {
-      // console.log("update");
       updatePostById(settingsData, postId);
     }
-    // else {
-    //   createPost(settingsData);
-    // }
   };
 
   const notify = (msg) =>
     toast(msg, {
-      position: "top-right",
-      autoClose: 3000,
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -243,6 +233,7 @@ export default function Write({ post_Id }) {
       <div className="bg-gray-100 px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <WriteNav
+            previousUrl={referer}
             saveToDraft={saveToDraft}
             submitForReview={submitForReview}
             getSettings={getSettings}
@@ -265,7 +256,6 @@ export default function Write({ post_Id }) {
             </p>
           </div> */}
         </div>
-        {/* <ToastContainer /> */}
       </div>
     </>
   );

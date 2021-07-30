@@ -8,6 +8,7 @@ import Head from "next/head";
 import PostService from "../services/PostService";
 import TagService from "../services/TagService";
 import { useState } from "react";
+import { homePageSchema, logoPath, url } from "../seoschema/schema";
 
 export async function getServerSideProps(context) {
   const tagsArray = await TagService.getTags();
@@ -76,10 +77,43 @@ export default function BlogListing({ blog, tagsArray, count }) {
     <div>
       <Head>
         <title>Blog | Nullcast</title>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              ...homePageSchema,
+              url: `${url}/blog`,
+              description: "blog"
+            })
+          }}
+        ></script>
+        <meta
+          name="description"
+          content="nullcast is a series of blogs, podcasts and short videos for everything web related."
+        />
+        <link rel="canonical" href={`${url}/blog`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="blog" />
+        <meta
+          property="og:description"
+          content="nullcast is a series of blogs, podcasts and short videos for everything web related."
+        />
+        <meta property="og:url" content={`${url}/blog`} />
+        <meta property="og:image" content={logoPath} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="blog" />
+        <meta
+          name="twitter:description"
+          content="nullcast is a series of blogs, podcasts and short videos for everything web related."
+        />
+        <meta name="twitter:url" content={`${url}/blog`} />
+        <meta name="twitter:image" content={logoPath} />
+        <meta property="og:image:width" content="352" />
+        <meta property="og:image:height" content="212" />
       </Head>
       <SiteHeader />
       <ListingHeader />
-      {blog[0] && <ListingFeatured blog={blog} />}
+      {blog[0] && <ListingFeatured blog={blog[0]} />}
       {blog.length > 0 ? (
         <Listing
           blog={newBlogs}

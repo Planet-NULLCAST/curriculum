@@ -56,7 +56,7 @@ export default function FollowersList() {
           View All
         </a> */}
       </div>
-      <p className="text-gray-500 mt-8">Coming Soon</p>
+      <p className="text-gray-400 mt-8 text-sm">Coming Soon</p>
 
       {/* <div className="mt-4">
         {followers?.map((data) => (

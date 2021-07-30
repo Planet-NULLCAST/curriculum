@@ -39,7 +39,7 @@
     max-width: 490px;
   }
   figure {
-    @apply rounded-full overflow-hidden m-auto relative cursor-pointer mb-2;
+    @apply rounded-full overflow-hidden m-auto relative cursor-pointer border;
     width: 140px;
     height: 140px;
     img {
@@ -47,16 +47,7 @@
       position: absolute;
       z-index: 10;
     }
-    &:before {
-      content: "";
-      @apply absolute left-0 top-0 w-full h-full;
-      background-color: rgba($color: #000000, $alpha: 0.5);
-    }
     // }
-    figcaption {
-      @apply absolute top-1/2 left-0 w-full text-white font-bold text-sm;
-      transform: translateY(-50%);
-    }
     input {
       width: 140px;
       height: 140px;
@@ -64,10 +55,12 @@
       position: absolute;
       opacity: 0;
     }
-    &:before {
+    &:hover {
+      &:before {
       content: "";
-      @apply absolute left-0 top-0 w-full h-full z-20;
+      @apply absolute left-0 top-0 w-full h-full z-20 duration-700;
       background-color: rgba($color: #000000, $alpha: 0.5);
+    }
     }
     figcaption {
       @apply absolute top-1/2 left-0 w-full text-white font-bold text-sm;
@@ -96,8 +89,18 @@
   }
   button {
     background: #242424;
-    @apply p-4 py-3 text-white;
+    border: 1px solid #242424;
+    color: #fff;
+    @apply p-4 py-3 duration-700;
     border-radius: 3px;
+    &:hover {
+      background: #fff;
+      color: #242424;
+    }
+    &:disabled {
+      background: #242424;
+      color: #fff;
+    }
   }
 }
 .delete {

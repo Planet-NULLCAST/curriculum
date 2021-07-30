@@ -73,10 +73,14 @@
 }
 
 .form {
-    @apply p-1 md:p-2 flex mb-10;
+    @apply p-1 md:p-2 flex mb-10 relative;
     border: 3px solid #626262;
     max-width: 602px;
     border-radius: 5px;
+    p {
+        @apply absolute left-0;
+        bottom: -30px;
+    }
 }
 
 .email {

@@ -305,6 +305,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
               <a
                 className="text-white h-8 text-xs bg-indigo-600 w-full p-2 rounded-sm inline-flex items-center"
                 target="_blank"
+                rel="noopener noreferer"
               >
                 Trouble? Join Discord
                 <svg

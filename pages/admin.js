@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import Pagination from "../component/pagination/pagination";
-import Navbar from "../component/myblogs/Navbar";
-import MyBlogs from "../component/myblogs/MyBlogs";
 import MyBlogsstyles from "../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
 import PostService from "../services/PostService";
 import AdminNavbar from "../component/admin/AdminNavbar";
 import AdminBlogsList from "../component/admin/AdminBlogsList";
 import { getCookieValue } from "../lib/cookie";
-import { serverUrl } from "../config/config";
 
 export async function getServerSideProps(context) {
   try {
@@ -65,7 +62,7 @@ const Admin = (props) => {
     skip: 0,
     optionsCategory: "",
     optionsStatus: "",
-    order: 1,
+    order: -1,
     fieldName: "updatedAt"
   });
   const [loaded, setLoaded] = useState(false);

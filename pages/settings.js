@@ -6,11 +6,12 @@ import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
-import ImageCropper from "../component/popup/ImageCropper"
+import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
-
+import CreatableSelect from "react-select/creatable";
+import SkillService from "../services/SkillService";
 
 export async function getServerSideProps(context) {
   try {
@@ -22,9 +23,11 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
         const response = await UserService.getProfileByUserId(cookie);
+        const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: response.data
+            profileData: response.data,
+            _skills: skillsRes
           }
         };
       } else {
@@ -56,14 +59,24 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Settings({ profileData }) {
+export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
+  const [allSkills, setAllSkills] = useState(_skills);
   const [profile, setProfile] = useState({
     fullName: "",
     bio: "",
     avatar: "",
+    skills: [],
+    twitter: "",
+    facebook: "",
+    linkedin: "",
+    github: "",
+    website: ""
+  });
+  const [errors, setErrors] = useState({
+    fullName: "",
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -72,22 +85,22 @@ export default function Settings({ profileData }) {
   });
   const [image, setImage] = useState("");
 
-
   useEffect(() => {
     setProfile({ ...profileData });
-    setImage(profileData.avatar)
+    setImage(profileData.avatar);
+    // console.log(profileData);
+    // console.log(_skills);
+    setAllSkills(_skills);
   }, []);
 
   const updateProfile = async (newProfile) => {
-
     try {
       const response = await UserService.updateProfileByUserId(
         userCookie,
-        newProfile ? newProfile:profile
+        newProfile ? newProfile : profile
       );
       notify(response.message);
       setLoading(false);
-
     } catch (err) {
       setLoading(false);
       notify(err.response.data.message);
@@ -95,7 +108,95 @@ export default function Settings({ profileData }) {
   };
   const handleSettings = (e) => {
     e.preventDefault();
-    updateProfile();
+    if (profile.fullName) {
+      updateProfile();
+    } else {
+      setErrors((prevValue) => {
+        return {
+          ...prevValue,
+          fullName: "Required"
+        };
+      });
+    }
+  };
+
+  const handleSkills = (e) => {
+    const newSkill = e
+      .filter((skill) => {
+        if (skill.__isNew__ === true) {
+          return skill;
+        }
+      })
+      .map((fSkill) => fSkill.value);
+
+    SkillService.postSkills(userCookie, newSkill);
+    setProfile((prevValue) => {
+      return {
+        ...prevValue,
+        skills: e.map((i) => i.value)
+      };
+    });
+  };
+
+  const handleErrors = (e) => {
+    const { name, value } = e.target;
+    if (name === "fullName") {
+      if (value === "") {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "Required"
+          };
+        });
+      } else if (value) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      }
+    } else if (name === "website") {
+      if (value === "" || value.match(/^(ftp|http|https):\/\/[^ "]+$/)) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      } else {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "Please enter a valid URL"
+          };
+        });
+      }
+    } else if (
+      name === "twitter" ||
+      name === "facebook" ||
+      name === "linkedin" ||
+      name === "github"
+    ) {
+      if (
+        value === "" ||
+        (value.match(/^[a-zA-Z0-9]\S*$/) && value.length < 30)
+      ) {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: "valid"
+          };
+        });
+      } else {
+        setErrors((prevValue) => {
+          return {
+            ...prevValue,
+            [name]: `Invalid ${name} username`
+          };
+        });
+      }
+    }
   };
 
   const handleOnChange = (e) => {
@@ -113,53 +214,49 @@ export default function Settings({ profileData }) {
     if (image) {
       const imageData = {
         stage: "dev",
-        fileName: userCookie.username + '.png',
+        fileName: userCookie.username + ".png",
         id: userCookie.id,
         category: "profiles",
-        ContentType: 'image/png'
+        ContentType: "image/png"
       };
       setLoading(true);
-    notify('Uploading image in progress')
+      notify("Uploading image in progress");
       try {
         let s3ImageUrl = await PostService.uploadImage(image, imageData);
-        s3ImageUrl += '?bustcache=' + new Date().getTime()
-        setImage(s3ImageUrl)
+        s3ImageUrl += "?bustcache=" + new Date().getTime();
+        setImage(s3ImageUrl);
 
-        setProfile(
-            {...profile,
-            avatar: s3ImageUrl
-        });
+        setProfile({ ...profile, avatar: s3ImageUrl });
         const cookies = new Cookies();
         const userCookie = cookies.get("userNullcast");
-        userCookie.avatar = s3ImageUrl
+        userCookie.avatar = s3ImageUrl;
         document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
-          updateProfile({...profile,
-            avatar: s3ImageUrl
-        })
+        updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify('Image upload failed')
+        notify("Image upload failed");
       }
-
     }
 
     setLoading(false);
   };
+
   const closeTrigerred = () => {
-    setImage(profile.avatar)
-  }
-  const deletePhoto = () => {
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        avatar: ""
-      };
-    });
-    const cookies = new Cookies();
-    const userCookie = cookies.get("userNullcast");
-    userCookie.avatar = ''
-    document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+    setImage(profile.avatar);
   };
+
+  // const deletePhoto = () => {
+  //   setProfile((prevValue) => {
+  //     return {
+  //       ...prevValue,
+  //       avatar: ""
+  //     };
+  //   });
+  //   const cookies = new Cookies();
+  //   const userCookie = cookies.get("userNullcast");
+  //   userCookie.avatar = "";
+  //   document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
+  // };
 
   const handleImage = (e) => {
     e.preventDefault();
@@ -177,7 +274,6 @@ export default function Settings({ profileData }) {
       reader.readAsDataURL(files[0]);
     }
   };
-
 
   const notify = (msg) =>
     toast(msg, {
@@ -206,7 +302,7 @@ export default function Settings({ profileData }) {
             </ul>
           </div>
 
-          <div className="flex flex-wrap relative lg:justify-center">
+          <div className="flex flex-wrap relative lg:justify-center max-w-panel">
             <div className={`${styles.aside} bg-white md:mr-4`}>
               <ul>
                 <Link href="/settings">
@@ -252,7 +348,10 @@ export default function Settings({ profileData }) {
                       }
                       handleSubmit={uploadImage}
                     />
-                    <img src={profile.avatar} alt="profile" />
+                    <img
+                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      alt="profile"
+                    />
                     <figcaption className="z-40">
                       <div className={styles.icon}>
                         <svg
@@ -276,22 +375,26 @@ export default function Settings({ profileData }) {
                     </figcaption>
                   </figure>
                 </div>
-                <div>
-                  <ModalConfirm
-                    trigger={
-                      <button className={`${styles.delete}`}>
-                        Delete Photo
-                      </button>
-                    }
-                    handleSubmit={deletePhoto}
-                    purpose={"delete"}
-                    buttonColor={"red"}
-                    heading={"Are you sure"}
-                    text="Are you sure you want to delete this image?"
-                  // secondaryText="This cannot be undone"
-                  />
 
-                </div>
+                {/* {profile.avatar && (
+                  <div>
+                    <ModalConfirm
+                      trigger={
+                        <div
+                          className={`cursor-pointer hover:opacity-50 duration-500 ${styles.delete}`}
+                        >
+                          Delete Photo
+                        </div>
+                      }
+                      handleSubmit={deletePhoto}
+                      purpose={"delete"}
+                      buttonColor={"red"}
+                      heading={"Are you sure"}
+                      text="Are you sure you want to delete this image?"
+                      // secondaryText="This cannot be undone"
+                    />
+                  </div>
+                )} */}
               </div>
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
@@ -301,10 +404,25 @@ export default function Settings({ profileData }) {
                     type="text"
                     id="fullName"
                     name="fullName"
+                    maxLength="30"
                     placeholder="Name"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.fullName) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.fullName}
                   />
+
+                  {errors.fullName && errors.fullName !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.fullName}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full mb-4">
                   <label htmlFor="bio">Bio</label>
@@ -314,66 +432,181 @@ export default function Settings({ profileData }) {
                     cols="30"
                     rows="10"
                     onChange={handleOnChange}
+                    placeholder="Enter bio"
                     value={profile.bio}
                   ></textarea>
                 </div>
+                <label htmlFor="skills">Skills</label>
+                <CreatableSelect
+                  options={allSkills.map((a) => {
+                    return {
+                      label: `${a.name.toUpperCase()}`,
+                      value: `${a.name}`
+                    };
+                  })}
+                  isMulti
+                  className="w-full mb-4"
+                  classNamePrefix="Skills"
+                  clearValue={() => undefined}
+                  placeholder="Skills"
+                  closeMenuOnSelect={false}
+                  name="skills"
+                  id="skills"
+                  value={profile.skills.map((a) => {
+                    return {
+                      label: `${a.toUpperCase()}`,
+                      value: `${a}`
+                    };
+                  })}
+                  onChange={handleSkills}
+                />
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="twitter">Twitter</label>
+                  <label htmlFor="twitter">Twitter Username</label>
                   <input
                     type="text"
                     id="twitter"
                     name="twitter"
-                    placeholder="Enter URL"
-                    onChange={handleOnChange}
+                    placeholder="Enter username"
+                    onChange={(e) => {
+                      if (errors.twitter) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.twitter}
                   />
+                  {errors.twitter && errors.twitter !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.twitter}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="linkedin">Linkedin</label>
+                  <label htmlFor="linkedin">Linkedin Username</label>
                   <input
                     type="text"
                     id="linkedin"
                     name="linkedin"
-                    placeholder="Enter URL"
-                    onChange={handleOnChange}
+                    placeholder="Enter username"
+                    onChange={(e) => {
+                      if (errors.linkedin) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.linkedin}
                   />
+                  {errors.linkedin && errors.linkedin !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.linkedin}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pr-2">
-                  <label htmlFor="facebook">Facebook</label>
+                  <label htmlFor="facebook">Facebook Username</label>
                   <input
                     type="text"
                     id="facebook"
                     name="facebook"
-                    placeholder="Enter URL"
-                    onChange={handleOnChange}
+                    placeholder="Enter username"
+                    onChange={(e) => {
+                      if (errors.facebook) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.facebook}
                   />
+                  {errors.facebook && errors.facebook !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.facebook}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github</label>
+                  <label htmlFor="github">Github Username</label>
                   <input
                     id="github"
                     name="github"
                     type="text"
-                    placeholder="Enter URL"
-                    onChange={handleOnChange}
+                    placeholder="Enter username"
+                    onChange={(e) => {
+                      if (errors.github) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.github}
                   />
+                  {errors.github && errors.github !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.github}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full mb-4">
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
-                    placeholder="Enter Website"
+                    placeholder="Enter Website URL"
                     id="website"
                     name="website"
-                    onChange={handleOnChange}
+                    onChange={(e) => {
+                      if (errors.website) {
+                        handleErrors(e);
+                      }
+                      handleOnChange(e);
+                    }}
+                    onBlur={(e) => {
+                      handleErrors(e);
+                    }}
                     value={profile.website}
                   />
+                  {errors.website && errors.website !== "valid" && (
+                    <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
+                      {errors.website}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right w-full">
-                  <button disabled={loading} className={`${loading && "disabled:opacity-50"}`} type="submit">Update Profile</button>
+                  <button
+                    disabled={
+                      loading ||
+                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.twitter !== "" && errors.twitter !== "valid") ||
+                      (errors.facebook !== "" && errors.facebook !== "valid") ||
+                      (errors.linkedin !== "" && errors.linkedin !== "valid") ||
+                      (errors.github !== "" && errors.github !== "valid") ||
+                      (errors.website !== "" && errors.website !== "valid")
+                      // !profile.fullName
+                    }
+                    className={`${
+                      loading ||
+                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.twitter !== "" && errors.twitter !== "valid") ||
+                      (errors.facebook !== "" && errors.facebook !== "valid") ||
+                      (errors.linkedin !== "" && errors.linkedin !== "valid") ||
+                      (errors.github !== "" && errors.github !== "valid") ||
+                      (errors.website !== "" && errors.website !== "valid")
+                        ? "opacity-50 hover:bg-black cursor-not-allowed"
+                        : ""
+                    } ${1 === 1 && ""}`}
+                    type="submit"
+                  >
+                    Update Profile
+                  </button>
                 </div>
               </form>
             </div>

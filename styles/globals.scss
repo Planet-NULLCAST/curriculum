@@ -5,6 +5,8 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;600;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
 body {
   font-family: "Open Sans", sans-serif !important;
 }
@@ -72,6 +74,9 @@ input:-webkit-autofill:active {
 }
 .opensansFamily {
   font-family: "Open Sans", sans-serif !important;
+}
+.robotoFamily {
+  font-family: "Roboto", sans-serif;
 }
 
 @import "./partials/fonts";
@@ -207,10 +212,14 @@ h3 {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.Skills__control {
+  border: 1px solid #dedede !important;
+  background-color: #f8f7f7 !important;
+}
 
 // maximum width for profile panels
 .max-w-panel {
-  max-width: 1600px;
+  max-width: 1205px;
   margin-left: auto;
   margin-right: auto;
 }

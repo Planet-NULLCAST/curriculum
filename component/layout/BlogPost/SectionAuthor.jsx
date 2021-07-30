@@ -1,9 +1,25 @@
-import styles from "./SectionAuthor.module.scss";
 import Link from "next/link";
 import AuthorDetails from "../BlogListing/AuthorDetails";
+import styles from "./SectionAuthor.module.scss";
+import PostService from "../../../services/PostService";
+import { useEffect, useState } from "react";
 
 export default function SectionAuthor({ primaryAuthor }) {
-  const { bio, username } = primaryAuthor;
+  const { bio, username, avatar } = primaryAuthor;
+
+  const [count, setCount] = useState();
+
+  const getPostsCountByUserId = async () => {
+    const res = await PostService.getPublishedPostsCountByUserId(
+      primaryAuthor._id
+    );
+    // console.log(count);
+    setCount(res.count);
+  };
+
+  useEffect(() => {
+    getPostsCountByUserId();
+  }, [primaryAuthor]);
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
       <div className="container container--post">
@@ -19,22 +35,22 @@ export default function SectionAuthor({ primaryAuthor }) {
         </div>
         <div className={styles.widget}>
           <div className={styles.details}>
-            <AuthorDetails username={username} />
+            <AuthorDetails username={username} avatar={avatar} />
 
-            {/* <div className={styles.stats}>
-                            <div className={styles.statsItem}>
-                                <strong>1157</strong>
-                                <span>Blogs</span>
-                            </div>
-                            <div className={styles.statsItem}>
-                                <strong>45</strong>
-                                <span>Followers</span>
-                            </div>
-                            <div className={styles.statsItem}>
-                                <strong>678</strong>
-                                <span>Following</span>
-                            </div>
-                        </div> */}
+            <div className={styles.stats}>
+              <div className={styles.statsItem}>
+                <strong>{count}</strong>
+                <span>Blogs</span>
+              </div>
+              <div className={styles.statsItem}>
+                <strong>0</strong>
+                <span>Followers</span>
+              </div>
+              <div className={styles.statsItem}>
+                <strong>0</strong>
+                <span>Following</span>
+              </div>
+            </div>
           </div>
           <div className={styles.description}>
             <p>{bio}</p>
