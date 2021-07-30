@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Styles from "./pagination.module.scss";
 
 export default function Pagination({ TotalCount, changePage, pageNum, limit }) {
+  // pagenum is coming as string, so converting to number
+  pageNum = +pageNum
   const [TotalPages, setTotalPages] = useState();
   const [FirstThree, setFirstThree] = useState([]);
   const [LastThree, setLastThree] = useState([]);
