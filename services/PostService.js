@@ -315,6 +315,31 @@ async function setVotes(type, postId, token) {
   }
 }
 
+
+/**
+ * Fetch posts having multiple tags
+ * @author sNkr-10
+ * @param {String} type
+ * @param {String} postId
+ * @param {String} token
+ * @returns {Promise}
+ */
+async function getPostsByMultipleTags(tags, clickNo) {
+  let url = getUrl();
+
+  try {
+    const { data } = await axios.get(`${url}/${tagUrl}/tagnames`, {params: {
+      tags: tags,
+      clickNo: clickNo
+    }});
+    // console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 const PostService = {
   getPostById,
   getPostsByUserId,
@@ -332,7 +357,8 @@ const PostService = {
   isAdmin,
   getPublishedPostsByUserId,
   getPublishedPostsCountByUserId,
-  setVotes
+  setVotes,
+  getPostsByMultipleTags
 };
 
 module.exports = PostService;

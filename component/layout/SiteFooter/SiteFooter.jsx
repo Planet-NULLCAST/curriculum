@@ -83,7 +83,7 @@ export default function SiteFooter() {
 
             <ul className={styles.nevFooter}>
               <li>
-                <Link href="/">
+                <Link href="/whats-new">
                   <a>What the Ducks?</a>
                 </Link>
               </li>

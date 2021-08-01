@@ -104,11 +104,11 @@ export default function HomeSpotlight() {
             <div className={styles.darkBg}>
               <nav>
                 <ul className={styles.mainMenu}>
-                  {/* <li>
-                    <Link href="/">
+                  <li>
+                    <Link href="/whats-new">
                       <a onClick={() => setMenu(true)}>What the Ducks?</a>
                     </Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link href="/curriculum">
                       <a onClick={() => setMenu(true)}>School of Ducks</a>

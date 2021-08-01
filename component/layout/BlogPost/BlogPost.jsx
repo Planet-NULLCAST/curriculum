@@ -29,6 +29,7 @@ export default function BlogPost(props) {
   const [voteType, setVoteType] = useState(
     props.blog.votes?.find((item) => item.userId == props.userId)?.type
   );
+  console.log(props.blog.votes?.find((item) => item.userId == props.userId)?.type, "===========")
   const [voteCount, setVoteCount] = useState(
     props.blog.votes.filter((item) => item.type == "up").length -
       props.blog.votes.filter((item) => item.type == "down").length
@@ -143,7 +144,7 @@ export default function BlogPost(props) {
                       viewBox="0 0 37 28"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                    >
+                    >{console.log(voteType,"?????????????")}
                       <path
                         d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z"
                         fill={voteType == "up" ? "#ff590f" : "#CFCFCF"}
