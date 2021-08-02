@@ -14,7 +14,6 @@ export async function getServerSideProps() {
   const limit = 10; //should be 10
   const filterWhatsNew = true;
   const tagsArray = await TagService.getTags(filterWhatsNew);
-  console.log(tagsArray);
   try {
     const postParams = {
       fieldName: "publishedAt",
@@ -23,7 +22,6 @@ export async function getServerSideProps() {
       skip: 0
     };
     const responsePost = await PostService.getLatestPosts(postParams);
-    // console.log(responsePost.data);
     if (responsePost.data.blog.length > 0) {
       return {
         props: {
@@ -51,12 +49,9 @@ export async function getServerSideProps() {
 }
 
 export default function BlogListing({ blog, tagsArray, count, limit }) {
-  // console.clear();
-  // console.log(tagsArray);
   const [newBlogs, setNewBlogs] = useState(blog);
 
   const currentCount = (count) => {
-    // console.log(count);
     getNewPosts(count);
   };
 
@@ -68,8 +63,6 @@ export default function BlogListing({ blog, tagsArray, count, limit }) {
       skip: clickNo * limit
     };
     const responsePost = await PostService.getLatestPosts(postParams);
-    // console.log(responsePost.data.blog);
-    // console.log(posts, count);
 
     setNewBlogs((prevValue) => {
       return [...prevValue, ...responsePost.data.blog];

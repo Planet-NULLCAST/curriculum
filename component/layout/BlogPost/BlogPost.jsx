@@ -28,7 +28,10 @@ export default function BlogPost(props) {
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
   const [voteType, setVoteType] = useState("");
   useEffect(()=> {
-    setVoteType(props.blog.votes?.find((item) => item.userId == props.userId).type)
+    const votes = props.blog.votes?.find((item) => item.userId == props.userId)
+    if(votes){
+      setVoteType(votes.type)
+    }
   },[props.blog])
   const [voteCount, setVoteCount] = useState(
     props.blog.votes.filter((item) => item.type == "up").length -
