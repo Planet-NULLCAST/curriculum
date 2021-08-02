@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import PostService from "../../../services/PostService"
 
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
-  const [active, setActive] = useState(1);
+  const router = useRouter();
 
   const createMarkup = (value) => {
     return { __html: value };
@@ -14,30 +17,53 @@ export default function WhatsNewPosts({ blogs }) {
     <>
       <section className={styles.header}>
         <ul>
-          <li
-            style={{ background: active == 1 && "#f6e049" }}
-            onClick={() => setActive(1)}
+        <Link 
+            href={{
+              pathname: `/whats-new`,
+            }}
           >
-            All Post
-          </li>
-          <li
-            style={{ background: active == 2 && "#f6e049" }}
-            onClick={() => setActive(2)}
+            <li
+              style={{ background: !router.query.tag && "#f6e049" }}
+            >
+              All Post
+            </li>
+          </Link>
+          <Link 
+            href={{
+              pathname: `/whats-new`,
+              query: {tag:"fix"}
+            }}
           >
-            Fix
-          </li>
-          <li
-            style={{ background: active == 3 && "#f6e049" }}
-            onClick={() => setActive(3)}
+            <li
+              style={{ background: router.query.tag == "fix" && "#f6e049" }}
+            >
+              Fix
+            </li>
+          </Link>
+          <Link 
+            href={{
+              pathname: `/whats-new`,
+              query: {tag:"announcement"}
+            }}
           >
-            Announcement
-          </li>
-          <li
-            style={{ background: active == 4 && "#f6e049" }}
-            onClick={() => setActive(4)}
+            <li
+              style={{ background: router.query.tag == "announcement" && "#f6e049" }}
+            >
+              Announcement
+            </li>
+          </Link>
+          <Link 
+            href={{
+              pathname: `/whats-new`,
+              query: {tag:"improvement"}
+            }}
           >
-            Improvement
-          </li>
+            <li
+              style={{ background: router.query.tag == "improvement" && "#f6e049" }}
+            >
+              Improvement
+            </li>
+          </Link>
         </ul>
       </section>
       <section className={styles.content}>
@@ -52,9 +78,11 @@ export default function WhatsNewPosts({ blogs }) {
               }}
               className={styles.content__left}
             >
-              <h3>{post.title}</h3>
+              <Link href={`/${post.slug}`}>
+                <h3>{post.title}</h3>
+              </Link>
               <div dangerouslySetInnerHTML={createMarkup(post.html)} />
-              <Link href="#">
+              <Link href={`/${post.slug}`}>
                 <a className="btn btn--small mt-auto">
                   <span className="btn__text">Learn more</span>
                 </a>

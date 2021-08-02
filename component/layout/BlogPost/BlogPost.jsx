@@ -26,9 +26,10 @@ export default function BlogPost(props) {
    * @author sNkr-10
    */
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
-  const [voteType, setVoteType] = useState(
-    props.blog.votes?.find((item) => item.userId == props.userId)?.type
-  );
+  const [voteType, setVoteType] = useState("");
+  useEffect(()=> {
+    setVoteType(props.blog.votes?.find((item) => item.userId == props.userId).type)
+  },[props.blog])
   const [voteCount, setVoteCount] = useState(
     props.blog.votes.filter((item) => item.type == "up").length -
       props.blog.votes.filter((item) => item.type == "down").length
@@ -246,70 +247,6 @@ export default function BlogPost(props) {
                 dangerouslySetInnerHTML={createMarkup(props.html)}
                 id="component"
               />
-              {/* 
-
-                        <p>He wrote this in 2007, but it is still valid today, especially in the case of tech startups.
-
-    Year-on-year we see hundreds of startups popping up everywhere with what sounds like the next big thing in tech that's going to revolutionize the industry and year-on-year without fail we see the vast majority of them fail.</p>
-
-    <h3 id="post1">Twitter post</h3>
-                        <figure className="kg-card kg-embed-card"><blockquote className="twitter-tweet" data-width="550"><p lang="en" dir="ltr">In the third installment of <a href="https://twitter.com/hashtag/OpenMinded?src=hash&amp;ref_src=twsrc%5Etfw">#OpenMinded</a>, <a href="https://twitter.com/KendallJenner?ref_src=twsrc%5Etfw">@KendallJenner</a> is joined by Dr. Curley Bonds (<a href="https://twitter.com/md_bonds?ref_src=twsrc%5Etfw">@md_bonds</a>), who explains how to step up as an ally for a loved one who is experiencing a panic attack or seems regularly anxious.<br /><br />Watch more: <a href="https://t.co/aAzSYRjj3A">https://t.co/aAzSYRjj3A</a> <a href="https://t.co/a301idiLwi">pic.twitter.com/a301idiLwi</a></p>&mdash; Vogue Magazine (@voguemagazine) <a href="https://twitter.com/voguemagazine/status/1395487612614455304?ref_src=twsrc%5Etfw">May 20, 2021</a></blockquote>
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        </figure>
-
-                        <p>A startup can fail for a wide variety of reasons, but most often than not, they fail because they don't achieve product-market fit. It is because the product they have built—no matter how good it is—is not selling.  Customers are not talking about it, they don't understand its values, dwindling sales numbers, below par user base, and so on. Which points to one thing </p>
-                        <h3 id="post2">Image post</h3>
-                        <figure className="kg-card kg-image-card"><img src="https://nullcast-assets.s3.amazonaws.com/dev/posts/4243524wrtfsdf/nullcast-banner-template.png" className="kg-image" alt loading="lazy" width="340" height="192" /></figure>
-                        <h2 id="heading-1">heading 1</h2>
-                        <blockquote>
-                        <p>a quote<br />
-                        some other quote<br />
-                        <strong>bold</strong><br />
-                        <em>italic</em></p>
-                        </blockquote>
-                        <h3 id="post3">Sample list</h3>
-                        <ul>
-                        <li>afafa</li>
-                        <li>adfasdfasdf</li>
-                        <li>asdfasfas</li>
-                        <li>adfafsadf</li>
-                        </ul>
-                        
-                        <figure className="kg-card kg-embed-card"><iframe width="356" height="200" src="https://www.youtube.com/embed/Cv0q056lL0Y?feature=oembed" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></figure>
-
-
-                        <div>
-
-                        <h3>Subtitle</h3>
-
-                        <p>A startup can fail for a wide variety of reasons, but most often than not, they fail because they don't achieve product-market fit. It is because the product they have built—no matter how good it is—is not selling.  Customers are not talking about it, they don't understand its values, dwindling sales numbers, below par user base, and so on. Which points to one thing </p>
-
-                        <pre><code>&lt;div className="navbar"&gt;
-                            &lt;div className="nav"&gt;
-                                &lt;a href="#home" className="activeTab" onclick="setActive('home')" id='home'&gt;
-                                    &lt;i className="fa fa-home"&gt;&lt;/i&gt;
-                                    Home
-                                &lt;/a&gt;
-                                &lt;a href="#contact" onclick="setActive('contact')" id='contact'&gt;
-                                    &lt;i className="fa fa-phone-square-alt"&gt;&lt;/i&gt;
-                                    Contact
-                                &lt;/a&gt;
-                                &lt;a href="#gallery" onclick="setActive('gallery')" id='gallery'&gt;
-                                    &lt;i className="fa fa-image"&gt;&lt;/i&gt;
-                                    Gallery
-                                &lt;/a&gt;
-                                &lt;a href="#login" onclick="setActive('login')" id='login'&gt;
-                                    &lt;i className="fa fa-sign-in-alt"&gt;&lt;/i&gt;
-                                    Login
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                            &lt;div className="tab activeTabhome" id='tab'&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;</code></pre>
-
-                        </div>
-
-                     */}
             </div>
           </div>
         </div>
