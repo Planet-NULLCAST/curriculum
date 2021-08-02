@@ -24,10 +24,7 @@ export async function getServerSideProps(context) {
   // console.log(response);
   if (!foundTag) {
     return {
-      redirect: {
-        // permanent: false,
-        destination: "/404"
-      }
+      notFound: true
     };
   } else {
     return {

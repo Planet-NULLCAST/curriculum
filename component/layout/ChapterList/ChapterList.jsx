@@ -34,8 +34,8 @@ export default function ChapterList({ chapters, courseUrl }) {
               <div className={styles.text}>
                 <h3>{chapter.chapterName}</h3>
                 <p>
-                  Learn how to add styles websites with CSS and how to use
-                  selectors to apply styles to specific elements.
+                  {/* Learn how to add styles websites with CSS and how to use
+                  selectors to apply styles to specific elements. */}
                 </p>
                 <Link href={`/curriculum/${courseUrl}/${chapter.chapterUrl}`}>
                   <a className="btn btn--purple">
