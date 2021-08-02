@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import PostService from "../../../services/PostService"
 
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
-  const [active, setActive] = useState(1);
+  const router = useRouter();
 
   const createMarkup = (value) => {
     return { __html: value };
@@ -22,8 +23,7 @@ export default function WhatsNewPosts({ blogs }) {
             }}
           >
             <li
-              style={{ background: active == 1 && "#f6e049" }}
-              onClick={() => setActive(1)}
+              style={{ background: !router.query.tag && "#f6e049" }}
             >
               All Post
             </li>
@@ -35,8 +35,7 @@ export default function WhatsNewPosts({ blogs }) {
             }}
           >
             <li
-              style={{ background: active == 2 && "#f6e049" }}
-              onClick={() => setActive(2)}
+              style={{ background: router.query.tag == "fix" && "#f6e049" }}
             >
               Fix
             </li>
@@ -48,8 +47,7 @@ export default function WhatsNewPosts({ blogs }) {
             }}
           >
             <li
-              style={{ background: active == 3 && "#f6e049" }}
-              onClick={() => setActive(3)}
+              style={{ background: router.query.tag == "announcement" && "#f6e049" }}
             >
               Announcement
             </li>
@@ -61,8 +59,7 @@ export default function WhatsNewPosts({ blogs }) {
             }}
           >
             <li
-              style={{ background: active == 4 && "#f6e049" }}
-              onClick={() => setActive(4)}
+              style={{ background: router.query.tag == "improvement" && "#f6e049" }}
             >
               Improvement
             </li>
@@ -85,7 +82,7 @@ export default function WhatsNewPosts({ blogs }) {
                 <h3>{post.title}</h3>
               </Link>
               <div dangerouslySetInnerHTML={createMarkup(post.html)} />
-              <Link href="#">
+              <Link href={`/${post.slug}`}>
                 <a className="btn btn--small mt-auto">
                   <span className="btn__text">Learn more</span>
                 </a>

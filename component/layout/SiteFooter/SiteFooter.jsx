@@ -84,7 +84,7 @@ export default function SiteFooter() {
             <ul className={styles.nevFooter}>
               <li>
                 <Link href="/whats-new">
-                  <a>What the Ducks?</a>
+                  <a>What's New?</a>
                 </Link>
               </li>
               <li>

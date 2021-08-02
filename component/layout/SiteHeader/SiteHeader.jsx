@@ -106,7 +106,7 @@ export default function HomeSpotlight() {
                 <ul className={styles.mainMenu}>
                   <li>
                     <Link href="/whats-new">
-                      <a onClick={() => setMenu(true)}>What the Ducks?</a>
+                      <a onClick={() => setMenu(true)}>What's New?</a>
                     </Link>
                   </li>
                   <li>
