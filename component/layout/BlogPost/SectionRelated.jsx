@@ -5,10 +5,10 @@ import moment from "moment";
 import styles from "./SectionRelated.module.scss";
 
 export default function SectionRelated({ title, posts }) {
-  // console.log(posts.length);
+  posts.splice(3)
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
-      <div className="container">
+      <div className="container container--post">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-25 font-extrabold">{title}</h2>
           <span>
