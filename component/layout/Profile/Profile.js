@@ -9,30 +9,6 @@ export default function Profile({ onLogout, username }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
 
-  // State
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // Effects
-  useEffect(() => {
-    if (userCookie?.roles === "admin") {
-      getIsAdmin();
-    }
-  }, []);
-
-  // Functions
-  /**
-   * Function to get if a user is asn admin
-   *
-   * @author athulraj2002
-   */
-  const getIsAdmin = async () => {
-    const res = await PostService.isAdmin(
-      userCookie.id,
-      userCookie.accessToken
-    );
-    if (res?.data) setIsAdmin(true);
-  };
-
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
@@ -77,13 +53,6 @@ export default function Profile({ onLogout, username }) {
               </a>
             </Link>
           </li>
-          {isAdmin && (
-            <li>
-              <Link href="/admin">
-                <a className="linkUnderline w-full font-semibold">Admin Console</a>
-              </Link>
-            </li>
-          )}
           <li>
             <Link href="/settings">
               <a className="linkUnderline w-full font-semibold">Settings</a>
@@ -91,7 +60,10 @@ export default function Profile({ onLogout, username }) {
           </li>
           <li>
             {/* <a onClick={onLogout}>Logout</a> */}
-            <button onClick={onLogout} className="linkUnderline w-full font-semibold">
+            <button
+              onClick={onLogout}
+              className="linkUnderline w-full font-semibold"
+            >
               Logout
             </button>
           </li>
