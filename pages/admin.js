@@ -165,7 +165,6 @@ const Admin = (props) => {
 
           {postData.posts?.length ? (
             <div>
-              {/* <MyBlogs posts={postData.posts} /> */}
               <AdminBlogsList
                 posts={postData.posts}
                 updated={() => getPosts(pagination)}

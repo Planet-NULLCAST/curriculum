@@ -1,4 +1,11 @@
+import { useEffect, useContext, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import Head from "next/head";
+import Cookies from "universal-cookie";
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
 import { courses } from "../../../courses/meta";
@@ -6,14 +13,10 @@ import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
-import hljs from "highlight.js";
-import javascript from "highlight.js/lib/languages/javascript";
-import { useEffect, useContext, useState } from "react";
 import UserState from "../../../context/user/userContext";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { baseUrl } from "../../../config/config";
+
 const axios = require("axios");
-import Cookies from "universal-cookie";
 import "highlight.js/styles/tomorrow-night-blue.css";
 
 hljs.registerLanguage("javascript", javascript);
@@ -57,7 +60,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
         axios({
           method: "post",
           mode: "no-cors",
-          url: `http://localhost:8080/api/enrol/${courseName}/${chapterName}`,
+          url: `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
           headers: {
             "x-access-token": `${cook.accessToken}`
           }
@@ -71,7 +74,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
       }
 
       let progress = JSON.parse(window.localStorage.getItem("progress"));
-      if(!progress) progress = []
+      if (!progress) progress = [];
       const Course = progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
