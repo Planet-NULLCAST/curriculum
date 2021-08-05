@@ -307,7 +307,7 @@ export default function WriteNav({
           >
             <p>Settings</p>
           </div>
-          <Link href={`/p/${currentPost._id}`}>
+          <Link href={`/p/${router.query.post_id}`}>
             <a target="_blank">
               <div className="bg-blue-500 border border-blue-500 text-white hover:text-blue-500 hover:bg-white text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
                 Preview
