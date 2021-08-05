@@ -85,7 +85,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         });
       }
       let progress = JSON.parse(window.localStorage.getItem("progress"));
-      console.log(progress);
+      if(!progress) progress = []
       const Course = progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
