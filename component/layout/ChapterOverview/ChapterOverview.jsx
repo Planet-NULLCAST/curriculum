@@ -10,17 +10,18 @@ export default function ChapterOverview() {
         <div className="row md:flex">
           <div className="md:w-8/12 pt-5 md:text-18 font-medium lg:font-semibold leading-loose mb-10 md:mb-0 md:pr-5">
             <p className="mb-10">
-              JavaScript (JS) is a lightweight, interpreted, or just-in-time
-              compiled programming language with first-class functions. While it
-              is most well-known as the scripting language for Web pages, many
-              non-browser environments also use it, such as Node.js, Apache
-              CouchDB etc.
+             After gaining a prerequisite understanding of HTML and CSS, make way for some juicy Javascript.
+             It is with Javascript that you can step up your website-building game by boosting its interactiveness. 
+             So, head down to master the fundamentals and then to create algorithms that matter in the real-world.
+
             </p>
             <h3 className="text-25 font-extrabold mb-5">Take-Away Skills:</h3>
             <p>
-              You will learn important basics of JavaScript. We will cover
-              JavaScript's key fundamental features, turning our attention to
-              it's key features such as variables, datatypes, functions.
+              By the end of this course, you’ll be able to upskill yourself to amplify web interactivity, data manipulation and animation.
+              It’s all the fun stuff in one package!<br>
+              You’ll also come across Object Oriented Programming (OOP) and Functional Programming 
+              (FP) which are two essential programming paradigms for working with JS.
+
             </p>
           </div>
           <div className="md:w-4/12">
