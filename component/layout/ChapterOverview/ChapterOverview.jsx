@@ -18,7 +18,7 @@ export default function ChapterOverview() {
             <h3 className="text-25 font-extrabold mb-5">Take-Away Skills:</h3>
             <p>
               By the end of this course, you’ll be able to upskill yourself to amplify web interactivity, data manipulation and animation.
-              It’s all the fun stuff in one package!<br>
+              It’s all the fun stuff in one package!<br/>
               You’ll also come across Object Oriented Programming (OOP) and Functional Programming 
               (FP) which are two essential programming paradigms for working with JS.
 
