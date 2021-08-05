@@ -67,6 +67,7 @@ export default function AdminBlogsList({ posts, updated }) {
                     className={`text-15 font-semibold mb-1 ${MyBlogStyles.color_blue_910}`}
                   >
                     <a
+                      target="_blank"
                       className={`text-gray-900 text-xl hover:text-purple-600 font-semibold ${MyBlogStyles.min_w_25rem}`}
                     >
                       {item.title}
@@ -171,23 +172,27 @@ export default function AdminBlogsList({ posts, updated }) {
                       query: { post_id: `${item._id}` }
                     }}
                   >
-                    <div
-                      className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.linkBg}`}
-                    >
-                      <div className="mr-1 mt-1 rounded-full">
-                        <Image
-                          src="/images/edit.svg"
-                          alt="edit"
-                          width={15}
-                          height={15}
-                          layout="fixed"
-                          margin={0}
-                        />
+                    <a target="_blank">
+                      <div
+                        className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.linkBg}`}
+                      >
+                        <div className="mr-1 mt-1 rounded-full">
+                          <Image
+                            src="/images/edit.svg"
+                            alt="edit"
+                            width={15}
+                            height={15}
+                            layout="fixed"
+                            margin={0}
+                          />
+                        </div>
+                        <span
+                          className={`capitalize  ${MyBlogStyles.linkText}`}
+                        >
+                          Edit
+                        </span>
                       </div>
-                      <span className={`capitalize  ${MyBlogStyles.linkText}`}>
-                        Edit
-                      </span>
-                    </div>
+                    </a>
                   </Link>
                 </div>
               </div>
