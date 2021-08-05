@@ -25,8 +25,14 @@
     border-radius: 6px;
 
     img {
-
+        @apply w-full;
         transition: all ease .3s;
+        height: 370px;
+        object-fit: cover;
+
+        @media (max-width: 767px) {
+            height: 300px;
+        }
 
     }
 }

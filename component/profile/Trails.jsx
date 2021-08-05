@@ -5,24 +5,24 @@ export default function Trails() {
   const trailItems = [
     {
       trailName: "Contributor",
-      points: "1500",
+      points: "0",
       title: "Mega Expert",
-      rank: "145",
-      total: "37,222"
+      rank: "0",
+      total: "0"
     },
     {
       trailName: "Competitor",
       points: "0",
       title: "Unranked",
-      rank: "145",
-      total: "37,222"
+      rank: "0",
+      total: "0"
     },
     {
       trailName: "Learner",
-      points: "1500",
+      points: "0",
       title: "Mega Expert",
-      rank: "145",
-      total: "37,222"
+      rank: "0",
+      total: "0"
     }
   ];
   return (
@@ -42,6 +42,7 @@ export default function Trails() {
             <h3 className="font-semibold text-gray-900 mb-2">
               {trail.trailName}
             </h3>
+
             <div className="flex flex-row mt-2 mb-1">
               <img
                 className="mr-2"
@@ -52,7 +53,7 @@ export default function Trails() {
             </div>
 
             <h2 className="text-red-500 font-semibold">{trail.title}</h2>
-            {trail.title !== "Unranked" && (
+            {/* {trail.title !== "Unranked" && (
               <>
                 <h5 className="text-xs text-gray-600 mt-2">Current Rank</h5>
                 <div>
@@ -60,12 +61,12 @@ export default function Trails() {
                     {trail.rank}
                   </span>
                   <span className="text-sm text-gray-600">
-                    {" "}
                     of {trail.total}
                   </span>
                 </div>
               </>
-            )}
+            )} */}
+            <p className="text-gray-400 mt-8 text-sm">Coming Soon</p>
           </div>
         </div>
       ))}

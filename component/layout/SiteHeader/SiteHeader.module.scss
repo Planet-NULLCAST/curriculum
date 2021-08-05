@@ -3,9 +3,10 @@
   @media (min-width: 1536px) {
     height: 80px;
   }
-  @apply bg-white relative left-0 top-0 w-full z-20 px-3 md:px-10 sticky flex items-center;
+  @apply bg-white relative left-0 top-0 w-full z-50 sticky flex items-center;
   // border: 1px solid rgb(255, 255, 255);
-  // border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+
   transition: all ease 0.3s;
   &[class*="sticky"] {
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
@@ -124,7 +125,7 @@
 .wrap {
   @apply flex items-center justify-between pl-14;
   @media (min-width: 992px) {
-    @apply pl-0;
+    @apply lg:pl-0;
   }
 }
 
@@ -174,7 +175,7 @@
   }
 
   ul {
-    transition: all ease .3s;
+    transition: all ease 0.3s;
     @media (min-width: 992px) {
       @apply absolute top-1/2 right-0 lg:-right-5 w-52 px-5 py-3 opacity-0 pointer-events-none z-50;
       background: #fff;
@@ -193,7 +194,7 @@
     @media (max-width: 991px) {
       @apply max-h-0 overflow-hidden;
     }
-  
+
     li {
       @apply py-2 m-0;
       border-top: 1px solid #f3f3f3;
@@ -226,7 +227,6 @@
       fill: #fff;
     }
   }
-
 }
 
 .wrapBtn {

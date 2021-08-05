@@ -1,51 +1,108 @@
 import React, { useRef, useEffect, useState } from "react";
-import WriteNav from "../../component/myblogs/WriteNav";
 import Head from "next/head";
-import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
+import { toast } from "react-toastify";
+
+import WriteNav from "../../component/myblogs/WriteNav";
+import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import PostService from "../../services/PostService";
-import { baseUrl, clientUrl, editorUrl } from "../../config/config";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-// import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import { editorUrl } from "../../config/config";
+import { getCookieValue } from "../../lib/cookie";
 
 const TARGET = editorUrl;
 
-Write.getInitialProps = async (ctx) => {
-  // console.log(ctx);
-  // console.log(ctx.query);
-  const post_Id = ctx.query.post_id;
-  return { post_Id: post_Id ? post_Id : "" };
-};
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        const post_Id = context.query.post_id;
+        // const res = await PostService.getPostById(cookie, post_Id);
+        // // console.log("get post response", res);
+        // const resPost = {
+        //   mobiledoc: res.mobiledoc,
+        //   title: res.title
+        // };
+        return {
+          props: {
+            post_Id: post_Id ? post_Id : "",
+            referer: context.req.headers.referer
+              ? context.req.headers.referer
+              : ""
+            // resPost: resPost,
+            // res: res
+          }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/login"
+          }
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
+  }
+}
 
-export default function Write({ post_Id }) {
-  // console.log("postId if there's a post Id", post_Id);
-  const [postId, setPostId] = useState("");
+export default function Write({
+  post_Id,
+  referer
+  // resPost,
+  // res
+}) {
+  const [postId, setPostId] = useState(post_Id);
   const [post, setPost] = useState();
+
   const iframeRef = useRef();
   const postElement = useRef();
+
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const router = useRouter();
   // console.log(userCookie);
 
   useEffect(() => {
-    const currentPostId = router.query.post_id;
-
+    // const currentPostId = router.query.post_id;
+    // console.log({ currentPostId });
     if (userCookie) {
-      setPostId(currentPostId);
+      setPostId(post_Id);
       try {
         // errors on refresh
-        console.log(iframeRef.current.contentWindow);
+        // !START
+        // *IMPORTANT: Don't remove the below block of code
+        const iframeElement = iframeRef.current;
+        iframeElement.contentWindow.innerWidth;
+        // *IMPORTANT: It's the reason the control goes to the catch block on refresh
+        // !END
 
-        iframeRef.current.onload = function () {
-          if (currentPostId) {
-            getPostById(currentPostId);
+        iframeElement.onload = function () {
+          if (post_Id) {
+            getPostById(post_Id);
           }
         };
       } catch (error) {
-        getPostById(currentPostId);
+        console.log("error blaaaah==>", error);
+        getPostById(post_Id);
       }
     }
 
@@ -93,23 +150,19 @@ export default function Write({ post_Id }) {
   }
 
   async function updatePostById(updateData, newPostId) {
-    const { msg, data } = await PostService.updatePostById(
-      userCookie,
-      updateData,
-      newPostId
-    );
-    console.log("updated post response", data);
-    notify(msg);
-  }
-
-  async function createPost(createThisPost) {
-    const { data } = await PostService.createPost(userCookie, createThisPost);
-    const { post, msg } = data;
-    notify(msg);
-    // console.log(post, msg);
-    //TO DO: compare our user id and the posts's user id
-    // setPostId(post._id);
-    router.push(`?post_id=${post._id}`);
+    try {
+      const { msg, data } = await PostService.updatePostById(
+        userCookie,
+        updateData,
+        newPostId
+      );
+      // console.log("updated post response", data);
+      if (msg) {
+        notify(msg);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const saveToDraft = () => {
@@ -117,90 +170,53 @@ export default function Write({ post_Id }) {
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
       // wait for the response post message to get the post from the state
-      console.log({ postElement });
+      // console.log({ postElement });
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement.current.scratch;
       const title = postElement.current.titleScratch || "[Untitled]";
-      // console.log("title: ", title);
-      // createPost or updatePost -  if post id - update, else create
-      console.log({ router });
-      const newPostId = router.query.post_id;
-      console.log({ newPostId });
-      if (newPostId) {
+
+      if (postId) {
         //updatePost
         const newUpdatedPost = {
           title: title,
           mobiledoc: newMobiledoc
         };
-        updatePostById(newUpdatedPost, newPostId);
-      } else {
-        const createThisPost = {
-          mobiledoc: newMobiledoc,
-          title: title,
-          status: "drafted",
-          type: "blog"
-        };
-        console.log(createThisPost);
-        createPost(createThisPost);
+        updatePostById(newUpdatedPost, postId);
       }
     }, 500);
   };
 
-  const submitForReview = () => {
-    //status pending if submitted for review
-  };
-
-  const getSettings = async (e) => {
-    //get form settings data - imageUpload url tags shortDes metaTitle metaDes
-    e.preventDefault();
-    console.log(e.target.imageUpload.files[0]);
-    // console.log("in settings");
-    const imageFile = e.target.imageUpload.files[0] || "";
-    const imageData = {
-      stage: "dev",
-      fileName: imageFile.name,
-      id: postId,
-      category: "posts",
-      ContentType: imageFile.type
-    };
-    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    console.log(s3ImageUrl);
-    const postUrl = e.target.url.value || "";
-    // console.log(`${baseUrl}/${postUrl}`);
-    let tags = Array.from(e.target.tags) || "";
-    // console.log("tags length: ", tags.length);
-    if (tags.length > 0) {
-      tags = tags.map((tag) => tag.value.toUpperCase());
-      // console.log("multiple tags", tags);
-    } else {
-      tags = e.target.tags.value.toUpperCase();
-      // console.log("single tag", tags);
+  async function submitForReview() {
+    //change status to "pending" if submitted for review
+    // console.log(postId);
+    try {
+      const statusUpdate = {
+        status: "pending"
+      };
+      const msg = await PostService.changePostStatus(
+        userCookie,
+        postId,
+        statusUpdate
+      );
+      // console.log(msg);
+      if (msg) {
+        notify(msg);
+      }
+    } catch (err) {
+      console.log(err);
     }
+  }
 
-    const shortDes = e.target.shortDes.value || "";
-    const metaTitle = e.target.metaTitle.value || "";
-    const metaDes = e.target.metaDes.value || "";
-    // console.log(imageName, postUrl, tags, shortDes, metaTitle, metaDes);
-    const settingsData = {
-      tags: tags,
-      // url: , //p/id
-      canonicalUrl: `${clientUrl}/${postUrl}`,
-      bannerImage: s3ImageUrl,
-      shortDescription: shortDes,
-      metaTitle: metaTitle,
-      metaDescription: metaDes
-    };
+  const getSettings = async (settingsData) => {
     if (postId) {
       updatePostById(settingsData, postId);
-    } else {
-      createPost(settingsData);
     }
   };
 
   const notify = (msg) =>
     toast(msg, {
-      position: "top-right",
-      autoClose: 5000,
+      position: "top-center",
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -217,6 +233,7 @@ export default function Write({ post_Id }) {
       <div className="bg-gray-100 px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <WriteNav
+            previousUrl={referer}
             saveToDraft={saveToDraft}
             submitForReview={submitForReview}
             getSettings={getSettings}
@@ -231,8 +248,14 @@ export default function Write({ post_Id }) {
               src={TARGET}
             ></iframe>
           </div>
+          {/* <div
+            className={`height_Iframe_write flex  w-full justify-center px-3 rounded overflow-y-auto`}
+          >
+            <p className="text-gray-700 text-center font-semibold mt-8">
+              Oops! This functionality is disabled in smaller screens !
+            </p>
+          </div> */}
         </div>
-        <ToastContainer />
       </div>
     </>
   );

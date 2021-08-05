@@ -1,79 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Profilestyles from "../../styles/Profile.module.css";
 import Link from "next/link";
 
-export default function BlogList() {
-  const blogs = [
-    {
-      name: "Null Safety in Flutter",
-      image: "",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Active Tab Animation using HTML, CSS and JS",
-      image: "/images/dummy_Blog4.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "All you need to know about Supabase",
-      image: "/images/dummy_Blog3.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Creative Search Bar and Input Field Design Inspiration",
-      image: "/images/dummy_Blog2.png",
-      date: "2021-05-04T03:59:48.157Z"
-    },
-    {
-      name: "Introduction to Rapid HTML Development using Tailwind CSS",
-      image: "/images/dummy_Blog3.png",
-      date: "2021-05-04T03:59:48.157Z"
-    }
-  ];
+export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
+  const [count, setCount] = useState(0);
+
+  const handleViewMore = () => {
+    let newCount = count + 1;
+    setCount(newCount);
+    getNewPostsWithCount(newCount);
+  };
+
   return (
-    <div className="bg-white shadow-sm rounded p-4 mt-4 h-72">
+    <div className={`bg-white shadow-sm rounded p-4 mt-4 `}>
       <div className="flex justify-between items-center">
         <span className="font-bold">Blog</span>
-        <Link href="/blog">
-          <a className="underline text-sm font-semibold">View All</a>
-        </Link>
       </div>
-      <div className="flex items-start w-full overflow-x-auto pb-2">
-        {blogs?.map((data) => (
-          <div
-            className={`flex items-start w-1/5 mt-3 justify-between pr-6 ${Profilestyles.min_w_9}`}
-          >
-            <div className="flex flex-col w-full">
-              {data?.image ? (
-                <div className="w-full h-32 overflow-hidden rounded-md flex items-center justify-center text-white">
-                  <img
-                    src={data?.image}
-                    alt="img"
-                    className="rounded-md w-full"
-                  ></img>
-                </div>
-              ) : (
-                <div className="w-full h-32 overflow-hidden rounded-md flex items-center justify-center text-white">
-                  <img
-                    src="/images/dummy_Blog.png"
-                    alt="default"
-                    className="rounded-md w-full"
-                  ></img>
-                </div>
-              )}
-              <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
-                {moment(data?.date).format("LL")}
-              </p>
-              <p
-                className={`multi-line-truncate font-bold underline text-sm cursor-pointer ${Profilestyles.a_green_210}`}
+      <div className="flex flex-wrap pb-2 w-full">
+        {posts?.length > 0 ? (
+          <div className="flex flex-wrap w-full">
+            {posts.map((blog, index) => (
+              <div
+                key={blog._id}
+                className={`flex flex-wrap w-full lg:w-1/2 mt-4 ${
+                  index % 2 === 0 ? "lg:pr-2" : "lg:pl-2"
+                }`}
               >
-                {data?.name}
-              </p>
-              {/* <p className="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
-            </div>
+                <div
+                  className={`flex justify-between rounded border p-3 w-full`}
+                >
+                  {blog.bannerImage ? (
+                    <div className="w-32 h-32 rounded-md flex items-center justify-center text-white">
+                      <img
+                        src={blog.bannerImage}
+                        alt="banner"
+                        className="rounded-md w-32 h-32 object-cover"
+                      ></img>
+                    </div>
+                  ) : (
+                    <div className="w-32 h-32 rounded-md flex items-center justify-center text-white">
+                      <img
+                        src="/images/dummy_Blog.png"
+                        alt="default"
+                        className="rounded-md w-32 h-32 object-cover"
+                      ></img>
+                    </div>
+                  )}
+                  <div className="flex flex-col mx-4 w-60">
+                    <Link href={`/${blog.slug}`}>
+                      <a
+                        className={`multi-line-truncate font-bold underline text-lg cursor-pointer ${Profilestyles.a_green_210}`}
+                      >
+                        {blog.title}
+                      </a>
+                    </Link>
+                    <div className="flex justify-between w-full items-center">
+                      <div className="flex items-center">
+                        {/* <img src="/images/like.svg" alt="" />
+                        <p className="text-xs">123</p> */}
+                      </div>
+                      <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
+                        {moment(blog.publishedAt).format("LL")}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* <p className="multi-line-truncate">With this paragraph, I will show you what a truncated text looks like. You might be surprised, but yh, it is what it is. How are you doing today, though?</p> */}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <>
+            <div className="w-full h-12 flex justify-start items-center">
+              <span className="text-gray-400 text-sm">
+                Currently, you don't have any published posts
+              </span>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="w-full flex justify-center mt-8  items-center">
+        {posts.length !== postsCount && (
+          <button
+            onClick={handleViewMore}
+            className="py-1 px-6 text-sm font-semibold whitespace-nowrap border border-black bg-white text-black hover:bg-black hover:text-white duration-700 rounded"
+          >
+            View All
+          </button>
+        )}
       </div>
     </div>
   );

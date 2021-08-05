@@ -4,41 +4,116 @@ import MyBlogs from "../../component/myblogs/MyBlogs";
 import Head from "next/head";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import Cookies from "universal-cookie";
-import withAuth from "../../component/withAuth/withAuth";
 import PostService from "../../services/PostService";
 import Pagination from "../../component/pagination/pagination";
+import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import { getCookieValue } from "../../lib/cookie";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-const MyPost = () => {
+export async function getServerSideProps(context) {
+  // console.log(context.req.headers.cookie);
+  // console.log(context.query.pageNo);
+  try {
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        return {
+          props: {
+            // _pageNo: context.query.pageNo
+          }
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/login"
+          }
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
+  }
+}
+
+export default function Posts() {
   const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+  // console.log(userCookie);
+  const router = useRouter();
   const [postData, setPostData] = useState({
     posts: [],
-    count: 0
+    count: 0,
+    pageNo: router.query.pageNo,
+    limit: 10 //should be 10
   });
 
-  useEffect(() => {
-    const userCookie = cookies.get("userNullcast");
-    if (userCookie) {
-      async function getPosts() {
-        try {
-          const data = await PostService.getPostsByUserId(userCookie);
-          console.log(data);
-          const { posts, count } = data;
-          // console.log({ posts });
-          setPostData({
-            posts: posts,
-            count: count
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      getPosts();
-    }
-  }, []);
+  const [loaded, setLoaded] = useState(false);
 
-  const pageChange = (pageNo, limit) => {
-    console.log(pageNo, limit, "page index");
-    // call api here for Paginations
+  const [tagFilter, setTagFilter] = useState(router.query.tag);
+  const [statusFilter, setStatusFilter] = useState(router.query.status);
+
+  useEffect(() => {
+    setTagFilter(router.query.tag);
+    setStatusFilter(router.query.status);
+    const newReqData = {
+      pageNo: router.query.pageNo,
+      limit: postData.limit,
+      tag: router.query.tag,
+      status: router.query.status
+    };
+    getPosts(newReqData);
+  }, [router.query.pageNo, router.query.tag, router.query.status]);
+
+  async function getPosts(reqData) {
+    // console.log("getposts call");
+    try {
+      const data = await PostService.getPostsByUserId(userCookie, reqData);
+      // console.log(data);
+      const { posts, count } = data;
+      // console.log({ posts });
+      if (data) {
+        setLoaded(true);
+      }
+      setPostData((prevValue) => {
+        return {
+          ...prevValue,
+          posts: posts,
+          count: count
+        };
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const changePage = (newPageNo) => {
+    // console.log("change page: ", newPageNo, tagFilter, statusFilter);
+    router.push({
+      pathname: "/posts",
+      query: {
+        pageNo: newPageNo,
+        tag: router.query.tag,
+        status: router.query.status
+      }
+    });
   };
 
   return (
@@ -47,354 +122,46 @@ const MyPost = () => {
         <title>My Posts | Nullcast</title>
       </Head>
       <SiteHeader />
-      <div className="bg-gray-100 px-6 min-h-screen-top">
+      <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <Navbar />
-          {postData.posts.length ? (
-            <MyBlogs
-              posts={postData.posts}
-              paginationData={pageChange}
-              // posts={data}
-              paginationData={pageChange}
-            />
+          {loaded ? (
+            postData.posts.length > 0 ? (
+              <div>
+                <MyBlogs posts={postData.posts} currentPage={postData.pageNo} />
+              </div>
+            ) : !tagFilter && !statusFilter ? (
+              <div className="text-gray-700 text-center font-semibold mt-8">
+                Looks like you haven't created any posts yet.
+              </div>
+            ) : (
+              <div className="text-gray-700 text-center font-semibold mt-8">
+                No results found.
+              </div>
+            )
           ) : (
-            <div className="pt-8 text-black text-center">
-              You have not created any posts!
+            <div className="flex w-full justify-center h-96 items-center">
+              <div className="h-20 w-20">
+                <Image
+                  src="/spinner-transparent.gif"
+                  height="65px"
+                  width="65px"
+                />
+              </div>
             </div>
           )}
+          <div
+            className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
+          >
+            <Pagination
+              TotalCount={postData.count}
+              changePage={changePage}
+              pageNum={postData.pageNo}
+              limit={postData.limit}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default withAuth(MyPost);
-
-// export default MyPost;
-
-const data = [
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Creative Search Bar and Input Field Design Inspiration",
-    mobiledoc: "mobiledoc",
-    status: "approved",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Active Tab Animation using HTML, CSS and JS",
-    mobiledoc: "mobiledoc",
-    status: "drafted",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Null Safety in Flutter",
-    mobiledoc: "mobiledoc",
-    status: "published",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Creative Search Bar and Input Field Design Inspiration",
-    mobiledoc: "mobiledoc",
-    status: "approved",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Active Tab Animation using HTML, CSS and JS",
-    mobiledoc: "mobiledoc",
-    status: "pending",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Null Safety in Flutter",
-    mobiledoc: "mobiledoc",
-    status: "rejected",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Creative Search Bar and Input Field Design Inspiration",
-    mobiledoc: "mobiledoc",
-    status: "approved",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Active Tab Animation using HTML, CSS and JS",
-    mobiledoc: "mobiledoc",
-    status: "pending",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  },
-  {
-    tags: ["css", "html"],
-    _id: "60b0899c3397112295ded7fc",
-    userId: "60a4d5ac2871874c835ca542",
-    url: "ww/ww/",
-    createdBy: "60a4d5ac2871874c835ca542",
-    updatedBy: "person b",
-    html: "</a>",
-    title: "Null Safety in Flutter",
-    mobiledoc: "mobiledoc",
-    status: "rejected",
-    featured: true,
-    canonicalUrl: "ww/www",
-    primaryTag: "css",
-    primaryAuthor: {
-      _id: "60b0899c3397112295ded7fd",
-      firstName: "person b"
-    },
-    contributors: [
-      {
-        _id: "60b0899c3397112295ded7fe",
-        firstName: "person c"
-      },
-      {
-        _id: "60b0899c3397112295ded7ff",
-        firstName: "person d"
-      }
-    ],
-    bannerImage: "img",
-    metaTitle: "some article",
-    metaDescription: "some description",
-    type: "type",
-    createdAt: "2021-05-28T06:11:40.644Z",
-    updatedAt: "2021-05-28T06:11:40.644Z",
-    __v: 0
-  }
-];
+}

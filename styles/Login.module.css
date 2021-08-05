@@ -2,8 +2,27 @@
   color: #909a9a;
 }
 .bg_green_710 {
-  background-color: #0B2A2B;
+  background-color: #0b2a2b;
+}
+.bg_yellow_710 {
+  background-color: #ffc700;
 }
 .text_gray_910 {
   color: #333333;
+}
+.text_green_710 {
+  color: #0b2a2b;
+}
+.formCard {
+  background-color: #0b2a2b;
+  /* overflow-y: auto; */
+}
+.inputGreen {
+  background-color: #051d1e;
+  color: #fff;
+}
+.duck_login {
+  position: fixed;
+  left: 0;
+  width: calc(65% - 1.5rem);
 }

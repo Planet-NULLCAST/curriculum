@@ -1,79 +1,74 @@
 .section {
-    @apply overflow-hidden;
-    margin: -12vw 0;
-    padding: 6vw 0;
+  @apply overflow-hidden;
+  margin: -12vw 0;
+  padding: 6vw 0;
 }
 
 .wrap {
+  @apply bg-gray-01 text-white py-7 xl:py-12 relative;
+  transform: rotate(6.2deg);
+  margin: 0 -15px;
 
-    @apply bg-gray-01 text-white py-7 xl:py-12 relative;
-    transform: rotate(6.2deg);
-    margin: 0 -15px;
-
-    &:before {
-
-        @apply absolute bg-gray-01 left-0 top-0 w-full h-full;
-        content: '';
-        transform: skewX(6.2deg);
-    }
-
+  &:before {
+    @apply absolute bg-gray-01 left-0 top-0 w-full h-full;
+    content: "";
+    transform: skewX(6.2deg);
+  }
 }
-
 
 $animationSpeed: 15s;
 
 // Scroll Animation
 @keyframes scroll {
-	0% { transform: translateX(0); }
-	100% { transform: translateX(calc(-250px * 7))}
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-250px * 7));
+  }
 }
 
 // Styling
 .slider {
-	
-	.slide-track {
-		display: flex;
-		width: calc(250px * 14);
-	}
-
+  .slide-track {
+    display: flex;
+    width: calc(250px * 14);
+  }
 }
 
 .border {
-    border: 2px solid #F7DA5B;
-    border-width: 2px 0;
-    position: relative;
+  border: 2px solid #f7da5b;
+  border-width: 2px 0;
+  position: relative;
 }
 
 .list {
-
-    @apply py-7 lg:py-12 flex;
-		animation: scroll $animationSpeed linear infinite;
-    -webkit-backface-visibility: hidden;
-
+  @apply py-7 lg:py-12 flex;
+  animation: scroll $animationSpeed linear infinite;
+  -webkit-backface-visibility: hidden;
 }
 
 .item {
-    @apply flex items-center mx-4;
-    min-width: fit-content;
+  @apply flex items-center mx-4;
+  min-width: fit-content;
 
-    h4 {
-        @apply text-25 xl:text-34 xl:text-40 2xl:text-50 font-extrabold text-orange whitespace-nowrap;
-    }
-
+  h4 {
+    @apply text-25 xl:text-34 xl:text-40 2xl:text-50 font-extrabold text-orange whitespace-nowrap;
+  }
 }
 
 .icon {
-    @apply mr-3 flex-shrink-0;
+  @apply mr-3 flex-shrink-0;
 }
 
 @screen xl {
+  .section {
+  }
 
-    .section {
-        
-    }
-
-    .list {
-        padding: 65px 0;
-    }
-
+  .list {
+    padding: 65px 0;
+  }
+}
+.min_w_10rem {
+  min-width: 10rem;
 }

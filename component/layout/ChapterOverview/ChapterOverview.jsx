@@ -8,7 +8,7 @@ export default function ChapterOverview() {
           Overview
         </h2>
         <div className="row md:flex">
-          <div className="md:w-8/12 pt-5 md:text-18 font-medium lg:font-semibold leading-loose mb-10 md:mb-0">
+          <div className="md:w-8/12 pt-5 md:text-18 font-medium lg:font-semibold leading-loose mb-10 md:mb-0 md:pr-5">
             <p className="mb-10">
               Without CSS, every web page would be drab plain text and images
               that flowed straight down the page. With CSS, you can add color

@@ -1,45 +1,62 @@
-import styles from './SectionAuthor.module.scss';
 import Link from "next/link";
-import AuthorDetails from '../BlogListing/AuthorDetails';
+import AuthorDetails from "../BlogListing/AuthorDetails";
+import styles from "./SectionAuthor.module.scss";
+import PostService from "../../../services/PostService";
+import { useEffect, useState } from "react";
 
-export default function SectionAuthor() {
+export default function SectionAuthor({ primaryAuthor }) {
+  const { bio, username, avatar } = primaryAuthor;
 
-    return(
-        <section className={`${styles.section} py-10 lg:py-20`}>
-            <div className="container container--post">
-                <div className="flex items-center justify-between mb-7">
-                    <h2>About the Author</h2>
-                    <span>
-                        <Link href="#">
-                            <a className={`${styles.profileLink} linkUnderline`}>View Profile</a>
-                        </Link>
-                    </span>
-                </div>
-                <div className={styles.widget}>
-                    <div className={styles.details}>
-                        
-                        <AuthorDetails />
+  const [count, setCount] = useState();
 
-                        <div className={styles.stats}>
-                            <div className={styles.statsItem}>
-                                <strong>1157</strong>
-                                <span>Blogs</span>
-                            </div>
-                            <div className={styles.statsItem}>
-                                <strong>45</strong>
-                                <span>Followers</span>
-                            </div>
-                            <div className={styles.statsItem}>
-                                <strong>678</strong>
-                                <span>Following</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.description}>
-                        <p>ML data annotations made super easy. Just upload data, invite your team and build training/evaluation dataset in hours.ML data annotations made super easy. Just upload data, invite your team.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  const getPostsCountByUserId = async () => {
+    const res = await PostService.getPublishedPostsCountByUserId(
+      primaryAuthor._id
     );
+    // console.log(count);
+    setCount(res.count);
+  };
+
+  useEffect(() => {
+    getPostsCountByUserId();
+  }, [primaryAuthor]);
+  return (
+    <section className={`${styles.section} py-10 lg:py-20`}>
+      <div className="container container--post">
+        <div className="flex items-center justify-between mb-7">
+          <h2>About the Author</h2>
+          <span>
+            <Link href={`/u/${username}`}>
+              <a className={`${styles.profileLink} linkUnderline`}>
+                View Profile
+              </a>
+            </Link>
+          </span>
+        </div>
+        <div className={styles.widget}>
+          <div className={styles.details}>
+            <AuthorDetails username={username} avatar={avatar} />
+
+            <div className={styles.stats}>
+              <div className={styles.statsItem}>
+                <strong>{count}</strong>
+                <span>Blogs</span>
+              </div>
+              <div className={styles.statsItem}>
+                <strong>0</strong>
+                <span>Followers</span>
+              </div>
+              <div className={styles.statsItem}>
+                <strong>0</strong>
+                <span>Following</span>
+              </div>
+            </div>
+          </div>
+          <div className={styles.description}>
+            <p>{bio}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

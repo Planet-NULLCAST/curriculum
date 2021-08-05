@@ -1,15 +1,15 @@
-import { test } from "gray-matter";
 import React, { useContext } from "react";
 import UserContext from "../../context/user/userContext";
-import { courses } from "../../courses/meta";
 const axios = require("axios");
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { baseUrl } from "../../config/config";
+import Cookies from "universal-cookie";
 
 export default function Runbutton({ editorVal, courseName, chapterName }) {
   const userState = useContext(UserContext);
   const testCase = userState.test;
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
 
   let clicked = false;
   let flag = false;
@@ -66,21 +66,15 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
       }
     }
     if (flag) {
-      // let cook = document.cookie;
-      // cook = cook.split("=");
-      // if (cook) {
-      //   cook[0] !== ""
-      //     ? (cook = JSON.parse(cook[1]).accessToken)
-      //     : (cook = false);
-      // }
-      let cook = authCheck();
+      let cook = userCookie;
+
       if (cook) {
         axios({
           method: "post",
           mode: "no-cors",
           url: `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
           headers: {
-            "x-access-token": `${cook}`
+            "x-access-token": `${cook.accessToken}`
           }
         }).then((response) => {
           if (response.data.entryAdded) {
@@ -91,7 +85,7 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
         });
       }
       let progress = JSON.parse(window.localStorage.getItem("progress"));
-      console.log(progress);
+      if(!progress) progress = []
       const Course = progress.find((post, index) => {
         if (post.courseName === courseName) {
           return true;
@@ -122,17 +116,6 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
   };
   return (
     <div className="absolute bottom-14">
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <button
         className={`bg-green-600  text-white font-medium py-1 px-3 ml-4 mt-20 rounded-sm ${
           !testCase && "disabled:opacity-50"

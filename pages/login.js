@@ -1,39 +1,82 @@
-import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { baseUrl, authUrl, enrolUrl } from "../config/config";
-import "react-toastify/dist/ReactToastify.css";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
+import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import Head from "next/head";
-import Cookies from "universal-cookie";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { getCookieValue } from "../lib/cookie";
 
 const axios = require("axios");
-export default function Login() {
-  const router = useRouter();
-  const cookies = new Cookies();
-  // console.log("redirect", router.query.redirect);
-  const redirectTo = router.query.redirect;
 
+export async function getServerSideProps(context) {
+  // console.log(context.req.headers.referer);
+  try {
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    }
+    return {
+      props: {
+        referer: context.req.headers.referer ? context.req.headers.referer : ""
+      }
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {}
+    };
+  }
+}
+
+export default function Login({ referer }) {
+  const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
-  const [validPassword, setValidPassword] = useState(false);
+  const [validPassword, setValidPassword] = useState(true);
+  const [hidePassword, setHidePassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.getElementById("email").focus();
+  }, []);
 
   const eyeClick = (e) => {
-    setValidPassword((prevState) => {
+    setHidePassword((prevState) => {
       return !prevState;
     });
   };
   const emailValidator = (e) => {
-    let emailAdress = e.target.value;
+    let emailAddress = e.target.value;
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailAdress.match(regexEmail)) {
+    if (emailAddress.match(regexEmail)) {
       setEmailValid(true);
+    } else if (!e.target.value) {
+      setEmailValid(false);
     } else {
       setEmailValid(false);
     }
   };
+
+  function handlePassword(e) {
+    if (e.target.value) {
+      setValidPassword(true);
+    } else {
+      setValidPassword(false);
+    }
+  }
 
   const notify = (err) =>
     toast.error(err.message, {
@@ -47,69 +90,82 @@ export default function Login() {
     });
   const handleClick = (e) => {
     e.preventDefault();
-    if (validEmail) {
+    setIsLoading(true);
+    // console.log(e.target);
+    if (validEmail && validPassword) {
       const password = document.querySelector("#password").value;
       const email = document.querySelector("#email").value;
-      const loginDetails = {
-        email: email,
-        password: password
-      };
-      // console.log({ loginDetails });
-      const err = axios({
-        method: "POST",
-        url: `${baseUrl}${authUrl}/signin`,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        data: loginDetails
-      })
-        .then((response) => {
-          return response.data;
+      if (password && email) {
+        const loginDetails = {
+          email: email,
+          password: password
+        };
+        // console.log({ loginDetails });
+        const err = axios({
+          method: "POST",
+          url: `${baseUrl}${authUrl}/signin`,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          data: loginDetails
         })
-        .then((data) => {
-          // console.log(data);
-          if (data.accessToken) {
-            document.cookie = `userNullcast=${JSON.stringify(data)}`;
-            sessionStorage.setItem("userNullcast", JSON.stringify(data));
+          .then((response) => {
+            setIsLoading(false);
+            return response.data;
+          })
+          .then((data) => {
+            if (data.accessToken) {
+              document.cookie = `userNullcast=${JSON.stringify(data)}`;
+              sessionStorage.setItem("userNullcast", JSON.stringify(data));
 
-            let progress = JSON.parse(
-              window.localStorage.getItem("progress")
-            ) || [{ courseName: "", completedChapter: [] }];
-            axios({
-              method: "post",
-              url: `${baseUrl}${enrolUrl}/progress`,
-              headers: {
-                "x-access-token": `${data.accessToken}`
-              },
-              data: progress
-            }).then((response) => {
-              // console.log(response);
-            });
-            axios({
-              method: "post",
-              url: `${baseUrl}/api/progress/all`,
-              headers: {
-                "x-access-token": `${data.accessToken}`
-              }
-            })
-              .then((response) => {
-                window.localStorage.setItem(
-                  "progress",
-                  JSON.stringify(response.data)
-                );
-              })
-              .catch((err) => {
-                console.log(err.message);
+              let progress = JSON.parse(
+                window.localStorage.getItem("progress")
+              ) || [{ courseName: "", completedChapter: [] }];
+              axios({
+                method: "post",
+                url: `${baseUrl}${enrolUrl}/progress`,
+                headers: {
+                  "x-access-token": `${data.accessToken}`
+                },
+                data: progress
+              }).then((response) => {
+                // console.log(response);
               });
-            if (redirectTo) {
-              router.push(redirectTo);
+              axios({
+                method: "post",
+                url: `${baseUrl}/api/progress/all`,
+                headers: {
+                  "x-access-token": `${data.accessToken}`
+                }
+              })
+                .then((response) => {
+                  window.localStorage.setItem(
+                    "progress",
+                    JSON.stringify(response.data)
+                  );
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+              if (referer) {
+                router.back();
+              } else {
+                router.push("/");
+              }
             } else {
-              router.push("/");
+              setIsLoading(false);
+              notify(data);
             }
-          } else {
-            notify(data);
-          }
-        });
+          });
+      } else {
+        setIsLoading(false);
+        if (!email) {
+          setEmailValid(false);
+        }
+        if (!password) {
+          setValidPassword(false);
+        }
+      }
     }
   };
   return (
@@ -117,71 +173,105 @@ export default function Login() {
       <Head>
         <title>Login | Nullcast</title>
       </Head>
-      <div className="w-full h-screen bg-white flex">
-        <div className="fixed top-0 right-0 flex items-center p-3 pr-6 sm:p-6 sm:pr-12">
-          <p className={`font-semibold ${Loginstyles.text_gray_910}`}>
-            Don’t have an Account ?
-          </p>
-          {/* <a
-            href="/signup"
-            className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700"
-          >
-            Sign Up
-          </a> */}
-          <Link
-            href={{
-              pathname: `/signup`
-            }}
-          >
-            <div className="ml-3 bg-gray-900 px-4 py-2 rounded text-white text-sm hover:bg-white hover:text-gray-900 border border-gray-900 duration-700 cursor-pointer">
-              Login
-            </div>
-          </Link>
-        </div>
+      <Link href="/">
+        <img
+          src="/images/nullcast.svg"
+          alt="logo"
+          className="fixed left-5 lg:left-10 top-5 lg:top-10 z-50 cursor-pointer"
+        ></img>
+      </Link>
+      <div
+        className={`w-full h-screen flex ${Loginstyles.bg_yellow_710} loginSection`}
+      >
         <SideLogin />
-        <div className="flex justify-end w-full mt-20">
-          <div className="w-full lg:w-1/2 bg-white h-full flex flex-col items-center justify-center p-6 md:p-20 md:pb-5 md:pt-0 pt-0 overflow-x-hidden">
-            <Fade duration={2000}>
-              <div className="border border-gray-100 shadow-lg rounded-xl w-full h-fit p-5 sm:p-10 max-w-xl">
-                <h1 className="text-gray-500 font-extrabold text-xl">Login</h1>
-                <p className={`${Loginstyles.text_gray_910} mt-2 text-sm`}>
+        <div className="flex justify-end w-full items-center">
+          <div
+            className={`${Loginstyles.bg_yellow_710} h-full flex flex-col items-center lg:items-end justify-center overflow-x-hidden greenLoginDiv`}
+          >
+            <div
+              className={`rounded-xl w-full py-5 sm:py-10 px-5 sm:px-10 md:px-5 lg:px-20 max-w-xl flex items-start justify-center flex-col greenLogin relative overflow-y-auto ${Loginstyles.formCard}`}
+            >
+              <Fade duration={2000}>
+                <div
+                  className={`absolute top-0 right-0 flex items-center justify-end p-6 w-full ${Loginstyles.bg_green_710}`}
+                >
+                  <p
+                    className={`sm:flex hidden font-semibold text-white text-sm mr-2 md:mr-5`}
+                  >
+                    Don’t have an Account ?
+                  </p>
+                  {isLoading ? (
+                    <div className="md:mr-4 bg-pink-710 font-semibold border border-pink-710 rounded-sm duration-700 text-white focus:outline-none flex justify-center items-center w-20 h-10 opacity-50 cursor-not-allowed">
+                      Sign Up
+                    </div>
+                  ) : (
+                    <Link
+                      href={{
+                        pathname: `/signup`
+                      }}
+                    >
+                      <div className="md:mr-4 bg-pink-710 font-semibold hover:bg-transparent hover-text-pink-710 border border-pink-710 rounded-sm duration-700 text-white focus:outline-none cursor-pointer flex justify-center items-center w-20 h-10">
+                        Sign Up
+                      </div>
+                    </Link>
+                  )}
+                </div>
+                <h1 className="text-white font-bold text-2xl leading-10">
+                  Login
+                </h1>
+                <p className={`text-white mt-2 text-sm font-bold mb-3`}>
                   Welcome Back!
                 </p>
                 <div className="container py-2 px-0-imp">
                   <form method="" action="">
                     <div className="mb-1 flex flex-col">
                       <label
-                        className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                        className={`text-white mt-2 mb-1 font-semibold text-sm`}
                       >
                         Email
                       </label>
                       <input
                         placeholder="Enter email"
-                        className="inputStyle"
+                        maxLength="30"
+                        className={`inputStyle placeholder-gray-600 pr-3 ${Loginstyles.inputGreen}`}
                         id="email"
+                        name="email"
                         type="text"
-                        onChange={(e) => emailValidator(e)}
+                        onBlur={(e) => emailValidator(e)}
+                        onChange={(e) => {
+                          if (!validEmail) {
+                            emailValidator(e);
+                          }
+                        }}
                       />
                       {validEmail ? (
                         ""
                       ) : (
-                        <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                        <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
                           Invalid email field !
                         </span>
                       )}
                     </div>
                     <div className="mb-4 flex flex-col">
                       <label
-                        className={`${Loginstyles.text_gray_910} mt-2 mb-1 font-semibold text-sm`}
+                        className={`text-white mt-2 mb-1 font-semibold text-sm`}
                       >
                         Password
                       </label>
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          className="inputStyle w-full"
+                          maxLength="50"
+                          className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="password"
-                          type={`${validPassword ? "text" : "password"}`}
+                          name="password"
+                          onBlur={(e) => handlePassword(e)}
+                          onChange={(e) => {
+                            if (!validPassword) {
+                              handlePassword(e);
+                            }
+                          }}
+                          type={`${hidePassword ? "text" : "password"}`}
                         />
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                           <img
@@ -191,19 +281,39 @@ export default function Login() {
                           ></img>
                         </div>
                       </div>
+                      {validPassword ? (
+                        ""
+                      ) : (
+                        <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          Please enter password
+                        </span>
+                      )}
                     </div>
+
                     <button
-                      className="submitButtons w-full"
+                      className={`submitButtons w-full flex items-center justify-center ${
+                        isLoading
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-transparent hover-text-pink-710"
+                      }`}
                       type="submit"
-                      onClick={(e) => handleClick(e)}
+                      onClick={(e) => {
+                        handleClick(e);
+                      }}
+                      disabled={!validEmail || !validPassword || isLoading}
                     >
+                      {isLoading && <LoadIcon color="#fff" height="23px" />}
                       Login
                     </button>
+                    <Link href="/forgot-password">
+                      <a className="text-white text-sm my-5">
+                        Forgot Password ?
+                      </a>
+                    </Link>
                   </form>
-                  <ToastContainer />
                 </div>
-              </div>
-            </Fade>
+              </Fade>
+            </div>
           </div>
         </div>
       </div>

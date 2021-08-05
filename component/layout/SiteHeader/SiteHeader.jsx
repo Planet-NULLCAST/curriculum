@@ -3,23 +3,26 @@ import { useEffect, useState } from "react";
 import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { authCheck } from "../../../lib/authCheck";
+import Cookies from "universal-cookie";
 
 export default function HomeSpotlight() {
-  const [menu, setMenu] = useState(false);
-  const ShowMenu = () => {
-    setMenu(menu);
-  };
-  useEffect(() => {
-    document.body.classList.toggle("menuOpen", menu);
-  }, [menu]);
   const router = useRouter();
-  // console.log("aspath", router.asPath);
-  const currentPath = router.asPath;
+  const _cookies = new Cookies();
+  const userCookie = _cookies.get("userNullcast");
+  const [menu, setMenu] = useState(false);
   const [cookies, setCookies] = useState("");
+
+  // const ShowMenu = () => {
+  //   setMenu(menu);
+  // };
+  // useEffect(() => {
+  //   document.body.classList.toggle("menuOpen", menu);
+  // }, [menu]);
+
   useEffect(() => {
-    let cook = authCheck();
-    cook && setCookies(cook);
+    if (userCookie) {
+      setCookies(userCookie);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,20 +58,34 @@ export default function HomeSpotlight() {
       "userNullcast=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setCookies("");
     sessionStorage.setItem("userNullcast", null);
-    router.reload();
+    // console.log(router);
+    if (router.pathname === "/posts" || router.pathname === "/posts/write") {
+      router.push("/");
+    } else {
+      router.reload();
+    }
   }
+  // const handleDropDown = () => {
+  //   // console.log("clicked");
+  //   setDropDown(!dropdown);
+  // };
   return (
     <header
       className={`${styles.header} ${menu ? "menu-open" : " "} w-full`}
       id="header"
     >
       <div
-        className={`${styles.wrap} flex items-center justify-between w-full`}
+        className={`${styles.wrap} flex items-center justify-between w-full px-3 lg:px-0 max-w-panel`}
       >
         <div id="logo">
           <Link href="/">
             <a onClick={() => setMenu(true)}>
-              <img src="/images/nullcast.svg" alt="" />
+              <img
+                src="/images/nullcast.svg"
+                alt="logo"
+                height="120rem"
+                width="120rem"
+              />
             </a>
           </Link>
         </div>
@@ -88,8 +105,8 @@ export default function HomeSpotlight() {
               <nav>
                 <ul className={styles.mainMenu}>
                   <li>
-                    <Link href="/">
-                      <a onClick={() => setMenu(true)}>What the Ducks?</a>
+                    <Link href="/whats-new">
+                      <a onClick={() => setMenu(true)}>What's New?</a>
                     </Link>
                   </li>
                   <li>
@@ -98,50 +115,63 @@ export default function HomeSpotlight() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/posts">
+                    <Link
+                      href={{
+                        pathname: "/posts",
+                        query: { pageNo: 1, tag: "", status: "" }
+                      }}
+                    >
                       <a onClick={() => setMenu(true)}>
-                        Write{" "}
-                        <img src="/images/hand.png" className="ml-1" alt="" />
+                        Write
+                        <img
+                          src="/images/hand.png"
+                          className="ml-1"
+                          alt="hand"
+                          width="15rem"
+                          height="14rem"
+                        />
                       </a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
-                      {/*TO DO: add some menu blog, events, leaderboard drop down*/}
-                      <a onClick={() => setMenu(true)}>
-                        Explore
-                        <span className={styles.downArrow}>
-                          <svg
-                            width="8"
-                            height="5"
-                            viewBox="0 0 8 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#1B1B1B"
-                          >
-                            <path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" />
-                          </svg>
-                        </span>
-                      </a>
-                    </Link>
+                    {/*TO DO: add some menu blog, events, leaderboard drop down*/}
+                    <a onClick={() => setMenu(true)} className="w-full cursor-default font-semibold">
+                      Explore
+                      <span className={styles.downArrow}>
+                        <svg
+                          width="8"
+                          height="5"
+                          viewBox="0 0 8 5"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#1B1B1B"
+                        >
+                          <path d="M.149.148A.48.48 0 01.5 0h7a.48.48 0 01.352.148A.48.48 0 018 .5a.48.48 0 01-.148.352l-3.5 3.5A.48.48 0 014 4.5a.48.48 0 01-.352-.148l-3.5-3.5A.48.48 0 010 .5C0 .365.05.248.149.148z" />
+                        </svg>
+                      </span>
+                    </a>
                     <ul>
                       <li>
                         <Link href="/blog">
-                          <a onClick={() => setMenu(true)}>Blog</a>
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
+                            Blog
+                          </a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/code-of-conduct">
-                          <a onClick={() => setMenu(true)}>Code of conduct</a>
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
+                            Code of conduct
+                          </a>
                         </Link>
                       </li>
                     </ul>
                   </li>
                 </ul>
               </nav>
-              <a href="" className="btn btn--whiteBorder">
+              {/* <a href="" className="btn btn--whiteBorder">
                 <span className="btn__text">Donate</span>
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -149,15 +179,9 @@ export default function HomeSpotlight() {
             {cookies ? (
               <div className="flex flex-row justify-center items-center">
                 <Profile onLogout={() => logout()} />
-                {/* <div>
-                <button onClick={() => logout()}>Logout</button>
-              </div> */}
               </div>
             ) : (
-              <a
-                href={`/login/?redirect=${currentPath}`}
-                className="btn btn--black"
-              >
+              <a href="/login" className="btn btn--black">
                 <span className="btn__text">Login</span>
                 <svg
                   className="btn__arrow"

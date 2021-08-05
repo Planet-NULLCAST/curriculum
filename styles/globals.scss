@@ -5,6 +5,12 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;600;700;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Open Sans", sans-serif !important;
 }
@@ -27,13 +33,44 @@ body {
 .border-green-710 {
   border-color: #007f00;
 }
+.text-red-danger {
+  color: red;
+}
 
 .submitButtons {
-  @apply bg-pink-710 font-semibold hover:bg-white hover-text-pink-710 border border-pink-710 py-2 px-2 rounded duration-700 text-white focus:outline-none;
+  @apply bg-pink-710 font-bold border border-pink-710 px-2 h-10 rounded duration-700 text-white focus:outline-none;
 }
 
 .inputStyle {
-  @apply bg-gray-100 px-3 py-3 placeholder-gray-300 focus:outline-none text-gray-800 rounded text-sm;
+  @apply bg-gray-100 pl-3 h-11 flex items-center focus:outline-none text-gray-800 rounded text-sm;
+}
+.line-height-56px {
+  line-height: 56.5px;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+}
+
+.greenLogin {
+  height: calc(80vh);
+  @media (min-width: 1024px) {
+    height: calc(100vh - 3rem);
+  }
+}
+.greenLoginDiv {
+  width: calc(100% - 3rem);
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  right: 0;
+  position: fixed;
+  @media (min-width: 1024px) {
+    margin-left: 0rem;
+    margin-right: 1.5rem;
+    width: 35%;
+  }
 }
 
 .GrotesqueFamily {
@@ -42,17 +79,22 @@ body {
 .opensansFamily {
   font-family: "Open Sans", sans-serif !important;
 }
+.robotoFamily {
+  font-family: "Roboto", sans-serif;
+}
 
 @import "./partials/fonts";
 @import "./partials/common";
 
-html {
-  // scroll-behavior: smooth;
-}
-
 body {
   font-family: "Open Sans", sans-serif;
   font-size: 1em;
+}
+.Toastify__toast--error {
+  background: #ef4444;
+}
+.Toastify__toast--success {
+  background: #10b981;
 }
 
 h2,
@@ -68,14 +110,15 @@ h3 {
   margin-top: 1rem;
   margin-bottom: 1rem;
   overflow: auto;
+  background-color: #22202c;
 }
 
 .codeClass :not(pre) code {
   display: unset;
   border: 1px solid grey;
-  /* color: #880000; */
   padding: 1px 5px;
   border-radius: 5px;
+  background-color: transparent;
 }
 
 .codeClass h1,
@@ -173,10 +216,14 @@ h3 {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.Skills__control {
+  border: 1px solid #dedede !important;
+  background-color: #f8f7f7 !important;
+}
 
 // maximum width for profile panels
 .max-w-panel {
-  max-width: 1600px;
+  max-width: 1205px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -260,5 +307,140 @@ h3 {
     .bgshadow {
       display: flex;
     }
+  }
+}
+
+// login scroll
+.loginSection {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0px #051d1e;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b48e04;
+    border-radius: 3px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccb418;
+  }
+}
+
+// popup animation
+
+@keyframes anvil {
+  0% {
+    transform: scale(1) translateY(0px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  1% {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+.popup-content {
+  -webkit-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  border: 0px !important;
+  background-color: transparent !important;
+  max-width: 95%;
+  width: unset !important;
+  .modal {
+    width: 30rem;
+    max-width: 95%;
+  }
+}
+
+// settings for write
+
+.h-calcSettings {
+  height: calc(100vh - 10rem);
+  overflow-y: auto;
+}
+
+// floating label input styles
+.floating_form {
+  .floating-label {
+    position: relative;
+  }
+  .urlInput {
+    border-left-color: black;
+  }
+  .floating-input {
+    display: block;
+    &:focus {
+      outline: none;
+    }
+    &:focus ~ label {
+      top: -18px;
+      font-size: 10px;
+      margin-top: 0rem;
+      span {
+        background-color: #fff;
+        border-radius: 0.25rem;
+        color: #000;
+        padding: 0 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+    }
+    &:focus ~ .bar:before {
+      width: 50%;
+    }
+    &:focus ~ .bar:after {
+      width: 50%;
+    }
+    &:not(:placeholder-shown) ~ label {
+      top: -18px;
+      margin-top: 0rem;
+      font-size: 10px;
+      span {
+        background-color: #fff;
+        border-radius: 0.25rem;
+        color: #000;
+        padding: 0 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+    }
+    &:focus ~ .highlight {
+      -webkit-animation: inputHighlighter 0.7s ease;
+      -moz-animation: inputHighlighter 0.7s ease;
+      animation: inputHighlighter 0.7s ease;
+    }
+  }
+  label {
+    color: #9ca3af;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    transition: 0.4s ease all;
+    -moz-transition: 0.4s ease all;
+    -webkit-transition: 0.4s ease all;
+  }
+  .longPlaceholder {
+    margin-top: 0.5rem;
+  }
+}
+.selectFloat {
+  font-size: 10px;
+  span {
+    background-color: #fff;
+    border-radius: 0.25rem;
+    color: #000;
+    padding: 0 0.5rem;
+    border: 1px solid #e5e7eb;
   }
 }

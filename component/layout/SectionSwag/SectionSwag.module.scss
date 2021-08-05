@@ -15,7 +15,7 @@
         transform: rotate(-4.6deg);
 
         h3 {
-            @apply font-extrabold uppercase text-4xl md:text-46 text-center py-10;
+            @apply font-extrabold uppercase text-4xl md:text-46 text-center py-8 md:py-10 px-4;
         }
     }
 
