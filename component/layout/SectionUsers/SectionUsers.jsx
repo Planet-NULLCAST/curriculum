@@ -36,7 +36,7 @@ export default class SimpleSlider extends Component {
                     </div>
                     <h4 className={styles.min_w_10rem}>
                       <Link href={`/u/${item.username}`}>
-                        <a>{item.fullName}</a>
+                        <a>{item.username}</a>
                       </Link>
                     </h4>
                   </div>
