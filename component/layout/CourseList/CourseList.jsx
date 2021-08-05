@@ -9,8 +9,7 @@ export default function CourseList({ courses }) {
       imageHeight: 190,
       title: "Learn JavaScript",
       url: "/curriculum/javascript",
-      description:
-        "Once the foundation is set, it’s time to step up your game and create the interactive side of your website. Kick things off with Javascript to learn the basic fundamentals of programming and achieve advanced JS mastery.",
+      description: "Learn the fundamentals of JavaScript",
       linktext: "Learn more"
     },
     {
