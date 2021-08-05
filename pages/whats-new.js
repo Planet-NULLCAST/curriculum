@@ -1,5 +1,6 @@
-import { useState,useEffect } from "react";
-import {useRouter} from "next/router";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import WhatsNewSpotlight from "../component/layout/WhatsNew/WhatsNewSpotlight";
@@ -10,17 +11,20 @@ import PostService from "../services/PostService";
 
 export async function getServerSideProps(context) {
   try {
-    let tag = context.query.tag
-    let searchArray = ["whats-new"]
+    let tag = context.query.tag;
+    let searchArray = ["whats-new"];
     if (tag) {
-      searchArray = ["whats-new", tag]
+      searchArray = ["whats-new", tag];
     }
-    const { posts, count } = await PostService.getPostsByMultipleTags(searchArray, 0);
+    const { posts, count } = await PostService.getPostsByMultipleTags(
+      searchArray,
+      0
+    );
     return {
       props: {
         blogs: posts
       }
-    }
+    };
   } catch (err) {
     console.log("Error => ", err);
     return {
@@ -35,6 +39,9 @@ export async function getServerSideProps(context) {
 export default function whatsNew(props) {
   return (
     <>
+      <Head>
+        <title> What's new | Nullcast</title>
+      </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
       <WhatsNewPosts blogs={props.blogs} />
