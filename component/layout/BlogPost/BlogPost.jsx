@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import Slider from "react-slick";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton
 } from "react-share";
 
-import Link from "next/link";
 import hljs from "highlight.js";
 
 import PostService from "../../../services/PostService";
@@ -86,7 +84,6 @@ export default function BlogPost(props) {
     });
     // console.log({ h2Tags });
     setHeadings(h2Tags);
-
     hljs.highlightAll();
   }, []);
 

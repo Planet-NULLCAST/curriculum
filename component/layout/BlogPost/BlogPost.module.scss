@@ -2,6 +2,9 @@
   @apply text-lg relative py-10 lg:py-20;
   color: #202020;
 }
+div.code {
+  white-space: pre;
+}
 
 .postContent {
   @apply lg:text-lg;
@@ -25,13 +28,8 @@
     @apply max-w-full m-auto mb-5 xl:mb-10;
   }
 
-  pre {
-    @apply max-w-full;
-  }
-
-  code {
-    @apply block max-w-full overflow-auto p-5 rounded-sm rounded-md text-base;
-    background-color: #22202c;
+  pre code {
+    @apply overflow-auto p-5 rounded-sm rounded-md text-base;
   }
 
   blockquote {
