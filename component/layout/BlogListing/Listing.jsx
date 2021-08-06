@@ -40,7 +40,7 @@ export default function Listing({
                   {newTagsArray.map((tag) => (
                     <li key={tag._id}>
                       <Link href={`/tag/${tag.name}`}>
-                        <a className="tags__item">{tag.name}</a>
+                        <a className="tags__item tags__item--navy">{tag.name}</a>
                       </Link>
                     </li>
                   ))}

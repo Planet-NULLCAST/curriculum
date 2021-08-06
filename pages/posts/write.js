@@ -240,7 +240,7 @@ export default function Write({
             post={post}
           />
           <div
-            className={`height_Iframe_write bg-white w-full rounded overflow-y-auto`}
+            className={`height_Iframe_write bg-white w-full rounded overflow-y-auto hidden md:flex`}
           >
             <iframe
               ref={iframeRef}
@@ -248,13 +248,13 @@ export default function Write({
               src={TARGET}
             ></iframe>
           </div>
-          {/* <div
-            className={`height_Iframe_write flex  w-full justify-center px-3 rounded overflow-y-auto`}
+          <div
+            className={`height_Iframe_write flex  w-full justify-center px-3 rounded overflow-y-auto md:hidden`}
           >
             <p className="text-gray-700 text-center font-semibold mt-8">
               Oops! This functionality is disabled in smaller screens !
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </>
