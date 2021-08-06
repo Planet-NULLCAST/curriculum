@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -25,12 +25,12 @@ export default function BlogPost(props) {
    */
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
   const [voteType, setVoteType] = useState("");
-  useEffect(()=> {
-    const votes = props.blog.votes?.find((item) => item.userId == props.userId)
-    if(votes){
-      setVoteType(votes.type)
+  useEffect(() => {
+    const votes = props.blog.votes?.find((item) => item.userId == props.userId);
+    if (votes) {
+      setVoteType(votes.type);
     }
-  },[props.blog])
+  }, [props.blog]);
   const [voteCount, setVoteCount] = useState(
     props.blog.votes.filter((item) => item.type == "up").length -
       props.blog.votes.filter((item) => item.type == "down").length
@@ -74,8 +74,8 @@ export default function BlogPost(props) {
 
   const [headings, setHeadings] = useState();
   useEffect(() => {
-    const h2Tags = Array.from(
-      document.getElementById("component").getElementsByTagName("h2")
+    const hTags = Array.from(
+      document.getElementById("component").querySelectorAll("h2, h3, h4")
     ).map((item) => {
       return {
         id: item.id,
@@ -83,7 +83,7 @@ export default function BlogPost(props) {
       };
     });
     // console.log({ h2Tags });
-    setHeadings(h2Tags);
+    setHeadings(hTags);
     hljs.highlightAll();
   }, []);
 
