@@ -32,7 +32,7 @@ export default function SideBar({ onToggle, toggle, course }) {
     <aside
       className={`transform top-0 ${
         toggle ? "left-0" : "-left-64"
-      } w-64 bg-white border-r fixed ease-in-out h-full transition-all delay-200 duration-500 z-40 translate-x-0 `}
+      } w-64 bg-white border-r fixed ease-in-out h-full transition-all delay-200 duration-500 z-50 translate-x-0 `}
     >
       <img
         className="h-5 w-5 absolute top-5 right-6 cursor-pointer close-icon"

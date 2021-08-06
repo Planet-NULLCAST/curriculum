@@ -1,9 +1,10 @@
-
-a, button {
+a,
+button {
     -webkit-tap-highlight-color: transparent;
-    transition: all ease .3s;
+    transition: all ease 0.3s;
     outline: none;
-    &:focus, &:active {
+    &:focus,
+    &:active {
         outline: none;
     }
 }
@@ -13,11 +14,10 @@ input {
     }
 }
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active
-{
- background: transparent;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background: transparent;
 }
 body.menuOpen {
     @media (max-width: 991px) {
@@ -27,23 +27,23 @@ body.menuOpen {
 // Button component with style variations
 
 .linkUnderline {
-    background-image: linear-gradient(#8DA1A1, #8DA1A1);
+    background-image: linear-gradient(#8da1a1, #8da1a1);
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 100% 1px;
-    transition: all ease .4s;
+    transition: all ease 0.4s;
 }
 .btn {
     --shadowcolor: #202020;
     @apply inline-block bg-pink rounded-10 text-white px-6 md:px-10 py-5 2xl:py-7 text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-extrabold uppercase relative overflow-hidden leading-tight xl:leading-6;
-    border: 1px solid #1C1C1D;
+    border: 1px solid #1c1c1d;
     box-shadow: 0px 4px 0px var(--shadowcolor);
 
     &:before {
         @apply absolute top-0 h-full;
-        transition: all ease .5s;
-        background: linear-gradient(100deg,  #FDB500 60%, transparent);
-        content: '';
+        transition: all ease 0.5s;
+        background: linear-gradient(100deg, #fdb500 60%, transparent);
+        content: "";
         left: -200%;
         width: 200%;
     }
@@ -51,7 +51,7 @@ body.menuOpen {
     &:hover {
         &:before {
             @apply left-0;
-            @media (hover:none) {
+            @media (hover: none) {
                 left: -200%;
             }
         }
@@ -65,12 +65,12 @@ body.menuOpen {
         @apply relative;
     }
 
-    &--black, &--blackborder {
-        --shadowcolor:transparent;
-        @apply 
-            inline-block relative bg-black inline-flex items-center justify-center 
+    &--black,
+    &--blackborder {
+        --shadowcolor: transparent;
+        @apply inline-block relative bg-black inline-flex items-center justify-center 
             text-white px-3 2xl:px-6 py-2 mx-3  capitalize font-semibold leading-tight 2xl:leading-normal 
-            border border-black ;
+            border border-black;
         font-size: 14px;
         border-radius: 1px;
 
@@ -90,7 +90,7 @@ body.menuOpen {
     }
 
     svg {
-        transition: all ease .3s;
+        transition: all ease 0.3s;
     }
 
     &--blackborder {
@@ -110,13 +110,13 @@ body.menuOpen {
     }
 
     &--purple {
-        background: #8032ED;
+        background: #8032ed;
         @apply py-4 text-18;
     }
 
     &--gray {
-        background: #EDEDED;
-        color: #F13E5D;
+        background: #ededed;
+        color: #f13e5d;
     }
 
     &--small {
@@ -124,7 +124,7 @@ body.menuOpen {
     }
 
     &--whiteBorder {
-        --shadowcolor:transparent;
+        --shadowcolor: transparent;
         @apply bg-transparent border border-white;
         border-radius: 2px;
         @media (max-width: 1023px) {
@@ -145,7 +145,6 @@ body.menuOpen {
     &__arrow {
         @apply ml-2 relative;
     }
-
 }
 
 .cta {
@@ -154,9 +153,8 @@ body.menuOpen {
 }
 
 .container {
-    
     @apply mx-auto px-3 md:px-4;
-    
+
     &--small {
         max-width: 1150px;
         @media (min-width: 1536px) {
@@ -172,7 +170,6 @@ body.menuOpen {
 }
 
 .sectionHeader {
-    
     @apply md:flex justify-between items-center text-center md:text-right;
 
     &__title {
@@ -182,16 +179,31 @@ body.menuOpen {
     &__description {
         @apply font-medium lg:font-bold text-18 md:w-7/12 lg:w-1/2;
     }
-
 }
-
 
 .tags {
     @apply flex flex-wrap mb-5;
     &__item {
         @apply inline-block px-4 py-2 rounded-full mr-5 text-sm font-bold;
-        background: #F2FAFD;
-        color: #1C8AB9;
+        background: #f2fafd;
+        color: #1c8ab9;
+        &--navy {
+            color: #1c35b9;
+            background-color: #e1e5f6;
+        }
+    }
+    &__inner {
+        @apply inline-block pr-3 text-sm font-bold;
+        color: #1c8ab9;
+        // border-color: #1c8ab9;
+        &--border {
+            border-right: 2px solid #1c8ab9;
+            @apply mr-3;
+        }
+    }
+    &__tool {
+        @apply inline-block pr-3 text-sm font-bold;
+        color: #1c8ab9;
     }
     &--large {
         .tags__item {
@@ -203,20 +215,63 @@ body.menuOpen {
 }
 
 @keyframes move-duck {
-    20% { transform: rotate(-4deg); }
-    40% { transform: rotate(3deg); }
-    60% { transform: rotate(-2deg); }
-    80% { transform: rotate(1deg); }
-    100% { transform: rotate(0); }
+    20% {
+        transform: rotate(-4deg);
+    }
+    40% {
+        transform: rotate(3deg);
+    }
+    60% {
+        transform: rotate(-2deg);
+    }
+    80% {
+        transform: rotate(1deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
 }
 
 .moveDuck {
     transform-origin: 50% 100%;
-    animation: move-duck .5s ease forwards;
-    & img{
+    animation: move-duck 0.5s ease forwards;
+    & img {
         transform-origin: 50% 100%;
         &:hover {
-            animation: move-duck .5s ease forwards;
+            animation: move-duck 0.5s ease forwards;
+        }
+    }
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    &__text {
+        visibility: hidden;
+        width: unset;
+        max-width: 20rem;
+        background-color: #1c8ab9;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 10px;
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 110%;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 1rem;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #1c8ab9 transparent transparent;
+        }
+    }
+    &:hover {
+        .tooltip__text {
+            visibility: visible;
         }
     }
 }

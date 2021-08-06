@@ -14,7 +14,7 @@ export default function WhatsNewPosts({ blogs }) {
   };
 
   return (
-    <>
+    <div className={styles.wrapperHeader}>
       <section className={styles.header}>
         <ul>
         <Link 
@@ -99,6 +99,6 @@ export default function WhatsNewPosts({ blogs }) {
           </div>
         ))}
       </section>
-    </>
+    </div>
   );
 }
