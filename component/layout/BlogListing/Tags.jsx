@@ -9,7 +9,7 @@ export default function Tags({ _tags }) {
     setTags(_tags.slice(0, 2));
   }, [_tags]);
   useEffect(() => {
-    setMoreTags(_tags.slice(1, _tags?.length));
+    setMoreTags(_tags.slice(2, _tags?.length));
   }, [_tags]);
 
   const handleExpandTags = () => {
@@ -31,9 +31,9 @@ export default function Tags({ _tags }) {
       ))}
       <div>
         {_tags.length - 2 > 0 && _tags.length !== tags.length && (
-          <div class="cursor-pointer text-blue-600 tags__tool tooltip font-normal">
+          <div className="cursor-pointer text-blue-600 tags__tool tooltip font-normal">
             +{_tags.length - 2}
-            <span class="tooltip__text flex flex-wrap">
+            <span className="tooltip__text flex flex-wrap">
               {moretags.map((tag, ind) => (
                 <Link href={`/tag/${tag}`} key={ind}>
                   <a className="hover:text-blue-900">{`${tag}${
