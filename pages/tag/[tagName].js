@@ -1,13 +1,11 @@
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import ListingHeader from "../../component/layout/ListingHeader/ListingHeader";
-import ListingFeatured from "../../component/layout/BlogListing/ListingFeatured";
 import Listing from "../../component/layout/BlogListing/Listing";
 import SectionSwag from "../../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export async function getServerSideProps(context) {
   const { params } = context;
@@ -38,20 +36,22 @@ export async function getServerSideProps(context) {
 }
 
 export default function TagName({ posts, params, count }) {
-  // console.log(posts);
-  // console.log(params);
-  // console.log(count);
+  console.log(posts);
   const name = params.tagName;
   const [newBlogs, setNewBlogs] = useState(posts);
 
   const currentCount = (count) => {
-    // console.log(count);
     getNewPosts(count);
   };
-
+  useEffect(async () => {
+    const { posts, count } = await PostService.getPostByTags(
+      params.tagName,
+      0
+    );
+    setNewBlogs(posts)
+  }, [params.tagName])
   const getNewPosts = async (clickNo) => {
     const { posts, count } = await PostService.getPostByTags(name, clickNo);
-    // console.log(posts, count);
 
     setNewBlogs((prevValue) => {
       return [...prevValue, ...posts];
