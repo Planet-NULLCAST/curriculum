@@ -311,7 +311,7 @@ export default function WriteNav({
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Save</p>
+            <p>Save to draft</p>
           </div>
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
