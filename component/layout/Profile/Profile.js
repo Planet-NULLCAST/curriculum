@@ -35,8 +35,8 @@ export default function Profile({ onLogout, username }) {
         </div>
         <ul>
           <li>
-            <Link href={`/u/${userCookie.username}`}>
-              <a className="linkUnderline w-full font-semibold">
+            <a href={`/u/${userCookie.username}`}>
+              <button className="linkUnderline w-full font-semibold">
                 Profile
                 <svg
                   className="ml-3"
@@ -50,8 +50,8 @@ export default function Profile({ onLogout, username }) {
                     fill="#878787"
                   />
                 </svg>
-              </a>
-            </Link>
+              </button>
+            </a>
           </li>
           <li>
             <Link href="/settings">
@@ -59,7 +59,6 @@ export default function Profile({ onLogout, username }) {
             </Link>
           </li>
           <li>
-            {/* <a onClick={onLogout}>Logout</a> */}
             <button
               onClick={onLogout}
               className="linkUnderline w-full font-semibold"
