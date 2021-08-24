@@ -68,7 +68,10 @@ export default function BlogPost(props) {
   };
 
   const handleClick = (value) => {
-    setVotes(value);
+    // Prevents users to vote their own posts.
+    if (props.userId != props.blog.primaryAuthor._id) {
+      setVotes(value);
+    }
     !props.userId && notify("Please login for further actions");
   };
 
