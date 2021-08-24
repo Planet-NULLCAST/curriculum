@@ -12,6 +12,8 @@ import UserState from "../../context/user/UserState";
 import ModalConfirm from "../../component/popup/ModalConfirm";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
+import InfoPopup from "../modal/InfoPopup";
+import Modal from "../modal/Modal";
 
 export default function WriteNav({
   saveToDraft,
@@ -25,7 +27,8 @@ export default function WriteNav({
   const [openSettings, setOpenSettings] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
+
   const router = useRouter();
 
   // const userState = useContext(UserState);
@@ -267,11 +270,21 @@ export default function WriteNav({
       progress: undefined
     });
 
+  const handlePublish = () => {
+    const res = submitForReview();
+    res.then((msg) => {
+      handlePopup();
+      // console.log(msg);
+    });
+  };
+  const handlePopup = () => {
+    setOpenPopup(!openPopup);
+  };
+
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
         <div className="cursor-pointer h-16 flex items-center">
-          {/* <Link href={`${isAdmin ? "/admin" : "/posts"}`}> */}
           <div onClick={handleBackOption}>
             <div className="flex items-center">
               <Image
@@ -285,21 +298,20 @@ export default function WriteNav({
               <span className="ml-2 text-gray-900">Posts</span>
             </div>
           </div>
-          {/* </Link> */}
           <span className="text-gray-500 ml-1">{"/ Edit"}</span>
         </div>
         <div className="items-center py-3 md:flex hidden">
           <div
-            onClick={submitForReview}
+            onClick={handlePublish}
             className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Submit For Review</p>
+            <p>Publish</p>
           </div>
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
           >
-            <p>Save</p>
+            <p>Save to draft</p>
           </div>
           <div
             className="bg-black hover:bg-white border border-black text-white hover:text-black text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
@@ -584,7 +596,11 @@ export default function WriteNav({
           </div>
         </Slide>
       )}
-      {/* <ToastContainer /> */}
+      {openPopup && (
+        <Modal>
+          <InfoPopup togglePopup={handlePopup} />
+        </Modal>
+      )}
     </div>
   );
 }
