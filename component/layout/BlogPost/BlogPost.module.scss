@@ -97,6 +97,9 @@ div.code {
   @media (max-width: 1023px) {
     @apply static;
   }
+  a {
+    cursor: pointer;
+  }
   a:hover {
     svg {
       stroke: #333;
