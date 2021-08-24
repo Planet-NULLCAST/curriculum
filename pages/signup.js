@@ -158,13 +158,13 @@ export default function SignUp() {
     if (validEmail) {
       if (fName && password && email && username && terms) {
         const signupData = {
-          fullName: fName,
+          full_name: fName,
           email: email,
-          username: username,
+          user_name: username,
           password: password,
-          updates: updates
+          // updates: updates
         };
-        fetch(`${baseUrl}/api/auth/signup`, {
+        fetch(`${baseUrl}/api/v1/user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
