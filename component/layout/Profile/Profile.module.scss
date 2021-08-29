@@ -50,6 +50,7 @@
   @apply py-3;
   h4 {
     @apply text-sm font-bold mb-1;
+    text-transform: capitalize;
   }
   p {
     @apply flex items-center text-sm font-bold;

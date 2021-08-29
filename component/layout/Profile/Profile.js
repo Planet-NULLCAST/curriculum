@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./Profile.module.scss";
 import Link from "next/link";
-import Image from "next/image";
-import Cookies from "universal-cookie";
-import PostService from "../../../services/PostService";
 
 export default function Profile({ onLogout, username }) {
-  const cookies = new Cookies();
-  const userCookie = cookies.get("userNullcast");
+
+  // Retrieving userdata from session storage which is in string format
+  const userData = JSON.parse(sessionStorage.getItem("userNullcast"))
 
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
         <img
-          src={userCookie.avatar || "/images/svgs/avatar.svg"}
+          src={userData.avatar || "/images/svgs/avatar.svg"}
           alt="avatar"
           width="32"
           height="32"
@@ -22,7 +20,7 @@ export default function Profile({ onLogout, username }) {
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{userCookie.fullName}</h4>
+          <h4>{userData.full_name}</h4>
           <p>
             <img
               src="/images/smallduck.svg"
@@ -35,7 +33,7 @@ export default function Profile({ onLogout, username }) {
         </div>
         <ul>
           <li>
-            <a href={`/u/${userCookie.username}`}>
+            <a href={`/u/${userData.username}`}>
               <button className="linkUnderline w-full font-semibold">
                 Profile
                 <svg

@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
-import { ToastContainer, toast } from "react-toastify";
-import { baseUrl } from "../config/config";
+import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 
+import { useRouter } from "next/router";
+import Cookies from "universal-cookie";
+
+const axios = require("axios");
+
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+        getCookieValue(context.req.headers.cookie, "token")
       );
-      // console.log(cookie);
       if (cookie) {
         return {
           redirect: {
@@ -29,11 +32,12 @@ export async function getServerSideProps(context) {
     console.log("User not logged in");
   }
   return {
-    props: {}
+    props: {referer: context.req.headers.referer ? context.req.headers.referer : ""}
   };
 }
 
-export default function SignUp() {
+export default function SignUp({referer}) {
+  const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validTerms, setTermsValid] = useState(true);
   const [validPassword, setValidPassword] = useState("");
@@ -146,6 +150,10 @@ export default function SignUp() {
     }
   }
 
+  // Getting token from cookie
+  const cookies = new Cookies();
+  const userToken = cookies.get("token");
+
   const handleClick = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -169,6 +177,7 @@ export default function SignUp() {
           headers: {
             "Content-Type": "application/json"
           },
+          credentials: 'include',
           body: JSON.stringify(signupData)
         })
           .then((response) => {
@@ -176,16 +185,51 @@ export default function SignUp() {
             return response.json();
           })
           .then((data) => {
-            if (data.message === "User was registered successfully!") {
-              console.log(data);
-              setIsLoading(false);
-              window.location.replace("/login");
-              toast.success(data.message);
+            // Getting token from cookie
+            const cookies = new Cookies();
+            const userToken = cookies.get("token");
+
+            if (userToken) {
+              sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+
+              // let progress = JSON.parse(
+              //   window.localStorage.getItem("progress")
+              // ) || [{ courseName: "", completedChapter: [] }];
+              // axios({
+              //   method: "post",
+              //   url: `${baseUrl}${enrolUrl}/progress`,
+              //   headers: {
+              //     "x-access-token": `${document.cookie}`
+              //   },
+              //   data: progress
+              // }).then((response) => {
+              //   // console.log(response);
+              // });
+              // axios({
+              //   method: "post",
+              //   url: `${baseUrl}/api/progress/all`,
+              //   headers: {
+              //     "x-access-token": `${document.cookie}`
+              //   }
+              // })
+              //   .then((response) => {
+              //     window.localStorage.setItem(
+              //       "progress",
+              //       JSON.stringify(response.data)
+              //     );
+              //   })
+              //   .catch((err) => {
+              //     console.log(err.message);
+              //   });
+              if (referer) {
+                router.back();
+              } else {
+                router.push("/");
+              }
             } else {
-              toast.error(data.message);
-            }
-            setIsLoading(false);
-            // notify(data);
+                setIsLoading(false);
+                // notify(data);
+              }
           });
       } else {
         setIsLoading(false);
@@ -209,6 +253,7 @@ export default function SignUp() {
       // setIsLoading(false);
     }
   };
+
   return (
     <div className="w-full min-h-screen bg-white flex">
       <Head>
