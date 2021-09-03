@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 export default function HomeSpotlight() {
   const router = useRouter();
   const _cookies = new Cookies();
-  const userCookie = _cookies.get("userNullcast");
+  const userToken = _cookies.get("token");
   const [menu, setMenu] = useState(false);
   const [cookies, setCookies] = useState("");
 
@@ -20,8 +20,8 @@ export default function HomeSpotlight() {
   // }, [menu]);
 
   useEffect(() => {
-    if (userCookie) {
-      setCookies(userCookie);
+    if (userToken) {
+      setCookies(userToken);
     }
   }, []);
 
@@ -55,9 +55,9 @@ export default function HomeSpotlight() {
     // console.log("logout");
     window.localStorage.removeItem("progress");
     document.cookie =
-      "userNullcast=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setCookies("");
-    sessionStorage.setItem("userNullcast", null);
+    sessionStorage.removeItem("userNullcast");
     // console.log(router);
     if (router.pathname === "/posts" || router.pathname === "/posts/write") {
       router.push("/");
