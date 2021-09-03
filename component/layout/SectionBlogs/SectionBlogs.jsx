@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function SectionBlogs(props) {
+  console.log(props.blog,"------")
   return (
     <section className="pt-10 lg:pt-20">
       <div className="container container--small">
@@ -27,14 +28,14 @@ export default function SectionBlogs(props) {
                 <figure className={styles.blogImage}>
                   <Link href={`/${item.slug}`}>
                     <a>
-                      {item.bannerImage && (
+                      {item.banner_image && (
                         <Image
-                          src={item.bannerImage}
+                          src={item.banner_image}
                           alt={item.title}
                           width={528}
                           height={548}
                           placeholder="blur"
-                          blurDataURL={item.bannerImage}
+                          blurDataURL={item.banner_image}
                         />
                       )}
                     </a>
@@ -46,8 +47,8 @@ export default function SectionBlogs(props) {
               </h3>
 
               <AuthorDetails
-                username={item.primaryAuthor.username}
-                avatar={item.primaryAuthor.avatar}
+                username={item.user.username}
+                avatar={item.user.avatar}
               />
             </div>
           ))}

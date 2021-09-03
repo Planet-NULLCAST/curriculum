@@ -15,15 +15,15 @@ export default function ListingFeatured({ blog }) {
               <Link href={`/${blog?.slug}`}>
                 <a>
                   <figure>
-                    {blog.bannerImage && (
+                    {blog.banner_image && (
                       <Image
-                        src={blog.bannerImage}
+                        src={blog.banner_image}
                         alt={blog?.title}
                         width={380}
                         height={318}
                         layout="responsive"
                         placeholder="blur"
-                        blurDataURL={blog?.bannerImage}
+                        blurDataURL={blog?.banner_image}
                       />
                     )}
                   </figure>
@@ -34,8 +34,8 @@ export default function ListingFeatured({ blog }) {
           <Fade>
             <div className={` ${styles.text} md:w-2/3 md:pl-6`}>
               <div className="tags">
-                <Link href={`/tag/${blog?.tags[0]}`}>
-                  <a className="tags__item">{blog?.tags[0]}</a>
+                <Link href={`/tag/${blog?.tags[0].name}`}>
+                  <a className="tags__item">{blog?.tags[0].name}</a>
                 </Link>
               </div>
               <h3>
@@ -45,13 +45,13 @@ export default function ListingFeatured({ blog }) {
               </h3>
               <p>{blog?.metaDescription}</p>
               <p className={styles.time}>
-                <span>{moment(blog?.publishedAt).format("MMMM Do, YYYY")}</span>
+                <span>{moment(blog?.published_at).format("MMMM Do, YYYY")}</span>
                 {/* <span>5 Min Read</span> */}
               </p>
 
               <Details
-                username={blog?.primaryAuthor.username}
-                avatar={blog?.primaryAuthor.avatar}
+                username={blog?.user.username}
+                avatar={blog?.user.avatar}
               />
             </div>
           </Fade>

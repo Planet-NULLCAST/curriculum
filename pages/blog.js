@@ -12,22 +12,24 @@ import { homePageSchema, logoPath, url } from "../seoschema/schema";
 
 export async function getServerSideProps() {
   const limit = 10; //should be 10
-  const filterWhatsNew = true;
-  const tagsArray = await TagService.getTags(filterWhatsNew);
+  // const filterWhatsNew = true;
+  // const tagsArray = await TagService.getTags(filterWhatsNew);
+  
   try {
     const postParams = {
-      fieldName: "publishedAt",
-      order: -1,
+      sort_field: "published_at",
+      order: "ASC",
       limit: limit,
-      skip: 0
+      page: 1,
+      with_table: "users, tags"
     };
     const responsePost = await PostService.getLatestPosts(postParams);
-    if (responsePost.data.blog.length > 0) {
+    if (responsePost.data.length > 0) {
       return {
         props: {
-          blog: responsePost.data.blog,
-          tagsArray: tagsArray,
-          count: responsePost.data.count,
+          blog: responsePost.data,
+          // tagsArray: tagsArray,
+          count: 2,
           limit: limit
         }
       };
@@ -35,7 +37,7 @@ export async function getServerSideProps() {
       return {
         props: {
           blog: [],
-          tagsArray: tagsArray,
+          // tagsArray: tagsArray,
           count: 0
         }
       };
@@ -48,7 +50,29 @@ export async function getServerSideProps() {
   }
 }
 
-export default function BlogListing({ blog, tagsArray, count, limit }) {
+export default function BlogListing({ blog, count, limit }) {
+  const tagsArray = [
+    {
+      count: 0,
+      status: 'enabled',
+      _id: '610299948fb9dadb439a392f',
+      name: 'css',
+      user_id: '610296398fb9dadb439a392c',
+      createdAt: '2021-07-29T12:05:40.984Z',
+      updatedAt: '2021-07-29T12:05:40.984Z',
+      __v: 0
+    },
+    {
+      count: 0,
+      status: 'enabled',
+      _id: '610299a78fb9dadb439a3930',
+      name: 'fix',
+      user_id: '610296398fb9dadb439a392c',
+      createdAt: '2021-07-29T12:05:59.672Z',
+      updatedAt: '2021-07-29T12:05:59.672Z',
+      __v: 0
+    }
+  ];
   const [newBlogs, setNewBlogs] = useState(blog);
 
   const currentCount = (count) => {
@@ -57,10 +81,11 @@ export default function BlogListing({ blog, tagsArray, count, limit }) {
 
   const getNewPosts = async (clickNo) => {
     const postParams = {
-      fieldName: "publishedAt",
-      order: -1,
+      sort_field: "published_at",
+      order: "ASC",
       limit: limit,
-      skip: clickNo * limit
+      page: 1,
+      with_table: "users, tags"
     };
     const responsePost = await PostService.getLatestPosts(postParams);
 
@@ -108,7 +133,7 @@ export default function BlogListing({ blog, tagsArray, count, limit }) {
       </Head>
       <SiteHeader />
       <ListingHeader />
-      {blog && blog[0] && <ListingFeatured blog={blog[0]} />}
+      {blog && <ListingFeatured blog={blog[0]} />}
       {blog.length > 0 ? (
         <Listing
           blog={newBlogs}
