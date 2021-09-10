@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function SectionBlogs(props) {
-  console.log(props.blog,"------")
   return (
     <section className="pt-10 lg:pt-20">
       <div className="container container--small">
