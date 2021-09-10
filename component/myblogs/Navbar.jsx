@@ -5,6 +5,7 @@ import styles from "./blogs.module.scss";
 // import tagOptions from "../../utils/tags";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
+import { toast } from "react-toastify";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 
@@ -77,15 +78,14 @@ export default function Navbar() {
 
   const createPost = async (createThisPost) => {
     try {
-      const { data } = await PostService.createPost(userCookie, createThisPost);
-      const { post, msg } = data;
-      // notify(msg);
-      // console.log(post, msg);
-      // console.log(post.primaryAuthor._id, userCookie.id);
-      if (post.primaryAuthor._id === userCookie.id) {
+      const {
+        data: { data: post, message }
+      } = await PostService.createPost(createThisPost);
+      // notify(message);
+      if (post.created_by === Number(userCookie.id)) {
         router.push({
           pathname: "/posts/write",
-          query: { post_id: post._id }
+          query: { post_id: post.id }
         });
       }
     } catch (err) {
@@ -108,6 +108,19 @@ export default function Navbar() {
     createPost(newPost);
   };
 
+  const notify = (msg) => {
+    // console.log(msg);
+    toast.success(msg, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+  };
+
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full md:px-5 px-3">
@@ -123,10 +136,6 @@ export default function Navbar() {
                 label: tag.toUpperCase(),
                 value: tag
               }
-              // : {
-              //     label: "ALL TAGS",
-              //     value: tag
-              //   }
             }
             isMulti={false}
             className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer md:mr-4 ${styles.min_w_10}`}
@@ -134,6 +143,7 @@ export default function Navbar() {
             clearValue={() => undefined}
             placeholder="Select Tag"
             onChange={handleTagSelect}
+            instanceId="select-tag"
           />
           <Select
             options={statusOptions}
@@ -142,23 +152,20 @@ export default function Navbar() {
                 label: status.toUpperCase(),
                 value: status
               }
-              // : {
-              //     label: "ALL STATUS",
-              //     value: status
-              //   }
             }
             isMulti={false}
-            className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
+            className={`basic-single postFilter md:block  m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
             placeholder="Select Status"
             onChange={handleStatusSelect}
+            instanceId="select-status"
           />
 
           {/* Add a New Post creates a new post and goes to /posts/write/:postId  */}
           <div
             onClick={handleAddNewPost}
-            className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
+            className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black  sm:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
           >
             <p>Add a New Post</p>
           </div>

@@ -53,7 +53,7 @@ export default function WriteNav({
   }, [post]);
 
   useEffect(() => {
-    getSettingsTags();
+    // getSettingsTags();
     if (userCookie.roles === "admin") {
       getIsAdmin();
     }

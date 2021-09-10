@@ -16,12 +16,8 @@ export async function getServerSideProps(context) {
   // console.log(context.query.pageNo);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(
-        context.req.headers.cookie,
-        "userNullcast"
-      );
+      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
       if (contextCookie) {
-        const cookie = JSON.parse(contextCookie);
         return {
           props: {
             // _pageNo: context.query.pageNo
@@ -78,15 +74,15 @@ export default function Posts() {
       limit: postData.limit,
       tag: router.query.tag,
       status: router.query.status
+      // with_table: ["user"]
     };
-    getPosts(newReqData);
+    // getPosts(newReqData);
   }, [router.query.pageNo, router.query.tag, router.query.status]);
 
   async function getPosts(reqData) {
     // console.log("getposts call");
     try {
-      const data = await PostService.getPostsByUserId(userCookie, reqData);
-      // console.log(data);
+      const data = await PostService.getPostsByUserId(reqData);
       const { posts, count } = data;
       // console.log({ posts });
       if (data) {

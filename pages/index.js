@@ -30,11 +30,11 @@ export async function getServerSideProps(context) {
     const responsePost = await PostService.getLatestPosts(postParams);
     // const responseUser = await UserService.getLatestUsers(userParams);
     return {
-      props: { blog: responsePost.data}
+      props: { blog: responsePost.data }
     };
   } catch (err) {
     console.log("Error => ", err);
-    return { props: { blog: []} };
+    return { props: { blog: [] } };
   }
 }
 
@@ -74,7 +74,7 @@ export default function Home({ blog }) {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      {blog && <SectioBlogs blog={blog} />}
+      {blog && blog[0] && <SectioBlogs blog={blog} />}
 
       <SectionVideos />
       {/* {user && <SectionUsers user={user} />} */}

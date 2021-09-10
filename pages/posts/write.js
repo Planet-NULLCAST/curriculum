@@ -132,13 +132,13 @@ export default function Write({
   }, [post_Id]);
 
   async function getPostById(id) {
-    const res = await PostService.getPostById(userCookie, id);
-    console.log("get post response", res);
+    const { data: post } = await PostService.getPostById(userCookie, id);
+    console.log("get post response", post);
     const resPost = {
-      mobiledoc: res.mobiledoc,
-      title: res.title
+      mobiledoc: post.mobiledoc,
+      title: post.title
     };
-    setPost(res);
+    setPost(post);
     // ---- to show the post in iframe
     iframeRef.current.contentWindow.postMessage(
       {
@@ -151,15 +151,11 @@ export default function Write({
 
   async function updatePostById(updateData, newPostId) {
     try {
-      const { msg, data } = await PostService.updatePostById(
-        userCookie,
-        updateData,
-        newPostId
-      );
-      // console.log("updated post response", data);
-      if (msg) {
-        notify(msg);
-      }
+      const res = await PostService.updatePostById(updateData, newPostId);
+      console.log("updated post response", res);
+      // if (msg) {
+      //   notify(msg);
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -181,6 +177,7 @@ export default function Write({
           title: title,
           mobiledoc: newMobiledoc
         };
+        console.log({ newUpdatedPost });
         updatePostById(newUpdatedPost, postId);
       }
     }, 500);
