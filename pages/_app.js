@@ -7,6 +7,11 @@ import "../styles/globals.scss";
 import "../styles/Home.module.scss";
 import { ToastContainer } from "react-toastify";
 
+import axios from "axios";
+import { baseUrl } from "../config/config";
+axios.defaults.withCredentials=true;
+axios.defaults.baseURL=baseUrl
+
 function MyApp({ Component, pageProps }) {
   return (
     <UserState>
