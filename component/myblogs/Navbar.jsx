@@ -154,7 +154,7 @@ export default function Navbar() {
               }
             }
             isMulti={false}
-            className={`basic-single postFilter md:block  m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
+            className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${styles.min_w_10}`}
             classNamePrefix="Blog Status"
             clearValue={() => undefined}
             placeholder="Select Status"
@@ -165,7 +165,7 @@ export default function Navbar() {
           {/* Add a New Post creates a new post and goes to /posts/write/:postId  */}
           <div
             onClick={handleAddNewPost}
-            className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black  sm:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
+            className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
           >
             <p>Add a New Post</p>
           </div>

@@ -3,6 +3,7 @@ import {
   baseUrl,
   allPostsUrl,
   postUrl,
+  postsUrl,
   s3Url,
   userUrl,
   changeStatusUrl,
@@ -26,7 +27,7 @@ async function getPostsByUserId(reqData) {
   }
 }
 
-async function getPostById(userCookie, postId) {
+async function getPostById(postId) {
   let url = getUrl();
 
   try {
@@ -64,19 +65,11 @@ async function createPost(post) {
 
 async function getLatestPosts(reqParams) {
   let url = getUrl();
-
   try {
-    const { sort_field, order, limit, page, with_table } = reqParams;
-    const { data } = await axios.get(`${url}/api/v1/posts`, {
-      params: {
-        order,
-        sort_field,
-        limit,
-        page,
-        with_table
-      }
+    const res = await axios.get(`${url}/${postsUrl}`, {
+      params: reqParams
     });
-    return data;
+    return res.data.data;
   } catch (err) {
     console.log(err);
     throw err;
