@@ -19,13 +19,13 @@ export default function Tags({ _tags }) {
   return (
     <div className="flex items-center">
       {tags.map((tag, index) => (
-        <Link href={`/tag/${tag}`} key={index}>
+        <Link href={`/tag/${tag.name}`} key={index}>
           <a
             className={`tags__inner my-2 ${
               index === 0 && _tags.length > 1 && "tags__inner--border"
             }`}
           >
-            {tag}
+            {tag.name}
           </a>
         </Link>
       ))}
@@ -35,8 +35,8 @@ export default function Tags({ _tags }) {
             +{_tags.length - 2}
             <span className="tooltip__text flex flex-wrap">
               {moretags.map((tag, ind) => (
-                <Link href={`/tag/${tag}`} key={ind}>
-                  <a className="hover:text-blue-900">{`${tag}${
+                <Link href={`/tag/${tag.name}`} key={ind}>
+                  <a className="hover:text-blue-900">{`${tag.name}${
                     ind !== moretags - 1 && ", "
                   }`}</a>
                 </Link>

@@ -15,29 +15,30 @@ import { homePageSchema, logoPath, url } from "../seoschema/schema";
 export async function getServerSideProps(context) {
   try {
     const postParams = {
-      fieldName: "publishedAt",
-      order: -1,
-      limit: 4,
-      skip: 0
+      sort_field: "published_at",
+      order: "ASC",
+      limit: 2,
+      page: 1,
+      with_table: "users, tags"
     };
-    const userParams = {
-      fieldName: "createdAt",
-      order: -1,
-      limit: 10,
-      skip: 0
-    };
+    // const userParams = {
+    //   fieldName: "createdAt",
+    //   order: -1,
+    //   limit: 10,
+    //   skip: 0
+    // };
     const responsePost = await PostService.getLatestPosts(postParams);
-    const responseUser = await UserService.getLatestUsers(userParams);
+    // const responseUser = await UserService.getLatestUsers(userParams);
     return {
-      props: { blog: responsePost.data.blog, user: responseUser.data.user }
+      props: { blog: responsePost.data}
     };
   } catch (err) {
     console.log("Error => ", err);
-    return { props: { blog: [], user: [] } };
+    return { props: { blog: []} };
   }
 }
 
-export default function Home({ blog, user }) {
+export default function Home({ blog }) {
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -76,7 +77,7 @@ export default function Home({ blog, user }) {
       {blog && <SectioBlogs blog={blog} />}
 
       <SectionVideos />
-      {user && <SectionUsers user={user} />}
+      {/* {user && <SectionUsers user={user} />} */}
 
       <SectionEvents />
       <SectionSwag />

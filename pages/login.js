@@ -8,6 +8,8 @@ import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import Cookies from "universal-cookie";
+
 import { getCookieValue } from "../lib/cookie";
 
 const axios = require("axios");
@@ -18,7 +20,7 @@ export async function getServerSideProps(context) {
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
         context.req.headers.cookie,
-        "userNullcast"
+        "token"
       );
       if (contextCookie) {
         return {
@@ -103,10 +105,11 @@ export default function Login({ referer }) {
         // console.log({ loginDetails });
         const err = axios({
           method: "POST",
-          url: `${baseUrl}${authUrl}/signin`,
+          url: `${baseUrl}/api/v1/signin`,
           headers: {
             "Content-Type": "application/json"
           },
+          withCredentials: true,
           data: loginDetails
         })
           .then((response) => {
@@ -114,39 +117,47 @@ export default function Login({ referer }) {
             return response.data;
           })
           .then((data) => {
-            if (data.accessToken) {
-              document.cookie = `userNullcast=${JSON.stringify(data)}`;
-              sessionStorage.setItem("userNullcast", JSON.stringify(data));
+            // Getting token from cookie
+            const cookies = new Cookies();
+            const userToken = cookies.get("token");
 
-              let progress = JSON.parse(
-                window.localStorage.getItem("progress")
-              ) || [{ courseName: "", completedChapter: [] }];
-              axios({
-                method: "post",
-                url: `${baseUrl}${enrolUrl}/progress`,
-                headers: {
-                  "x-access-token": `${data.accessToken}`
-                },
-                data: progress
-              }).then((response) => {
-                // console.log(response);
-              });
-              axios({
-                method: "post",
-                url: `${baseUrl}/api/progress/all`,
-                headers: {
-                  "x-access-token": `${data.accessToken}`
-                }
-              })
-                .then((response) => {
-                  window.localStorage.setItem(
-                    "progress",
-                    JSON.stringify(response.data)
-                  );
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                });
+            if (userToken) {
+              sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+
+              // let progress = JSON.parse(
+              //   window.localStorage.getItem("progress")
+              // ) || [{ courseName: "", completedChapter: [] }];
+              // axios({
+              //   method: "post",
+              //   url: `${baseUrl}${enrolUrl}/progress`,
+              //   headers: {
+              //     "x-access-token": `${data.accessToken}`
+              //   },
+              //   data: progress
+              // }).then((response) => {
+              //   // console.log(response);
+              // });
+              // axios({
+              //   method: "post",
+              //   url: `${baseUrl}/api/progress/all`,
+              //   headers: {
+              //     "x-access-token": `${data.accessToken}`
+              //   }
+              // })
+              //   .then((response) => {
+              //     window.localStorage.setItem(
+              //       "progress",
+              //       JSON.stringify(response.data)
+              //     );
+              //   })
+              //   .catch((err) => {
+              //     console.log(err.message);
+              //   });
+              // if (referer) {
+              //   router.back();
+              // } else {
+              //   router.push("/");
+              // }
               if (referer) {
                 router.back();
               } else {

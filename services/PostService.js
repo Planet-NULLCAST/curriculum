@@ -74,17 +74,17 @@ async function getLatestPosts(reqParams) {
   let url = getUrl();
 
   try {
-    const { order, fieldName, limit, skip } = reqParams;
-    const response = await axios.get(`${url}/${userUrl}/getPosts`, {
+    const { sort_field, order, limit, page, with_table } = reqParams;
+    const { data } = await axios.get(`${url}/api/v1/posts`, {
       params: {
         order,
-        fieldName,
+        sort_field,
         limit,
-        skip
+        page,
+        with_table
       }
     });
-    // console.log(response.data);
-    return response;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
