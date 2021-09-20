@@ -5,14 +5,15 @@ const s3Url = process.env.BUCKET_URL;
 const serverUrl = process.env.SERVER_URL;
 const authUrl = "/api/auth";
 const enrolUrl = "/api/enrol";
-const postUrl = "api/post";
+const postUrl = "api/v1/post";
+const postsUrl = "api/v1/posts";
 const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
-const userUrl = "api/user";
-const usersUrl = "api/users";
+const userUrl = "api/v1/user";
+const usersUrl = "api/v1/users";
 const adminUrl = "api/admin";
-const tagUrl = "api/tags";
+const tagUrl = "api/v1/tags";
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
@@ -28,6 +29,7 @@ const configVars = {
   authUrl,
   enrolUrl,
   postUrl,
+  postsUrl,
   allPostsUrl,
   changeStatusUrl,
   subscribeUrl,

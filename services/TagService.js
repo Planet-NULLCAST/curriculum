@@ -6,11 +6,14 @@ async function getTags(filterWhatsNew) {
   let url = getUrl();
 
   try {
-    const { data } = await axios.get(`${url}/${tagUrl}`, {
-      params: { filterWhatsNew }
-    });
-    // console.log(data.tags);
-    return data.tags;
+    const { data } = await axios.get(
+      `${url}/${tagUrl}`
+      // {
+      //   params: { filterWhatsNew }
+      // }
+    );
+    // console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
     throw err;

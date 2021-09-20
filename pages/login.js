@@ -9,6 +9,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import Cookies from "universal-cookie";
+import moment from "moment";
 
 import { getCookieValue } from "../lib/cookie";
 
@@ -120,9 +121,14 @@ export default function Login({ referer }) {
             // Getting token from cookie
             const cookies = new Cookies();
             const userToken = cookies.get("token");
+						const newDate = new Date(moment().add(30, 'days')).toUTCString();
+						const expires = `; expires=${newDate}`;
+						const userData = data.user;
 
             if (userToken) {
-              sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+							document.cookie = `userNullcast=${JSON.stringify(userData)}${expires}`;
+              localStorage.setItem("userNullcast", JSON.stringify(userData));
+							// console.log(document.cookie);
 
               // let progress = JSON.parse(
               //   window.localStorage.getItem("progress")

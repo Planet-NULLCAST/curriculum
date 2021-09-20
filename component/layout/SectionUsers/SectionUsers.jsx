@@ -26,17 +26,17 @@ export default class SimpleSlider extends Component {
                 <div key={key}>
                   <div className={styles.item}>
                     <div className={styles.icon}>
-                    <Image
+                      <Image
                         className="rounded-full"
-                        src={item.avatar||`/images/dummy${key%4}.png`}
+                        src={item.avatar || `/images/dummy${key % 4}.png`}
                         alt="user"
                         height="70rem"
                         width="70rem"
                       />
                     </div>
                     <h4 className={styles.min_w_10rem}>
-                      <Link href={`/u/${item.username}`}>
-                        <a>{item.username}</a>
+                      <Link href={`/u/${item.user_name}`}>
+                        <a>{item.user_name}</a>
                       </Link>
                     </h4>
                   </div>

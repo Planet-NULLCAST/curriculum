@@ -3,6 +3,7 @@ import {
   baseUrl,
   allPostsUrl,
   postUrl,
+  postsUrl,
   s3Url,
   userUrl,
   changeStatusUrl,
@@ -14,29 +15,24 @@ import {
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
-async function getPostsByUserId(userCookie, reqData) {
+async function getPostsByUserId(reqData) {
   try {
-    const { data } = await axios.post(`${baseUrl}/${allPostsUrl}`, reqData, {
-      headers: {
-        "x-access-token": `${userCookie.accessToken}`
-      }
+    const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+      params: reqData
     });
+    console.log(data);
     return data;
   } catch (err) {
     throw err;
   }
 }
 
-async function getPostById(userCookie, postId) {
+async function getPostById(postId) {
   let url = getUrl();
 
   try {
     // console.log(postId);
-    const { data } = await axios.get(`${url}/${postUrl}/${postId}`, {
-      headers: {
-        "x-access-token": `${userCookie.accessToken}`
-      }
-    });
+    const { data } = await axios.get(`${url}/${postUrl}/${postId}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -56,13 +52,10 @@ async function getPostBySlug(slug) {
   }
 }
 
-async function createPost(userCookie, post) {
+async function createPost(post) {
   try {
-    const response = await axios.post(`${baseUrl}/${postUrl}`, post, {
-      headers: {
-        "x-access-token": `${userCookie.accessToken}`
-      }
-    });
+    const response = await axios.post(postUrl, post);
+    // console.log(response);
     return response;
   } catch (err) {
     console.log(err);
@@ -72,19 +65,11 @@ async function createPost(userCookie, post) {
 
 async function getLatestPosts(reqParams) {
   let url = getUrl();
-
   try {
-    const { sort_field, order, limit, page, with_table } = reqParams;
-    const { data } = await axios.get(`${url}/api/v1/posts`, {
-      params: {
-        order,
-        sort_field,
-        limit,
-        page,
-        with_table
-      }
+    const res = await axios.get(`${url}/${postsUrl}`, {
+      params: reqParams
     });
-    return data;
+    return res.data.data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -113,13 +98,9 @@ async function adminGetLatestPosts(reqParams) {
   }
 }
 
-async function updatePostById(userCookie, post, postId) {
+async function updatePostById(post, postId) {
   try {
-    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, post, {
-      headers: {
-        "x-access-token": `${userCookie.accessToken}`
-      }
-    });
+    const { data } = await axios.put(`${postUrl}/${postId}`, post);
     return data;
   } catch (err) {
     console.log(err);
@@ -315,7 +296,6 @@ async function setVotes(type, postId, token) {
   }
 }
 
-
 /**
  * Fetch posts having multiple tags
  * @author sNkr-10
@@ -328,10 +308,12 @@ async function getPostsByMultipleTags(tags, clickNo) {
   let url = getUrl();
 
   try {
-    const { data } = await axios.get(`${url}/${tagUrl}/tagnames`, {params: {
-      tags: tags,
-      clickNo: clickNo
-    }});
+    const { data } = await axios.get(`${url}/${tagUrl}/tagnames`, {
+      params: {
+        tags: tags,
+        clickNo: clickNo
+      }
+    });
     // console.log(data);
     return data;
   } catch (err) {

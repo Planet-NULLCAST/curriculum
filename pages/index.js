@@ -1,6 +1,6 @@
 import HomeSpotlight from "../component/layout/HomeSpotlight/HomeSpotlight";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import SectioBlogs from "../component/layout/SectionBlogs/SectionBlogs";
+import SectionBlogs from "../component/layout/SectionBlogs/SectionBlogs";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import SectionVideos from "../component/layout/SectionVideos/SectionVideos";
 import SectionEvents from "../component/layout/SectionEvents/SectionEvents";
@@ -16,29 +16,32 @@ export async function getServerSideProps(context) {
   try {
     const postParams = {
       sort_field: "published_at",
+      status: "published",
       order: "ASC",
-      limit: 2,
+      limit: 4,
       page: 1,
-      with_table: "users, tags"
+      with_table: "users"
     };
-    // const userParams = {
-    //   fieldName: "createdAt",
-    //   order: -1,
-    //   limit: 10,
-    //   skip: 0
-    // };
+    const userParams = {
+      limit: 10
+    };
     const responsePost = await PostService.getLatestPosts(postParams);
-    // const responseUser = await UserService.getLatestUsers(userParams);
+    // console.log(responsePost.posts[0].user);
+    const responseUser = await UserService.getLatestUsers(userParams);
+    // console.log(responseUser);
     return {
-      props: { blog: responsePost.data}
+      props: {
+        posts: responsePost.posts || [],
+        user: responseUser
+      }
     };
   } catch (err) {
     console.log("Error => ", err);
-    return { props: { blog: []} };
+    return { props: { blog: [] } };
   }
 }
 
-export default function Home({ blog }) {
+export default function Home({ posts, user }) {
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -74,10 +77,10 @@ export default function Home({ blog }) {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      {blog && <SectioBlogs blog={blog} />}
+      {posts && posts[0] && <SectionBlogs posts={posts} />}
 
       <SectionVideos />
-      {/* {user && <SectionUsers user={user} />} */}
+      {user && <SectionUsers user={user} />}
 
       <SectionEvents />
       <SectionSwag />

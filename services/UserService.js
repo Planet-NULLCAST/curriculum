@@ -1,22 +1,18 @@
 const axios = require("axios");
-import { baseUrl, userUrl, usersUrl } from "../config/config";
+import { baseUrl, usersUrl } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
 async function getLatestUsers(reqParams) {
   let url = getUrl();
-
   try {
-    const { fields, order, fieldName, limit, skip } = reqParams;
-    const response = await axios.get(`${url}/${userUrl}/getUsers`, {
-      params: {
-        order,
-        fieldName,
-        limit,
-        skip,
-        fields
+    const {
+      data: {
+        data: { users }
       }
+    } = await axios.get(`${url}/${usersUrl}`, {
+      params: reqParams
     });
-    return response;
+    return users;
   } catch (err) {
     console.log(err);
     throw err;
