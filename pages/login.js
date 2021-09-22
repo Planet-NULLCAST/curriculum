@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
@@ -10,10 +9,9 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import Cookies from "universal-cookie";
 import moment from "moment";
+import {signIn} from "../services/AuthService"
 
 import { getCookieValue } from "../lib/cookie";
-
-const axios = require("axios");
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
@@ -91,34 +89,16 @@ export default function Login({ referer }) {
       draggable: true,
       progress: undefined
     });
-  const handleClick = (e) => {
+  async function handleClick (e) {
     e.preventDefault();
     setIsLoading(true);
     // console.log(e.target);
     if (validEmail && validPassword) {
       const password = document.querySelector("#password").value;
       const email = document.querySelector("#email").value;
+      
       if (password && email) {
-        const loginDetails = {
-          email: email,
-          password: password
-        };
-        // console.log({ loginDetails });
-        const err = axios({
-          method: "POST",
-          url: `${baseUrl}/api/v1/signin`,
-          headers: {
-            "Content-Type": "application/json"
-          },
-          withCredentials: true,
-          data: loginDetails
-        })
-          .then((response) => {
-            setIsLoading(false);
-            return response.data;
-          })
-          .then((data) => {
-            // Getting token from cookie
+        const data = await signIn(email, password)
             const cookies = new Cookies();
             const userToken = cookies.get("token");
 						const newDate = new Date(moment().add(30, 'days')).toUTCString();
@@ -173,7 +153,7 @@ export default function Login({ referer }) {
               setIsLoading(false);
               notify(data);
             }
-          });
+          };
       } else {
         setIsLoading(false);
         if (!email) {
@@ -183,7 +163,6 @@ export default function Login({ referer }) {
           setValidPassword(false);
         }
       }
-    }
   };
   return (
     <div>

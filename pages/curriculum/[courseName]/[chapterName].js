@@ -14,7 +14,8 @@ import Output from "../../../component/layout/Output/Output";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import UserState from "../../../context/user/userContext";
-import { baseUrl } from "../../../config/config";
+import {enrollCourse} from "../services/CurriculamService"
+
 
 const axios = require("axios");
 import "highlight.js/styles/tomorrow-night-blue.css";
@@ -54,23 +55,12 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
 
   const clickHandle = (courseName, chapterName) => {
     if (contentOnly) {
-      let cook = userCookie;
-      // console.log(cook);
-      if (cook) {
-        axios({
-          method: "post",
-          mode: "no-cors",
-          url: `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
-          headers: {
-            "x-access-token": `${cook.accessToken}`
-          }
-        }).then((response) => {
-          if (response.data.entryAdded) {
+          const data = await enrollCourse(courseName, chapterName)
+          if (data.entryAdded) {
             console.log("👍 Chapter Is Completed!");
           } else {
-            console.log(`👍 ${response.data}`);
-          }
-        });
+            console.log(`👍 ${data}`);
+          };
       }
 
       let progress = JSON.parse(window.localStorage.getItem("progress"));

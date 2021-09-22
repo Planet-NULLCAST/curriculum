@@ -10,6 +10,8 @@ const postsUrl = "api/v1/posts";
 const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
+const loginUrl = "api/v1/signin";
+const signUpUrl = "api/v1/user";
 const userUrl = "api/v1/user";
 const usersUrl = "api/v1/users";
 const adminUrl = "api/admin";
@@ -24,6 +26,8 @@ const publishedPostsCountUrl = "api/posts/published/count";
 
 const configVars = {
   baseUrl,
+  loginUrl,
+  signUpUrl,
   clientUrl,
   s3Url,
   authUrl,

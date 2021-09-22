@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
-import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
+import {signUp} from "../services/AuthService"
 
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
-
-const axios = require("axios");
 
 export async function getServerSideProps(context) {
   try {
@@ -154,7 +152,7 @@ export default function SignUp({referer}) {
   const cookies = new Cookies();
   const userToken = cookies.get("token");
 
-  const handleClick = (e) => {
+  async function handleClick (e) {
     e.preventDefault();
     setIsLoading(true);
     const fName = e.target.fullName.value;
@@ -165,27 +163,9 @@ export default function SignUp({referer}) {
 
     if (validEmail) {
       if (fName && password && email && username && terms) {
-        const signupData = {
-          full_name: fName,
-          email: email,
-          user_name: username,
-          password: password,
-          // updates: updates
-        };
-        fetch(`${baseUrl}/api/v1/user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: 'include',
-          body: JSON.stringify(signupData)
-        })
-          .then((response) => {
-            setIsLoading(false);
-            return response.json();
-          })
-          .then((data) => {
-            // Getting token from cookie
+          const data = await signUp(email, password,fName,username)
+            
+          // Getting token from cookie
             const cookies = new Cookies();
             const userToken = cookies.get("token");
 
@@ -229,8 +209,7 @@ export default function SignUp({referer}) {
             } else {
                 setIsLoading(false);
                 // notify(data);
-              }
-          });
+              };
       } else {
         setIsLoading(false);
         if (!fName) {
