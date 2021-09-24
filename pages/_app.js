@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserState>
       <Head>
+      <meta name="google-site-verification" content="i7GH2ZiL_DBRxCi09A91mRT6EfWvMC-hrsL12WBCjqU" />
         <meta property="og:site_name" content="nullcast" />
         <meta
           property="article:publisher"
