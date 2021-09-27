@@ -16,38 +16,9 @@ import Head from "next/head";
 export async function getServerSideProps(context) {
   try {
     const postId = context.params.postId;
-    let userId = "";
-    let token = "";
+    const response = await PostService.getPostById("", postId);
 
-    if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(
-        context.req.headers.cookie,
-        "userNullcast"
-      );
-      if (contextCookie) {
-        const cookie = JSON.parse(contextCookie);
-        userId = cookie.id;
-        token = cookie.accessToken;
-
-        const response = await PostService.getPostById(cookie, postId);
-        if (!response) {
-          return {
-            redirect: {
-              permanent: false,
-              destination: "/404"
-            }
-          };
-        }
-        return {
-          props: {
-            posts: response,
-            token: token,
-            userId: userId
-          }
-        };
-      }
-    } else {
-      // console.log("else");
+    if (!response) {
       return {
         redirect: {
           permanent: false,
@@ -55,6 +26,12 @@ export async function getServerSideProps(context) {
         }
       };
     }
+
+    return {
+      props: {
+        posts: response
+      }
+    };
   } catch (err) {
     console.log("Error => ", err);
     return {
@@ -78,8 +55,6 @@ export default function BlogListing(props) {
         primaryAuthor={primaryAuthor}
       />
       <BlogPost
-        userId={props.userId}
-        token={props.token}
         blog={props.posts}
         html={html}
       />
