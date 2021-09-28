@@ -3,17 +3,20 @@ const clientUrl = process.env.CLIENT_URL;
 const editorUrl = process.env.EDITOR_URL;
 const s3Url = process.env.BUCKET_URL;
 const serverUrl = process.env.SERVER_URL;
+const apiVerUrl = "api/v1";
 const authUrl = "/api/auth";
 const enrolUrl = "/api/enrol";
-const postUrl = "api/v1/post";
-const postsUrl = "api/v1/posts";
+const postUrl = `${apiVerUrl}/post`;
+const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
-const userUrl = "api/v1/user";
-const usersUrl = "api/v1/users";
+const loginUrl = `${apiVerUrl}/signin`;
+const signUpUrl = `${apiVerUrl}/user`;
+const userUrl = `${apiVerUrl}/user`;
+const usersUrl = `${apiVerUrl}/users`;
 const adminUrl = "api/admin";
-const tagUrl = "api/v1/tags";
+const tagUrl = `${apiVerUrl}/tags`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
@@ -24,6 +27,8 @@ const publishedPostsCountUrl = "api/posts/published/count";
 
 const configVars = {
   baseUrl,
+  loginUrl,
+  signUpUrl,
   clientUrl,
   s3Url,
   authUrl,

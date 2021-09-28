@@ -3,7 +3,9 @@ import {
   baseUrl,
   forgotPasswordUrl,
   resetPasswordUrl,
-  changePasswordUrl
+  changePasswordUrl,
+  loginUrl,
+  signUpUrl,
 } from "../config/config";
 
 async function sendEmail(email) {
@@ -16,6 +18,35 @@ async function sendEmail(email) {
     return data;
   } catch (err) {
     // console.log(err);
+    throw err;
+  }
+}
+
+async function signIn(email, password) {
+  const loginDetails = {
+    email: email,
+    password: password
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${loginUrl}`,loginDetails);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function signUp(email, password,fName,username) {
+  const signupData = {
+    full_name: fName,
+    email: email,
+    user_name: username,
+    password: password,
+    // updates: updates
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${signUpUrl}`,signupData);
+    return data;
+  } catch (err) {
     throw err;
   }
 }
@@ -60,7 +91,9 @@ async function changePassword(passwords, userCookie) {
 const AuthService = {
   sendEmail,
   resetPassword,
-  changePassword
+  changePassword,
+  signIn,
+  signUp,
 };
 
 module.exports = AuthService;
