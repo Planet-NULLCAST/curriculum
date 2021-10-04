@@ -35,7 +35,7 @@ export default function SectionAuthor({ primaryAuthor }) {
         </div>
         <div className={styles.widget}>
           <div className={styles.details}>
-            <AuthorDetails username={username} avatar={avatar} />
+            <AuthorDetails username={username} avatar={avatar} sectionAuthor />
 
             <div className={styles.stats}>
               <div className={styles.statsItem}>

@@ -48,6 +48,17 @@
             color: #F13E5D;
         }
     }
+    &__titleSection {
+        @apply text-2xl 2xl:text-3xl font-extrabold mb-1;
+        background-image: linear-gradient(#f13e5d, #f13e5d);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 0 1px;
+        transition: all ease 0.4s;
+        a:hover {
+            color: #f13e5d;
+        }
+    }
 
     &__position {
         @apply text-sm 2xl:text-xl;

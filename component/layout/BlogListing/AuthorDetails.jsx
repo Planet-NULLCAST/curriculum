@@ -2,7 +2,7 @@ import styles from "./AuthorDetails.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Details({ username, avatar }) {
+export default function Details({ username, avatar, sectionAuthor }) {
   return (
     <>
       <div className={styles.authorDetails}>
@@ -34,7 +34,13 @@ export default function Details({ username, avatar }) {
           </Link>
         </div>
         <div className={styles.authorDetails__text}>
-          <h4 className={styles.authorDetails__title}>
+          <h4
+            className={
+              sectionAuthor
+                ? styles.authorDetails__titleSection
+                : styles.authorDetails__title
+            }
+          >
             <Link href={`/u/${username}`}>
               <a>{username}</a>
             </Link>
