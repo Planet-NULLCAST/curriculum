@@ -15,7 +15,8 @@ const ImageCropper = ({
     trigger,
     image,
     handleSubmit,
-    closeTrigerred
+    closeTrigerred,
+    aspectRatio,
 })=>{
     const [cropper, setCropper] = useState();
     const getCropData = (close) => {
@@ -46,7 +47,7 @@ const ImageCropper = ({
               <Cropper
             style={{ height: 400, width: "100%" }}
             zoomTo={0.5}
-            aspectRatio={1}
+            aspectRatio={aspectRatio}
             preview=".img-preview"
             src={image}
             viewMode={1}
