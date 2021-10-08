@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>https://nullcast.dev/sitemap-user-profiles-1.xml</loc>
+    <lastmod>2021-10-08T06:07:53.635Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nullcast.dev/sitemap-posts-1.xml</loc>
+    <lastmod>2021-10-08T06:07:53.635Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nullcast.dev/sitemap-courses.xml</loc>
+    <lastmod>2021-10-08T06:07:53.635Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nullcast.dev/sitemap-common.xml</loc>
+    <lastmod>2021-10-08T06:07:53.635Z</lastmod>
+  </url>
+</urlset>
