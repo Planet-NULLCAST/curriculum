@@ -15,6 +15,7 @@ import PostService from "../../services/PostService";
 
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -59,7 +60,7 @@ export async function getServerSideProps(context) {
     };
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
-    console.log(err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       redirect: {
         permanent: false,
@@ -82,15 +83,19 @@ export default function Username({ userData, postsCount, posts, limit }) {
   };
 
   const getNewPosts = async (clickNo) => {
-    const responsePost = await PostService.getPublishedPostsByUserId(
-      userData._id,
-      limit,
-      clickNo
-    );
-
-    setNewBlogs((prevValue) => {
-      return [...prevValue, ...responsePost.posts];
-    });
+    try {
+      const responsePost = await PostService.getPublishedPostsByUserId(
+        userData._id,
+        limit,
+        clickNo
+      );
+  
+      setNewBlogs((prevValue) => {
+        return [...prevValue, ...responsePost.posts];
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   return (

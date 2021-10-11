@@ -3,6 +3,7 @@ import UserContext from "./userContext";
 import UserReducer from "./userReducer";
 import { SET_TESTS, SET_RUN, SET_PROGRESS, SET_TAGS } from "./types";
 import TagService from "../../services/TagService";
+import notify from "../../lib/notify";
 
 const UserState = ({ children }) => {
   const initialState = {
@@ -40,14 +41,18 @@ const UserState = ({ children }) => {
   };
 
   async function setTags() {
-    const res = await TagService.getTags();
-    console.log(res);
-    console.log("get tags response", res);
-    // setCurrentPost.tags(res);
-    dispatch({
-      type: SET_TAGS,
-      payload: res
-    });
+    try {
+      const res = await TagService.getTags();
+      console.log(res);
+      console.log("get tags response", res);
+      // setCurrentPost.tags(res);
+      dispatch({
+        type: SET_TAGS,
+        payload: res
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   }
 
   return (

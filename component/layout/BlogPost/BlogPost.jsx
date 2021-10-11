@@ -13,6 +13,7 @@ import { clientUrl } from "../../../config/config";
 
 import "highlight.js/styles/tomorrow-night-blue.css";
 import styles from "./BlogPost.module.scss";
+import notify from "../../../lib/notify";
 
 export default function BlogPost(props) {
   const createMarkup = (value) => {
@@ -63,7 +64,7 @@ export default function BlogPost(props) {
         return response;
       }
     } catch (err) {
-      return err;
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
 
@@ -72,7 +73,7 @@ export default function BlogPost(props) {
     if (props.userId != props.blog.primaryAuthor._id) {
       setVotes(value);
     }
-    !props.userId && notify("Please login for further actions");
+    !props.userId && notify("Please login for further actions", 'dark');
   };
 
   const [headings, setHeadings] = useState();
@@ -89,20 +90,6 @@ export default function BlogPost(props) {
     setHeadings(hTags);
     hljs.highlightAll();
   }, []);
-
-  //Function definition for toast
-  const notify = (err) => {
-    console.log(err);
-    toast.dark(err, {
-      position: "bottom-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  };
 
   return (
     <>

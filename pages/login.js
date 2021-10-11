@@ -12,6 +12,7 @@ import moment from "moment";
 import { signIn } from "../services/AuthService";
 
 import { getCookieValue } from "../lib/cookie";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
@@ -76,16 +77,6 @@ export default function Login({ referer }) {
     }
   }
 
-  const notify = (err) =>
-    toast.error(err.message, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
   async function handleClick(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -147,7 +138,7 @@ export default function Login({ referer }) {
           }
         } catch (err) {
           setIsLoading(false);
-          notify(err);
+          notify(err?.response?.data?.message ?? err?.message, 'error');
         }
       }
     } else {

@@ -14,6 +14,7 @@ import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
 import InfoPopup from "../modal/InfoPopup";
 import Modal from "../modal/Modal";
+import notify from "../../lib/notify";
 
 export default function WriteNav({
   saveToDraft,
@@ -76,18 +77,22 @@ export default function WriteNav({
    * @author akhilalekha
    */
   async function getSettingsTags() {
-    const res = await TagService.getTags();
-    // console.log("get tags response", res);
-    if (res && res.length) {
-      const resTagOptions = res.map((tag) => {
-        return {
-          label: `${tag.name.toUpperCase()}`,
-          value: `${tag.name}`
-        };
-      });
-      // setTagOptions;
-      // console.log({ resTagOptions });
-      setTagOptions(resTagOptions);
+    try {
+      const res = await TagService.getTags();
+      // console.log("get tags response", res);
+      if (res && res.length) {
+        const resTagOptions = res.map((tag) => {
+          return {
+            label: `${tag.name.toUpperCase()}`,
+            value: `${tag.name}`
+          };
+        });
+        // setTagOptions;
+        // console.log({ resTagOptions });
+        setTagOptions(resTagOptions);
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 
@@ -107,16 +112,19 @@ export default function WriteNav({
       })
       .map((fTag) => fTag.value);
     // console.log(newTag);
-
-    const res = await TagService.postTags(userCookie, newTag);
-    // console.log({ res });
-
-    setCurrentPost((prevValue) => {
-      return {
-        ...prevValue,
-        tags: e.map((i) => i.value)
-      };
-    });
+    try {
+      const res = await TagService.postTags(userCookie, newTag);
+      // console.log({ res });
+  
+      setCurrentPost((prevValue) => {
+        return {
+          ...prevValue,
+          tags: e.map((i) => i.value)
+        };
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   /**
@@ -205,15 +213,19 @@ export default function WriteNav({
       ContentType: imageFile.type
     };
     setLoading(true);
-    const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-    // console.log(s3ImageUrl);
-
-    setCurrentPost((prevValue) => {
-      return {
-        ...prevValue,
-        bannerImage: s3ImageUrl
-      };
-    });
+    try {
+      const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
+      // console.log(s3ImageUrl);
+  
+      setCurrentPost((prevValue) => {
+        return {
+          ...prevValue,
+          bannerImage: s3ImageUrl
+        };
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
     setLoading(false);
   };
 
@@ -238,37 +250,30 @@ export default function WriteNav({
    */
   async function deletePost() {
     // console.log({ currentPost });
-    const { msg, data } = await PostService.deletePostById(
-      userCookie,
-      currentPost._id
-    );
-    // console.log(msg);
-    notify("Post deleted successfully");
-    router.push({
-      pathname: "/posts",
-      query: {
-        pageNo: 1,
-        tag: "",
-        status: ""
-      }
-    });
+    try {
+      const { msg, data } = await PostService.deletePostById(
+        userCookie,
+        currentPost._id
+      );
+      // console.log(msg);
+      notify("Post deleted successfully");
+      router.push({
+        pathname: "/posts",
+        query: {
+          pageNo: 1,
+          tag: "",
+          status: ""
+        }
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   }
 
   const handleBackOption = () => {
     // console.log(previousUrl);
     router.push(previousUrl);
   };
-
-  const notify = (msg) =>
-    toast.success(msg, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
 
   const handlePublish = () => {
     const res = submitForReview();

@@ -3,6 +3,7 @@ import AuthorDetails from "../BlogListing/AuthorDetails";
 import styles from "./SectionAuthor.module.scss";
 import PostService from "../../../services/PostService";
 import { useEffect, useState } from "react";
+import notify from "../../../lib/notify";
 
 export default function SectionAuthor({ primaryAuthor }) {
   const { bio, username, avatar } = primaryAuthor;
@@ -10,11 +11,15 @@ export default function SectionAuthor({ primaryAuthor }) {
   const [count, setCount] = useState();
 
   const getPostsCountByUserId = async () => {
-    const res = await PostService.getPublishedPostsCountByUserId(
-      primaryAuthor._id
-    );
-    // console.log(count);
-    setCount(res.count);
+    try {
+      const res = await PostService.getPublishedPostsCountByUserId(
+        primaryAuthor._id
+      );
+      // console.log(count);
+      setCount(res.count);
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   useEffect(() => {

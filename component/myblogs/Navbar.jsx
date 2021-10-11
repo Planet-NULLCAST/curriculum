@@ -8,6 +8,7 @@ import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
+import notify from "../../lib/notify";
 
 export default function Navbar() {
   const cookies = new Cookies();
@@ -40,15 +41,20 @@ export default function Navbar() {
    * @author akhilalekha
    */
   async function getSettingsTags() {
-    const res = await TagService.getTags();
-    // console.log("get tags response", res);
-    let resTagOptions = res.map((tag) => {
-      return {
-        label: `${tag.name.toUpperCase()}`,
-        value: `${tag.name}`
-      };
-    });
-    // setTagOptions;
+    let resTagOptions = [];
+    try {
+      const res = await TagService.getTags();
+      // console.log("get tags response", res);
+      resTagOptions = res.map((tag) => {
+        return {
+          label: `${tag.name.toUpperCase()}`,
+          value: `${tag.name}`
+        };
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
+      // setTagOptions;
     const allOption = {
       label: "ALL TAGS",
       value: ""
@@ -89,7 +95,7 @@ export default function Navbar() {
         });
       }
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
 
@@ -106,19 +112,6 @@ export default function Navbar() {
       }
     };
     createPost(newPost);
-  };
-
-  const notify = (msg) => {
-    // console.log(msg);
-    toast.success(msg, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
   };
 
   return (

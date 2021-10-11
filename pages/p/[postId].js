@@ -7,6 +7,7 @@ import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import PostService from "../../services/PostService";
 import { getCookieValue } from "../../lib/cookie";
 import Head from "next/head";
+import notify from "../../lib/notify";
 
 // unsure on using getServerSideProps
 // if facing SEO issues refer
@@ -56,7 +57,7 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       props: {}
     };

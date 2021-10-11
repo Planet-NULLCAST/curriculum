@@ -10,6 +10,7 @@ import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import { getCookieValue } from "../../lib/cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.cookie);
@@ -96,7 +97,7 @@ export default function Posts() {
         };
       });
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 

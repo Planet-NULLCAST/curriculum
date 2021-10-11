@@ -19,6 +19,7 @@ import { enrollCourse } from "../services/CurriculamService"
 
 const axios = require("axios");
 import "highlight.js/styles/tomorrow-night-blue.css";
+import notify from "../../../lib/notify";
 
 hljs.registerLanguage("javascript", javascript);
 
@@ -63,21 +64,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           console.log(`👍 ${data}`);
         };
       } catch (err) {
-        notify(err.message);
+        notify(err?.response?.data?.message ?? err?.message, 'error');
       }
     }
-
-    const notify = (err) => {
-      toast.error(err.message, {
-        position: "bottom-center",
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
-    };
 
     let progress = JSON.parse(window.localStorage.getItem("progress"));
     if (!progress) progress = [];
