@@ -173,48 +173,40 @@ export default function SignUp({ referer }) {
             notify(err);
           }
 
-          // Getting token from cookie
-          const cookies = new Cookies();
-          const userToken = cookies.get("token");
-          if (userToken) {
-            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-            // let progress = JSON.parse(
-            //   window.localStorage.getItem("progress")
-            // ) || [{ courseName: "", completedChapter: [] }];
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}${enrolUrl}/progress`,
-            //   headers: {
-            //     "x-access-token": `${document.cookie}`
-            //   },
-            //   data: progress
-            // }).then((response) => {
-            //   // console.log(response);
-            // });
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}/api/progress/all`,
-            //   headers: {
-            //     "x-access-token": `${document.cookie}`
-            //   }
-            // })
-            //   .then((response) => {
-            //     window.localStorage.setItem(
-            //       "progress",
-            //       JSON.stringify(response.data)
-            //     );
-            //   })
-            //   .catch((err) => {
-            //     console.log(err.message);
-            //   });
-            if (referer) {
-              router.back();
-            } else {
-              router.push("/");
-            }
+          sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          if (referer) {
+            router.back();
           } else {
-            setIsLoading(false);
-            // notify(data);
+            router.push("/");
           }
         } else {
           setIsLoading(false);

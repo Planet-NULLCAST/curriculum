@@ -97,60 +97,53 @@ export default function Login({ referer }) {
       if (password && email) {
         try {
           const data = await signIn(email, password);
-          const cookies = new Cookies();
-          const userToken = cookies.get("token");
           const newDate = new Date(moment().add(30, "days")).toUTCString();
           const expires = `; expires=${newDate}`;
           const userData = data.user;
-          if (userToken) {
-            document.cookie = `userNullcast=${JSON.stringify(
-              userData
-            )}${expires}`;
-            localStorage.setItem("userNullcast", JSON.stringify(userData));
-            // console.log(document.cookie);
-  
-            // let progress = JSON.parse(
-            //   window.localStorage.getItem("progress")
-            // ) || [{ courseName: "", completedChapter: [] }];
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}${enrolUrl}/progress`,
-            //   headers: {
-            //     "x-access-token": `${data.accessToken}`
-            //   },
-            //   data: progress
-            // }).then((response) => {
-            //   // console.log(response);
-            // });
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}/api/progress/all`,
-            //   headers: {
-            //     "x-access-token": `${data.accessToken}`
-            //   }
-            // })
-            //   .then((response) => {
-            //     window.localStorage.setItem(
-            //       "progress",
-            //       JSON.stringify(response.data)
-            //     );
-            //   })
-            //   .catch((err) => {
-            //     console.log(err.message);
-            //   });
-            // if (referer) {
-            //   router.back();
-            // } else {
-            //   router.push("/");
-            // }
-            if (referer) {
-              router.back();
-            } else {
-              router.push("/");
-            }
+          document.cookie = `userNullcast=${JSON.stringify(
+            userData
+          )}${expires}`;
+          localStorage.setItem("userNullcast", JSON.stringify(userData));
+          // console.log(document.cookie);
+
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${data.accessToken}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${data.accessToken}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          // if (referer) {
+          //   router.back();
+          // } else {
+          //   router.push("/");
+          // }
+          if (referer) {
+            router.back();
           } else {
-            setIsLoading(false);
-            notify(data);
+            router.push("/");
           }
         } catch (err) {
           setIsLoading(false);
