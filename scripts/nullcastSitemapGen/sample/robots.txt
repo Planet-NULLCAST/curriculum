@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://nullcast.dev/
+
+# Sitemaps
+Sitemap: https://nullcast.dev/sitemap.xml
