@@ -3,6 +3,7 @@ import Head from "next/head";
 import AuthService from "../services/AuthService";
 import validatePassword from "../lib/validatePassword";
 import { useRouter } from "next/router";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   return {
@@ -69,10 +70,14 @@ export default function resetPassword({ query }) {
   }, []);
 
   const resetPassword = async (newPass) => {
-    const response = await AuthService.resetPassword(newPass, query.token);
-    console.log(response.status);
-    if (response.status === 201) {
-      router.push("/login");
+    try {
+      const response = await AuthService.resetPassword(newPass, query.token);
+      console.log(response.status);
+      if (response.status === 201) {
+        router.push("/login");
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
   const handleSubmit = (e) => {

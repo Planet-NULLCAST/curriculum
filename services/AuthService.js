@@ -1,4 +1,5 @@
 const axios = require("axios");
+import router from "next/router";
 import {
   baseUrl,
   forgotPasswordUrl,
@@ -6,6 +7,7 @@ import {
   changePasswordUrl,
   loginUrl,
   signUpUrl,
+  logoutUrl,
 } from "../config/config";
 
 async function sendEmail(email) {
@@ -61,8 +63,7 @@ async function resetPassword(password, token) {
     // console.log(response);
     return response;
   } catch (err) {
-    console.log(err);
-    return;
+    throw err;
   }
 }
 
@@ -84,7 +85,23 @@ async function changePassword(passwords, userCookie) {
     return data;
   } catch (err) {
     // console.log(err.response.data);
-    throw err.response.data;
+    throw err;
+  }
+}
+
+async function logout() {
+  // console.log("logout");
+  try {
+    await axios.post(`${logoutUrl}`, {});
+  } catch { }
+  window.localStorage.removeItem("progress");
+  sessionStorage.removeItem("userNullcast");
+  document.cookie = "userNullcast=''; Max-Age=0;";
+  // console.log(router);
+  if (router.pathname === "/posts" || router.pathname === "/posts/write") {
+    window.location = '/';
+  } else {
+    router.reload();
   }
 }
 
@@ -94,6 +111,7 @@ const AuthService = {
   changePassword,
   signIn,
   signUp,
+  logout,
 };
 
 module.exports = AuthService;

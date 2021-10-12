@@ -8,6 +8,7 @@ import PostService from "../services/PostService";
 import AdminNavbar from "../component/admin/AdminNavbar";
 import AdminBlogsList from "../component/admin/AdminBlogsList";
 import { getCookieValue } from "../lib/cookie";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -37,7 +38,7 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       redirect: {
         permanent: false,
@@ -90,7 +91,7 @@ const Admin = (props) => {
 
       setPostData({ posts, count });
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 

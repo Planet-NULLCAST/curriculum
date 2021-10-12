@@ -4,6 +4,7 @@ const axios = require("axios");
 import { toast } from "react-toastify";
 import { baseUrl } from "../../config/config";
 import Cookies from "universal-cookie";
+import notify from "../../lib/notify";
 
 export default function Runbutton({ editorVal, courseName, chapterName }) {
   const userState = useContext(UserContext);
@@ -13,19 +14,6 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
 
   let clicked = false;
   let flag = false;
-
-  const notify = (err) => {
-    console.log(err);
-    toast.dark(err, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  };
 
   const clickHandle = () => {
     clicked = true;
@@ -78,9 +66,9 @@ export default function Runbutton({ editorVal, courseName, chapterName }) {
           }
         }).then((response) => {
           if (response.data.entryAdded) {
-            notify("👍 Chapter Is Completed!");
+            notify("👍 Chapter Is Completed!", 'dark');
           } else {
-            notify(`👍 ${response.data}`);
+            notify(`👍 ${response.data}`, 'dark');
           }
         });
       }

@@ -6,32 +6,37 @@ import Head from "next/head";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
 import { useState,useEffect } from "react";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   const { params } = context;
   // console.log(params.tagName);
   const clickNo = 0;
-  const tagsArray = await TagService.getTags();
-  // console.log(tagsArray);
-  const foundTag = tagsArray.find((tag) => tag.name === params.tagName);
   // console.log(foundTag);
-  const { posts, count } = await PostService.getPostByTags(
-    params.tagName,
-    clickNo
-  );
-  // console.log(response);
-  if (!foundTag) {
-    return {
-      notFound: true
-    };
-  } else {
-    return {
-      props: {
-        posts: posts,
-        count: count,
-        params: params
-      }
-    };
+  try {
+    const tagsArray = await TagService.getTags();
+    // console.log(tagsArray);
+    const foundTag = tagsArray.find((tag) => tag.name === params.tagName);
+    const { posts, count } = await PostService.getPostByTags(
+      params.tagName,
+      clickNo
+    );
+    // console.log(response);
+    if (!foundTag) {
+      return {
+        notFound: true
+      };
+    } else {
+      return {
+        props: {
+          posts: posts,
+          count: count,
+          params: params
+        }
+      };
+    }
+  } catch (err) {
+    notify(err?.response?.data?.message ?? err?.message, 'error');
   }
 }
 
@@ -44,18 +49,26 @@ export default function TagName({ posts, params, count }) {
     getNewPosts(count);
   };
   useEffect(async () => {
-    const { posts, count } = await PostService.getPostByTags(
-      params.tagName,
-      0
-    );
-    setNewBlogs(posts)
+    try {
+      const { posts, count } = await PostService.getPostByTags(
+        params.tagName,
+        0
+      );
+      setNewBlogs(posts)
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   }, [params.tagName])
   const getNewPosts = async (clickNo) => {
-    const { posts, count } = await PostService.getPostByTags(name, clickNo);
-
-    setNewBlogs((prevValue) => {
-      return [...prevValue, ...posts];
-    });
+    try {
+      const { posts, count } = await PostService.getPostByTags(name, clickNo);
+  
+      setNewBlogs((prevValue) => {
+        return [...prevValue, ...posts];
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   return (

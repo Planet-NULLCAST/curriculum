@@ -11,11 +11,12 @@ import { signUp } from "../services/AuthService";
 
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
+import notify from "../lib/notify";
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "token")
+        getCookieValue(context.req.headers.cookie, "userNullcast")
       );
       if (cookie) {
         return {
@@ -50,16 +51,6 @@ export default function SignUp({ referer }) {
   useEffect(() => {
     document.getElementById("fullName").focus();
   }, []);
-  const notify = (err) =>
-    toast.error(err.message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
   const termsClick = (e) => {
     setTerms((prevState) => {
       return !prevState;
@@ -170,51 +161,43 @@ export default function SignUp({ referer }) {
             const data = await signUp(email, password, fName, username);
             router.push("/login");
           } catch (err) {
-            notify(err);
+            notify(err?.response?.data?.message ?? err?.message, 'error');
           }
 
-          // Getting token from cookie
-          const cookies = new Cookies();
-          const userToken = cookies.get("token");
-          if (userToken) {
-            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-            // let progress = JSON.parse(
-            //   window.localStorage.getItem("progress")
-            // ) || [{ courseName: "", completedChapter: [] }];
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}${enrolUrl}/progress`,
-            //   headers: {
-            //     "x-access-token": `${document.cookie}`
-            //   },
-            //   data: progress
-            // }).then((response) => {
-            //   // console.log(response);
-            // });
-            // axios({
-            //   method: "post",
-            //   url: `${baseUrl}/api/progress/all`,
-            //   headers: {
-            //     "x-access-token": `${document.cookie}`
-            //   }
-            // })
-            //   .then((response) => {
-            //     window.localStorage.setItem(
-            //       "progress",
-            //       JSON.stringify(response.data)
-            //     );
-            //   })
-            //   .catch((err) => {
-            //     console.log(err.message);
-            //   });
-            if (referer) {
-              router.back();
-            } else {
-              router.push("/");
-            }
+          sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          if (referer) {
+            router.back();
           } else {
-            setIsLoading(false);
-            // notify(data);
+            router.push("/");
           }
         } else {
           setIsLoading(false);

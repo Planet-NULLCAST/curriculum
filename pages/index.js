@@ -11,6 +11,7 @@ import "../styles/Home.module.scss";
 import PostService from "../services/PostService";
 import UserService from "../services/UserService";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -36,7 +37,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return { props: { blog: [] } };
   }
 }

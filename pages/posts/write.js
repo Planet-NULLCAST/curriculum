@@ -9,6 +9,7 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import PostService from "../../services/PostService";
 import { editorUrl } from "../../config/config";
 import { getCookieValue } from "../../lib/cookie";
+import notify from "../../lib/notify";
 
 const TARGET = editorUrl;
 
@@ -132,21 +133,25 @@ export default function Write({
   }, [post_Id]);
 
   async function getPostById(id) {
-    const { data: post } = await PostService.getPostById(userCookie, id);
-    console.log("get post response", post);
-    const resPost = {
-      mobiledoc: post.mobiledoc,
-      title: post.title
-    };
-    setPost(post);
-    // ---- to show the post in iframe
-    iframeRef.current.contentWindow.postMessage(
-      {
-        msg: "providePost",
-        post: resPost
-      },
-      TARGET
-    );
+    try {
+      const { data: post } = await PostService.getPostById(userCookie, id);
+      console.log("get post response", post);
+      const resPost = {
+        mobiledoc: post.mobiledoc,
+        title: post.title
+      };
+      setPost(post);
+      // ---- to show the post in iframe
+      iframeRef.current.contentWindow.postMessage(
+        {
+          msg: "providePost",
+          post: resPost
+        },
+        TARGET
+      );
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   }
 
   async function updatePostById(updateData, newPostId) {
@@ -157,7 +162,7 @@ export default function Write({
       //   notify(msg);
       // }
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 
@@ -201,7 +206,7 @@ export default function Write({
         return msg;
       }
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 
@@ -210,17 +215,6 @@ export default function Write({
       updatePostById(settingsData, postId);
     }
   };
-
-  const notify = (msg) =>
-    toast(msg, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
 
   return (
     <>

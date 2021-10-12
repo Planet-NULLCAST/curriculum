@@ -6,16 +6,20 @@ async function enrollCourse(courseName, chapterName) {
   let usercookie = cookies.get("userNullcast");
 
   if (usercookie) {
-    const { data } = await axios.post(
-      `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
-      null,
-      {
-        headers: {
-          "x-access-token": `${usercookie.accesToken}`
+    try {
+      const { data } = await axios.post(
+        `${baseUrl}/api/enrol/${courseName}/${chapterName}`,
+        null,
+        {
+          headers: {
+            "x-access-token": `${usercookie.accesToken}`
+          }
         }
-      }
-    );
-    return data;
+      );
+      return data;
+    } catch (err) {
+      throw err;
+    }
   }
 }
 

@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import AuthService from "../services/AuthService";
 import validateEmail from "../lib/validateEmail";
+import notify from "../lib/notify";
 
 export default function forgotPassword() {
   const [isValidEmail, setIsValidEmail] = useState();
@@ -13,10 +14,10 @@ export default function forgotPassword() {
     try {
       const { message } = await AuthService.sendEmail(email);
       // console.log(message);
-      notify(message);
+      notify(message, 'dark');
     } catch (err) {
       // console.log(err.response.data.message);
-      notify(err.response.data.message);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
 
@@ -31,18 +32,6 @@ export default function forgotPassword() {
     }
   };
 
-  const notify = (msg) => {
-    // console.log(msg);
-    toast.dark(msg, {
-      position: "bottom-center",
-      autoClose: false,
-      hideProgressBar: true,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  };
   return (
     <div className="h-screen flex flex-col items-center justify-center">
       <Head>
