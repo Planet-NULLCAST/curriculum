@@ -335,6 +335,7 @@ export default function Settings({ profileData, _skills }) {
                   <figure>
                     <ImageCropper
                       image={image}
+                      aspectRatio={1}
                       closeTrigerred={closeTrigerred}
                       trigger={
                         <input

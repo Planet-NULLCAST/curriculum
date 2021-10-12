@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ImageCropper from "../../component/popup/ImageCropper";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
@@ -28,6 +29,7 @@ export default function WriteNav({
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
   const [openPopup, setOpenPopup] = useState(false);
+  const [image, setImage] = useState("");
 
   const router = useRouter();
 
@@ -189,14 +191,15 @@ export default function WriteNav({
    * @param e handle change event for file upload field
    * @author akhilalekha
    */
-  const handleImageUpload = async (e) => {
+   const handleImageUpload = async (image) => {
     // console.log(e.target.files[0]);
     // const imageUrl = URL.createObjectURL(e.target.files[0]);
     // console.log(imageUrl);
     // setImageSrc(imageUrl);
 
-    console.log(e.target.files[0]);
-    const imageFile = e.target.files[0] || "";
+    // console.log(e.target.files[0]);
+    // const imageFile = e.target.files[0] || "";
+    const imageFile = image;
     const imageData = {
       stage: "dev",
       fileName: imageFile.name,
@@ -227,7 +230,9 @@ export default function WriteNav({
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
-        bannerImage: ""
+        bannerImage: "",
+        imageUrl: "",
+        image: "",
       };
     });
   };
@@ -279,6 +284,23 @@ export default function WriteNav({
   };
   const handlePopup = () => {
     setOpenPopup(!openPopup);
+  };
+
+  const handleImage = (e) => {
+    e.preventDefault();
+    if (e.target.files.length) {
+      let files;
+      if (e.dataTransfer) {
+        files = e.dataTransfer.files;
+      } else if (e.target) {
+        files = e.target.files;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+    }
   };
 
   return (
@@ -404,13 +426,20 @@ export default function WriteNav({
                         </div>
                       ) : (
                         <div>
-                          <input
-                            type="file"
-                            className="cursor-pointer block opacity-0 w-full h-full z-50 absolute"
-                            name="imageUpload"
-                            onChange={handleImageUpload}
-                            ref={imgRef}
-                            // value={imageSrc}
+                           <ImageCropper
+                            image={image}
+                            aspectRatio={2}
+                            trigger={
+                              <input
+                                type="file"
+                                className="cursor-pointer block opacity-0 w-full h-full z-50 absolute"
+                                name="imageUpload"
+                                onInput={handleImage}
+                                ref={imgRef}
+                                // value={imageSrc}
+                              />
+                            }
+                            handleSubmit={handleImageUpload}
                           />
 
                           <div className="absolute cursor-pointer top-0 w-full h-full bg-gray-100 flex justify-center items-center z-40">

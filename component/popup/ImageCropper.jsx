@@ -14,6 +14,7 @@ import { useState, } from "react";
 const ImageCropper = ({
     trigger,
     image,
+    aspectRatio,
     handleSubmit,
     closeTrigerred
 })=>{
@@ -49,6 +50,7 @@ const ImageCropper = ({
             aspectRatio={1}
             preview=".img-preview"
             src={image}
+            aspectRatio={aspectRatio}
             viewMode={1}
             minCropBoxHeight={10}
             minCropBoxWidth={10}
