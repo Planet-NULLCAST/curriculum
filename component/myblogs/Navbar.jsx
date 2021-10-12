@@ -95,6 +95,7 @@ export default function Navbar() {
 
   const handleAddNewPost = () => {
     const newPost = {
+      html: '',
       title: "[Untitled]",
       mobiledoc: {
         version: "0.3.1",

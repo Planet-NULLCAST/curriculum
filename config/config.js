@@ -9,6 +9,7 @@ const enrolUrl = "/api/enrol";
 const postUrl = `${apiVerUrl}/post`;
 const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
+const postUser = `${apiVerUrl}/posts-user`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -27,6 +28,7 @@ const publishedPostsCountUrl = "api/posts/published/count";
 
 const configVars = {
   baseUrl,
+  postUser,
   loginUrl,
   signUpUrl,
   clientUrl,

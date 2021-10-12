@@ -1,5 +1,5 @@
 const axios = require("axios");
-import { baseUrl, usersUrl } from "../config/config";
+import { baseUrl, usersUrl, userUrl } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
 async function getLatestUsers(reqParams) {
@@ -25,7 +25,7 @@ async function getUserByUsername(username) {
 
   try {
     const { data } = await axios.get(
-      `${url}/${userUrl}/getUserByUsername/${username}`
+      `${baseUrl}/${userUrl}/${username}`
     );
     return data;
   } catch (err) {

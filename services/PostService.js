@@ -5,6 +5,7 @@ import {
   postUrl,
   postsUrl,
   s3Url,
+  postUser,
   userUrl,
   changeStatusUrl,
   tagUrl,
@@ -236,11 +237,9 @@ async function getPostsByQuery(query, clickNo) {
  * @returns {Promise}
  */
 async function getPublishedPostsByUserId(userId, limit, clickNo) {
-  // console.log({ userId });
   const url = getUrl();
-
   try {
-    const { data } = await axios.get(`${url}/${publishedPostsUrl}/${userId}`, {
+    const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`, {
       params: {
         limit: limit,
         clickNo: clickNo
