@@ -17,8 +17,8 @@
         
         img {
             @apply  m-auto;
-            width: 80%;
-            height: 50vh;
+            width: 1200px;
+            height: 637px;
         }
 
     }
@@ -31,13 +31,14 @@
 .author {
     @apply md:absolute bottom-0 lg:bottom-auto lg:top-1/2 mx-auto mt-10;
     background: #242424;
-    right: 10%;
+    right: 5%;
     color: #AFAFAF;
     width: min(100%, 420px);
     @screen md {
         @apply mt-0 bottom-auto top-1/2;
         width: min(300px, 20vw);
         transform: translateY(-50%);
+        right: 0%;
     }
     @screen xl {
         width: min(350px, 20vw);
