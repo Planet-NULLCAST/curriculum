@@ -35,7 +35,7 @@ export default function Profile({ onLogout, username }) {
         </div>
         <ul>
           <li>
-            <a href={`/u/${userCookie.username}`}>
+            <a href={`/u/${userCookie.user_name}`}>
               <button className="linkUnderline w-full font-semibold">
                 Profile
                 <svg
