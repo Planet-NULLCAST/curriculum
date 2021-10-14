@@ -16,7 +16,9 @@
     figure {
         
         img {
-            @apply w-full m-auto;
+          @apply  m-auto;
+          width: 1200px;
+          height: 637px;
         }
 
     }
@@ -27,13 +29,15 @@
     max-width: 1700px;
 }
 .author {
-    @apply md:absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 mx-auto mt-10;
+    @apply md:absolute bottom-0 lg:bottom-auto lg:top-1/2 mx-auto mt-10;
     background: #242424;
     color: #AFAFAF;
+    right: 5%;
     width: min(100%, 420px);
     @screen md {
         @apply mt-0 bottom-auto top-1/2;
         width: min(300px, 35vw);
+        right: 0%;
         transform: translateY(-50%);
     }
     @screen xl {
