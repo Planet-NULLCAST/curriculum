@@ -8,6 +8,7 @@ import WhatsNewPosts from "../component/layout/WhatsNew/WhatsNewPosts";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import PostService from "../services/PostService";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -26,7 +27,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       redirect: {
         permanent: false,

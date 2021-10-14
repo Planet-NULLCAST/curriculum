@@ -7,6 +7,7 @@ import Head from "next/head";
 import PostService from "../services/PostService";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -50,7 +51,7 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       props: {
         posts: [],
@@ -96,12 +97,16 @@ export default function Search({
 
   const getNewPosts = async (query, clickNo) => {
     // console.log({ query });
-    const { msg, posts } = await PostService.getPostsByQuery(query, clickNo);
-    // console.log(posts);
-
-    setNewBlogs((prevValue) => {
-      return [...prevValue, ...posts];
-    });
+    try {
+      const { msg, posts } = await PostService.getPostsByQuery(query, clickNo);
+      // console.log(posts);
+  
+      setNewBlogs((prevValue) => {
+        return [...prevValue, ...posts];
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   const handleSearch = (e) => {

@@ -15,6 +15,7 @@ import PostService from "../../services/PostService";
 
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {

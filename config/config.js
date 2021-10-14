@@ -25,6 +25,7 @@ const resetPasswordUrl = "api/auth/reset-password-confirmation";
 const changePasswordUrl = "api/auth/change-password";
 const publishedPostsUrl = "api/posts/published";
 const publishedPostsCountUrl = "api/posts/published/count";
+const logoutUrl = `${apiVerUrl}/logout`;
 
 const configVars = {
   baseUrl,
@@ -52,7 +53,8 @@ const configVars = {
   changePasswordUrl,
   skillUrl,
   publishedPostsUrl,
-  publishedPostsCountUrl
+  publishedPostsCountUrl,
+  logoutUrl,
 };
 
 module.exports = configVars;

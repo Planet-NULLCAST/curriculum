@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import PostService from "../../../services/PostService"
-
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
