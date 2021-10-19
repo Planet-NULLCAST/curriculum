@@ -150,7 +150,6 @@ export default function BlogListing({ blog, count, limit }) {
           There's no published blogs yet!
         </div>
       )}
-
       <SectionSwag />
       <SiteFooter />
     </div>
