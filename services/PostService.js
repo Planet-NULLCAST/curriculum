@@ -6,12 +6,11 @@ import {
   postsUrl,
   s3Url,
   postUser,
-  userUrl,
+  postBySlug,
   changeStatusUrl,
   tagUrl,
   adminUrl,
   searchUrl,
-  publishedPostsUrl,
   publishedPostsCountUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
@@ -29,11 +28,9 @@ async function getPostsByUserId(reqData) {
 }
 
 async function getPostById(postId) {
-  let url = getUrl();
-
   try {
     // console.log(postId);
-    const { data } = await axios.get(`${url}/${postUrl}/${postId}`);
+    const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -42,10 +39,8 @@ async function getPostById(postId) {
 }
 
 async function getPostBySlug(slug) {
-  let url = getUrl();
-
   try {
-    const response = await axios.get(`${url}/${postUrl}/blog/${slug}`);
+    const response = await axios.get(`${baseUrl}/${postBySlug}/${slug}`);
     return response;
   } catch (err) {
     console.log(err);
@@ -101,7 +96,7 @@ async function adminGetLatestPosts(reqParams) {
 
 async function updatePostById(post, postId) {
   try {
-    const { data } = await axios.put(`${postUrl}/${postId}`, post);
+    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, post);
     return data;
   } catch (err) {
     console.log(err);
@@ -166,13 +161,12 @@ async function changePostStatus(userCookie, postId, statusUpdate) {
 }
 
 async function getPostByTags(tagName, clickNo) {
-  let url = getUrl();
 
   const item = {
     clickNo: clickNo
   };
   try {
-    const { data } = await axios.post(`${url}/${tagUrl}/${tagName}`, item);
+    const { data } = await axios.post(`${baseUrl}/${postUrl}/${tagName}`, item);
     // console.log(data);
     return data;
   } catch (err) {
