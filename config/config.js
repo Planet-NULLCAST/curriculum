@@ -7,6 +7,7 @@ const apiVerUrl = "api/v1";
 const authUrl = "/api/auth";
 const enrolUrl = "/api/enrol";
 const postUrl = `${apiVerUrl}/post`;
+const postBySlug = `${apiVerUrl}/post-by-slug`;
 const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-user`;
@@ -37,6 +38,7 @@ const configVars = {
   authUrl,
   enrolUrl,
   postUrl,
+  postBySlug,
   postsUrl,
   allPostsUrl,
   changeStatusUrl,
