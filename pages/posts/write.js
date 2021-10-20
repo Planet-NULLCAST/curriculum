@@ -134,7 +134,7 @@ export default function Write({
 
   async function getPostById(id) {
     try {
-      const { data: post } = await PostService.getPostById(userCookie, id);
+      const { data: post } = await PostService.getPostById(id);
       console.log("get post response", post);
       const resPost = {
         mobiledoc: post.mobiledoc,
