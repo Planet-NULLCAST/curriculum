@@ -70,6 +70,11 @@ let courses = [
         chapterId: 13,
         chapterUrl: "arrow-functions",
         chapterName: "Arrow Functions"
+      },
+      {
+        chapterId: 14,
+        chapterUrl: "foreach-map-filter",
+        chapterName: "Foreach vs Map vs Filter"
       }
     ]
   },
