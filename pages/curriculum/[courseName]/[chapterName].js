@@ -180,7 +180,7 @@ const routerClick = (courseName, chapterEntry, e) => {
 
 return (
   <div>
-    <Head >
+    <Head>
       <title>{chapterData.subheading} | Curriculum</title>
     </Head>
     <SiteHeader />
