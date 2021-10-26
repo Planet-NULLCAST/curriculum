@@ -5,7 +5,6 @@ import Head from "next/head";
 import Cookies from "universal-cookie";
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
-
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
 import { courses } from "../../../courses/meta";
