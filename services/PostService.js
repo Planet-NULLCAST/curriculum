@@ -332,8 +332,13 @@ async function getPostsByMultipleTags(tags, clickNo) {
       tags: tags,
       clickNo: clickNo
     }});
-    // console.log(data);
+    
+
+    console.log("Data", data);
+    
     return data;
+
+
   } catch (err) {
     console.log(err);
     throw err;

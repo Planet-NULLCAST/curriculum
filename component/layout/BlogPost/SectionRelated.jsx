@@ -5,7 +5,7 @@ import moment from "moment";
 import styles from "./SectionRelated.module.scss";
 
 export default function SectionRelated({ title, posts }) {
-  posts.splice(3)
+
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
       <div className="container container--post">
@@ -20,7 +20,7 @@ export default function SectionRelated({ title, posts }) {
           </span>
         </div>
         <div className={styles.relatedList}>
-          {posts.length > 0 ? (
+          {posts?.length > 0 ? (
             posts.map((post) => (
               <div className={styles.relatedItem} key={post._id}>
                 <figure>

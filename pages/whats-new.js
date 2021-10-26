@@ -27,16 +27,16 @@ export async function getServerSideProps(context) {
     };
   } catch (err) {
     console.log("Error => ", err);
+
     return {
-      redirect: {
-        permanent: false,
-        destination: "/404"
+      props : {
+        blogs: []
       }
-    };
+    }
   }
 }
 
-export default function whatsNew(props) {
+export default function whatsNew({blogs}) {
   return (
     <>
       <Head>
@@ -44,9 +44,10 @@ export default function whatsNew(props) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      <WhatsNewPosts blogs={props.blogs} />
+      {blogs?.length > 0 ? <WhatsNewPosts blogs={props.blogs} /> : null}
       <SectionSwag />
       <SiteFooter />
     </>
   );
 }
+

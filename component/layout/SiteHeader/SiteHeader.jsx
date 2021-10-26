@@ -65,10 +65,7 @@ export default function HomeSpotlight() {
       router.reload();
     }
   }
-  // const handleDropDown = () => {
-  //   // console.log("clicked");
-  //   setDropDown(!dropdown);
-  // };
+
   return (
     <header
       className={`${styles.header} ${menu ? "menu-open" : " "} w-full`}
