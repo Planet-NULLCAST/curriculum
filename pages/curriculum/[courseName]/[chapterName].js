@@ -48,6 +48,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   function handleToggle() {
     setToggle(!toggle);
   }
+  function onOutsideClick() {
+    setToggle(false);
+  }
   const router = useRouter();
   const { testCase, contentOnly } = chapterData;
   const cookies = new Cookies();
@@ -178,12 +181,12 @@ const routerClick = (courseName, chapterEntry, e) => {
 
 return (
   <div>
-    <Head>
+    <Head >
       <title>{chapterData.subheading} | Curriculum</title>
     </Head>
     <SiteHeader />
     <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
-    <div
+    <div onClick={onOutsideClick}
       className={`bg-gray-50 flex flex-row justify-center`}
       style={{ height: "calc(100vh - 107px)" }}
     >
@@ -224,7 +227,7 @@ return (
           onClick={handleToggle}
           className="h-6 w-6 cursor-pointer ml-4 inline-block m-2"
         />
-        <div className="rounded-md bg-gray-600 hidden md:inline-block w-60 lg:w-80 mx-2">
+        <div onClick={onOutsideClick} className="rounded-md bg-gray-600 hidden md:inline-block w-60 lg:w-80 mx-2">
           <div
             className="mt-0 bg-green-600 py-1 rounded-full"
             style={{ width: `${progressBar}%` }}
@@ -235,7 +238,9 @@ return (
         </div>
       </div>
 
-      <div className="flex flex-row w-1/2 justify-end items-center">
+      <div 
+      onClick={onOutsideClick}
+        className="flex flex-row w-1/2 justify-end items-center">
         <div className="flex flex-row justify-start items-center ml-4">
           <a
             className={`text-white cursor-pointer`}
