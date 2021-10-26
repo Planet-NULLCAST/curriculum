@@ -91,6 +91,14 @@ export default function Login({ referer }) {
       progress: undefined
     });
   const handleClick = (e) => {
+    if (!document.querySelector("#password").value) {
+      setValidPassword(false);
+      return;
+    }
+    if (!document.querySelector("#email").value) {
+      setEmailValid(false);
+      return;
+    }
     e.preventDefault();
     setIsLoading(true);
     // console.log(e.target);
