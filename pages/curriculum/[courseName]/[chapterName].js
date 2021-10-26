@@ -14,8 +14,7 @@ import Output from "../../../component/layout/Output/Output";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import UserState from "../../../context/user/userContext";
-import { enrollCourse } from "../services/CurriculamService"
-
+import { enrollCourse } from "../../../services/CurriculamService";
 
 const axios = require("axios");
 import "highlight.js/styles/tomorrow-night-blue.css";
@@ -54,7 +53,7 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
 
-  const clickHandle = (courseName, chapterName) => {
+  const clickHandle = async (courseName, chapterName) => {
     if (contentOnly) {
       try {
         const data = await enrollCourse(courseName, chapterName)
@@ -97,7 +96,6 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
     window.localStorage.setItem("progress", JSON.stringify(progress));
     userState.setRun(true);
   }
-};
 
 const [progressBar, setProgressBar] = useState(0);
 
@@ -323,4 +321,4 @@ return (
     </div>
   </div>
 );
-}
+};
