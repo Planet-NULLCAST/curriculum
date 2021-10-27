@@ -49,7 +49,7 @@ export default function SignUp({ referer }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.getElementById("fullName").focus();
+    //document.getElementById("fullName").focus();
   }, []);
   const termsClick = (e) => {
     setTerms((prevState) => {

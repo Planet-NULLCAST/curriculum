@@ -49,7 +49,7 @@ export default function Login({ referer }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.getElementById("email").focus();
+    //document.getElementById("email").focus();
   }, []);
 
   const eyeClick = (e) => {
