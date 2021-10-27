@@ -460,7 +460,7 @@ export default function SignUp({ referer }) {
                           >
                             I agree to the{" "}
                             <a href="#" className="text-white cursor-pointer underline">
-                              terms and conditions
+                              Terms and Conditions
                             </a>
                           </label>
                         </div>
