@@ -77,16 +77,16 @@ export default function forgotPassword() {
                 <h1 className="text-white font-bold text-2xl leading-10">
                   Forgot Password ?
                 </h1>
-                <p className={`text-white mt-2 text-sm font-bold mb-3`}>
+                {/* <p className={`text-white mt-2 text-sm font-bold mb-3`}>
                   Enter Your Mail id
-                </p>
+                </p> */}
                 <div className="container py-2 px-0-imp">
                   <form>
                     <div className="mb-4 flex flex-col">
                       <label
                         className={`text-white mt-2 mb-1 font-semibold text-sm`}
                       >
-                        Email
+                        Enter Your Mail id
                       </label>
                       <input
                         ref={emailRef}
