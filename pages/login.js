@@ -78,6 +78,14 @@ export default function Login({ referer }) {
   }
 
   async function handleClick(e) {
+    if (!document.querySelector("#password").value) {
+      setValidPassword(false);
+      return;
+    }
+    if (!document.querySelector("#email").value) {
+      setEmailValid(false);
+      return;
+    }
     e.preventDefault();
     setIsLoading(true);
     // console.log(e.target);

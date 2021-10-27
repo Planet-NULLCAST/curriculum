@@ -154,17 +154,20 @@ export default function SignUp({ referer }) {
     const password = e.target.password.value;
     const updates = e.target.updates.value;
 
+    if (!email) {
+      setEmailValid(false);
+    }
+
     if (validEmail) {
       if (fName && password && email && username && terms) {
-        if (password && email) {
           try {
             const data = await signUp(email, password, fName, username);
             router.push("/login");
+            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
           } catch (err) {
             notify(err?.response?.data?.message ?? err?.message, 'error');
           }
 
-          sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
           // let progress = JSON.parse(
           //   window.localStorage.getItem("progress")
           // ) || [{ courseName: "", completedChapter: [] }];
@@ -199,7 +202,7 @@ export default function SignUp({ referer }) {
           } else {
             router.push("/");
           }
-        } else {
+      } else {
           setIsLoading(false);
           if (!fName) {
             setValidName("empty");
@@ -215,9 +218,7 @@ export default function SignUp({ referer }) {
           }
           if (!terms) {
             setTermsValid(false);
-          }
         }
-      } else {
         // setIsLoading(false);
       }
     }
