@@ -450,7 +450,6 @@ export default function SignUp({ referer }) {
                             id="terms"
                             name="terms"
                             value="terms"
-                            className="cursor-pointer"
                             onClick={(e) => {
                               termsClick(e);
                               setTermsValid(e.target.checked);
@@ -458,11 +457,11 @@ export default function SignUp({ referer }) {
                           />
                           <label
                             htmlFor="terms"
-                            className="ml-2 cursor-pointer text-white"
+                            className="ml-2 text-white"
                           >
                             I agree to the{" "}
-                            <a href="#" className="text-white underline">
-                              terms and conditions
+                            <a href="#" className="text-white cursor-pointer underline">
+                              Terms and Conditions
                             </a>
                           </label>
                         </div>
@@ -472,11 +471,10 @@ export default function SignUp({ referer }) {
                             id="updates"
                             name="updates"
                             value="updates"
-                            className="cursor-pointer"
                           />
                           <label
                             htmlFor="updates"
-                            className="ml-2 cursor-pointer text-white"
+                            className="ml-2 text-white"
                           >
                             Send me latest updates
                           </label>
