@@ -88,10 +88,10 @@ And all these things will comes togehter and make the javascript run.
 ```js
 console.log("first");
 const greet = (name) => {
-  setTimeout(() => console.log(`Hello! ${name}`));
+  setTimeout(() => console.log(`Hello! ${name}`), 1500);
 };
 fetch(`https://api-getUserData.com`).then(() => {
   console.log("got the response from API");
-});
+}); //consider the response came after 500ms
 console.log("second");
 ```
