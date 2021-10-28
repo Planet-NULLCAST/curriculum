@@ -1,6 +1,6 @@
 ---
   title: "Introduction To Javascript"
-  subheading: "Asyncronous Behaviour and Event Loop"
+  subheading: "Asynchronous Behaviour and Event Loop"
   next : ""
   prev: "Arrow Function"
   testCase : []
