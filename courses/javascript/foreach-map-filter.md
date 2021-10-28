@@ -7,32 +7,32 @@ contentOnly: false
 testCase: [
 			{
 				id: 1,
-				case: ["const test = [1,2,3,4,5];", "const test = [1,2,3,4,5]"],
-				hint: "test should be declared as const and should contain values from 1 to 5",
+				case: ["const test = [1, 2, 3, 4, 5];", "const test = [1, 2, 3, 4, 5]","const test = [1,2,3,4,5];", "const test = [1,2,3,4,5]"],
+				hint: "Try declaring type of 'test' as const and try including values from 1 to 5",
 				isCorrect: false
 			},
 			{
 				id: 2,
-				case: ['test.forEach((item) => console.log(item));',"test.forEach((item) => console.log(item))"],
-				hint: "Use forEach method. Arrow function with 'item' as argument should be used and should print the value on console",
+				case: ["test.forEach((item) => console.log(item));","test.forEach((item) => console.log(item))","test.forEach(item => console.log(item));","test.forEach(item => console.log(item))"],
+				hint: "Use forEach method. Try using arrow function with 'item' as argument and print the values on console",
 				isCorrect: false
 			},
 			{
 				id: 3,
-				case: ["var res = test.map((item) => item*4);", "var res = test.map((item) => item*4)", "var res = test.map((item) => item * 4);", "var res = test.map((item) => item * 4)"],
-				hint: "Use map method. Arrow function should have item as argument, each element should be multiplied by 4 and the result should store in var 'res'.",
+				case: ["var res = test.map((item) => item*4);", "var res = test.map((item) => item*4)", "var res = test.map((item) => item * 4);", "var res = test.map((item) => item * 4)","var res = test.map(item => item*4);", "var res = test.map(item => item*4)", "var res = test.map(item => item * 4);", "var res = test.map(item => item * 4)"],
+				hint: "Try creating a variable named 'res' of type 'var'. Do use map method on 'test'. Try using arrow function with 'item' as argument. Do multiply each element by 4 and store the result in 'res'.",
 				isCorrect: false
 			},
 			{
 				id: 4,
-				case: ["res.filter((item) => item>10);", "res.filter((item) => item>10)", "res.filter((item) => item > 10);", "res.filter((item) => item > 10)"],
-				hint: "Use filter method. Array in the new variable 'res' should be filtered to return elements which are greater than 10",
+				case: ["res.filter((item) => item>10);", "res.filter((item) => item>10)", "res.filter((item) => item > 10);", "res.filter((item) => item > 10)","res.filter(item => item>10);", "res.filter(item => item>10)", "res.filter(item => item > 10);", "res.filter(item => item > 10)"],
+				hint: "Try using filter method on 'res'. Try using arrow function with 'item' as argument and filter elements which are greater than 10",
 				isCorrect: false
 			}
 		]
 ---
 
-In the [Prototypes](/curriculum/javascript/prototypes) session, you've already learned that everything in Javascript revolves around Objects and looked into some of the `Prototypes of Array` provided by Javascript.
+In the [Prototypes](/curriculum/javascript/prototypes) session, you've already learned that everything in Javascript revolves around Objects and looked into some of the Prototypes of `Array` provided by Javascript.
 
 <br>In this session, we'll dive more deeply into some of the most commonly used Array Prototypes(Methods).
 
@@ -40,7 +40,7 @@ In the [Prototypes](/curriculum/javascript/prototypes) session, you've already l
 
 ### .forEach( )
 
-`Foreach` takes a callback function as an argument and execute the function for each individual element in an array.
+`forEach` takes a callback function as an argument and execute the function for each individual element in an array.
 
 *Example : Print a text in console with each elements of an array*
 
@@ -65,7 +65,7 @@ sample.forEach((elm) => console.log("I got " + elm));
 
 ### .map( )
 
-`Map` takes a callback function as an argument and execute the function for each element on the array and returns an entirely **New Array** populated with the results of function execution.
+`map` takes a callback function as an argument and execute the function for each element on the array and returns an entirely **New Array** populated with the results of function execution.
 
 *Example : Multiply all elements by 2 and return the result in a new array*
 
@@ -75,7 +75,7 @@ sample.map((el) => el*2);  // [2,4,6]
 
 ### .filter( )
 
-`Filter` takes a callback function as an argument, checks a certain condition on every element in an array to see if it meets the criteria and returns an entirely **New Array** populated with the results.
+`filter` takes a callback function as an argument, checks a certain condition on every element in an array to see if it meets the criteria and returns an entirely **New Array** populated with the results.
 
 *Example : Return values that are greater than 2 in a new array*
 
@@ -143,10 +143,10 @@ sample.forEach((elm, ind, ar) => console.log(elm > 2, ind, ar)));
 
 ## Complete the tasks below:
 
-- Create a constant array 'test' with values from 1 to 5.
+- Create an array named 'test' of type **const** with values from 1 to 5.
 
-- Write a `forEach()` method to print each element on console. The arrow function takes 'item' as an argument.
+- Write a `forEach()` method to print each element on console. Try using arrow function for callback. The arrow function takes 'item' as an argument.
 
-- Write a `map()` method to multiply each element with 4. The arrow function takes 'item' as an argument. Save the result in variable named 'res'.
+- Write a `map()` method to multiply each element with 4. Try using arrow function for callback. The arrow function takes 'item' as an argument. Declare a variable named 'res' of type **var** and save the result in it.
 
-- Write a `filter()` method to filter elements which are greater than 10 from the variable 'res' . The arrow function takes 'item' as an argument.
+- The result saved in 'res' will be an array. Write a `filter()` method to filter elements which are greater than 10 from the variable 'res'. Try using arrow function for callback. The arrow function takes 'item' as an argument.
