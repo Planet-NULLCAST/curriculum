@@ -131,7 +131,7 @@ sample.forEach((elm, ind, ar) => console.log(elm > 2, ind, ar)));
 
 ### Mutability
 
-- None of these methods Mutate the array on which it is called
+- None of these methods Mutate the array on which it is called. (although if invoked in callback, may do so)
 
 ## When To Use ?
 
