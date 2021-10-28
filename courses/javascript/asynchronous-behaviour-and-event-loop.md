@@ -56,4 +56,42 @@ Every code in javascript run beacuse of javascript engine and inside JS Engine t
 
 JS Engine does not have all the features inside it like it cant set a timer on it's own or it can't make a call to an External API it can handle this with the help of some apis which are called WEB APIs
 
-and these things together comes in the browser and thats how we can execute javascript code in browser
+So now consider the previous example, the output will be:-
+
+```
+first
+second
+hello ! John
+```
+
+## Callback and Microtask queue
+
+these two queues line up the callback functions which are returned when the asynchronous task will be completed.
+then why these two queues ?
+actually both of these queue are similar the only difference is of priority and the callback functions they store and priority, Microtask queue stores the **Callbacks of fetch Promises & Mutation observer** and callback queue stores the **Callbacks of SetTimeout , DOM API's , etc**.
+
+But they also differ in priority , priority for what ?
+
+here comes the concept of **Event Loop**.
+
+## Event Loop
+
+It basically checks whether the Call Stack is empty and whether there is anything in any of the queues and if there is any callback function in it it will push it to the call stack and as soon as the the function is pushed into the call stack it will be executed.
+Event loop gives priority to microtask queue which means it checks if there is anything in Microtask queue and when the microtask queue will be empty then it will check if there is something in Callback queue if it find something it will push it call stack.
+
+And all these things will comes togehter and make the javascript run.
+
+## Try to solve this questions
+
+- what will be the output the below code
+
+```js
+console.log("first");
+const greet = (name) => {
+  setTimeout(() => console.log(`Hello! ${name}`));
+};
+fetch(`https://api-getUserData.com`).then(() => {
+  console.log("got the response from API");
+});
+console.log("second");
+```
