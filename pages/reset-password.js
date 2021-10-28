@@ -34,7 +34,6 @@ export default function resetPassword({ query }) {
   const passwordCheck = (name, value) => {
     if (name === "newPassword") {
       const validType = validatePassword(value);
-      // console.log("newPassword validType -", validType);
       if (validType) {
         setValidNewPassword(validType);
       }
@@ -42,7 +41,6 @@ export default function resetPassword({ query }) {
 
     if (name === "confirmPassword") {
       const validType = validatePassword(value);
-      // console.log("confirmPassword validType -", validType);
       if (validType) {
         setValidConfirmPassword(validType);
       }
@@ -50,9 +48,7 @@ export default function resetPassword({ query }) {
   };
 
   const handleInputChange = (e) => {
-    // console.log(e.target);
     const { name, value } = e.target;
-    // console.log(name, value);
     if (validNewPassword !== "" && name === "newPassword") {
       passwordCheck(name, value);
     }
@@ -83,11 +79,8 @@ export default function resetPassword({ query }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e.target.newPassword.value);
-    // console.log(e.target.confirmPassword.value);
     const newPass = e.target.newPassword.value;
     const confirmPass = e.target.confirmPassword.value;
-    // console.log({ password });
     passwordCheck(e.target.newPassword.name, newPass);
     passwordCheck(e.target.confirmPassword.name, confirmPass);
     if (
@@ -132,9 +125,6 @@ export default function resetPassword({ query }) {
                 <h1 className="text-white font-bold text-2xl leading-10">
                   Reset Password
                 </h1>
-                {/* <p className={`text-white mt-2 text-sm font-bold mb-3`}>
-                  Welcome Back!
-                </p> */}
                 <div className="container py-2 px-0-imp">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4 flex flex-col">
@@ -156,13 +146,6 @@ export default function resetPassword({ query }) {
                           onBlur={handleOnBlur}
                           value={password.newPassword}
                         />
-                        {/* <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
-                          <img
-                            src="/images/eye.svg"
-                            className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
-                            onClick={(e) => eyeClick(e)}
-                          ></img>
-                        </div> */}
                       </div>
                       {validNewPassword === "empty" && (
                         <p className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
@@ -197,13 +180,6 @@ export default function resetPassword({ query }) {
                           onChange={handleInputChange}
                           value={password.confirmPassword}
                         />
-                        {/* <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
-                          <img
-                            src="/images/eye.svg"
-                            className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
-                            onClick={(e) => eyeClick(e)}
-                          ></img>
-                        </div> */}
                       </div>
                       {validConfirmPassword === "empty" && (
                         <p className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
