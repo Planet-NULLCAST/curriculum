@@ -7,7 +7,6 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import notify from "../lib/notify";
 import AuthService from "../services/AuthService";
-import validateEmail from "../lib/validateEmail";
 
 export default function forgotPassword() {
   const [validEmail, setEmailValid] = useState(true);
@@ -22,10 +21,8 @@ export default function forgotPassword() {
     // console.log({ email });
     try {
       const { message } = await AuthService.sendEmail(email);
-      // console.log(message);
       notify(message, "dark");
     } catch (err) {
-      // console.log(err.response.data.message);
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
@@ -77,9 +74,6 @@ export default function forgotPassword() {
                 <h1 className="text-white font-bold text-2xl leading-10">
                   Forgot Password ?
                 </h1>
-                {/* <p className={`text-white mt-2 text-sm font-bold mb-3`}>
-                  Enter Your Mail id
-                </p> */}
                 <div className="container py-2 px-0-imp">
                   <form>
                     <div className="mb-4 flex flex-col">
@@ -113,11 +107,10 @@ export default function forgotPassword() {
                     </div>
 
                     <button
-                      className={`submitButtons w-full flex items-center justify-center ${
-                        isLoading
-                          ? "opacity-50 cursor-not-allowed"
-                          : "hover:bg-transparent hover-text-pink-710"
-                      }`}
+                      className={`submitButtons w-full flex items-center justify-center ${isLoading
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-transparent hover-text-pink-710"
+                        }`}
                       type="submit"
                       onClick={(e) => {
                         handleSubmit(e);
