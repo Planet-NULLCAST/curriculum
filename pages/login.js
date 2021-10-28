@@ -49,7 +49,7 @@ export default function Login({ referer }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    //document.getElementById("email").focus();
+    document.getElementById("email").focus();
   }, []);
 
   const eyeClick = (e) => {
@@ -83,6 +83,11 @@ export default function Login({ referer }) {
       return;
     }
     if (!document.querySelector("#email").value) {
+      setEmailValid(false);
+      return;
+    }
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(document.querySelector("#email").value && !document.querySelector("#email").value.match(regexEmail)){
       setEmailValid(false);
       return;
     }
@@ -227,11 +232,12 @@ export default function Login({ referer }) {
                         id="email"
                         name="email"
                         type="text"
-                        onBlur={(e) => emailValidator(e)}
+                        //onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
-                          if (!validEmail) {
-                            emailValidator(e);
-                          }
+                          setEmailValid(true)
+                          // if (!validEmail) {
+                          //   emailValidator(e);
+                          // }
                         }}
                       />
                       {validEmail ? (

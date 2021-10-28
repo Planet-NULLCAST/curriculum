@@ -49,7 +49,7 @@ export default function SignUp({ referer }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    //document.getElementById("fullName").focus();
+    document.getElementById("fullName").focus();
   }, []);
   const termsClick = (e) => {
     setTerms((prevState) => {
@@ -298,7 +298,7 @@ export default function SignUp({ referer }) {
                             id="fullName"
                             name="fullName"
                             type="text"
-                            onBlur={(e) => handleName(e)}
+                            // onBlur={(e) => handleName(e)}
                             onChange={(e) => {
                               if (validName !== "") {
                                 handleName(e);
