@@ -28,7 +28,7 @@ second
 
 As I told earlier Javascript is **Synchronous** **Single Threaded Language** , so here `console.log("first")` will be executed after that it will find the function `sayHi` will be called and at end `console.log("second")` will be executed, So this is how a javascript code is execucted.
 
-So the question arrises what if there is a function in between or some code which takes sometime to execute ?
+So the question arises what if there is a function in between or some code which takes sometime to execute ?
 for example:-
 
 ```js
@@ -40,7 +40,7 @@ sayHi("John");
 console.log("second");
 ```
 
-So if we go by the the defination I have given above, first `console.log('first')` will be executed then function `sayHi()` will be called and wait till the `setTimeout()` is resolved (here 1500ms) and after that `console.log('second')` will be executed
+So if we go by the the definition I have given above, first `console.log('first')` will be executed then function `sayHi()` will be called and wait till the `setTimeout()` is resolved (here 1500ms) and after that `console.log('second')` will be executed
 
 It seems right here but there is a problem, here the code will be stuck for 1500ms(till `setTimeout()` is resolved) then the further code will be executed this actually is very big problem what if you are doing an API call and till the time it is resolved your App will be stuck and this will leave a bad impression to the user, and this is called **thread blocking** or **blocking the main thread**.
 
