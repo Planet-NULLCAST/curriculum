@@ -8,25 +8,25 @@ testCase: [
 			{
 				id: 1,
 				case: ["const test = [1, 2, 3, 4, 5];", "const test = [1, 2, 3, 4, 5]","const test = [1,2,3,4,5];", "const test = [1,2,3,4,5]"],
-				hint: "Try declaring type of 'test' as const and try including values from 1 to 5",
+				hint: "Create an array named 'test' of type 'const' and include values from 1 to 5",
 				isCorrect: false
 			},
 			{
 				id: 2,
 				case: ["test.forEach((item) => console.log(item));","test.forEach((item) => console.log(item))","test.forEach(item => console.log(item));","test.forEach(item => console.log(item))"],
-				hint: "Use forEach method. Try using arrow function with 'item' as argument and print the values on console",
+				hint: "Using forEach, print elements in console. Use arrow function for callback with 'item' as an argument.",
 				isCorrect: false
 			},
 			{
 				id: 3,
-				case: ["var res = test.map((item) => item*4);", "var res = test.map((item) => item*4)", "var res = test.map((item) => item * 4);", "var res = test.map((item) => item * 4)","var res = test.map(item => item*4);", "var res = test.map(item => item*4)", "var res = test.map(item => item * 4);", "var res = test.map(item => item * 4)"],
-				hint: "Try creating a variable named 'res' of type 'var'. Do use map method on 'test'. Try using arrow function with 'item' as argument. Do multiply each element by 4 and store the result in 'res'.",
+				case: ["test.map((item) => item*4);", "test.map((item) => item*4)", "test.map((item) => item * 4);", "test.map((item) => item * 4)","test.map(item => item*4);", "test.map(item => item*4)", "test.map(item => item * 4);", "test.map(item => item * 4)"],
+				hint: "Using map, multiply elements by 4. Use arrow function for callback with 'item' as an argument.",
 				isCorrect: false
 			},
 			{
 				id: 4,
-				case: ["res.filter((item) => item>10);", "res.filter((item) => item>10)", "res.filter((item) => item > 10);", "res.filter((item) => item > 10)","res.filter(item => item>10);", "res.filter(item => item>10)", "res.filter(item => item > 10);", "res.filter(item => item > 10)"],
-				hint: "Try using filter method on 'res'. Try using arrow function with 'item' as argument and filter elements which are greater than 10",
+				case: ["test.filter((item) => item>2);", "test.filter((item) => item>2)", "test.filter((item) => item > 2);", "test.filter((item) => item > 2)","test.filter(item => item>2);", "test.filter(item => item>2)", "test.filter(item => item > 2);", "test.filter(item => item > 2)"],
+				hint: "Using filter, filter elements which are greater than 2. Use arrow function for callback with 'item' as an argument.",
 				isCorrect: false
 			}
 		]
@@ -147,6 +147,6 @@ sample.forEach((elm, ind, ar) => console.log(elm > 2, ind, ar)));
 
 - Write a `forEach()` method to print each element on console. Try using arrow function for callback. The arrow function takes 'item' as an argument.
 
-- Write a `map()` method to multiply each element with 4. Try using arrow function for callback. The arrow function takes 'item' as an argument. Declare a variable named 'res' of type **var** and save the result in it.
+- Write a `map()` method to multiply each element with 4. Try using arrow function for callback. The arrow function takes 'item' as an argument.
 
-- The result saved in 'res' will be an array. Write a `filter()` method to filter elements which are greater than 10 from the variable 'res'. Try using arrow function for callback. The arrow function takes 'item' as an argument.
+- Write a `filter()` method to filter elements which are greater than 2. Try using arrow function for callback. The arrow function takes 'item' as an argument.
