@@ -39,7 +39,7 @@ console.log("hi");
 
 But HTML5 introduces 2 attributes that help us to define when we want to execute our code.
 <br/><br/>
-#### 1. [`defer`](https://www.w3schools.com/tags/att_script_defer.asp)
+#### i. [`defer`](https://www.w3schools.com/tags/att_script_defer.asp)
 
 It is used to tell the browser to only execute the code when the browser is fully parsed and you can put in any section of HTML and it will not block HTML parsing.
 
@@ -56,7 +56,7 @@ console.log("hi");
 ```
 <br/>
 
-#### 2. [`async`](https://www.w3schools.com/tags/att_script_async.asp)
+#### ii. [`async`](https://www.w3schools.com/tags/att_script_async.asp)
 
 This attribute helps our code to execute asynchronously. That means the script that uses an `async` attribute will execute alongside with the parsing of HTML without blocking it. This will be very helpful when we need to run a pre script in order to run our main script.
 
