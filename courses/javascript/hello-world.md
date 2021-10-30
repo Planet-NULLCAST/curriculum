@@ -72,7 +72,7 @@ console.log("hi");
 </body>
 ```
 
-### 2. Linking external files.
+### 2. Linking External Files
 
 This is the go-to method when writing medium to large applications. This method allows the developers to isolate JavaScript and HTML.
 <br/><br/>
