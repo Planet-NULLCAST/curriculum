@@ -18,7 +18,7 @@ In this section we are going to see how you can execute **JavaScript** code on b
 
 <br />
 
-**There are Three main ways to execute JavaScript on browser.**
+**There are two main ways to execute JavaScript on browser.**
 
 ### 1. `script` Tag
 
