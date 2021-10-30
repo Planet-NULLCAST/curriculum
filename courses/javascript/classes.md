@@ -4,7 +4,66 @@ subheading: "Class"
 prev: "arrow-functions"
 next: ""
 testCase: [
-           
+    {
+      id: 1,
+      case: ["class Calcu {"],
+      hint: "Please re check the class syntax and code formatting.",
+      isCorrect: false
+    },
+     {
+      id: 2,
+      case: ["constructor(num1){"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 3,
+      case: ["}"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 4,
+      case: ["toAdd(num2) {"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 5,
+      case: ["return this.num1 + num2;"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 6,
+      case: ["}"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 7,
+      case: ["}"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 8,
+      case: ["let calcuObjects = new Calcu(1);"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+     {
+      id: 9,
+      case: ["const calcuNum2 = calcuObjects.toAdd(2);"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 10,
+      case: ["console.log(concatData);"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
 ]
 ---
 
@@ -45,7 +104,7 @@ class TestClass {}
 
 ```
 
-### Constructor
+## Constructor
 The constructor method is a special method inside the class for creating and initializing an object in a class. Javascript automatically calls the constructor method when you initialize an object of the class.
 
 ```javascript
@@ -91,12 +150,62 @@ class TestClass {
 
     constructor(name){
         
+        // this is the same one from class
         console.log(this.name);
 
-        console.log('data from params '+ name);
+        // the name is from the params
+        console.log('data from params '+ name); 
     }
 }
 
 let textClassObjects = new TestClass('Ducks');
 
 ```
+In the above example, 'this.name' is used to access the name variable on the class named 'TestClass'. And the 'name' variable is the same variable we need as params in our constructor.
+
+* Please note that they are actually called methods not variables. But for the simple understanding we just called them variables.
+***
+## Methods
+Just like we use variables and constructor in our class. We can also create functions too. We called then methods. They looks like a function and act like one for the most part.
+
+For example:
+
+```javascript
+
+class TestClass {
+
+    constructor(name){
+    
+        this.stringOne = name
+    }
+
+    toConcatStrings(stringTwo) {
+
+        return this.stringOne + stringTwo
+
+    }
+    
+}
+
+let textClassObjects = new TestClass('Nullcast');
+
+const concatData = textClassObjects.toConcatStrings(' Ducks')
+
+// result: Nullcast Ducks
+ console.log(concatData); 
+
+```
+
+In the above example, we create a class and it has a method named toConcatStrings. In the constructor of that class, you can see we have a param named name and we initialize that value to this.stringOne. But if you take look at the class you can see we didn't declare any variables or method named stringOne. Don't worry it will not cause an error a new method named stringOne will be created for our class.
+
+You can see we called our method outside of our class by `const concatData = textClassObjects.toConcatStrings(' Ducks')`. By this, we can point out that we can call the method named **toConcatStrings** on the class **textClassObjects**.
+
+## Complete the task below
+- create a class named Calcu
+- create a constructor with params as num1
+- make an object name num1 using this keyword and insert the above num1 param to it.
+- make a method name toAdd which have a param named num2
+- it should return the the addition of method num1 and num2 from the param.
+- create an object named calcuObjects of the above class and pass value as 1.
+- now call the method toAdd and pass value as 2 and get the return value to a variable named calcuNum2
+-  Then console log calcuNum2 value.
