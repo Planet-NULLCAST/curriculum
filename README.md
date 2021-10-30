@@ -7,8 +7,8 @@
 
 # How to run
 
-1. `yarn install`
-2. `yarn dev`
+1. ` npm i`
+2. `npm run dev`
 
 # 🙌 Contributing to Curriculum
 
