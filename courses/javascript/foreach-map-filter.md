@@ -1,7 +1,7 @@
 ---
 title: "Introduction To Javascript"
 subheading: "Foreach vs Map vs Filter"
-prev: "arrow-functions"
+prev: "asynchronous-behaviour-and-event-loop"
 next: ""
 contentOnly: false
 testCase: [

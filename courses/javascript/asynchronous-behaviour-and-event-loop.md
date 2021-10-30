@@ -1,8 +1,8 @@
 ---
   title: "Introduction To Javascript"
   subheading: "Asynchronous Behaviour and Event Loop"
-  next : ""
-  prev: "Arrow Function"
+  next : "foreach-map-filter"
+  prev: "arrow-functions"
   testCase : []
 ---
 
