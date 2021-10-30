@@ -20,6 +20,8 @@ There is a website [readme](https://github.com/Planet-NULLCAST/curriculum/blob/m
 
 # Steps for contributing
 
+ Switch to [`development`](https://github.com/Planet-NULLCAST/curriculum/tree/development) branch before start working as it has the latest code
+
 1. Create or pick an issue from the [issues](https://github.com/Planet-NULLCAST/curriculum/issues)
 2. If adding a new feature create an issue with lots of details to support. You can even start a discussion [here](https://github.com/Planet-NULLCAST/curriculum/discussions) to gain upvotes or ask for improvising the idea.
 3. For a member create a branch and send PR
