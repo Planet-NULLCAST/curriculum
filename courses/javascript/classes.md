@@ -16,27 +16,27 @@ testCase: [
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
-    {
+     {
       id: 3,
-      case: ["}"],
-      hint: "Please re check the code and formatting.",
+      case: ["this.num1 = num1;"],
+      hint: "Please re check the csode and formatting.",
       isCorrect: false
     },
     {
       id: 4,
-      case: ["toAdd(num2) {"],
+      case: ["}"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
     {
       id: 5,
-      case: ["return this.num1 + num2;"],
+      case: ["toAdd(num2) {"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
     {
       id: 6,
-      case: ["}"],
+      case: ["return this.num1 + num2;"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
@@ -48,18 +48,24 @@ testCase: [
     },
     {
       id: 8,
+      case: ["}"],
+      hint: "Please re check the code and formatting.",
+      isCorrect: false
+    },
+    {
+      id: 9,
       case: ["let calcuObjects = new Calcu(1);"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
      {
-      id: 9,
+      id: 10,
       case: ["const calcuNum2 = calcuObjects.toAdd(2);"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     },
     {
-      id: 10,
+      id: 11,
       case: ["console.log(concatData);"],
       hint: "Please re check the code and formatting.",
       isCorrect: false
