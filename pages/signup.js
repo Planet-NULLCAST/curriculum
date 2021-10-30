@@ -298,7 +298,7 @@ export default function SignUp({ referer }) {
                             id="fullName"
                             name="fullName"
                             type="text"
-                            onBlur={(e) => handleName(e)}
+                            // onBlur={(e) => handleName(e)}
                             onChange={(e) => {
                               if (validName !== "") {
                                 handleName(e);
