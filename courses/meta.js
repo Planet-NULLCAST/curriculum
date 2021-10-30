@@ -70,6 +70,11 @@ let courses = [
         chapterId: 13,
         chapterUrl: "arrow-functions",
         chapterName: "Arrow Functions"
+      },
+      {
+        chapterId: 16,
+        chapterUrl: "classes",
+        chapterName: "Class"
       }
     ]
   },
