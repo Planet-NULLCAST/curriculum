@@ -72,7 +72,7 @@ let courses = [
         chapterName: "Arrow Functions"
       },
       {
-        chapterId: 14,
+        chapterId: 16,
         chapterUrl: "classes",
         chapterName: "Class"
       }
