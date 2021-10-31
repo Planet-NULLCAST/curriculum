@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import UserState from "../../../context/user/userContext";
 
-export default function SideBar({ onToggle, toggle, course }) {
+export default function SideBar({ onToggle, toggle, course, courseRef }) {
   const titles = course.chapters;
   // console.log({ titles });
   // console.log(course.courseUrl);
@@ -53,7 +53,11 @@ export default function SideBar({ onToggle, toggle, course }) {
               <Link
                 href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}
               >
-                <a onClick={handleClick}>{title.chapterName}</a>
+                <a  onClick={() =>{
+                  console.log('j');
+                  courseRef.current.scrollTo({top: 0, left: 0,behavior: 'smooth'});
+                  handleClick()
+                  }}>{title.chapterName}</a>
               </Link>
               {chapters?.includes(title.chapterUrl) && (
                 <img
