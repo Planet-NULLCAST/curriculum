@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState,useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
@@ -43,6 +43,7 @@ export async function getStaticProps({ params }) {
 }
 export default function Chapter({ chapterData, chapterName, courseName }) {
   const userState = useContext(UserState);
+  const course = useRef();
 
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
@@ -182,12 +183,13 @@ return (
       <title>{chapterData.subheading} | Curriculum</title>
     </Head>
     <SiteHeader />
-    <Sidebar onToggle={handleToggle} toggle={toggle} course={currentCourse} />
+    <Sidebar onToggle={handleToggle} courseRef={course} toggle={toggle} course={currentCourse} />
     <div
       className={`bg-gray-50 flex flex-row justify-center`}
       style={{ height: "calc(100vh - 107px)" }}
     >
       <div
+              ref={course}
         className={`px-4 py-4 overflow-auto text-gray-700 ${contentOnly ? "md:w-1/2" : "md:w-1/3"
           }`}
       >
