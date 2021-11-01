@@ -99,8 +99,8 @@ async function logout() {
   document.cookie = "userNullcast=''; Max-Age=0;";
   // console.log(router);
   if (router.pathname === "/posts" || router.pathname === "/posts/write") {
-    window.location = '/';
-  } else {
+    router.push('/');
+  } else if (router.pathname !== '/login') {
     router.reload();
   }
 }

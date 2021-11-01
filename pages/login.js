@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
+      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
       if (contextCookie) {
         return {
           redirect: {
