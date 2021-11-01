@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
-import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
+import { signUp } from "../services/AuthService";
 
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
-
-const axios = require("axios");
-
+import notify from "../lib/notify";
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
       const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "token")
+        getCookieValue(context.req.headers.cookie, "userNullcast")
       );
       if (cookie) {
         return {
@@ -32,11 +31,13 @@ export async function getServerSideProps(context) {
     console.log("User not logged in");
   }
   return {
-    props: {referer: context.req.headers.referer ? context.req.headers.referer : ""}
+    props: {
+      referer: context.req.headers.referer ? context.req.headers.referer : ""
+    }
   };
 }
 
-export default function SignUp({referer}) {
+export default function SignUp({ referer }) {
   const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validTerms, setTermsValid] = useState(true);
@@ -50,16 +51,6 @@ export default function SignUp({referer}) {
   useEffect(() => {
     document.getElementById("fullName").focus();
   }, []);
-  // const notify = (item) =>
-  //   toast.success(item.message, {
-  //     position: "top-right",
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined
-  //   });
   const termsClick = (e) => {
     setTerms((prevState) => {
       return !prevState;
@@ -154,7 +145,7 @@ export default function SignUp({referer}) {
   const cookies = new Cookies();
   const userToken = cookies.get("token");
 
-  const handleClick = (e) => {
+  async function handleClick(e) {
     e.preventDefault();
     setIsLoading(true);
     const fName = e.target.fullName.value;
@@ -163,97 +154,75 @@ export default function SignUp({referer}) {
     const password = e.target.password.value;
     const updates = e.target.updates.value;
 
+    if (!email) {
+      setEmailValid(false);
+    }
+
     if (validEmail) {
       if (fName && password && email && username && terms) {
-        const signupData = {
-          full_name: fName,
-          email: email,
-          user_name: username,
-          password: password,
-          // updates: updates
-        };
-        fetch(`${baseUrl}/api/v1/user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: 'include',
-          body: JSON.stringify(signupData)
-        })
-          .then((response) => {
-            setIsLoading(false);
-            return response.json();
-          })
-          .then((data) => {
-            // Getting token from cookie
-            const cookies = new Cookies();
-            const userToken = cookies.get("token");
+          try {
+            const data = await signUp(email, password, fName, username);
+            router.push("/login");
+            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+          } catch (err) {
+            notify(err?.response?.data?.message ?? err?.message, 'error');
+          }
 
-            if (userToken) {
-              sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-
-              // let progress = JSON.parse(
-              //   window.localStorage.getItem("progress")
-              // ) || [{ courseName: "", completedChapter: [] }];
-              // axios({
-              //   method: "post",
-              //   url: `${baseUrl}${enrolUrl}/progress`,
-              //   headers: {
-              //     "x-access-token": `${document.cookie}`
-              //   },
-              //   data: progress
-              // }).then((response) => {
-              //   // console.log(response);
-              // });
-              // axios({
-              //   method: "post",
-              //   url: `${baseUrl}/api/progress/all`,
-              //   headers: {
-              //     "x-access-token": `${document.cookie}`
-              //   }
-              // })
-              //   .then((response) => {
-              //     window.localStorage.setItem(
-              //       "progress",
-              //       JSON.stringify(response.data)
-              //     );
-              //   })
-              //   .catch((err) => {
-              //     console.log(err.message);
-              //   });
-              if (referer) {
-                router.back();
-              } else {
-                router.push("/");
-              }
-            } else {
-                setIsLoading(false);
-                // notify(data);
-              }
-          });
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          if (referer) {
+            router.back();
+          } else {
+            router.push("/");
+          }
       } else {
-        setIsLoading(false);
-        if (!fName) {
-          setValidName("empty");
+          setIsLoading(false);
+          if (!fName) {
+            setValidName("empty");
+          }
+          if (!password) {
+            setValidPassword("empty");
+          }
+          if (!email) {
+            setEmailValid(false);
+          }
+          if (!username) {
+            setValidUserName("empty");
+          }
+          if (!terms) {
+            setTermsValid(false);
         }
-        if (!password) {
-          setValidPassword("empty");
-        }
-        if (!email) {
-          setEmailValid(false);
-        }
-        if (!username) {
-          setValidUserName("empty");
-        }
-        if (!terms) {
-          setTermsValid(false);
-        }
+        // setIsLoading(false);
       }
-    } else {
-      // setIsLoading(false);
     }
-  };
-
+  }
   return (
     <div className="w-full min-h-screen bg-white flex">
       <Head>
@@ -329,7 +298,7 @@ export default function SignUp({referer}) {
                             id="fullName"
                             name="fullName"
                             type="text"
-                            onBlur={(e) => handleName(e)}
+                            // onBlur={(e) => handleName(e)}
                             onChange={(e) => {
                               if (validName !== "") {
                                 handleName(e);
@@ -388,7 +357,8 @@ export default function SignUp({referer}) {
                           )}
                           {validUserName === "characters" && (
                             <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                              Username can only contain alphabets, numbers and cannot contain spaces
+                              Username can only contain alphabets, numbers and
+                              cannot contain spaces
                             </span>
                           )}
                         </div>
@@ -480,7 +450,6 @@ export default function SignUp({referer}) {
                             id="terms"
                             name="terms"
                             value="terms"
-                            className="cursor-pointer"
                             onClick={(e) => {
                               termsClick(e);
                               setTermsValid(e.target.checked);
@@ -488,11 +457,11 @@ export default function SignUp({referer}) {
                           />
                           <label
                             htmlFor="terms"
-                            className="ml-2 cursor-pointer text-white"
+                            className="ml-2 text-white"
                           >
                             I agree to the{" "}
-                            <a href="#" className="text-white underline">
-                              terms and conditions
+                            <a href="#" className="text-white cursor-pointer underline">
+                              Terms and Conditions
                             </a>
                           </label>
                         </div>
@@ -502,11 +471,10 @@ export default function SignUp({referer}) {
                             id="updates"
                             name="updates"
                             value="updates"
-                            className="cursor-pointer"
                           />
                           <label
                             htmlFor="updates"
-                            className="ml-2 cursor-pointer text-white"
+                            className="ml-2 text-white"
                           >
                             Send me latest updates
                           </label>
@@ -519,11 +487,10 @@ export default function SignUp({referer}) {
                           </span>
                         )}
                         <button
-                          className={`submitButtons w-full flex items-center justify-center ${
-                            isLoading
+                          className={`submitButtons w-full flex items-center justify-center ${isLoading
                               ? "opacity-50 cursor-not-allowed"
                               : "hover:bg-transparent hover-text-pink-710"
-                          }`}
+                            }`}
                           type="submit"
                           disabled={
                             !validEmail ||

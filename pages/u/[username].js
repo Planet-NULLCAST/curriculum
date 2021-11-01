@@ -15,23 +15,21 @@ import PostService from "../../services/PostService";
 
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
     let isThisUserTheCurrentLoggedIn = false;
-
     const LIMIT = 10; //should be 10
     const CLICK_N0 = 0;
-
-    const { user } = await UserService.getUserByUsername(username);
-    const { posts, count } = await PostService.getPublishedPostsByUserId(
-      user._id,
+    const { data } = await UserService.getUserByUsername(username);
+    const userId = data.id;
+    const response = await PostService.getPublishedPostsByUserId(
+      userId,
       LIMIT,
       CLICK_N0
     );
-    // console.log(posts, count);
-
     /**
      * isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
      * in the profile details section
@@ -44,22 +42,21 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-
-        isThisUserTheCurrentLoggedIn = cookie.id === user._id;
-        user.isThisUserTheCurrentLoggedIn = isThisUserTheCurrentLoggedIn;
+        isThisUserTheCurrentLoggedIn = cookie.id === data.id;
+        data.isThisUserTheCurrentLoggedIn = isThisUserTheCurrentLoggedIn;
       }
     }
     return {
       props: {
-        userData: user,
-        postsCount: count,
-        posts: posts,
-        limit: LIMIT
+        userData: data,
+        postsCount: {},
+        posts: response,
+        limit: LIMIT,
       }
     };
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
-    console.log(err);
+    // console.log(err);
     return {
       redirect: {
         permanent: false,
@@ -83,7 +80,7 @@ export default function Username({ userData, postsCount, posts, limit }) {
 
   const getNewPosts = async (clickNo) => {
     const responsePost = await PostService.getPublishedPostsByUserId(
-      userData._id,
+      userData.id,
       limit,
       clickNo
     );
@@ -96,7 +93,7 @@ export default function Username({ userData, postsCount, posts, limit }) {
   return (
     <div>
       <Head>
-        <title> @{userData.username} | Nullcast</title>
+        <title> @{userData.user_name} | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 py-2 pb-6 px-6">
@@ -120,7 +117,7 @@ export default function Username({ userData, postsCount, posts, limit }) {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            <Count postsCount={postsCount} />
+            {/* <Count postsCount={postsCount} /> */}
             <FollowersList />
           </div>
         </div>

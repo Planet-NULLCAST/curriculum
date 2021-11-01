@@ -4,8 +4,7 @@ import AuthorDetails from "../BlogListing/AuthorDetails";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function SectionBlogs(props) {
-  console.log(props.blog,"------")
+export default function SectionBlogs({ posts }) {
   return (
     <section className="pt-10 lg:pt-20">
       <div className="container container--small">
@@ -22,7 +21,7 @@ export default function SectionBlogs(props) {
           </Fade>
         </div>
         <div className={styles.blogList}>
-          {props.blog.map((item, key) => (
+          {posts.map((item, key) => (
             <div className={styles.blogItem} key={key}>
               <Fade>
                 <figure className={styles.blogImage}>
@@ -47,7 +46,7 @@ export default function SectionBlogs(props) {
               </h3>
 
               <AuthorDetails
-                username={item.user.username}
+                username={item.user.user_name}
                 avatar={item.user.avatar}
               />
             </div>

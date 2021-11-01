@@ -3,6 +3,7 @@ import Link from "next/link";
 import Select from "react-select";
 import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
+import notify from "../../lib/notify";
 
 export default function AdminNavbar({ changeCategory, changeStatus }) {
   const statusOptions = [
@@ -24,15 +25,17 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
    * @author athulraj2002
    */
   async function getSettingsTags() {
-    const res = await TagService.getTags();
     let resTagOptions = [];
-    if (res) {
+    try {
+      const res = await TagService.getTags();
       resTagOptions = res.map((tag) => {
         return {
           label: `${tag.name.toUpperCase()}`,
           value: `${tag.name}`
         };
       });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
 
     // setTagOptions;

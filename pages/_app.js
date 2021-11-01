@@ -6,6 +6,18 @@ import "../styles/slick-theme.scss";
 import "../styles/globals.scss";
 import "../styles/Home.module.scss";
 import { ToastContainer } from "react-toastify";
+import { logout } from "../services/AuthService";
+
+import axios from "axios";
+import { baseUrl } from "../config/config";
+axios.defaults.withCredentials=true;
+axios.defaults.baseURL=baseUrl;
+axios.interceptors.response.use(resp => resp, err => {
+  if (err.response?.status === 401 && !err.response?.config?.url.includes('logout')) {
+    logout();
+  }
+  throw err;
+})
 
 function MyApp({ Component, pageProps }) {
   return (

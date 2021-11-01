@@ -8,22 +8,10 @@ import { baseUrl, subscribeUrl } from "../../../config/config";
 import validateEmail from "../../../lib/validateEmail";
 
 import styles from "./SiteFooter.module.scss";
+import notify from "../../../lib/notify";
 
 export default function SiteFooter() {
   const [isValidEmail, setIsValidEmail] = useState("");
-
-  const notify = (msg) => {
-    // console.log(msg);
-    toast(msg, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  };
 
   const addSubscriber = async (e) => {
     e.preventDefault();

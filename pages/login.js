@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { baseUrl, authUrl, enrolUrl } from "../config/config";
 import Loginstyles from "../styles/Login.module.css";
 import SideLogin from "../component/login/side/SideLogin";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
@@ -9,19 +8,17 @@ import Head from "next/head";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import Cookies from "universal-cookie";
+import moment from "moment";
+import { signIn } from "../services/AuthService";
 
 import { getCookieValue } from "../lib/cookie";
-
-const axios = require("axios");
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(
-        context.req.headers.cookie,
-        "token"
-      );
+      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
       if (contextCookie) {
         return {
           redirect: {
@@ -80,105 +77,92 @@ export default function Login({ referer }) {
     }
   }
 
-  const notify = (err) =>
-    toast.error(err.message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  const handleClick = (e) => {
+  async function handleClick(e) {
+    if (!document.querySelector("#password").value) {
+      setValidPassword(false);
+      return;
+    }
+    if (!document.querySelector("#email").value) {
+      setEmailValid(false);
+      return;
+    }
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(document.querySelector("#email").value && !document.querySelector("#email").value.match(regexEmail)){
+      setEmailValid(false);
+      return;
+    }
     e.preventDefault();
     setIsLoading(true);
     // console.log(e.target);
     if (validEmail && validPassword) {
       const password = document.querySelector("#password").value;
       const email = document.querySelector("#email").value;
+
       if (password && email) {
-        const loginDetails = {
-          email: email,
-          password: password
-        };
-        // console.log({ loginDetails });
-        const err = axios({
-          method: "POST",
-          url: `${baseUrl}/api/v1/signin`,
-          headers: {
-            "Content-Type": "application/json"
-          },
-          withCredentials: true,
-          data: loginDetails
-        })
-          .then((response) => {
-            setIsLoading(false);
-            return response.data;
-          })
-          .then((data) => {
-            // Getting token from cookie
-            const cookies = new Cookies();
-            const userToken = cookies.get("token");
+        try {
+          const data = await signIn(email, password);
+          const newDate = new Date(moment().add(30, "days")).toUTCString();
+          const expires = `; expires=${newDate}`;
+          const userData = data.user;
+          document.cookie = `userNullcast=${JSON.stringify(
+            userData
+          )}${expires}`;
+          localStorage.setItem("userNullcast", JSON.stringify(userData));
+          // console.log(document.cookie);
 
-            if (userToken) {
-              sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-
-              // let progress = JSON.parse(
-              //   window.localStorage.getItem("progress")
-              // ) || [{ courseName: "", completedChapter: [] }];
-              // axios({
-              //   method: "post",
-              //   url: `${baseUrl}${enrolUrl}/progress`,
-              //   headers: {
-              //     "x-access-token": `${data.accessToken}`
-              //   },
-              //   data: progress
-              // }).then((response) => {
-              //   // console.log(response);
-              // });
-              // axios({
-              //   method: "post",
-              //   url: `${baseUrl}/api/progress/all`,
-              //   headers: {
-              //     "x-access-token": `${data.accessToken}`
-              //   }
-              // })
-              //   .then((response) => {
-              //     window.localStorage.setItem(
-              //       "progress",
-              //       JSON.stringify(response.data)
-              //     );
-              //   })
-              //   .catch((err) => {
-              //     console.log(err.message);
-              //   });
-              // if (referer) {
-              //   router.back();
-              // } else {
-              //   router.push("/");
-              // }
-              if (referer) {
-                router.back();
-              } else {
-                router.push("/");
-              }
-            } else {
-              setIsLoading(false);
-              notify(data);
-            }
-          });
-      } else {
-        setIsLoading(false);
-        if (!email) {
-          setEmailValid(false);
-        }
-        if (!password) {
-          setValidPassword(false);
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${data.accessToken}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${data.accessToken}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          // if (referer) {
+          //   router.back();
+          // } else {
+          //   router.push("/");
+          // }
+          if (referer) {
+            router.back();
+          } else {
+            router.push("/");
+          }
+        } catch (err) {
+          setIsLoading(false);
+          notify(err?.response?.data?.message ?? err?.message, 'error');
         }
       }
+    } else {
+      if (!email) {
+        setEmailValid(false);
+      }
+      if (!password) {
+        setValidPassword(false);
+      }
     }
-  };
+  }
   return (
     <div>
       <Head>
@@ -248,11 +232,12 @@ export default function Login({ referer }) {
                         id="email"
                         name="email"
                         type="text"
-                        onBlur={(e) => emailValidator(e)}
+                        //onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
-                          if (!validEmail) {
-                            emailValidator(e);
-                          }
+                          setEmailValid(true)
+                          // if (!validEmail) {
+                          //   emailValidator(e);
+                          // }
                         }}
                       />
                       {validEmail ? (

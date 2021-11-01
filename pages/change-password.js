@@ -8,6 +8,7 @@ import validatePassword from "../lib/validatePassword";
 import { getCookieValue } from "../lib/cookie";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -108,9 +109,9 @@ export default function changePassword() {
         passwords,
         userCookie
       );
-      notify(message, true);
+      notify(message, 'success');
     } catch (err) {
-      notify(err.message, false);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
   const handleSubmit = (e) => {
@@ -164,30 +165,6 @@ export default function changePassword() {
           ...prevValue,
           confirmPassword: !hidePassword.confirmPassword
         };
-      });
-    }
-  };
-
-  const notify = (msg, type) => {
-    if (type) {
-      toast.success(msg, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
-    } else {
-      toast.error(msg, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
       });
     }
   };

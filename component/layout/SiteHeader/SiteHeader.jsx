@@ -4,11 +4,11 @@ import Profile from "../Profile/Profile";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Cookies from "universal-cookie";
+import { logout } from "../../../services/AuthService";
 
 export default function HomeSpotlight() {
   const router = useRouter();
   const _cookies = new Cookies();
-  const userToken = _cookies.get("token");
   const [menu, setMenu] = useState(false);
   const [cookies, setCookies] = useState("");
 
@@ -20,10 +20,11 @@ export default function HomeSpotlight() {
   // }, [menu]);
 
   useEffect(() => {
+    const userToken = _cookies.get("userNullcast");
     if (userToken) {
       setCookies(userToken);
     }
-  }, []);
+  }, [router.pathname]);
 
   useEffect(() => {
     let header = document.getElementById("header");
@@ -51,20 +52,6 @@ export default function HomeSpotlight() {
     };
   }, []);
 
-  function logout() {
-    // console.log("logout");
-    window.localStorage.removeItem("progress");
-    document.cookie =
-      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    setCookies("");
-    sessionStorage.removeItem("userNullcast");
-    // console.log(router);
-    if (router.pathname === "/posts" || router.pathname === "/posts/write") {
-      router.push("/");
-    } else {
-      router.reload();
-    }
-  }
   // const handleDropDown = () => {
   //   // console.log("clicked");
   //   setDropDown(!dropdown);

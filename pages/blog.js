@@ -6,9 +6,9 @@ import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
 import PostService from "../services/PostService";
-import TagService from "../services/TagService";
 import { useState } from "react";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
+import notify from "../lib/notify";
 
 export async function getServerSideProps() {
   const limit = 10; //should be 10
@@ -43,7 +43,7 @@ export async function getServerSideProps() {
       };
     }
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       props: {}
     };
@@ -87,11 +87,15 @@ export default function BlogListing({ blog, count, limit }) {
       page: 1,
       with_table: "users, tags"
     };
-    const responsePost = await PostService.getLatestPosts(postParams);
-
-    setNewBlogs((prevValue) => {
-      return [...prevValue, ...responsePost.data.blog];
-    });
+    try {
+      const responsePost = await PostService.getLatestPosts(postParams);
+  
+      setNewBlogs((prevValue) => {
+        return [...prevValue, ...responsePost.data.blog];
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
   return (
     <div>
@@ -134,7 +138,7 @@ export default function BlogListing({ blog, count, limit }) {
       <SiteHeader />
       <ListingHeader />
       {blog && <ListingFeatured blog={blog[0]} />}
-      {blog.length > 0 ? (
+      {blog?.length > 0 ? (
         <Listing
           blog={newBlogs}
           tagsArray={tagsArray}
@@ -146,7 +150,6 @@ export default function BlogListing({ blog, count, limit }) {
           There's no published blogs yet!
         </div>
       )}
-
       <SectionSwag />
       <SiteFooter />
     </div>

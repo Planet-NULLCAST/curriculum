@@ -4,6 +4,7 @@ import MyBlogStyles from "../../styles/MyBlogs.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import PostService from "../../services/PostService";
+import notify from "../../lib/notify";
 
 export default function AdminBlogsList({ posts, updated }) {
   const cookies = new Cookies();
@@ -15,12 +16,16 @@ export default function AdminBlogsList({ posts, updated }) {
    * @returns null
    */
   const approveBlog = async (blog) => {
-    const response = await PostService.adminChangePostStatus(
-      userCookie,
-      blog._id,
-      "published"
-    );
-    updated();
+    try {
+      const response = await PostService.adminChangePostStatus(
+        userCookie,
+        blog._id,
+        "published"
+      );
+      updated();
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   /**
@@ -30,22 +35,30 @@ export default function AdminBlogsList({ posts, updated }) {
    * @returns null
    */
   const rejectBlog = async (blog) => {
-    const response = await PostService.adminChangePostStatus(
-      userCookie,
-      blog._id,
-      "rejected"
-    );
-    updated();
+    try {
+      const response = await PostService.adminChangePostStatus(
+        userCookie,
+        blog._id,
+        "rejected"
+      );
+      updated();
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   const unpublishBlog = async (blog) => {
-    const response = await PostService.adminChangePostStatus(
-      userCookie,
-      blog._id,
-      "pending"
-    );
+    try {
+      const response = await PostService.adminChangePostStatus(
+        userCookie,
+        blog._id,
+        "pending"
+      );
+      updated();
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
     // console.log(response);
-    updated();
   };
   return (
     <div

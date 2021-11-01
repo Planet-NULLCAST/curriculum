@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ProfileDetails({ userData }) {
-  // console.log(userData);
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -45,10 +44,10 @@ export default function ProfileDetails({ userData }) {
               {/* details */}
               <div className="px-6">
                 <h3 className="mb-1 font-semibold text-lg text-gray-900">
-                  {userData.fullName}
+                  {userData.full_name}
                 </h3>
                 <h3 className="my-1 text-sm font-medium">
-                  @{userData.username}
+                  @{userData.user_name}
                 </h3>
                 <div className="flex flex-row my-1">
                   <img

@@ -1,9 +1,13 @@
 const axios = require("axios");
+import router from "next/router";
 import {
   baseUrl,
   forgotPasswordUrl,
   resetPasswordUrl,
-  changePasswordUrl
+  changePasswordUrl,
+  loginUrl,
+  signUpUrl,
+  logoutUrl,
 } from "../config/config";
 
 async function sendEmail(email) {
@@ -20,6 +24,35 @@ async function sendEmail(email) {
   }
 }
 
+async function signIn(email, password) {
+  const loginDetails = {
+    email: email,
+    password: password
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${loginUrl}`,loginDetails);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function signUp(email, password,fName,username) {
+  const signupData = {
+    full_name: fName,
+    email: email,
+    user_name: username,
+    password: password,
+    // updates: updates
+  };
+  try {
+    const { data } = await axios.post(`${baseUrl}/${signUpUrl}`,signupData);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function resetPassword(password, token) {
   const item = {
     password: password,
@@ -30,8 +63,7 @@ async function resetPassword(password, token) {
     // console.log(response);
     return response;
   } catch (err) {
-    console.log(err);
-    return;
+    throw err;
   }
 }
 
@@ -53,14 +85,33 @@ async function changePassword(passwords, userCookie) {
     return data;
   } catch (err) {
     // console.log(err.response.data);
-    throw err.response.data;
+    throw err;
+  }
+}
+
+async function logout() {
+  // console.log("logout");
+  try {
+    await axios.post(`${logoutUrl}`, {});
+  } catch { }
+  window.localStorage.removeItem("progress");
+  sessionStorage.removeItem("userNullcast");
+  document.cookie = "userNullcast=''; Max-Age=0;";
+  // console.log(router);
+  if (router.pathname === "/posts" || router.pathname === "/posts/write") {
+    window.location = '/';
+  } else {
+    router.reload();
   }
 }
 
 const AuthService = {
   sendEmail,
   resetPassword,
-  changePassword
+  changePassword,
+  signIn,
+  signUp,
+  logout,
 };
 
 module.exports = AuthService;

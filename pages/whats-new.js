@@ -8,6 +8,7 @@ import WhatsNewPosts from "../component/layout/WhatsNew/WhatsNewPosts";
 import SectionSwag from "../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../component/layout/SiteFooter/SiteFooter";
 import PostService from "../services/PostService";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -26,17 +27,17 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
+    
     return {
-      redirect: {
-        permanent: false,
-        destination: "/404"
+      props: {
+        blogs: []
       }
-    };
+    }
   }
 }
 
-export default function whatsNew(props) {
+export default function whatsNew({blogs}) {
   return (
     <>
       <Head>
@@ -44,7 +45,7 @@ export default function whatsNew(props) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      <WhatsNewPosts blogs={props.blogs} />
+      { blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
       <SectionSwag />
       <SiteFooter />
     </>

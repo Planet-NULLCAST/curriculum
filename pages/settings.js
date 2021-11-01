@@ -12,6 +12,7 @@ import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
 import CreatableSelect from "react-select/creatable";
 import SkillService from "../services/SkillService";
+import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -47,6 +48,7 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       props: {
         profileData: []
@@ -103,7 +105,7 @@ export default function Settings({ profileData, _skills }) {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      notify(err.response.data.message);
+      notify(err?.response?.data?.message, 'error');
     }
   };
   const handleSettings = (e) => {
@@ -234,7 +236,7 @@ export default function Settings({ profileData, _skills }) {
         updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify("Image upload failed");
+        notify("Image upload failed", 'error');
       }
     }
 
@@ -274,17 +276,6 @@ export default function Settings({ profileData, _skills }) {
       reader.readAsDataURL(files[0]);
     }
   };
-
-  const notify = (msg) =>
-    toast(msg, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
 
   return (
     <>
@@ -335,6 +326,7 @@ export default function Settings({ profileData, _skills }) {
                   <figure>
                     <ImageCropper
                       image={image}
+                      aspectRatio={1}
                       closeTrigerred={closeTrigerred}
                       trigger={
                         <input

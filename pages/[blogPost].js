@@ -10,6 +10,7 @@ import Head from "next/head";
 import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { url, logoPath } from "../seoschema/schema";
+import notify from "../lib/notify";
 
 // unsure on using getServerSideProps
 // if facing SEO issues refer
@@ -48,7 +49,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.log("Error => ", err);
+    notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
       redirect: {
         permanent: false,

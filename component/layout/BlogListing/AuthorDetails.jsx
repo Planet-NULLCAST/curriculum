@@ -10,7 +10,7 @@ export default function Details({ username, avatar }) {
           <Link href={`/u/${username}`}>
             <a>
               <img
-                src={avatar ? avatar : "/images/dummy-profile.png"}
+                src={avatar ? avatar : "/images/svgs/avatar.svg"}
                 alt="Author"
                 width={150}
                 height={150}

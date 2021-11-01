@@ -10,18 +10,15 @@ import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import { getCookieValue } from "../../lib/cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   // console.log(context.req.headers.cookie);
   // console.log(context.query.pageNo);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(
-        context.req.headers.cookie,
-        "userNullcast"
-      );
+      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
       if (contextCookie) {
-        const cookie = JSON.parse(contextCookie);
         return {
           props: {
             // _pageNo: context.query.pageNo
@@ -78,15 +75,15 @@ export default function Posts() {
       limit: postData.limit,
       tag: router.query.tag,
       status: router.query.status
+      // with_table: ["user"]
     };
-    getPosts(newReqData);
+    // getPosts(newReqData);
   }, [router.query.pageNo, router.query.tag, router.query.status]);
 
   async function getPosts(reqData) {
     // console.log("getposts call");
     try {
-      const data = await PostService.getPostsByUserId(userCookie, reqData);
-      // console.log(data);
+      const data = await PostService.getPostsByUserId(reqData);
       const { posts, count } = data;
       // console.log({ posts });
       if (data) {
@@ -100,7 +97,7 @@ export default function Posts() {
         };
       });
     } catch (err) {
-      console.log(err);
+      notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
 
