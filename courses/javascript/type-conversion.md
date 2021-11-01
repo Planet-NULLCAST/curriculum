@@ -41,7 +41,7 @@ type to another.
 
 ## Type conversions in JavaScript
 
-Type conversion in javascript can be done either by javascipt itself (instrinsic type converion), or
+**Type conversion** in javascript can be done either by javascipt itself (instrinsic type converion), or
 by the use of some javascript function.
 
 ## Converting dates, numbers and boolean to string
@@ -130,7 +130,7 @@ Number("99 88"); // returns NaN
 The conversion rule:
 
 Values that are intuitively “empty”, like 0, `an empty string`, `null`, `undefined`, and `NaN`, become `false`.
-Other values become `**true**`.
+Other values become `true`.
 
 Explicit conversions to boolean can be done with the help of `Boolean()` method. For example:
 
