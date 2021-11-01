@@ -7,7 +7,7 @@ import {
   changePasswordUrl,
   loginUrl,
   signUpUrl,
-  logoutUrl,
+  logoutUrl
 } from "../config/config";
 
 async function sendEmail(email) {
@@ -30,23 +30,24 @@ async function signIn(email, password) {
     password: password
   };
   try {
-    const { data } = await axios.post(`${baseUrl}/${loginUrl}`,loginDetails);
+    const { data } = await axios.post(`${baseUrl}/${loginUrl}`, loginDetails);
     return data;
   } catch (err) {
     throw err;
   }
 }
 
-async function signUp(email, password,fName,username) {
+async function signUp(email, password, fName, username) {
   const signupData = {
     full_name: fName,
     email: email,
     user_name: username,
-    password: password,
+    password: password
     // updates: updates
   };
+  console.log(baseUrl, signUpUrl);
   try {
-    const { data } = await axios.post(`${baseUrl}/${signUpUrl}`,signupData);
+    const { data } = await axios.post(`${baseUrl}/${signUpUrl}`, signupData);
     return data;
   } catch (err) {
     throw err;
@@ -93,13 +94,13 @@ async function logout() {
   // console.log("logout");
   try {
     await axios.post(`${logoutUrl}`, {});
-  } catch { }
+  } catch {}
   window.localStorage.removeItem("progress");
   sessionStorage.removeItem("userNullcast");
   document.cookie = "userNullcast=''; Max-Age=0;";
   // console.log(router);
   if (router.pathname === "/posts" || router.pathname === "/posts/write") {
-    window.location = '/';
+    window.location = "/";
   } else {
     router.reload();
   }
@@ -111,7 +112,7 @@ const AuthService = {
   changePassword,
   signIn,
   signUp,
-  logout,
+  logout
 };
 
 module.exports = AuthService;
