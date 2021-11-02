@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
+      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
       if (contextCookie) {
         return {
           redirect: {
@@ -83,6 +83,11 @@ export default function Login({ referer }) {
       return;
     }
     if (!document.querySelector("#email").value) {
+      setEmailValid(false);
+      return;
+    }
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(document.querySelector("#email").value && !document.querySelector("#email").value.match(regexEmail)){
       setEmailValid(false);
       return;
     }
@@ -227,11 +232,12 @@ export default function Login({ referer }) {
                         id="email"
                         name="email"
                         type="text"
-                        onBlur={(e) => emailValidator(e)}
+                        //onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
-                          if (!validEmail) {
-                            emailValidator(e);
-                          }
+                          setEmailValid(true)
+                          // if (!validEmail) {
+                          //   emailValidator(e);
+                          // }
                         }}
                       />
                       {validEmail ? (

@@ -12,6 +12,7 @@ import { signUp } from "../services/AuthService";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import notify from "../lib/notify";
+import moment from "moment";
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
@@ -162,10 +163,22 @@ export default function SignUp({ referer }) {
       if (fName && password && email && username && terms) {
           try {
             const data = await signUp(email, password, fName, username);
+            const newDate = new Date(moment().add(30, "days")).toUTCString();
+            const expires = `; expires=${newDate}`;
+            const userData = data.user;
+            document.cookie = `userNullcast=${JSON.stringify(
+              userData
+            )}${expires}`;
+            localStorage.setItem("userNullcast", JSON.stringify(userData));
+            // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
             notify('Sign Up Succesfull')
-            router.push("/login");
-            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+            if (referer) {
+              router.back();
+            } else {
+              router.push("/");
+            }
           } catch (err) {
+            setIsLoading(false);
             notify(err?.response?.data?.message ?? err?.message, 'error');
           }
 
@@ -299,7 +312,7 @@ export default function SignUp({ referer }) {
                             id="fullName"
                             name="fullName"
                             type="text"
-                            onBlur={(e) => handleName(e)}
+                            // onBlur={(e) => handleName(e)}
                             onChange={(e) => {
                               if (validName !== "") {
                                 handleName(e);

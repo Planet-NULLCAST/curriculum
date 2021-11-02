@@ -32,20 +32,20 @@ testCase: [
 		]
 ---
 
-We know many operators from school. They are things like addition +, multiplication \*, subtraction -, and so on.
+We know many operators from school. They are things like addition `+`, multiplication `*`, subtraction `-`, and so on.
 
 In this chapter, we’ll start with simple operators, then concentrate on JavaScript-specific aspects, not covered by school arithmetic.
 
 The following math operations are supported:
 
-- Addition +,
-- Subtraction -,
-- Multiplication \*,
-- Division /,
-- Remainder %,
-- Exponentiation \*\*.
+- Addition `+`,
+- Subtraction `-`,
+- Multiplication `*`,
+- Division `/`,
+- Remainder `%`,
+- Exponentiation `**`.
 
-The first four are straightforward, while % and \*\* need a few words about them.
+The first four are straightforward, while `%` and `**` need a few words about them.
 
 ---
 
@@ -98,7 +98,7 @@ console.log(a / b); //2
 
 ## Exponentiation \*\*
 
-The exponentiation operator a \*\* b raises a to the power of b.
+The exponentiation operator `a ** b` raises a to the power of b.
 
 In school maths, we write that as a^b .
 
@@ -108,9 +108,9 @@ console.log(2 ** 2); // 2² = 4
 
 ## Remainder %
 
-The remainder operator %, despite its appearance, is not related to percents.
+The remainder operator `%`, despite its appearance, is not related to percents.
 
-The result of a % b is the remainder of the integer division of a by b.
+The result of `a % b` is the remainder of the integer division of a by b.
 
 ```javascript
 console.log(5 % 2); // 1, a remainder of 5 divided by 2
@@ -120,10 +120,10 @@ console.log(5 % 2); // 1, a remainder of 5 divided by 2
 
 ## Complete the tasks below:
 
-- Create two variables a and b and assign values 5 and 2 respectively.
+- Create two variables `a` and `b` and assign values 5 and 2 respectively.
 
-- Perform an addition(+) operation on a and b and assign the value to a variable result.
+- Perform an addition operation on `a` and `b` and assign the value to a variable `result`.
 
-- Perform a multiplication(\*) operation on a and b and assign the value to a variable result.
+- Perform a multiplication operation on `a` and `b` and assign the value to a variable `result`.
 
-- Perform an modulus(%) operation on a and b and assign the value to a variable result.
+- Perform a modulus operation on `a` and `b` and assign the value to a variable `result`.

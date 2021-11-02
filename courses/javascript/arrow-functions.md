@@ -2,7 +2,7 @@
 title: "Introduction To Javascript"
 subheading: "Arrow Functions"
 prev: "function"
-next: ""
+next: "foreach-map-filter"
 testCase: [
             {
                 id: 1,
