@@ -160,65 +160,64 @@ export default function SignUp({ referer }) {
 
     if (validEmail) {
       if (fName && password && email && username && terms) {
-        try {
-          const data = await signUp(email, password, fName, username);
-          notify("Sign Up Successfull");
-          router.push("/login");
-          sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-        } catch (err) {
-          notify(err?.response?.data?.message ?? err?.message, "error");
-        }
+          try {
+            const data = await signUp(email, password, fName, username);
+            router.push("/login");
+            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+          } catch (err) {
+            notify(err?.response?.data?.message ?? err?.message, 'error');
+          }
 
-        // let progress = JSON.parse(
-        //   window.localStorage.getItem("progress")
-        // ) || [{ courseName: "", completedChapter: [] }];
-        // axios({
-        //   method: "post",
-        //   url: `${baseUrl}${enrolUrl}/progress`,
-        //   headers: {
-        //     "x-access-token": `${document.cookie}`
-        //   },
-        //   data: progress
-        // }).then((response) => {
-        //   // console.log(response);
-        // });
-        // axios({
-        //   method: "post",
-        //   url: `${baseUrl}/api/progress/all`,
-        //   headers: {
-        //     "x-access-token": `${document.cookie}`
-        //   }
-        // })
-        //   .then((response) => {
-        //     window.localStorage.setItem(
-        //       "progress",
-        //       JSON.stringify(response.data)
-        //     );
-        //   })
-        //   .catch((err) => {
-        //     console.log(err.message);
-        //   });
-        if (referer) {
-          router.back();
-        } else {
-          router.push("/");
-        }
+          // let progress = JSON.parse(
+          //   window.localStorage.getItem("progress")
+          // ) || [{ courseName: "", completedChapter: [] }];
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}${enrolUrl}/progress`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   },
+          //   data: progress
+          // }).then((response) => {
+          //   // console.log(response);
+          // });
+          // axios({
+          //   method: "post",
+          //   url: `${baseUrl}/api/progress/all`,
+          //   headers: {
+          //     "x-access-token": `${document.cookie}`
+          //   }
+          // })
+          //   .then((response) => {
+          //     window.localStorage.setItem(
+          //       "progress",
+          //       JSON.stringify(response.data)
+          //     );
+          //   })
+          //   .catch((err) => {
+          //     console.log(err.message);
+          //   });
+          if (referer) {
+            router.back();
+          } else {
+            router.push("/");
+          }
       } else {
-        setIsLoading(false);
-        if (!fName) {
-          setValidName("empty");
-        }
-        if (!password) {
-          setValidPassword("empty");
-        }
-        if (!email) {
-          setEmailValid(false);
-        }
-        if (!username) {
-          setValidUserName("empty");
-        }
-        if (!terms) {
-          setTermsValid(false);
+          setIsLoading(false);
+          if (!fName) {
+            setValidName("empty");
+          }
+          if (!password) {
+            setValidPassword("empty");
+          }
+          if (!email) {
+            setEmailValid(false);
+          }
+          if (!username) {
+            setValidUserName("empty");
+          }
+          if (!terms) {
+            setTermsValid(false);
         }
         // setIsLoading(false);
       }
@@ -456,12 +455,12 @@ export default function SignUp({ referer }) {
                               setTermsValid(e.target.checked);
                             }}
                           />
-                          <label htmlFor="terms" className="ml-2 text-white">
+                          <label
+                            htmlFor="terms"
+                            className="ml-2 text-white"
+                          >
                             I agree to the{" "}
-                            <a
-                              href="#"
-                              className="text-white cursor-pointer underline"
-                            >
+                            <a href="#" className="text-white cursor-pointer underline">
                               Terms and Conditions
                             </a>
                           </label>
@@ -473,7 +472,10 @@ export default function SignUp({ referer }) {
                             name="updates"
                             value="updates"
                           />
-                          <label htmlFor="updates" className="ml-2 text-white">
+                          <label
+                            htmlFor="updates"
+                            className="ml-2 text-white"
+                          >
                             Send me latest updates
                           </label>
                         </div>
@@ -485,11 +487,10 @@ export default function SignUp({ referer }) {
                           </span>
                         )}
                         <button
-                          className={`submitButtons w-full flex items-center justify-center ${
-                            isLoading
+                          className={`submitButtons w-full flex items-center justify-center ${isLoading
                               ? "opacity-50 cursor-not-allowed"
                               : "hover:bg-transparent hover-text-pink-710"
-                          }`}
+                            }`}
                           type="submit"
                           disabled={
                             !validEmail ||
