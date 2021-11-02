@@ -56,7 +56,7 @@ function printText(text1, text2) {
 }
 let str1 = "Hello";
 let str2 = "world!";
-printText(str1, str2); // Hello world!
+printText(str1, str2); //   Hello world!
 ```
 
 From the above code snippet a function consist of

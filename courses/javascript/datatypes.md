@@ -54,7 +54,7 @@ The _`string`_ in JavaScript must be surrounded by quotes. In JavaScript, there 
 let str = "Hello"; // Hello
 let str2 = "Single quotes are ok too"; // Single quotes are ok too
 let phrase = `can embed another ${str}`; // can embed another Hello
-let result = `the result is ${1 + 2}`; // the result is 3
+let result = `the result is ${1 + 2}`; // the result is 3   
 ```
 
 ## Boolean
