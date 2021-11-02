@@ -162,6 +162,7 @@ export default function SignUp({ referer }) {
       if (fName && password && email && username && terms) {
           try {
             const data = await signUp(email, password, fName, username);
+            notify('Sign Up Succesfull')
             router.push("/login");
             sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
           } catch (err) {
