@@ -178,7 +178,9 @@ export default function SignUp({ referer }) {
             }
           } catch (err) {
             setIsLoading(false);
-            notify(err?.response?.data?.message ?? err?.message, 'error');
+            let errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
+            console.log(errorMessage)
+            notify(err?.response?.data?.message && errorMessage, 'error');
           }
 
           // let progress = JSON.parse(
