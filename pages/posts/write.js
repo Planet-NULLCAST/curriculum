@@ -185,6 +185,7 @@ export default function Write({
           mobiledoc: newMobiledoc,
         };
         updatePostById(postId, newUpdatedPost); 
+        notify();  
       }
     }, 500);
     
@@ -198,7 +199,7 @@ export default function Write({
       const statusUpdate = {
         status: "pending",
         // mobiledoc: postElement.current.scratch,
-        // mobiledoc: post.mobiledoc,
+        mobiledoc: post.mobiledoc,
       };
       const msg = await PostService.updatePostById(
         postId,
