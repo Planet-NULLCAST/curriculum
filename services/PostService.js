@@ -17,7 +17,7 @@ import { getUrl } from "../lib/getUrl";
 
 async function getPostsByUserId(reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
     console.log(data);
@@ -62,7 +62,7 @@ async function createPost(post) {
 async function getLatestPosts(reqParams) {
   let url = getUrl();
   try {
-    const res = await axios.get(`${url}/${postsUrl}`, {
+    const res = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqParams
     });
     return res.data.data;
@@ -94,9 +94,9 @@ async function adminGetLatestPosts(reqParams) {
   }
 }
 
-async function updatePostById(post, postId) {
+async function updatePostById(postId, postDetails) {
   try {
-    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, post);
+    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, postDetails);
     return data;
   } catch (err) {
     console.log(err);

@@ -56,7 +56,7 @@ export default function WriteNav({
   }, [post]);
 
   useEffect(() => {
-    // getSettingsTags();
+    getSettingsTags();
     if (userCookie.roles === "admin") {
       getIsAdmin();
     }
@@ -81,7 +81,7 @@ export default function WriteNav({
   async function getSettingsTags() {
     try {
       const res = await TagService.getTags();
-      // console.log("get tags response", res);
+      console.log("get tags response", res);
       if (res && res.length) {
         const resTagOptions = res.map((tag) => {
           return {
@@ -108,12 +108,12 @@ export default function WriteNav({
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
-          // console.log(tag);
+          console.log(tag);
           return tag;
         }
       })
       .map((fTag) => fTag.value);
-    // console.log(newTag);
+    console.log(newTag, 'newtag');
     try {
       const res = await TagService.postTags(userCookie, newTag);
       // console.log({ res });

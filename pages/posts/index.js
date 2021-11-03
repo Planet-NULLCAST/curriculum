@@ -74,18 +74,18 @@ export default function Posts() {
       pageNo: router.query.pageNo,
       limit: postData.limit,
       tag: router.query.tag,
-      status: router.query.status
-      // with_table: ["user"]
+      status: router.query.status,
+      with_table: ["user"]
     };
-    // getPosts(newReqData);
+    getPosts(newReqData);
   }, [router.query.pageNo, router.query.tag, router.query.status]);
 
   async function getPosts(reqData) {
     // console.log("getposts call");
     try {
       const data = await PostService.getPostsByUserId(reqData);
-      const { posts, count } = data;
-      // console.log({ posts });
+      const { posts, count } = data.data;
+      console.log({ posts });
       if (data) {
         setLoaded(true);
       }
