@@ -11,7 +11,7 @@ export default function MyBlogs({ posts }) {
       <div className="w-full">
         {posts &&
           posts.map((item) => (
-            <div className={`${MyBlogsstyles.oddBg} w-full`} key={item._id}>
+            <div className={`${MyBlogsstyles.oddBg} w-full`} key={item.id}>
               <div
                 className={`flex flex-col md:flex-row md:items-center justify-between p-4`}
               >
@@ -19,7 +19,7 @@ export default function MyBlogs({ posts }) {
                   <Link
                     href={{
                       pathname: `/posts/write`,
-                      query: { post_id: `${item._id}` }
+                      query: { post_id: `${item.id}` }
                     }}
                     className={`text-15 font-semibold mb-1 ${MyBlogsstyles.color_blue_910}`}
                   >
@@ -79,7 +79,7 @@ export default function MyBlogs({ posts }) {
                   <Link
                     href={{
                       pathname: `/posts/write`,
-                      query: { post_id: `${item._id}` }
+                      query: { post_id: `${item.id}` }
                     }}
                   >
                     <a target="_blank">
