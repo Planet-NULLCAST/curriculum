@@ -1,0 +1,19 @@
+.dateWrapper {
+  @apply flex justify-center md:justify-start mb-5 gap-x-5;
+
+  .dateBox {
+    @apply w-16 h-16;
+    border: 1px solid #CCCFDB;
+    border-radius: 5px;
+
+    span {
+      @apply flex justify-center items-center h-1/3 text-center text-xs font-semibold;
+      color: #848484;
+    }
+    .dateCount {
+      @apply h-2/3 text-24 font-bold rounded;
+      color: black;
+      background-color: #EFF1F5;
+    }
+  }
+}

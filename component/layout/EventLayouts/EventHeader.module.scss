@@ -1,0 +1,19 @@
+.section {
+  @apply text-center md:text-left bg-blue-01 text-white py-10 lg:py-20;
+
+  h2 {
+    @apply text-4xl xl:text-64 font-black font-darker leading-none mb-6;
+  }
+
+  p {
+    @apply mb-8;
+  }
+
+  figure {
+    @apply m-auto;
+    max-width: 250px;
+    @screen md {
+      @apply max-w-full;
+    }
+  }
+}

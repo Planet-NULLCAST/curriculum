@@ -1,0 +1,56 @@
+.listing__item {
+  @apply mb-14 md:mb-10 flex flex-col;
+  &:hover {
+    .listing__figure {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+  h3 {
+    @apply text-xl font-bold mb-3;
+  }
+  p {
+    @apply mb-3;
+  }
+  [class*="authorDetails"] {
+    @apply mt-auto;
+  }
+  .time {
+    @apply font-bold text-18 flex;
+    span {
+      @apply inline-block mr-5;
+    }
+    .icon {
+      @apply mr-2.5 my-auto;
+    }
+    .location {
+      @apply uppercase;
+    }
+  }
+}
+
+.listing__figure {
+  @apply relative overflow-hidden mb-4;
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+
+  button {
+    @apply absolute w-12 h-12 top-2.5 right-2.5 bg-white rounded-full focus:outline-none;
+    
+    .listing__figure__icon {
+      @apply m-auto;
+    }
+  }
+
+  img:not(.listing__figure__icon) {
+    @apply w-full;
+    transition: all ease 0.3s;
+    height: 370px;
+    object-fit: cover;
+
+    @media (max-width: 767px) {
+      height: 300px;
+    }
+  }
+}
