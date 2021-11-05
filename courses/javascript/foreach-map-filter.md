@@ -34,7 +34,7 @@ testCase: [
 
 In the [Prototypes](/curriculum/javascript/prototypes) session, you've already learned that everything in Javascript revolves around Objects and looked into some of the Prototypes of `Array` provided by Javascript.
 
-<br>In this session, we'll dive more deeply into some of the most commonly used Array Prototypes(Methods).
+<br>In this session, we'll dive more deeply into some of the most commonly used array prototypes (Methods).
 
 ## What Are They ?
 
@@ -89,7 +89,7 @@ sample.filter((el) => el > 2);   // [3,4,5]
 
 ### Returning Value 
 
-- Both `.map()` and `.filter()` methods return a **New Array** with the transformed elements whereas `.forEach()` method returns **Undefined**.
+- Both `.map()` and `.filter()` methods return a **New Array** with the transformed elements whereas `.forEach()` method returns `Undefined`.
 
 ### Usage
 
@@ -113,7 +113,7 @@ sample.filter((el) => el > 1).map((item) => item*2)   // [4,6,8,10]
 
 - Callback functions of all these methods accepts 3 arguments which are `elements` , `index` and `array` .
 
-*Example : Here we print **whether element greater than 2** , **Index of element** , **Parent array***
+*Example : Here we print **whether element greater than 2**, **Index of element** , **Parent array***
 
 ```javascript
 var sample = [1,2,3,4,5];
@@ -143,10 +143,10 @@ sample.forEach((elm, ind, ar) => console.log(elm > 2, ind, ar)));
 
 ## Complete the tasks below:
 
-- Create an array named 'test' of type **const** with values from 1 to 5.
+- Create an array named `test` of type `const` with values from 1 to 5.
 
-- Write a `forEach()` method to print each element on console. Try using arrow function for callback. The arrow function takes 'item' as an argument.
+- Write a `forEach()` method to print each element on console. Try using arrow function for callback. The arrow function takes `item` as an argument.
 
-- Write a `map()` method to multiply each element with 4. Try using arrow function for callback. The arrow function takes 'item' as an argument.
+- Write a `map()` method to multiply each element with 4. Try using arrow function for callback. The arrow function takes `item` as an argument.
 
-- Write a `filter()` method to filter elements which are greater than 2. Try using arrow function for callback. The arrow function takes 'item' as an argument.
+- Write a `filter()` method to filter elements which are greater than 2. Try using arrow function for callback. The arrow function takes `item` as an argument.

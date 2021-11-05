@@ -20,6 +20,8 @@ const userUrl = `${apiVerUrl}/user`;
 const usersUrl = `${apiVerUrl}/users`;
 const adminUrl = "api/admin";
 const tagUrl = `${apiVerUrl}/tags`;
+const postTagUrl = `${apiVerUrl}/post-tag`;
+const CreateTagUrl = `${apiVerUrl}/tag`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
@@ -31,6 +33,7 @@ const logoutUrl = `${apiVerUrl}/logout`;
 
 const configVars = {
   baseUrl,
+  postTagUrl,
   postUser,
   loginUrl,
   signUpUrl,
@@ -49,6 +52,7 @@ const configVars = {
   userUrl,
   adminUrl,
   tagUrl,
+  CreateTagUrl,
   serverUrl,
   searchUrl,
   forgotPasswordUrl,

@@ -38,16 +38,15 @@ export default function WriteNav({
   // console.log(userState);
 
   const [currentPost, setCurrentPost] = useState({
-    _id: "",
-    bannerImage: "",
-    canonicalUrl: "",
+    id: 0,
+    banner_image: "",
+    // canonicalUrl: "",
     tags: [],
     shortDescription: "",
     metaTitle: "",
     metaDescription: "",
     slug: ""
   });
-
   useEffect(() => {
     console.log("writenavprop", { post });
 
@@ -56,7 +55,7 @@ export default function WriteNav({
   }, [post]);
 
   useEffect(() => {
-    // getSettingsTags();
+    getSettingsTags();
     if (userCookie.roles === "admin") {
       getIsAdmin();
     }
@@ -81,7 +80,7 @@ export default function WriteNav({
   async function getSettingsTags() {
     try {
       const res = await TagService.getTags();
-      // console.log("get tags response", res);
+      console.log("get tags response", res);
       if (res && res.length) {
         const resTagOptions = res.map((tag) => {
           return {
@@ -108,12 +107,12 @@ export default function WriteNav({
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
-          // console.log(tag);
+          console.log(tag);
           return tag;
         }
       })
       .map((fTag) => fTag.value);
-    // console.log(newTag);
+    console.log(newTag, 'newtag');
     try {
       const res = await TagService.postTags(userCookie, newTag);
       // console.log({ res });
@@ -128,7 +127,6 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
-
   /**
    * gets form data and passes to parent getsettings function
    * @param e form submit event
@@ -155,16 +153,16 @@ export default function WriteNav({
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
-    // console.log(imageName, postUrl, tags, shortDescription, metaTitle, metaDescription);
     const settingsData = {
-      tags: tags,
-      url: `p/${currentPost._id}`,
-      canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
-      bannerImage: currentPost.bannerImage ? currentPost.bannerImage : null,
-      shortDescription: shortDes,
-      metaTitle: metaTitle,
-      metaDescription: metaDes,
-      slug: postUrl
+      // tags: "tags",
+      // url: `p/${currentPost._id}`,
+      // canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
+      banner_image: currentPost.banner_image ? currentPost.banner_image : null,
+      // shortDescription: shortDes,
+      meta_title: metaTitle,
+      // metaDescription: metaDes,
+      slug: postUrl,
+      mobiledoc: currentPost.mobiledoc,
     };
 
     // console.log(
@@ -211,7 +209,7 @@ export default function WriteNav({
     const imageData = {
       stage: "dev",
       fileName: imageFile.name,
-      id: currentPost._id,
+      id: currentPost.id,
       category: "posts",
       ContentType: imageFile.type
     };
@@ -254,11 +252,10 @@ export default function WriteNav({
    * @author akhilalekha
    */
   async function deletePost() {
-    // console.log({ currentPost });
     try {
       const { msg, data } = await PostService.deletePostById(
         userCookie,
-        currentPost._id
+        currentPost.id
       );
       // console.log(msg);
       notify("Post deleted successfully");
@@ -556,7 +553,7 @@ export default function WriteNav({
                             placeholder=" "
                             className="floating-input w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
                             name="metaTitle"
-                            value={currentPost.metaTitle}
+                            value={currentPost.meta_title}
                             onChange={handleChange}
                           />
                           <label className="flex items-center top-0 h-full left-0 ml-3 text-sm">

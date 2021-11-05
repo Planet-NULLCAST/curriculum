@@ -1,18 +1,16 @@
 const axios = require("axios");
-import { baseUrl, tagUrl } from "../config/config";
-import { getUrl } from "../lib/getUrl";
+import { baseUrl, tagUrl, CreateTagUrl, postTagUrl } from "../config/config";
 
 async function getTags(filterWhatsNew) {
-  let url = getUrl();
 
   try {
     const { data } = await axios.get(
-      `${url}/${tagUrl}`
+      `${baseUrl}/${tagUrl}`
       // {
       //   params: { filterWhatsNew }
       // }
     );
-    // console.log(data);
+    console.log(data);
     return data;
   } catch (err) {
     console.log(err);
@@ -23,9 +21,27 @@ async function getTags(filterWhatsNew) {
 async function postTags(userCookie, newTag) {
   try {
     const { data } = await axios.post(
-      `${baseUrl}/${tagUrl}`,
-      { tags: newTag },
-      {
+      `${baseUrl}/${CreateTagUrl}`,
+      {name: newTag[0], meta_title: newTag[0] },
+            {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    // console.log(data);
+    return data.msg;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+async function postTag(userCookie, Tags) {
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${postTagUrl}`,
+      {tag_id: Tags.id, post_id: postId },
+            {
         headers: {
           "x-access-token": `${userCookie.accessToken}`
         }
@@ -41,6 +57,7 @@ async function postTags(userCookie, newTag) {
 
 const TagService = {
   getTags,
+  postTag,
   postTags
 };
 

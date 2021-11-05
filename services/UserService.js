@@ -20,7 +20,7 @@ async function getLatestUsers(reqParams) {
 
 //Api call for fetching userdetails
 async function getUserByUsername(username) {
-  let url = getUrl();
+  // let url = getUrl();
 
   try {
     const { data } = await axios.get(

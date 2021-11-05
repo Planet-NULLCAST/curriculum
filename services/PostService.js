@@ -17,7 +17,7 @@ import { getUrl } from "../lib/getUrl";
 
 async function getPostsByUserId(reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
     console.log(data);
@@ -62,7 +62,7 @@ async function createPost(post) {
 async function getLatestPosts(reqParams) {
   let url = getUrl();
   try {
-    const res = await axios.get(`${url}/${postsUrl}`, {
+    const res = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqParams
     });
     return res.data.data;
@@ -94,9 +94,10 @@ async function adminGetLatestPosts(reqParams) {
   }
 }
 
-async function updatePostById(post, postId) {
+async function updatePostById(postId, postDetails) {
+  
   try {
-    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, post);
+    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, postDetails);
     return data;
   } catch (err) {
     console.log(err);
@@ -141,24 +142,24 @@ async function uploadImage(imageFile, imageData) {
   }
 }
 
-async function changePostStatus(userCookie, postId, statusUpdate) {
-  try {
-    const { data } = await axios.post(
-      `${baseUrl}/${changeStatusUrl}/${postId}`,
-      statusUpdate,
-      {
-        headers: {
-          "x-access-token": `${userCookie.accessToken}`
-        }
-      }
-    );
-    // console.log(data.message);
-    return data.message;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
+// async function changePostStatus(userCookie, postId, statusUpdate) {
+//   try {
+//     const { data } = await axios.post(
+//       `${baseUrl}/${changeStatusUrl}/${postId}`,
+//       statusUpdate,
+//       {
+//         headers: {
+//           "x-access-token": `${userCookie.accessToken}`
+//         }
+//       }
+//     );
+//     // console.log(data.message);
+//     return data.message;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// }
 
 async function getPostByTags(tagName, clickNo) {
 
@@ -324,7 +325,6 @@ const PostService = {
   deletePostById,
   uploadImage,
   getLatestPosts,
-  changePostStatus,
   getPostByTags,
   getPostsByQuery,
   adminChangePostStatus,
