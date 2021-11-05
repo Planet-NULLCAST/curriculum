@@ -95,6 +95,7 @@ async function adminGetLatestPosts(reqParams) {
 }
 
 async function updatePostById(postId, postDetails) {
+  
   try {
     const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, postDetails);
     return data;
@@ -141,24 +142,24 @@ async function uploadImage(imageFile, imageData) {
   }
 }
 
-async function changePostStatus(userCookie, postId, statusUpdate) {
-  try {
-    const { data } = await axios.post(
-      `${baseUrl}/${changeStatusUrl}/${postId}`,
-      statusUpdate,
-      {
-        headers: {
-          "x-access-token": `${userCookie.accessToken}`
-        }
-      }
-    );
-    // console.log(data.message);
-    return data.message;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
+// async function changePostStatus(userCookie, postId, statusUpdate) {
+//   try {
+//     const { data } = await axios.post(
+//       `${baseUrl}/${changeStatusUrl}/${postId}`,
+//       statusUpdate,
+//       {
+//         headers: {
+//           "x-access-token": `${userCookie.accessToken}`
+//         }
+//       }
+//     );
+//     // console.log(data.message);
+//     return data.message;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// }
 
 async function getPostByTags(tagName, clickNo) {
 
@@ -324,7 +325,6 @@ const PostService = {
   deletePostById,
   uploadImage,
   getLatestPosts,
-  changePostStatus,
   getPostByTags,
   getPostsByQuery,
   adminChangePostStatus,

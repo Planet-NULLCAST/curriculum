@@ -158,10 +158,10 @@ export default function Write({
   async function updatePostById(updateData, newPostId) {
     try {
       const res = await PostService.updatePostById(updateData, newPostId);
-      console.log("updated post response", res);
-      // if (msg) {
-      //   notify(msg);
-      // }
+      console.log("updated post response", res.message);
+      if (res) {
+        notify(res?.message);
+      }
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -201,15 +201,7 @@ export default function Write({
         // mobiledoc: postElement.current.scratch,
         mobiledoc: post.mobiledoc,
       };
-      const msg = await PostService.updatePostById(
-        postId,
-        statusUpdate,
-        );
-      console.log(msg);
-      if (msg) {
-        notify(msg);  
-        return msg;
-      }
+      updatePostById(postId,statusUpdate);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -217,7 +209,7 @@ export default function Write({
 
   const getSettings = async (settingsData) => {
     if (postId) {
-      updatePostById(settingsData, postId);
+      updatePostById(postId,settingsData);
     }
   };
 
