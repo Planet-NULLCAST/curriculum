@@ -4,11 +4,6 @@ import Image from "next/image";
 import Fade from "react-reveal/Fade";
 import moment from "moment";
 
-// For testing only (image from unsplash). Remove this and 'loader' from Image in production.
-const myLoader = ({ src, width, quality }) => {
-  return `${src}`;
-};
-
 export default function EventItems({ events }) {
   return events.map((item, key) => (
     <div className={styles.listing__item} key={"Event_Item_" + key}>
@@ -18,7 +13,6 @@ export default function EventItems({ events }) {
             <figure className={styles.listing__figure}>
               <Image
                 src={item.banner_image}
-                loader={myLoader}
                 alt={item.meta_title}
                 width={350}
                 height={370}

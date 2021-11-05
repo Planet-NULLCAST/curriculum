@@ -5,11 +5,6 @@ import Fade from "react-reveal/Fade";
 import moment from "moment";
 import EventDate from "./EventDate";
 
-// For testing only (image from unsplash). Remove this and 'loader' from Image in production
-const myLoader = ({ src, width, quality }) => {
-  return `${src}`
-}
-
 export default function EventFeatured({ event }) {
   return (
     event && (
@@ -23,7 +18,6 @@ export default function EventFeatured({ event }) {
                     {event.banner_image && (
                       <Image
                         src={event.banner_image}
-                        loader={myLoader}
                         alt={event?.meta_title}
                         width={380}
                         height={318}

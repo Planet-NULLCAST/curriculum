@@ -48,22 +48,6 @@ export async function getServerSideProps() {
 
 export default function EventListing({ events, count, limit }) {
 
-  // For test only, remove this in production (EventFeatured component with this data also)
-  const test = {
-    "id": 10000008,
-    "created_at": "2021-11-01T16:14:16.314Z",
-    "created_by": 10000024,
-    "status": "published",
-    "published_at": null,
-    "banner_image": "https://images.unsplash.com/photo-1579001843871-a9f7eb4311e0?ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8N3x8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    "updated_at": "2021-11-02T14:46:12.590Z",
-    "meta_title": "Creative Search Bar and Input Field Design Inspiration",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    "location": "Trivandrum, INDIA",
-    "primary_tag": null,
-    "event_time": "2021-11-11T16:20:35.138Z"
-  }
-
   const [newEvents, setNewEvents] = useState(events);
 
   const currentCount = (count) => {
@@ -128,8 +112,7 @@ export default function EventListing({ events, count, limit }) {
       </Head>
       <SiteHeader />
       <EventHeader />
-      {/* {events && <EventFeatured event={events[0]} />} */}
-      {events && <EventFeatured event={test} />}
+      {events && <EventFeatured event={events[0]} />}
       {events?.length > 0 ? (
         <EvListing
           events={newEvents}
