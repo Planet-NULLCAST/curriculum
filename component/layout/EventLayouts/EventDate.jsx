@@ -12,9 +12,10 @@ export default function EventDate({ eventDate }) {
   const countDown = useCallback(() => {
     setInterval(() => {
       const now = new Date();
+      const dateOfEvent = new Date(eventDate);
       const then = moment(eventDate).diff(now);
       var d = moment.duration(then);
-      setCount(d._data);
+      if(now <= dateOfEvent) setCount(d._data);
     }, 1000);
   }, [eventDate]);
 
