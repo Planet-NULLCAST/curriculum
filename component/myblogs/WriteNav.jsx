@@ -112,7 +112,6 @@ export default function WriteNav({
         }
       })
       .map((fTag) => fTag.value);
-    console.log(newTag, 'newtag');
     try {
       const res = await TagService.postTags(userCookie, newTag);
       // console.log({ res });

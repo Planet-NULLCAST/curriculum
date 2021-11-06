@@ -58,7 +58,7 @@ export default function Posts() {
   const [postData, setPostData] = useState({
     posts: [],
     count: 0,
-    pageNo: router.query.pageNo,
+    page: router.query.page,
     limit: 10 //should be 10
   });
 
@@ -71,7 +71,7 @@ export default function Posts() {
     setTagFilter(router.query.tag);
     setStatusFilter(router.query.status);
     const newReqData = {
-      pageNo: router.query.pageNo,
+      page: router.query.page,
       limit: postData.limit,
       tag: router.query.tag,
       status: router.query.status,
@@ -106,13 +106,12 @@ export default function Posts() {
     router.push({
       pathname: "/posts",
       query: {
-        pageNo: newPageNo,
+        page: postData.page,
         tag: router.query.tag,
         status: router.query.status
       }
     });
   };
-
   return (
     <div>
       <Head>
@@ -125,7 +124,7 @@ export default function Posts() {
           {loaded ? (
             postData.posts.length > 0 ? (
               <div>
-                <MyBlogs posts={postData.posts} currentPage={postData.pageNo} />
+                <MyBlogs posts={postData.posts} currentPage={postData.page} />
               </div>
             ) : !tagFilter && !statusFilter ? (
               <div className="text-gray-700 text-center font-semibold mt-8">
@@ -153,7 +152,7 @@ export default function Posts() {
             <Pagination
               TotalCount={postData.count}
               changePage={changePage}
-              pageNum={postData.pageNo}
+              pageNum={postData.page}
               limit={postData.limit}
             />
           </div>
