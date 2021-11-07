@@ -88,6 +88,7 @@ export default function WriteNav({
             label: `${tag.name.toUpperCase()}`,
             value: `${tag.name}`,
             id: `${tag.id}`,
+            name: `${tag.name}`,
           };
         });
         // setTagOptions;
@@ -122,13 +123,31 @@ export default function WriteNav({
         console.log({ res });
       }
       // console.log
-      setCurrentPost((prevValue) => {
-        return {
-          ...prevValue,
-          tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id}],
-          tagsId: [...prevValue.tagsId, e[e.length - 1].id]
-        };
-      });
+      if(e && e.length === 0) {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [],
+            // tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+          };
+        });
+      }
+      else {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [...e],
+            // tagsId: []
+          };
+        });
+      }
+      // setCurrentPost((prevValue) => {
+      //   return {
+      //     ...prevValue,
+      //     tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
+      //     tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+      //   };
+      // });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -155,7 +174,9 @@ export default function WriteNav({
     //   tags = e.target.tags.value;
     //   // console.log("single tag", tags);
     // }
-
+    const tagsId =currentPost.tags.map(tag => {
+      return tag.id
+    })
     const res = await TagService.postSaveTag(userCookie, currentPost.tagsId, currentPost.id );
 
 
@@ -521,7 +542,9 @@ export default function WriteNav({
                         value={currentPost?.tags?.map((tag) => {
                           return {
                             label: `${tag.name.toUpperCase()}`,
-                            value: `${tag.name}`
+                            value: `${tag.name}`,
+                            id: `${tag.id}`,
+                            name: `${tag.name}`,
                           };
                         })}
                         onChange={(e) => handleTags(e)}
