@@ -13,6 +13,7 @@ const OrganizerInfo = () => {
           alt="profile image"
           height={180}
           width={180}
+          className="filter brightness-50"
         />
         <div className="flex flex-col flex-grow ml-12">
           <div className="flex flex-col mb-3">
