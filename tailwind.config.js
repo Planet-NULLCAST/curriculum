@@ -31,6 +31,9 @@ module.exports = {
         gray: {
           "01": "#0B2A2B"
         },
+        blue: {
+          "01": "#102364"
+        },
         pink: "#F13E5D",
         yellowBg: "#F7DA5B",
         orange: "#FF590F",

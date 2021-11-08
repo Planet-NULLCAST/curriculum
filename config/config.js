@@ -11,6 +11,7 @@ const postBySlug = `${apiVerUrl}/post-by-slug`;
 const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-user`;
+const eventsUrl = `${apiVerUrl}/events`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -44,6 +45,7 @@ const configVars = {
   postBySlug,
   postsUrl,
   allPostsUrl,
+  eventsUrl,
   changeStatusUrl,
   subscribeUrl,
   editorUrl,

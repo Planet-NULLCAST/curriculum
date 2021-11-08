@@ -1,0 +1,53 @@
+.section {
+  @apply pt-10 lg:pt-12;
+
+  figure {
+    @apply relative mb-5 md:mb-0 overflow-hidden;
+    border-radius: 5px;
+
+    button {
+      @apply absolute w-12 h-12 top-2.5 right-2.5 bg-white rounded-full focus:outline-none;
+      
+      img {
+        @apply m-auto;
+      }
+    }
+  }
+  [class*="icon"] {
+    @screen xl {
+      max-width: 70px;
+      max-height: 70px;
+    }
+  }
+  circle {
+    stroke-width: 2px;
+  }
+}
+
+.text {
+  color: #0b2a2b;
+
+  h3 {
+    @apply text-24 font-bold mb-5 md:pr-48 text-left;
+  }
+
+  p {
+    @apply text-15 font-semibold mb-5;
+  }
+
+  .tags {
+    @apply mb-10;
+  }
+  .time {
+    @apply font-bold text-18 flex;
+    span {
+      @apply inline-block mr-5;
+    }
+    .icon {
+      @apply mr-2.5 my-auto;
+    }
+    .location {
+      @apply uppercase;
+    }
+  }
+}
