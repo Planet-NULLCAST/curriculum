@@ -28,12 +28,16 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
     let resTagOptions = [];
     try {
       const res = await TagService.getTags();
-      resTagOptions = res.map((tag) => {
-        return {
-          label: `${tag.name.toUpperCase()}`,
-          value: `${tag.name}`
-        };
-      });
+      // console.log("get tags response", res);
+      if (res && res.length) {
+         resTagOptions = res.data.map((tag) => {
+          return {
+            label: `${tag.name.toUpperCase()}`,
+            value: `${tag.name}`,
+            id: `${tag.id}`,
+          };
+        });
+      }
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }

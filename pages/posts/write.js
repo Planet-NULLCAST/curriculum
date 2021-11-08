@@ -158,7 +158,6 @@ export default function Write({
   async function updatePostById(updateData, newPostId) {
     try {
       const res = await PostService.updatePostById(updateData, newPostId);
-      console.log("updated post response", res.message);
       if (res) {
         notify(res?.message);
       }

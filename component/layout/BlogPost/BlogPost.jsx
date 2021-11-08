@@ -33,8 +33,8 @@ export default function BlogPost(props) {
     }
   }, [props.blog]);
   const [voteCount, setVoteCount] = useState(
-    props.blog.votes.filter((item) => item.type == "up").length -
-      props.blog.votes.filter((item) => item.type == "down").length
+    props.blog.votes?.filter((item) => item.type == "up").length -
+      props.blog.votes?.filter((item) => item.type == "down").length
   );
 
   /**
