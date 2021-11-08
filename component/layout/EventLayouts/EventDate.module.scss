@@ -1,5 +1,5 @@
 .dateWrapper {
-  @apply flex justify-center md:justify-start mb-5 gap-x-5;
+  @apply w-auto h-auto flex gap-x-5;
 
   .dateBox {
     @apply w-16 h-16;

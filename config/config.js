@@ -12,6 +12,7 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-user`;
 const eventsUrl = `${apiVerUrl}/events`;
+const eventIdUrl = `${apiVerUrl}/event`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -46,6 +47,7 @@ const configVars = {
   postsUrl,
   allPostsUrl,
   eventsUrl,
+  eventIdUrl,
   changeStatusUrl,
   subscribeUrl,
   editorUrl,
