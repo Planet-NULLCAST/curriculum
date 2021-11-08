@@ -1,4 +1,7 @@
+import { useRef } from "react";
 const EventInfo = () => {
+  const ref = useRef();
+
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
@@ -78,12 +81,20 @@ const EventInfo = () => {
           />
         </div>
       </div>
-      <div className="border-dashed border-2 border-grayBorder p-8 rounded text-center">
-        <input
-          type="file"
-          className="my-3 bg-tarnsparent"
-          placeholder="uplaod image"
-        />
+      <div
+        className="border-dashed border-2 border-grayBorder p-8 rounded text-center flex flex-col"
+        onClick={() => ref.current.click()}
+      >
+        <label htmlFor="inputFiles" className="font-semibold relative">
+          Upload Image
+          <input
+            type="file"
+            className="opacity-0 absolute top-0 left-0 w-full flex-grow"
+            placeholder="uplaod image"
+            id="inputFile"
+            ref={ref}
+          />
+        </label>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const CreateEvent = () => {
       <SiteHeader />
       <div className="bg-white max-w-6xl mx-auto flex  mt-3.5">
         <div className="px-4">
-          <p className="font-bold text-sm rounded py-3.5">Create Event</p>
+          <p className="font-bold text-sm rounded py-4">Create Event</p>
           <div className="h-1 bg-black rounded-t"></div>
         </div>
       </div>
