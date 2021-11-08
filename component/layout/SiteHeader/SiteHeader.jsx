@@ -105,7 +105,7 @@ export default function HomeSpotlight() {
                     <Link
                       href={{
                         pathname: "/posts",
-                        query: { pageNo: 1, tag: "", status: "" }
+                        query: { page: 1, tag: "", status: "" }
                       }}
                     >
                       <a onClick={() => setMenu(true)}>

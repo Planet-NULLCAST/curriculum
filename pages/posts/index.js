@@ -78,7 +78,7 @@ export default function Posts() {
       with_table: ["user"]
     };
     getPosts(newReqData);
-  }, [router.query.pageNo, router.query.tag, router.query.status]);
+  }, [router.query.page, router.query.tag, router.query.status]);
 
   async function getPosts(reqData) {
     // console.log("getposts call");
@@ -106,7 +106,7 @@ export default function Posts() {
     router.push({
       pathname: "/posts",
       query: {
-        page: postData.page,
+        page: newPageNo,
         tag: router.query.tag,
         status: router.query.status
       }

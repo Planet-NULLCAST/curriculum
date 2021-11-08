@@ -291,7 +291,7 @@ export default function WriteNav({
       router.push({
         pathname: "/posts",
         query: {
-          pageNo: 1,
+          page: 1,
           tag: "",
           status: ""
         }
