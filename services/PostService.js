@@ -11,7 +11,7 @@ import {
   tagUrl,
   adminUrl,
   searchUrl,
-  publishedPostsCountUrl
+  // publishedPostsCountUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
@@ -20,7 +20,7 @@ async function getPostsByUserId(reqData) {
     const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
-    console.log(data);
+    console.log(data ,);
     return data;
   } catch (err) {
     throw err;
@@ -247,20 +247,20 @@ async function getPublishedPostsByUserId(userId, limit, clickNo) {
   }
 }
 
-async function getPublishedPostsCountByUserId(userId) {
-  // console.log({ userId });
-  const url = getUrl();
+// async function getPublishedPostsCountByUserId(userId) {
+//   // console.log({ userId });
+//   const url = getUrl();
 
-  try {
-    const { data } = await axios.get(
-      `${url}/${publishedPostsCountUrl}/${userId}`
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
+//   try {
+//     const { data } = await axios.get(
+//       `${url}/${publishedPostsCountUrl}/${userId}`
+//     );
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// }
 
 /**
  * Service to call updatePostVote Api
@@ -331,7 +331,7 @@ const PostService = {
   adminGetLatestPosts,
   isAdmin,
   getPublishedPostsByUserId,
-  getPublishedPostsCountByUserId,
+  // getPublishedPostsCountByUserId,
   setVotes,
   getPostsByMultipleTags
 };

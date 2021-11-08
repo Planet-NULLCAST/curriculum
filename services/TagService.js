@@ -11,7 +11,7 @@ async function getTags(filterWhatsNew) {
       // }
     );
     console.log(data);
-    return data;
+    return data.data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -30,25 +30,29 @@ async function postTags(userCookie, newTag) {
       }
     );
     // console.log(data);
-    return data.msg;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
   }
 }
-async function postTag(userCookie, Tags) {
+async function postSaveTag(userCookie, Tags, postId) {
   try {
-    const { data } = await axios.post(
-      `${baseUrl}/${postTagUrl}`,
-      {tag_id: Tags.id, post_id: postId },
-            {
-        headers: {
-          "x-access-token": `${userCookie.accessToken}`
+    let arr= [];
+    for (const tag of Tags) {
+      const { data } = await axios.post(
+        `${baseUrl}/${postTagUrl}`,
+        {tag_id: tag, post_id: postId },
+              {
+          headers: {
+            "x-access-token": `${userCookie.accessToken}`
+          }
         }
-      }
-    );
+      );
+      arr.push(data);
+    }  
     // console.log(data);
-    return data.msg;
+    return arr;
   } catch (err) {
     console.log(err);
     throw err;
@@ -57,7 +61,7 @@ async function postTag(userCookie, Tags) {
 
 const TagService = {
   getTags,
-  postTag,
+  postSaveTag,
   postTags
 };
 

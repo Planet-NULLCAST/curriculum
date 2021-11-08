@@ -5,25 +5,10 @@ import PostService from "../../../services/PostService";
 import { useEffect, useState } from "react";
 import notify from "../../../lib/notify";
 
-export default function SectionAuthor({ primaryAuthor }) {
+export default function SectionAuthor({ primaryAuthor, postCount }) {
   const { bio, username, avatar } = primaryAuthor;
-
-  const [count, setCount] = useState();
-
-  const getPostsCountByUserId = async () => {
-    try {
-      const res = await PostService.getPublishedPostsCountByUserId(
-        primaryAuthor._id
-      );
-      // console.log(count);
-      setCount(res.count);
-    } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
-    }
-  };
-
+console.log(postCount);
   useEffect(() => {
-    getPostsCountByUserId();
   }, [primaryAuthor]);
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
@@ -44,7 +29,7 @@ export default function SectionAuthor({ primaryAuthor }) {
 
             <div className={styles.stats}>
               <div className={styles.statsItem}>
-                <strong>{count}</strong>
+                <strong>{postCount}</strong>
                 <span>Blogs</span>
               </div>
               <div className={styles.statsItem}>

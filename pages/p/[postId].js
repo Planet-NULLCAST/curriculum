@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   try {
     const postId = context.params.postId;
     let userId = "";
-    let token = "";
+    // let token = "";
 
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
@@ -28,9 +28,12 @@ export async function getServerSideProps(context) {
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
         userId = cookie.id;
-        token = cookie.accessToken;
+        // token = cookie.accessToken;
 
-        const response = await PostService.getPostById(cookie, postId);
+        const response = await PostService.getPostById(postId);
+        const data = await PostService.getPostsByUserId(userId);
+        const { count } = data.data;
+        // console.log('ysggh',response);
         if (!response) {
           return {
             redirect: {
@@ -41,9 +44,10 @@ export async function getServerSideProps(context) {
         }
         return {
           props: {
-            posts: response,
-            token: token,
-            userId: userId
+            posts: response.data,
+            count: count,
+            // token: token,
+            userId: userId,
           }
         };
       }
@@ -64,8 +68,9 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing(props) {
-  const { html, primaryAuthor, title, bannerImage, createdAt } = props.posts;
+export default function BlogListing(props,response) {
+  const { html, title, banner_image, created_by, user } = props.posts;
+  const count = props.count;
   return (
     <>
       <Head>
@@ -74,17 +79,17 @@ export default function BlogListing(props) {
       <SiteHeader />
       <BlogSpotlight
         title={title}
-        bannerImage={bannerImage}
-        createdAt={createdAt}
-        primaryAuthor={primaryAuthor}
+        bannerImage={banner_image}
+        createdAt={created_by}
+        primaryAuthor={user}
       />
       <BlogPost
         userId={props.userId}
-        token={props.token}
+        // token={props.token}
         blog={props.posts}
         html={html}
       />
-      <SectionAuthor primaryAuthor={primaryAuthor} />
+      <SectionAuthor primaryAuthor={user} postCount={count} />
       <SectionSwag />
       <SiteFooter />
     </>

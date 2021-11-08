@@ -42,6 +42,7 @@ export default function WriteNav({
     banner_image: "",
     // canonicalUrl: "",
     tags: [],
+    tagsId:[],
     shortDescription: "",
     metaTitle: "",
     metaDescription: "",
@@ -50,7 +51,7 @@ export default function WriteNav({
   useEffect(() => {
     console.log("writenavprop", { post });
 
-    setCurrentPost({ ...post });
+    setCurrentPost( prevValue =>  ( {...prevValue, ...post }));
     // userState.setTags();
   }, [post]);
 
@@ -85,7 +86,9 @@ export default function WriteNav({
         const resTagOptions = res.map((tag) => {
           return {
             label: `${tag.name.toUpperCase()}`,
-            value: `${tag.name}`
+            value: `${tag.name}`,
+            id: `${tag.id}`,
+            name: `${tag.name}`,
           };
         });
         // setTagOptions;
@@ -96,14 +99,15 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-
+  console.log(currentPost,'hola');
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    // console.log("handle tags", e);
+    
+    console.log("handle tags", e);
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -114,15 +118,36 @@ export default function WriteNav({
       .map((fTag) => fTag.value);
     console.log(newTag, 'newtag');
     try {
-      const res = await TagService.postTags(userCookie, newTag);
-      // console.log({ res });
-  
-      setCurrentPost((prevValue) => {
-        return {
-          ...prevValue,
-          tags: e.map((i) => i.value)
-        };
-      });
+      if (newTag.length > 0) {
+        const res = await TagService.postTags(userCookie, newTag);
+        console.log({ res });
+      }
+      // console.log
+      if(e && e.length === 0) {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [],
+            // tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+          };
+        });
+      }
+      else {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [...e],
+            // tagsId: []
+          };
+        });
+      }
+      // setCurrentPost((prevValue) => {
+      //   return {
+      //     ...prevValue,
+      //     tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
+      //     tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+      //   };
+      // });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -132,7 +157,7 @@ export default function WriteNav({
    * @param e form submit event
    * @author akhilalekha
    */
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
     // console.log(e.target);
@@ -140,15 +165,20 @@ export default function WriteNav({
     const postUrl = e.target.slug.value || "";
     // console.log({ postUrl });
     // console.log(`${baseUrl}/${postUrl}`);
-    let tags = Array.from(e.target.tags) || "";
-    // console.log("tags length: ", tags.length);
-    if (tags.length > 0) {
-      tags = tags.map((tag) => tag.value);
-      // console.log("multiple tags", tags);
-    } else {
-      tags = e.target.tags.value;
-      // console.log("single tag", tags);
-    }
+    // let tags = Array.from(e.target.tags) || "";
+    // // console.log("tags length: ", tags.length);
+    // if (tags.length > 0) {
+    //   tags = tags.map((tag) => tag.value);
+    //   // console.log("multiple tags", tags);
+    // } else {
+    //   tags = e.target.tags.value;
+    //   // console.log("single tag", tags);
+    // }
+    const tagsId =currentPost.tags.map(tag => {
+      return tag.id
+    })
+    const res = await TagService.postSaveTag(userCookie, currentPost.tagsId, currentPost.id );
+
 
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
@@ -511,8 +541,10 @@ export default function WriteNav({
                         name="tags"
                         value={currentPost?.tags?.map((tag) => {
                           return {
-                            label: `${tag.toUpperCase()}`,
-                            value: `${tag}`
+                            label: `${tag.name.toUpperCase()}`,
+                            value: `${tag.name}`,
+                            id: `${tag.id}`,
+                            name: `${tag.name}`,
                           };
                         })}
                         onChange={(e) => handleTags(e)}
