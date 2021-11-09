@@ -22,13 +22,15 @@ export async function getServerSideProps(context) {
         "userNullcast"
       );
       if (contextCookie) {
+        const username = context.params.username;
         const cookie = JSON.parse(contextCookie);
-        const response = await UserService.getProfileByUserId(cookie);
-        const skillsRes = await SkillService.getSkills();
+        const data  = await UserService.getUserByUsername(cookie.user_name);
+        console.log(data ,'error')
+        // const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: response.data,
-            _skills: skillsRes
+            profileData: data,
+            // _skills: skillsRes
           }
         };
       } else {
@@ -53,15 +55,16 @@ export async function getServerSideProps(context) {
       props: {
         profileData: []
       },
-      redirect: {
-        permanent: false,
-        destination: "/"
-      }
+      // redirect: {
+      //   permanent: false,
+      //   destination: "/"
+      // }
     };
   }
 }
 
 export default function Settings({ profileData, _skills }) {
+  console.log(profileData,'dd');
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
@@ -429,7 +432,7 @@ export default function Settings({ profileData, _skills }) {
                   ></textarea>
                 </div>
                 <label htmlFor="skills">Skills</label>
-                <CreatableSelect
+                {/* <CreatableSelect
                   options={allSkills.map((a) => {
                     return {
                       label: `${a.name.toUpperCase()}`,
@@ -451,7 +454,7 @@ export default function Settings({ profileData, _skills }) {
                     };
                   })}
                   onChange={handleSkills}
-                />
+                /> */}
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter Username</label>
                   <input
