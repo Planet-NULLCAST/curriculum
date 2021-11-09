@@ -20,7 +20,6 @@ async function getPostsByUserId(reqData) {
     const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
-    console.log(data ,);
     return data;
   } catch (err) {
     throw err;
