@@ -1,11 +1,14 @@
 import Image from "next/image";
 
-const OrganizerInfo = () => {
+const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
         <p className="text-sm font-semibold pr-3 flex-end">Organizer Info</p>
-        <div className="h-px bg-black w-6/7 flex-grow"></div>
+        <div
+          className="h-px w-6/7 flex-grow"
+          style={{ backgroundColor: "#A7A7A7" }}
+        ></div>
       </div>
       <div className="flex items-center">
         <Image
@@ -13,7 +16,6 @@ const OrganizerInfo = () => {
           alt="profile image"
           height={180}
           width={180}
-          className="filter brightness-50"
         />
         <div className="flex flex-col flex-grow ml-12">
           <div className="flex flex-col mb-3">
@@ -28,6 +30,13 @@ const OrganizerInfo = () => {
               className="bg-gray-100 p-4 rounded border-grayBorder border-2"
               name="organizer name"
               placeholder="Organizer Name"
+              value={eventDetails.organizerName}
+              onChange={(e) =>
+                setEventDetails((prev) => ({
+                  ...prev,
+                  organizerName: e.target.value
+                }))
+              }
             />
           </div>
           <div className="flex flex-col">
@@ -39,6 +48,13 @@ const OrganizerInfo = () => {
               className="bg-gray-100 p-4 rounded border-grayBorder border-2"
               name="Tag Line"
               placeholder="Tag here"
+              value={eventDetails.tagLine}
+              onChange={(e) =>
+                setEventDetails((prev) => ({
+                  ...prev,
+                  tagLine: e.target.value
+                }))
+              }
             />
           </div>
         </div>

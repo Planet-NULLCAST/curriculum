@@ -1,12 +1,15 @@
 import { useRef } from "react";
-const EventInfo = () => {
+const EventInfo = ({ eventDetails, setEventDetails }) => {
   const ref = useRef();
-
+  console.log(eventDetails?.eventImage);
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
         <p className="text-sm font-semibold pr-3 flex-end">Event Info</p>
-        <div className="h-px bg-black w-6/7 flex-grow"></div>
+        <div
+          className="h-px w-6/7 flex-grow"
+          style={{ backgroundColor: "#A7A7A7" }}
+        ></div>
       </div>
       <div className="flex justify-center item-center mb-4">
         <div className="flex flex-col w-full mr-3">
@@ -18,6 +21,13 @@ const EventInfo = () => {
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event name"
             placeholder="Enter Event Name"
+            value={eventDetails.eventName}
+            onChange={(e) =>
+              setEventDetails((prev) => ({
+                ...prev,
+                eventName: e.target.value
+              }))
+            }
           />
         </div>
         <div className="flex flex-col w-full ml-3">
@@ -32,6 +42,13 @@ const EventInfo = () => {
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event location"
             placeholder="paste location here"
+            value={eventDetails.eventLocation}
+            onChange={(e) =>
+              setEventDetails((prev) => ({
+                ...prev,
+                eventLocation: e.target.value
+              }))
+            }
           />
         </div>
       </div>
@@ -44,6 +61,13 @@ const EventInfo = () => {
           className="bg-gray-100 rounded border-grayBorder border-2 resize-none"
           name="description"
           rows="4"
+          value={eventDetails.eventDescription}
+          onChange={(e) =>
+            setEventDetails((prev) => ({
+              ...prev,
+              eventDescription: e.target.value
+            }))
+          }
         />
       </div>
       <div className="flex flex-col w-full mb-4">
@@ -55,6 +79,10 @@ const EventInfo = () => {
           className="bg-gray-100 p-4 rounded border-grayBorder border-2"
           name="event link"
           placeholder="Link Here"
+          value={eventDetails.eventLink}
+          onChange={(e) =>
+            setEventDetails((prev) => ({ ...prev, eventLink: e.target.value }))
+          }
         />
       </div>
       <div className="flex justify-center item-center mb-5">
@@ -67,6 +95,13 @@ const EventInfo = () => {
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event date"
             placeholder="choose"
+            value={eventDetails.eventDate}
+            onChange={(e) =>
+              setEventDetails((prev) => ({
+                ...prev,
+                eventDate: e.target.value
+              }))
+            }
           />
         </div>
         <div className="flex flex-col w-full ml-3">
@@ -78,21 +113,37 @@ const EventInfo = () => {
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event time"
             placeholder="choose"
+            value={eventDetails.eventTime}
+            onChange={(e) =>
+              setEventDetails((prev) => ({
+                ...prev,
+                eventTime: e.target.value
+              }))
+            }
           />
         </div>
       </div>
       <div
-        className="border-dashed border-2 border-grayBorder p-8 rounded text-center flex flex-col"
+        className="border-dashed border-2 border-grayBorder p-10 rounded text-center flex flex-col"
         onClick={() => ref.current.click()}
       >
-        <label htmlFor="inputFiles" className="font-semibold relative">
-          Upload Image
+        <label htmlFor="inputFiles" className="font-bold relative">
+          {eventDetails?.eventImage === ""
+            ? "Upload Image"
+            : eventDetails?.eventImage?.name}
           <input
             type="file"
             className="opacity-0 absolute top-0 left-0 w-full flex-grow"
             placeholder="uplaod image"
             id="inputFile"
             ref={ref}
+            accept="image/*"
+            onChange={(e) =>
+              setEventDetails((prev) => ({
+                ...prev,
+                eventImage: e.target.files[0]
+              }))
+            }
           />
         </label>
       </div>
