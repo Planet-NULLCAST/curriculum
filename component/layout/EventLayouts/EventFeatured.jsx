@@ -45,7 +45,9 @@ export default function EventFeatured({ event }) {
                   <a>{event?.meta_title}</a>
                 </Link>
               </h3>
-              <EventDate eventDate={event?.event_time} />
+              <div className={styles.count}>
+                <EventDate eventDate={event?.event_time} />
+              </div>
               <p className={styles.time}>
                 <span className={styles.icon}>
                   <img src="/images/calender.svg" alt="calender_Icon" />

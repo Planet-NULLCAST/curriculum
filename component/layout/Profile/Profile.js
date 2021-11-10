@@ -13,7 +13,7 @@ export default function Profile({ onLogout, username }) {
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
         <img
-          src={userCookie.avatar || "/images/svgs/avatar.svg"}
+          src={userCookie.avatar || "/images/dummy0.png"}
           alt="avatar"
           width="32"
           height="32"

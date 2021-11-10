@@ -83,12 +83,17 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
       </div>
       <div className="w-full flex justify-center mt-8  items-center">
         {posts.length !== postsCount && (
-          <button
-            onClick={handleViewMore}
+        <Link href={{
+          pathname: "/posts",
+          query: { page: 1, tag: "", status: "" }
+        }}>
+          <a
+            // onClick={handleViewMore}
             className="py-1 px-6 text-sm font-semibold whitespace-nowrap border border-black bg-white text-black hover:bg-black hover:text-white duration-700 rounded"
           >
             View All
-          </button>
+          </a>
+          </Link>
         )}
       </div>
     </div>

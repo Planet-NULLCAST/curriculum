@@ -116,7 +116,6 @@ export default function WriteNav({
         }
       })
       .map((fTag) => fTag.value);
-    console.log(newTag, 'newtag');
     try {
       if (newTag.length > 0) {
         const res = await TagService.postTags(userCookie, newTag);
@@ -292,7 +291,7 @@ export default function WriteNav({
       router.push({
         pathname: "/posts",
         query: {
-          pageNo: 1,
+          page: 1,
           tag: "",
           status: ""
         }

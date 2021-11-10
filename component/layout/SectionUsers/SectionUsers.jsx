@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 export default class SimpleSlider extends Component {
   render() {
-    // console.log(this.props.user);
     const settings = {
       dots: false,
       arrows: false,

@@ -21,16 +21,12 @@ export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
     let isThisUserTheCurrentLoggedIn = false;
-    const LIMIT = 10; //should be 10
-    const CLICK_N0 = 0;
     const data  = await UserService.getUserByUsername(username);
-    const userId = data.id;
-    console.log(data,'error')
-    // const response = await PostService.getPublishedPostsByUserId(
-    //   userId,
-    //   LIMIT,
-    //   CLICK_N0
-    // );
+    const postParams = {
+      limit: 10,
+      status: 'published',
+    };
+    const response = await PostService.getLatestPosts(postParams);
     /**
      * isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
      * in the profile details section
@@ -50,19 +46,19 @@ export async function getServerSideProps(context) {
     return {
       props: {
         userData: data.data,
-        postsCount: {},
-        posts: {},
-        limit: {},
+        postsCount: response.count,
+        posts: response.posts,
+        limit: response.limit,
       }
     };
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
     // console.log(err);
     return {
-      // redirect: {
-      //   permanent: false,
-      //   destination: "/404"
-      // }
+      redirect: {
+        permanent: false,
+        destination: "/404"
+      }
     };
   }
 }
