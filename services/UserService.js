@@ -19,6 +19,7 @@ async function getUserByUsername(username) {
       `${baseUrl}/${userUrl}/${username}`
     );
     return data;
+
   } catch (err) {
     throw err;
   }
@@ -26,17 +27,13 @@ async function getUserByUsername(username) {
 
 //update user profile details by user Id
 async function updateProfileByUserId(userCookie, reqData) {
-  // console.log({ reqData });
+  console.log({ reqData });
   try {
     const { data } = await axios.put(
-      `${baseUrl}/${usersUrl}/${userCookie.id}`,
-      reqData,
-      {
-        headers: {
-          "x-access-token": `${userCookie.accessToken}`
-        }
-      }
-    );
+      `${baseUrl}/${usersUrl}/${userCookie.id}`,reqData);
+
+      console.log(data, 'update');
+
     return data;
   } catch (err) {
     throw err;
