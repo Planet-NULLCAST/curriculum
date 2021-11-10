@@ -226,19 +226,13 @@ async function getPostsByQuery(query, clickNo) {
 }
 
 /**
- * Api call for fetching all publlished posts of a user
+ * Api call for fetching all posts of a user
  * @param {String} username
  * @returns {Promise}
  */
-async function getPublishedPostsByUserId(userId, limit, clickNo) {
-  const url = getUrl();
+async function getUserPostsByUserId(userId, reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`, {
-      params: {
-        limit: limit,
-        clickNo: clickNo
-      }
-    });
+    const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`,reqData);
     return data;
   } catch (err) {
     console.log(err);
@@ -329,7 +323,7 @@ const PostService = {
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin,
-  getPublishedPostsByUserId,
+  getUserPostsByUserId,
   // getPublishedPostsCountByUserId,
   setVotes,
   getPostsByMultipleTags
