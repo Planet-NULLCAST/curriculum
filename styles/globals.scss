@@ -13,6 +13,7 @@ html {
 
 body {
   font-family: "Open Sans", sans-serif !important;
+  cursor: url(../public/images/svgs/pointer.svg), auto;
 }
 
 .bg-pink-710 {
@@ -443,4 +444,13 @@ h3 {
     padding: 0 0.5rem;
     border: 1px solid #e5e7eb;
   }
+}
+.cursor {
+  height: 60px;
+  width: 60px;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  transition: transform 2.5s;
 }
