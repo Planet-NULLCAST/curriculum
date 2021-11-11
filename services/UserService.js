@@ -30,7 +30,7 @@ async function updateProfileByUserId(userCookie, reqData) {
   console.log({ reqData });
   try {
     const { data } = await axios.put(
-      `${baseUrl}/${usersUrl}/${userCookie.id}`,reqData);
+      `${baseUrl}/${userUrl}/${userCookie.id}`,reqData);
 
       console.log(data, 'update');
 
