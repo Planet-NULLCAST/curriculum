@@ -127,7 +127,7 @@ export default function WriteNav({
           return {
             ...prevValue,
             tags: [],
-            // tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+            tagsId: [...prevValue.tagsId, e[e.length - 1].id]
           };
         });
       }
@@ -136,17 +136,17 @@ export default function WriteNav({
           return {
             ...prevValue,
             tags: [...e],
-            // tagsId: []
+            tagsId: []
           };
         });
       }
-      // setCurrentPost((prevValue) => {
-      //   return {
-      //     ...prevValue,
-      //     tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
-      //     tagsId: [...prevValue.tagsId, e[e.length - 1].id]
-      //   };
-      // });
+      setCurrentPost((prevValue) => {
+        return {
+          ...prevValue,
+          tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
+          tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+        };
+      });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -183,7 +183,7 @@ export default function WriteNav({
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
     const settingsData = {
-      // tags: "tags",
+      // tags: tagsId,
       // url: `p/${currentPost._id}`,
       // canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
       banner_image: currentPost.banner_image ? currentPost.banner_image : null,
