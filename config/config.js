@@ -22,6 +22,7 @@ const usersUrl = `${apiVerUrl}/users`;
 const adminUrl = "api/admin";
 const tagUrl = `${apiVerUrl}/tags`;
 const postTagUrl = `${apiVerUrl}/post-tag`;
+const postTagsUrl = `${apiVerUrl}/post-tags`;
 const CreateTagUrl = `${apiVerUrl}/tag`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
@@ -34,6 +35,7 @@ const logoutUrl = `${apiVerUrl}/logout`;
 
 const configVars = {
   baseUrl,
+  postTagsUrl,
   postTagUrl,
   postUser,
   loginUrl,
