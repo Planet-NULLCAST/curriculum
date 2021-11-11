@@ -75,7 +75,7 @@ export default function WriteNav({
   async function getSettingsTags() {
     try {
       const res = await TagService.getTags();
-      console.log("get tags response", res);
+      // console.log("get tags response", res);
       if (res && res.length) {
         const resTagOptions = res.map((tag) => {
           return {
@@ -100,7 +100,7 @@ export default function WriteNav({
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    console.log("handle tags", e);
+    // console.log("handle tags", e);
 
     const newTag = e
       .filter((tag) => {
@@ -113,7 +113,6 @@ export default function WriteNav({
     try {
       if (newTag.length > 0) {
         const res = await TagService.postTags(userCookie, newTag);
-        console.log({ res }, 'res');
         const arr = [{ tag_id: res.id, post_id: currentPost.id }];
         const response = await TagService.postSaveTags(userCookie, arr);
         e.splice(-1, 1);
@@ -127,11 +126,7 @@ export default function WriteNav({
       else {
         // gets new added tag and closed tag using filter
         const addTag = e.filter(({ id: id1 }) => !currentPost.tags.some(({ id: id2 }) => id2 === id1));
-        console.log(addTag, 'addTag');
-
         const removeTag = currentPost.tags.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
-        console.log(removeTag, 'removeTag');
-
         if (addTag.length) {
           const arr = addTag.map(({ id }) => { return { tag_id: id, post_id: currentPost.id } })
           const res = await TagService.postSaveTags(userCookie, arr);
