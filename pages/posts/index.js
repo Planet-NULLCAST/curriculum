@@ -83,12 +83,12 @@ export default function Posts() {
     getPosts(newReqData);
   }, [router.query.page, router.query.tag, router.query.status]);
 
-  async function getPosts(ReqData) {
+  async function getPosts(reqData) {
     // console.log("getposts call");
     try {
       const userId = userCookie.id;
       console.log("user",userId);
-      const data = await PostService.getUserPostsByUserId(ReqData, userId);
+      const data = await PostService.getUserPostsByUserId(reqData, userId);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {
