@@ -83,12 +83,12 @@ export default function Posts() {
     getPosts(newReqData);
   }, [router.query.page, router.query.tag, router.query.status]);
 
-  async function getPosts(reqData) {
+  async function getPosts(ReqData) {
     // console.log("getposts call");
     try {
       const userId = userCookie.id;
       console.log("user",userId);
-      const data = await PostService.getUserPostsByUserId(userId, reqData);
+      const data = await PostService.getUserPostsByUserId(ReqData, userId);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {
@@ -106,7 +106,7 @@ export default function Posts() {
     }
   }
 
-  console.log('change page', postData);
+  console.log('change page', postData.posts);
 
   const changePage = (newPageNo) => {
     // console.log("change page: ", newPageNo, tagFilter, statusFilter);
