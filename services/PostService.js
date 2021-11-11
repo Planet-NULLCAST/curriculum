@@ -230,11 +230,11 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} username
  * @returns {Promise}
  */
-async function getUserPostsByUserId(ReqData, userId) {
+async function getUserPostsByUserId(reqData, userId) {
   
   try {
     const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`, {
-      params: ReqData
+      params: reqData
     });
     return data;
   } catch (err) {
