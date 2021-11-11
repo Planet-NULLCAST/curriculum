@@ -88,7 +88,7 @@ export default function Posts() {
     try {
       const userId = userCookie.id;
       console.log("user",userId);
-      const data = await PostService.getUserPostsByUserId(reqData, userId);
+      const data = await PostService.getUserPostsByUser(reqData);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {

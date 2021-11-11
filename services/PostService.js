@@ -230,10 +230,10 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} username
  * @returns {Promise}
  */
-async function getUserPostsByUserId(reqData, userId) {
+async function getUserPostsByUser(reqData) {
   
   try {
-    const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`, {
+    const { data } = await axios.get(`${baseUrl}/${postUser}`, {
       params: reqData
     });
     return data;
@@ -326,7 +326,7 @@ const PostService = {
   adminChangePostStatus,
   adminGetLatestPosts,
   isAdmin,
-  getUserPostsByUserId,
+  getUserPostsByUser,
   // getPublishedPostsCountByUserId,
   setVotes,
   getPostsByMultipleTags
