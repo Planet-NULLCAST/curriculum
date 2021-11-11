@@ -39,8 +39,8 @@ async function getPostById(postId) {
 
 async function getPostBySlug(slug) {
   try {
-    const response = await axios.get(`${baseUrl}/${postBySlug}/${slug}`);
-    return response;
+    const { data } = await axios.get(`${baseUrl}/${postBySlug}/${slug}`);
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -160,14 +160,11 @@ async function uploadImage(imageFile, imageData) {
 //   }
 // }
 
-async function getPostByTags(tagName, clickNo) {
 
-  const item = {
-    clickNo: clickNo
-  };
+async function getPostByTags(tagName) {
   try {
-    const { data } = await axios.post(`${baseUrl}/${postUrl}/${tagName}`, item);
-    // console.log(data);
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`);
+    console.log(data, 'success');
     return data;
   } catch (err) {
     console.log(err);

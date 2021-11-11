@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import notify from "../../../lib/notify";
 
 export default function SectionAuthor({ primaryAuthor, postCount }) {
-  const { bio, username, avatar } = primaryAuthor;
+  const { bio, user_name, avatar } = primaryAuthor;
 console.log(postCount);
   useEffect(() => {
   }, [primaryAuthor]);
@@ -16,7 +16,7 @@ console.log(postCount);
         <div className="flex items-center justify-between mb-7">
           <h2>About the Author</h2>
           <span>
-            <Link href={`/u/${username}`}>
+            <Link href={`/u/${user_name}`}>
               <a className={`${styles.profileLink} linkUnderline`}>
                 View Profile
               </a>
@@ -25,7 +25,7 @@ console.log(postCount);
         </div>
         <div className={styles.widget}>
           <div className={styles.details}>
-            <AuthorDetails username={username} avatar={avatar} />
+            <AuthorDetails username={user_name} avatar={avatar} />
 
             <div className={styles.stats}>
               <div className={styles.statsItem}>
