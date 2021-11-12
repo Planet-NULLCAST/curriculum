@@ -6,10 +6,7 @@ import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import PostService from "../../services/PostService";
 import TagService from "../../services/TagService";
-import { ToastContainer, toast } from "react-toastify";
 import CreatableSelect from "react-select/creatable";
-import { clientUrl } from "../../config/config";
-import UserState from "../../context/user/UserState";
 import ModalConfirm from "../../component/popup/ModalConfirm";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
@@ -31,18 +28,15 @@ export default function WriteNav({
   const [tagOptions, setTagOptions] = useState([]);
   const [openPopup, setOpenPopup] = useState(false);
   const [image, setImage] = useState("");
-
+  const newPostTags = useRef(null);
   const router = useRouter();
-
-  // const userState = useContext(UserState);
-  // console.log(userState);
 
   const [currentPost, setCurrentPost] = useState({
     id: 0,
     banner_image: "",
     // canonicalUrl: "",
     tags: [],
-    tagsId:[],
+    tagsId: [],
     shortDescription: "",
     metaTitle: "",
     metaDescription: "",
@@ -51,7 +45,7 @@ export default function WriteNav({
   useEffect(() => {
     console.log("writenavprop", { post });
 
-    setCurrentPost( prevValue =>  ( {...prevValue, ...post }));
+    setCurrentPost(prevValue => ({ ...prevValue, ...post }));
     // userState.setTags();
   }, [post]);
 
@@ -81,13 +75,13 @@ export default function WriteNav({
   async function getSettingsTags() {
     try {
       const res = await TagService.getTags();
-      console.log("get tags response", res);
+      // console.log("get tags response", res);
       if (res && res.length) {
         const resTagOptions = res.map((tag) => {
           return {
             label: `${tag.name.toUpperCase()}`,
             value: `${tag.name}`,
-            id: `${tag.id}`,
+            id: tag.id,
             name: `${tag.name}`,
           };
         });
@@ -99,15 +93,15 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-  console.log(currentPost,'hola');
+  console.log(currentPost, 'hola');
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    
-    console.log("handle tags", e);
+    // console.log("handle tags", e);
+
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -119,38 +113,40 @@ export default function WriteNav({
     try {
       if (newTag.length > 0) {
         const res = await TagService.postTags(userCookie, newTag);
-        console.log({ res });
-      }
-      // console.log
-      if(e && e.length === 0) {
+        const arr = [{ tag_id: res.id, post_id: currentPost.id }];
+        const response = await TagService.postSaveTags(userCookie, arr);
+        e.splice(-1, 1);
         setCurrentPost((prevValue) => {
           return {
             ...prevValue,
-            tags: [],
-            tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+            tags: [...e, { value: res.name, id: res.id, name: res.name, label: res.name }],
           };
         });
       }
       else {
+        // gets new added tag and closed tag using filter
+        const addTag = e.filter(({ id: id1 }) => !currentPost.tags.some(({ id: id2 }) => id2 === id1));
+        const removeTag = currentPost.tags.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        if (addTag.length) {
+          const arr = addTag.map(({ id }) => { return { tag_id: id, post_id: currentPost.id } })
+          const res = await TagService.postSaveTags(userCookie, arr);
+        }
+        if (removeTag.length) {
+          const res = await TagService.deletePostTag(userCookie, removeTag[0].id, currentPost.id);
+        }
         setCurrentPost((prevValue) => {
           return {
             ...prevValue,
             tags: [...e],
-            tagsId: []
           };
         });
       }
-      setCurrentPost((prevValue) => {
-        return {
-          ...prevValue,
-          tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
-          tagsId: [...prevValue.tagsId, e[e.length - 1].id]
-        };
-      });
+
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
+
   /**
    * gets form data and passes to parent getsettings function
    * @param e form submit event
@@ -173,11 +169,6 @@ export default function WriteNav({
     //   tags = e.target.tags.value;
     //   // console.log("single tag", tags);
     // }
-    const tagsId =currentPost.tags.map(tag => {
-      return tag.id
-    })
-    const res = await TagService.postSaveTag(userCookie, currentPost.tagsId, currentPost.id );
-
 
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
@@ -185,7 +176,6 @@ export default function WriteNav({
     const settingsData = {
       // tags: tagsId,
       // url: `p/${currentPost._id}`,
-      // canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
       banner_image: currentPost.banner_image ? currentPost.banner_image : null,
       // shortDescription: shortDes,
       meta_title: metaTitle,
@@ -226,7 +216,7 @@ export default function WriteNav({
    * @param e handle change event for file upload field
    * @author akhilalekha
    */
-   const handleImageUpload = async (image) => {
+  const handleImageUpload = async (image) => {
     // console.log(e.target.files[0]);
     // const imageUrl = URL.createObjectURL(e.target.files[0]);
     // console.log(imageUrl);
@@ -246,7 +236,7 @@ export default function WriteNav({
     try {
       const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
       // console.log(s3ImageUrl);
-  
+
       setCurrentPost((prevValue) => {
         return {
           ...prevValue,
@@ -412,9 +402,8 @@ export default function WriteNav({
                   </div>
                   <div className="flex flex-col p-5 mt-16 mb-24 h-calcSettings">
                     <div
-                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
-                        !currentPost.bannerImage && "cursor-pointer"
-                      }`}
+                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${!currentPost.bannerImage && "cursor-pointer"
+                        }`}
                     >
                       {currentPost.bannerImage ? (
                         <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
@@ -434,7 +423,7 @@ export default function WriteNav({
                               trigger={
                                 <div
                                   className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
-                                  // onClick={handleImageDelete}
+                                // onClick={handleImageDelete}
                                 >
                                   <Image
                                     src="/images/svgs/delwhite.svg"
@@ -451,13 +440,13 @@ export default function WriteNav({
                               buttonColor={"red"}
                               heading={"Are you sure"}
                               text="Are you sure you want to delete this image?"
-                              // secondaryText="This cannot be undone"
+                            // secondaryText="This cannot be undone"
                             />
                           </div>
                         </div>
                       ) : (
                         <div>
-                           <ImageCropper
+                          <ImageCropper
                             image={image}
                             aspectRatio={2}
                             trigger={
@@ -467,7 +456,7 @@ export default function WriteNav({
                                 name="imageUpload"
                                 onInput={handleImage}
                                 ref={imgRef}
-                                // value={imageSrc}
+                              // value={imageSrc}
                               />
                             }
                             handleSubmit={handleImageUpload}
@@ -542,7 +531,7 @@ export default function WriteNav({
                           return {
                             label: `${tag.name.toUpperCase()}`,
                             value: `${tag.name}`,
-                            id: `${tag.id}`,
+                            id: tag.id,
                             name: `${tag.name}`,
                           };
                         })}
@@ -619,9 +608,8 @@ export default function WriteNav({
                   <div className="w-full flex mb-3">
                     <div className="w-1/2 pr-1">
                       <button
-                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
-                          loading ? "disabled:opacity-50" : ""
-                        }`}
+                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${loading ? "disabled:opacity-50" : ""
+                          }`}
                         type="submit"
                         disabled={loading}
                       >
