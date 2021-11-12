@@ -28,9 +28,9 @@ const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
-const changePasswordUrl = "api/auth/change-password";
+const changePasswordUrl = `${apiVerUrl}/update-password`;
 const publishedPostsUrl = "api/posts/published";
-// const publishedPostsCountUrl = "api/posts/published/count";
+//  const publishedPostsCountUrl = "api/posts/published/count";
 const logoutUrl = `${apiVerUrl}/logout`;
 
 const configVars = {
