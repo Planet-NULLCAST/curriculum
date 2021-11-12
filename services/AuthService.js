@@ -71,12 +71,12 @@ async function changePassword(passwords, userCookie) {
   // console.log({ passwords });
   // console.log(userId);
   const item = {
-    current_password: passwords.currentPassword,
-    new_password: passwords.confirmPass,
-    user_name: userCookie.user_name
+    currentPassword: passwords.currentPassword,
+    newPassword: passwords.confirmPass,
+    userId: userCookie.id
   };
   try {
-    const { data } = await axios.put(`${baseUrl}/${changePasswordUrl}`, item, {
+    const { data } = await axios.post(`${baseUrl}/${changePasswordUrl}`, item, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
