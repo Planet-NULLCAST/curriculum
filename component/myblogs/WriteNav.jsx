@@ -38,25 +38,25 @@ export default function WriteNav({
   // console.log(userState);
 
   const [currentPost, setCurrentPost] = useState({
-    _id: "",
-    bannerImage: "",
-    canonicalUrl: "",
+    id: 0,
+    banner_image: "",
+    // canonicalUrl: "",
     tags: [],
+    tagsId:[],
     shortDescription: "",
     metaTitle: "",
     metaDescription: "",
     slug: ""
   });
-
   useEffect(() => {
     console.log("writenavprop", { post });
 
-    setCurrentPost({ ...post });
+    setCurrentPost( prevValue =>  ( {...prevValue, ...post }));
     // userState.setTags();
   }, [post]);
 
   useEffect(() => {
-    // getSettingsTags();
+    getSettingsTags();
     if (userCookie.roles === "admin") {
       getIsAdmin();
     }
@@ -81,12 +81,14 @@ export default function WriteNav({
   async function getSettingsTags() {
     try {
       const res = await TagService.getTags();
-      // console.log("get tags response", res);
+      console.log("get tags response", res);
       if (res && res.length) {
         const resTagOptions = res.map((tag) => {
           return {
             label: `${tag.name.toUpperCase()}`,
-            value: `${tag.name}`
+            value: `${tag.name}`,
+            id: `${tag.id}`,
+            name: `${tag.name}`,
           };
         });
         // setTagOptions;
@@ -97,44 +99,64 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-
+  console.log(currentPost,'hola');
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
    * @author akhilalekha
    */
   const handleTags = async (e) => {
-    // console.log("handle tags", e);
+    
+    console.log("handle tags", e);
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
-          // console.log(tag);
+          console.log(tag);
           return tag;
         }
       })
       .map((fTag) => fTag.value);
-    // console.log(newTag);
     try {
-      const res = await TagService.postTags(userCookie, newTag);
-      // console.log({ res });
-  
+      if (newTag.length > 0) {
+        const res = await TagService.postTags(userCookie, newTag);
+        console.log({ res });
+      }
+      // console.log
+      if(e && e.length === 0) {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [],
+            tagsId: [...prevValue.tagsId, e[e.length - 1].id]
+          };
+        });
+      }
+      else {
+        setCurrentPost((prevValue) => {
+          return {
+            ...prevValue,
+            tags: [...e],
+            tagsId: []
+          };
+        });
+      }
       setCurrentPost((prevValue) => {
         return {
           ...prevValue,
-          tags: e.map((i) => i.value)
+          tags: [...prevValue.tags,{name: e[e.length - 1].value, id: e[e.length - 1].id, value: e[e.length-1].value,label: e[e.length - 1].label}],
+          tagsId: [...prevValue.tagsId, e[e.length - 1].id]
         };
       });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
-
   /**
    * gets form data and passes to parent getsettings function
    * @param e form submit event
    * @author akhilalekha
    */
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
     // console.log(e.target);
@@ -142,29 +164,34 @@ export default function WriteNav({
     const postUrl = e.target.slug.value || "";
     // console.log({ postUrl });
     // console.log(`${baseUrl}/${postUrl}`);
-    let tags = Array.from(e.target.tags) || "";
-    // console.log("tags length: ", tags.length);
-    if (tags.length > 0) {
-      tags = tags.map((tag) => tag.value);
-      // console.log("multiple tags", tags);
-    } else {
-      tags = e.target.tags.value;
-      // console.log("single tag", tags);
-    }
+    // let tags = Array.from(e.target.tags) || "";
+    // // console.log("tags length: ", tags.length);
+    // if (tags.length > 0) {
+    //   tags = tags.map((tag) => tag.value);
+    //   // console.log("multiple tags", tags);
+    // } else {
+    //   tags = e.target.tags.value;
+    //   // console.log("single tag", tags);
+    // }
+    const tagsId =currentPost.tags.map(tag => {
+      return tag.id
+    })
+    const res = await TagService.postSaveTag(userCookie, currentPost.tagsId, currentPost.id );
+
 
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
-    // console.log(imageName, postUrl, tags, shortDescription, metaTitle, metaDescription);
     const settingsData = {
-      tags: tags,
-      url: `p/${currentPost._id}`,
-      canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
-      bannerImage: currentPost.bannerImage ? currentPost.bannerImage : null,
-      shortDescription: shortDes,
-      metaTitle: metaTitle,
-      metaDescription: metaDes,
-      slug: postUrl
+      // tags: tagsId,
+      // url: `p/${currentPost._id}`,
+      // canonicalUrl: postUrl ? `${clientUrl}/${postUrl}` : "",
+      banner_image: currentPost.banner_image ? currentPost.banner_image : null,
+      // shortDescription: shortDes,
+      meta_title: metaTitle,
+      // metaDescription: metaDes,
+      slug: postUrl,
+      mobiledoc: currentPost.mobiledoc,
     };
 
     // console.log(
@@ -211,7 +238,7 @@ export default function WriteNav({
     const imageData = {
       stage: "dev",
       fileName: imageFile.name,
-      id: currentPost._id,
+      id: currentPost.id,
       category: "posts",
       ContentType: imageFile.type
     };
@@ -254,18 +281,17 @@ export default function WriteNav({
    * @author akhilalekha
    */
   async function deletePost() {
-    // console.log({ currentPost });
     try {
       const { msg, data } = await PostService.deletePostById(
         userCookie,
-        currentPost._id
+        currentPost.id
       );
       // console.log(msg);
       notify("Post deleted successfully");
       router.push({
         pathname: "/posts",
         query: {
-          pageNo: 1,
+          page: 1,
           tag: "",
           status: ""
         }
@@ -514,8 +540,10 @@ export default function WriteNav({
                         name="tags"
                         value={currentPost?.tags?.map((tag) => {
                           return {
-                            label: `${tag.toUpperCase()}`,
-                            value: `${tag}`
+                            label: `${tag.name.toUpperCase()}`,
+                            value: `${tag.name}`,
+                            id: `${tag.id}`,
+                            name: `${tag.name}`,
                           };
                         })}
                         onChange={(e) => handleTags(e)}
@@ -556,7 +584,7 @@ export default function WriteNav({
                             placeholder=" "
                             className="floating-input w-full m-0 h-10 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black px-2 text-sm bg-gray-100 border rounded"
                             name="metaTitle"
-                            value={currentPost.metaTitle}
+                            value={currentPost.meta_title}
                             onChange={handleChange}
                           />
                           <label className="flex items-center top-0 h-full left-0 ml-3 text-sm">

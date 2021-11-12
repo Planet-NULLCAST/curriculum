@@ -1,0 +1,9 @@
+.listing {
+  @apply py-10 pt-6 lg:py-20;
+}
+.listing__list {
+   @apply sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7;
+}
+.wrapBtn {
+   @apply py-3 text-center;
+}

@@ -59,7 +59,7 @@ let str2 = "world!";
 printText(str1, str2); // Hello world!
 ```
 
-From the above code snippet a function consist of
+From the above code snippet a function consist of:
 
 - The name of the function **_printText_**.
 
@@ -89,4 +89,4 @@ console.log(num); // 50
 
 - The function should should return the **sum**
 
-- Then print the return from the function. pass 5 and 6 as the function arguments.
+- Then print the return from the function. Pass 5 and 6 as the function arguments.

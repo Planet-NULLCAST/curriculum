@@ -17,7 +17,10 @@ export async function getServerSideProps(context) {
   // console.log(context.query.pageNo);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
       if (contextCookie) {
         return {
           props: {
@@ -58,7 +61,7 @@ export default function Posts() {
   const [postData, setPostData] = useState({
     posts: [],
     count: 0,
-    pageNo: router.query.pageNo,
+    page: router.query.page,
     limit: 10 //should be 10
   });
 
@@ -71,21 +74,23 @@ export default function Posts() {
     setTagFilter(router.query.tag);
     setStatusFilter(router.query.status);
     const newReqData = {
-      pageNo: router.query.pageNo,
+      page: router.query.page,
       limit: postData.limit,
       tag: router.query.tag,
-      status: router.query.status
-      // with_table: ["user"]
+      status: router.query.status,
+      with_table: ["user"]
     };
-    // getPosts(newReqData);
-  }, [router.query.pageNo, router.query.tag, router.query.status]);
+    getPosts(newReqData);
+  }, [router.query.page, router.query.tag, router.query.status]);
 
   async function getPosts(reqData) {
     // console.log("getposts call");
     try {
-      const data = await PostService.getPostsByUserId(reqData);
-      const { posts, count } = data;
-      // console.log({ posts });
+      const userId = userCookie.id;
+      console.log("user",userId);
+      const data = await PostService.getUserPostsByUserId(reqData, userId);
+      const { posts, count } = data.data;
+      console.log({ posts });
       if (data) {
         setLoaded(true);
       }
@@ -101,12 +106,14 @@ export default function Posts() {
     }
   }
 
+  console.log('change page', postData.posts);
+
   const changePage = (newPageNo) => {
     // console.log("change page: ", newPageNo, tagFilter, statusFilter);
     router.push({
       pathname: "/posts",
       query: {
-        pageNo: newPageNo,
+        page: newPageNo,
         tag: router.query.tag,
         status: router.query.status
       }
@@ -125,7 +132,7 @@ export default function Posts() {
           {loaded ? (
             postData.posts.length > 0 ? (
               <div>
-                <MyBlogs posts={postData.posts} currentPage={postData.pageNo} />
+                <MyBlogs posts={postData.posts} currentPage={postData.page} />
               </div>
             ) : !tagFilter && !statusFilter ? (
               <div className="text-gray-700 text-center font-semibold mt-8">
@@ -153,7 +160,7 @@ export default function Posts() {
             <Pagination
               TotalCount={postData.count}
               changePage={changePage}
-              pageNum={postData.pageNo}
+              pageNum={postData.page}
               limit={postData.limit}
             />
           </div>

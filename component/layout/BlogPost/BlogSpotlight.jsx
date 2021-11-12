@@ -5,7 +5,7 @@ import moment from "moment";
 
 export default function BlogSpotlight(props) {
   const { title, bannerImage, createdAt, primaryAuthor } = props;
-  const { username, avatar } = primaryAuthor;
+  const { user_name, avatar } = primaryAuthor;
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function BlogSpotlight(props) {
           <figure>{bannerImage && <img src={bannerImage} alt="blog" />}</figure>
           <div className={styles.author}>
             <div className={styles.item}>
-              <AuthorDetails username={username} avatar={avatar} />
+              <AuthorDetails username={user_name} avatar={avatar} />
             </div>
           </div>
         </div>

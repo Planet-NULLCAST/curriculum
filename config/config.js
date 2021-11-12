@@ -10,7 +10,9 @@ const postUrl = `${apiVerUrl}/post`;
 const postBySlug = `${apiVerUrl}/post-by-slug`;
 const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
-const postUser = `${apiVerUrl}/posts-user`;
+const postUser = `${apiVerUrl}/posts-by-user`;
+const eventsUrl = `${apiVerUrl}/events`;
+const eventIdUrl = `${apiVerUrl}/event`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -19,17 +21,20 @@ const userUrl = `${apiVerUrl}/user`;
 const usersUrl = `${apiVerUrl}/users`;
 const adminUrl = "api/admin";
 const tagUrl = `${apiVerUrl}/tags`;
+const postTagUrl = `${apiVerUrl}/post-tag`;
+const CreateTagUrl = `${apiVerUrl}/tag`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
 const resetPasswordUrl = "api/auth/reset-password-confirmation";
 const changePasswordUrl = "api/auth/change-password";
 const publishedPostsUrl = "api/posts/published";
-const publishedPostsCountUrl = "api/posts/published/count";
+// const publishedPostsCountUrl = "api/posts/published/count";
 const logoutUrl = `${apiVerUrl}/logout`;
 
 const configVars = {
   baseUrl,
+  postTagUrl,
   postUser,
   loginUrl,
   signUpUrl,
@@ -41,12 +46,15 @@ const configVars = {
   postBySlug,
   postsUrl,
   allPostsUrl,
+  eventsUrl,
+  eventIdUrl,
   changeStatusUrl,
   subscribeUrl,
   editorUrl,
   userUrl,
   adminUrl,
   tagUrl,
+  CreateTagUrl,
   serverUrl,
   searchUrl,
   forgotPasswordUrl,
@@ -55,7 +63,7 @@ const configVars = {
   changePasswordUrl,
   skillUrl,
   publishedPostsUrl,
-  publishedPostsCountUrl,
+  // publishedPostsCountUrl,
   logoutUrl,
 };
 

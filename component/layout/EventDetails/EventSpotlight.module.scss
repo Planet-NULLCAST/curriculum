@@ -1,0 +1,35 @@
+.section {
+  @apply relative;
+
+  figure {
+
+      img {
+        @apply w-full;
+        height: 40rem;
+        object-fit: cover
+      }
+  }
+
+  &:before {
+    @apply absolute w-full left-0 bottom-0;
+    content: '';
+    background: url(/images/event_bg.svg) no-repeat center top;
+    height: 10rem;
+    z-index: 1;
+  }
+
+}
+.postWrap {
+  @apply relative mx-auto;
+  max-width: 1700px;
+}
+.author {
+  @apply absolute w-full;
+  bottom: 50px;
+  height: 10rem;
+  z-index: 2;
+}
+
+.bookEvent {
+  @apply absolute top-0 right-0 flex justify-center lg:justify-end w-full h-full items-start p-10 lg:p-20;
+}

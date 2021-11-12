@@ -17,17 +17,19 @@ export async function getServerSideProps() {
   
   try {
     const postParams = {
-      sort_field: "published_at",
-      order: "ASC",
+      // sort_field: "published_at",
+      // order: "ASC",
+      status: "published",
       limit: limit,
       page: 1,
-      with_table: "users, tags"
+      // with_table: "users, tags"
     };
-    const responsePost = await PostService.getLatestPosts(postParams);
-    if (responsePost.data.length > 0) {
+    const { data } = await PostService.getPostsByUserId(postParams);
+    console.log(data.posts,'json')
+    if (data.posts.length > 0) {
       return {
         props: {
-          blog: responsePost.data,
+          blog: data.posts,
           // tagsArray: tagsArray,
           count: 2,
           limit: limit
@@ -81,17 +83,19 @@ export default function BlogListing({ blog, count, limit }) {
 
   const getNewPosts = async (clickNo) => {
     const postParams = {
-      sort_field: "published_at",
-      order: "ASC",
+      // sort_field: "published_at",
+      // order: "ASC",
+      status: 'published',
       limit: limit,
       page: 1,
-      with_table: "users, tags"
+      // with_table: "users, tags"
     };
     try {
-      const responsePost = await PostService.getLatestPosts(postParams);
+      const { data } = await PostService.getPostsByUserId(postParams);
+      console.log(data, 'success');
   
       setNewBlogs((prevValue) => {
-        return [...prevValue, ...responsePost.data.blog];
+        return [...prevValue, ...data.posts];
       });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');

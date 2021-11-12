@@ -28,7 +28,7 @@ export default function ProfileDetails({ userData }) {
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
                   <Image
-                    src={userData.avatar}
+                    src={userData.avatar === null ? '/images/dummy0.png' : userData.avatar }
                     alt="avatar"
                     className="rounded-full h-24 w-24"
                     layout="fill"
