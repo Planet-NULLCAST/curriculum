@@ -17,7 +17,10 @@ export async function getServerSideProps(context) {
   // console.log(context.query.pageNo);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
       if (contextCookie) {
         return {
           props: {
@@ -83,7 +86,9 @@ export default function Posts() {
   async function getPosts(reqData) {
     // console.log("getposts call");
     try {
-      const data = await PostService.getPostsByUserId(reqData);
+      const userId = userCookie.id;
+      console.log("user",userId);
+      const data = await PostService.getUserPostsByUser(reqData);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {
@@ -101,6 +106,8 @@ export default function Posts() {
     }
   }
 
+  console.log('change page', postData.posts);
+
   const changePage = (newPageNo) => {
     // console.log("change page: ", newPageNo, tagFilter, statusFilter);
     router.push({
@@ -112,6 +119,7 @@ export default function Posts() {
       }
     });
   };
+
   return (
     <div>
       <Head>

@@ -22,9 +22,11 @@ export async function getServerSideProps(context) {
         "userNullcast"
       );
       if (contextCookie) {
-        const username = context.params.username;
+        console.log('d');
         const cookie = JSON.parse(contextCookie);
-        const data  = await UserService.getUserByUsername(cookie.user_name);
+        console.log('d');
+        const username = cookie.user_name;
+        const { data }  = await UserService.getUserByUsername(username);
         console.log(data ,'error')
         // const skillsRes = await SkillService.getSkills();
         return {
@@ -64,13 +66,12 @@ export async function getServerSideProps(context) {
 }
 
 export default function Settings({ profileData, _skills }) {
-  console.log(profileData,'dd');
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
   const [allSkills, setAllSkills] = useState(_skills);
   const [profile, setProfile] = useState({
-    fullName: "",
+    full_name: "",
     bio: "",
     avatar: "",
     skills: [],
@@ -81,7 +82,7 @@ export default function Settings({ profileData, _skills }) {
     website: ""
   });
   const [errors, setErrors] = useState({
-    fullName: "",
+    full_name: "",
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -113,13 +114,13 @@ export default function Settings({ profileData, _skills }) {
   };
   const handleSettings = (e) => {
     e.preventDefault();
-    if (profile.fullName) {
+    if (profile.full_name) {
       updateProfile();
     } else {
       setErrors((prevValue) => {
         return {
           ...prevValue,
-          fullName: "Required"
+          full_name: "Required"
         };
       });
     }
@@ -145,7 +146,7 @@ export default function Settings({ profileData, _skills }) {
 
   const handleErrors = (e) => {
     const { name, value } = e.target;
-    if (name === "fullName") {
+    if (name === "full_name") {
       if (value === "") {
         setErrors((prevValue) => {
           return {
@@ -394,15 +395,15 @@ export default function Settings({ profileData, _skills }) {
 
               <form className="flex flex-wrap" onSubmit={handleSettings}>
                 <div className="w-full mb-4">
-                  <label htmlFor="fullName">Name</label>
+                  <label htmlFor="full_name">Name</label>
                   <input
                     type="text"
-                    id="fullName"
-                    name="fullName"
+                    id="full_name"
+                    name="full_name"
                     maxLength="30"
                     placeholder="Name"
                     onChange={(e) => {
-                      if (errors.fullName) {
+                      if (errors.full_name) {
                         handleErrors(e);
                       }
                       handleOnChange(e);
@@ -410,12 +411,12 @@ export default function Settings({ profileData, _skills }) {
                     onBlur={(e) => {
                       handleErrors(e);
                     }}
-                    value={profile.fullName}
+                    value={profile.full_name}
                   />
 
-                  {errors.fullName && errors.fullName !== "valid" && (
+                  {errors.full_name && errors.full_name !== "valid" && (
                     <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
-                      {errors.fullName}
+                      {errors.full_name}
                     </p>
                   )}
                 </div>
@@ -579,7 +580,7 @@ export default function Settings({ profileData, _skills }) {
                   <button
                     disabled={
                       loading ||
-                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.full_name !== "" && errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||
@@ -589,7 +590,7 @@ export default function Settings({ profileData, _skills }) {
                     }
                     className={`${
                       loading ||
-                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.full_name !== "" && errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||
