@@ -19,7 +19,8 @@ const loginUrl = `${apiVerUrl}/signin`;
 const signUpUrl = `${apiVerUrl}/user`;
 const userUrl = `${apiVerUrl}/user`;
 const usersUrl = `${apiVerUrl}/users`;
-const adminUrl = "api/admin";
+const adminUrl = `${apiVerUrl}/admin`;
+const eventUrl = `${apiVerUrl}/admin/event`;
 const tagUrl = `${apiVerUrl}/tags`;
 const postTagUrl = `${apiVerUrl}/post-tag`;
 const postTagsUrl = `${apiVerUrl}/post-tags`;
@@ -43,6 +44,7 @@ const configVars = {
   clientUrl,
   s3Url,
   authUrl,
+  eventUrl,
   enrolUrl,
   postUrl,
   postBySlug,

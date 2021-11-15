@@ -16,6 +16,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
           alt="profile image"
           height={180}
           width={180}
+          className="cursor-pointer"
         />
         <div className="flex flex-col flex-grow ml-12">
           <div className="flex flex-col mb-3">

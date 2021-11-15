@@ -2,7 +2,8 @@ const axios = require("axios");
 import {
   baseUrl,
   eventsUrl,
-  eventIdUrl
+  eventIdUrl,
+  eventUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
@@ -29,9 +30,20 @@ async function getEventById(eventId) {
   }
 }
 
+async function createNewEvent(userCookie ,eventData) {
+  try {
+    const response = await axios.post(`${baseUrl}/${eventUrl}` , eventData)
+    return response
+  } catch (err) {
+      console.log(err);
+      throw err;
+  }
+}
+
 const EventService = {
   getLatestEvents,
-  getEventById
+  getEventById,
+  createNewEvent
 };
 
 module.exports = EventService;
