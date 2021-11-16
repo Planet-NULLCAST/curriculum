@@ -27,7 +27,8 @@ export async function getServerSideProps(context) {
         console.log('d');
         const username = cookie.user_name;
         const { data }  = await UserService.getUserByUsername(username);
-        console.log(data ,'error')
+        // removed roles from user data
+        delete data.roles;
         // const skillsRes = await SkillService.getSkills();
         return {
           props: {
@@ -127,6 +128,7 @@ export default function Settings({ profileData, _skills }) {
   };
 
   const handleSkills = (e) => {
+    console.log("handle skills", e);
     const newSkill = e
       .filter((skill) => {
         if (skill.__isNew__ === true) {
@@ -433,11 +435,13 @@ export default function Settings({ profileData, _skills }) {
                   ></textarea>
                 </div>
                 <label htmlFor="skills">Skills</label>
-                {/* <CreatableSelect
-                  options={allSkills.map((a) => {
+                <CreatableSelect
+                  options={allSkills?.map((a) => {
                     return {
                       label: `${a.name.toUpperCase()}`,
-                      value: `${a.name}`
+                      value: `${a.name}`,
+                      id: `${tag.id}`,
+                      name: `${tag.name}`,
                     };
                   })}
                   isMulti
@@ -448,14 +452,16 @@ export default function Settings({ profileData, _skills }) {
                   closeMenuOnSelect={false}
                   name="skills"
                   id="skills"
-                  value={profile.skills.map((a) => {
+                  value={profile?.skills?.map((skill) => {
                     return {
-                      label: `${a.toUpperCase()}`,
-                      value: `${a}`
+                      label: `${skill.toUpperCase()}`,
+                      value: `${skill}`,
+                      id: `${skill.id}`,
+                      name: `${skill.name}`,
                     };
                   })}
                   onChange={handleSkills}
-                /> */}
+                />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter Username</label>
                   <input
