@@ -45,7 +45,6 @@ const CreateEvent = () => {
       description: eventDetails.description,
       event_time: formatTime()
     };
-    //e.preventDefault();
     try {
       const data = await EventService.createNewEvent(userCookie ,eventData);
       notify(data.data.message);
