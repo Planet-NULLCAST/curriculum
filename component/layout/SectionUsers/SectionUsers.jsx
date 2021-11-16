@@ -23,6 +23,7 @@ export default class SimpleSlider extends Component {
             <Slider {...settings}>
               {this.props.user.map((item, key) => (
                 <div key={key}>
+                  { item.user_name && 
                   <div className={styles.item}>
                     <div className={styles.icon}>
                       <Image
@@ -39,6 +40,7 @@ export default class SimpleSlider extends Component {
                       </Link>
                     </h4>
                   </div>
+                  }
                 </div>
               ))}
             </Slider>
