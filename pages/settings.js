@@ -10,8 +10,10 @@ import ImageCropper from "../component/popup/ImageCropper";
 import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
+import Fade from "react-reveal/Fade";
 import CreatableSelect from "react-select/creatable";
 import SkillService from "../services/SkillService";
+import TagService from "../services/TagService";
 import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
@@ -22,16 +24,15 @@ export async function getServerSideProps(context) {
         "userNullcast"
       );
       if (contextCookie) {
-        console.log('d');
         const cookie = JSON.parse(contextCookie);
-        console.log('d');
         const username = cookie.user_name;
-        const { data }  = await UserService.getUserByUsername(username);
-        console.log(data ,'error')
+        const { data } = await UserService.getUserByUsername(username);
+        // removed roles from user data
+        delete data.roles;        
         // const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: data,
+            profileData: data
             // _skills: skillsRes
           }
         };
@@ -52,11 +53,11 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {
         profileData: []
-      },
+      }
       // redirect: {
       //   permanent: false,
       //   destination: "/"
@@ -70,11 +71,12 @@ export default function Settings({ profileData, _skills }) {
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
   const [allSkills, setAllSkills] = useState(_skills);
+  const [tagOptions, setTagOptions] = useState([]);
   const [profile, setProfile] = useState({
     full_name: "",
     bio: "",
     avatar: "",
-    skills: [],
+    skills: profileData.skills || [],
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -90,6 +92,9 @@ export default function Settings({ profileData, _skills }) {
     website: ""
   });
   const [image, setImage] = useState("");
+  useEffect(() => {
+    getSettingsTags();
+  }, []);
 
   useEffect(() => {
     setProfile({ ...profileData });
@@ -101,15 +106,16 @@ export default function Settings({ profileData, _skills }) {
 
   const updateProfile = async (newProfile) => {
     try {
+      const profileData = newProfile ? ({...newProfile}) : ({...profile});
+      delete profileData.skills;
       const response = await UserService.updateProfileByUserId(
-        userCookie,
-        newProfile ? newProfile : profile
+        userCookie, profileData
       );
       notify(response.message);
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      notify(err?.response?.data?.message, 'error');
+      notify(err?.response?.data?.message, "error");
     }
   };
   const handleSettings = (e) => {
@@ -126,22 +132,74 @@ export default function Settings({ profileData, _skills }) {
     }
   };
 
-  const handleSkills = (e) => {
-    const newSkill = e
-      .filter((skill) => {
-        if (skill.__isNew__ === true) {
-          return skill;
+  async function getSettingsTags() {
+    try {
+      const res = await TagService.getTags();
+      // console.log("get tags response", res);
+      if (res && res.length) {
+        const resTagOptions = res.map((tag) => {
+          return {
+            label: `${tag.name.toUpperCase()}`,
+            value: `${tag.name}`,
+            id: tag.id,
+            name: `${tag.name}`
+          };
+        });
+        // setTagOptions;
+        // console.log({ resTagOptions });
+        setTagOptions(resTagOptions);
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  }
+
+  const handleSkills = async (e) => {
+    // console.log("handle skills", e);
+    const newTag = e
+      .filter((tag) => {
+        if (tag.__isNew__ === true) {
+          // console.log(tag);
+          return tag;
         }
       })
-      .map((fSkill) => fSkill.value);
+      .map((fTag) => fTag.value);
+    try {
+      if (newTag.length > 0) {
+        const res = await TagService.postTags(userCookie, newTag);
+        const arr = [{ tag_id: res.id }];
+        const response = await SkillService.postSaveSkills(userCookie, arr);
+        e.splice(-1, 1);
+        setProfile((prevValue) => {
+          return {
+            ...prevValue,
+            skills: [...e, { value: res.name, id: res.id, name: res.name, label: res.name }],
+          };
+        });
+      }
+      else {
+        // gets new added tag and closed tag using filter
+        const addTag = e.filter(({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1));
+        // const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        if (addTag.length) {
+          const arr = addTag.map(({ id }) => { return { tag_id: id } })
+          const res = await SkillService.postSaveSkills(userCookie, arr);
+        }
+        if (removeTag.length) {
+          const res = await SkillService.deletePostSkill(userCookie, removeTag[0].id);
+        }
+        setProfile((prevValue) => {
+          return {
+            ...prevValue,
+            skills: [...e],
+          };
+        });
+      }
 
-    SkillService.postSkills(userCookie, newSkill);
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        skills: e.map((i) => i.value)
-      };
-    });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
   };
 
   const handleErrors = (e) => {
@@ -240,7 +298,7 @@ export default function Settings({ profileData, _skills }) {
         updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify("Image upload failed", 'error');
+        notify("Image upload failed", "error");
       }
     }
 
@@ -433,29 +491,26 @@ export default function Settings({ profileData, _skills }) {
                   ></textarea>
                 </div>
                 <label htmlFor="skills">Skills</label>
-                {/* <CreatableSelect
-                  options={allSkills.map((a) => {
-                    return {
-                      label: `${a.name.toUpperCase()}`,
-                      value: `${a.name}`
-                    };
-                  })}
+                <CreatableSelect
+                  options={tagOptions}
                   isMulti
-                  className="w-full mb-4"
+                  className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                   classNamePrefix="Skills"
                   clearValue={() => undefined}
                   placeholder="Skills"
                   closeMenuOnSelect={false}
                   name="skills"
-                  id="skills"
-                  value={profile.skills.map((a) => {
+                  // id="skills"
+                  value={profile?.skills?.map((skill) => {
                     return {
-                      label: `${a.toUpperCase()}`,
-                      value: `${a}`
+                      label: `${skill.name.toUpperCase()}`,
+                      value: `${skill.name}`,
+                      id: skill.id,
+                      name: `${skill.name}`
                     };
                   })}
-                  onChange={handleSkills}
-                /> */}
+                  onChange={(e) => handleSkills(e)}
+                />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter Username</label>
                   <input
@@ -580,7 +635,8 @@ export default function Settings({ profileData, _skills }) {
                   <button
                     disabled={
                       loading ||
-                      (errors.full_name !== "" && errors.full_name !== "valid") ||
+                      (errors.full_name !== "" &&
+                        errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||
@@ -590,7 +646,8 @@ export default function Settings({ profileData, _skills }) {
                     }
                     className={`${
                       loading ||
-                      (errors.full_name !== "" && errors.full_name !== "valid") ||
+                      (errors.full_name !== "" &&
+                        errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||

@@ -19,11 +19,12 @@ const loginUrl = `${apiVerUrl}/signin`;
 const signUpUrl = `${apiVerUrl}/user`;
 const userUrl = `${apiVerUrl}/user`;
 const usersUrl = `${apiVerUrl}/users`;
-const adminUrl = `${apiVerUrl}/admin`;
-const eventUrl = `${apiVerUrl}/admin/event`;
+const adminUrl = "api/admin";
 const tagUrl = `${apiVerUrl}/tags`;
 const postTagUrl = `${apiVerUrl}/post-tag`;
 const postTagsUrl = `${apiVerUrl}/post-tags`;
+const postSkillUrl = `${apiVerUrl}/user-tag`;
+const postSkillsUrl = `${apiVerUrl}/user-tags`;
 const CreateTagUrl = `${apiVerUrl}/tag`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
@@ -37,6 +38,8 @@ const logoutUrl = `${apiVerUrl}/logout`;
 const configVars = {
   baseUrl,
   postTagsUrl,
+  postSkillsUrl,
+  postSkillUrl,
   postTagUrl,
   postUser,
   loginUrl,
@@ -44,7 +47,6 @@ const configVars = {
   clientUrl,
   s3Url,
   authUrl,
-  eventUrl,
   enrolUrl,
   postUrl,
   postBySlug,

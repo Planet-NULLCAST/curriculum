@@ -1,5 +1,5 @@
 const axios = require("axios");
-import { baseUrl, skillUrl } from "../config/config";
+import { baseUrl, skillUrl, postSkillsUrl, postSkillUrl } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
 const getSkills = async () => {
@@ -14,28 +14,42 @@ const getSkills = async () => {
   }
 };
 
-const postSkills = async (userCookie, newSkill) => {
+async function postSaveSkills(userCookie, Tags) {
   try {
-    const { data } = await axios.post(
-      `${baseUrl}/${skillUrl}`,
-      { skills: newSkill },
+    const { data } = await axios.post(`${baseUrl}/${postSkillsUrl}`, Tags, {
+      headers: {
+        "x-access-token": `${userCookie.accessToken}`
+      }
+    });
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function deletePostSkill(userCookie, tagId) {
+  try {
+    const { data } = await axios.delete(
+      `${baseUrl}/${postSkillUrl}/${tagId}`,
       {
         headers: {
           "x-access-token": `${userCookie.accessToken}`
         }
       }
     );
-    // console.log(data);
-    return data.msg;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
   }
-};
+}
 
 const SkillService = {
   getSkills,
-  postSkills
+  postSaveSkills,
+  deletePostSkill
 };
 
 module.exports = SkillService;

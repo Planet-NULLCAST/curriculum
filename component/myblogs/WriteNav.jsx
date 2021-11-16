@@ -93,7 +93,6 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-  console.log(currentPost, 'hola');
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
@@ -105,7 +104,7 @@ export default function WriteNav({
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
-          console.log(tag);
+          // console.log(tag);
           return tag;
         }
       })
