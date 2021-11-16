@@ -171,7 +171,11 @@ export default function SignUp({ referer }) {
             )}${expires}`;
             localStorage.setItem("userNullcast", JSON.stringify(userData));
             // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+<<<<<<< HEAD
             notify('Sign Up Successful')
+=======
+            notify(data.message);
+>>>>>>> d7492640ccb6f95c422c5895bdb16019945740c8
             if (referer) {
               router.back();
             } else {
@@ -179,9 +183,9 @@ export default function SignUp({ referer }) {
             }
           } catch (err) {
             setIsLoading(false);
-            const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
+            // const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
             //console.log(errorMessage)
-            notify(errorMessage, 'error');
+            notify(err.response.data.message || err.message, 'error');
           }
 
           // let progress = JSON.parse(
