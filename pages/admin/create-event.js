@@ -5,40 +5,7 @@ import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import EventService from "../../services/EventService";
 import moment from "moment";
 import Cookies from "universal-cookie";
-
-
-// export async function getServerSideProps(context) {
-//   console.log('from server:-' , context.req.headers.cookie)
-//   try {
-//     if (context.req.headers.cookie) {
-//       const contextCookie = getCookieValue(
-//         context.req.headers.cookie,
-//         "userNullcast"
-//       );
-//       if (contextCookie) {
-//         const cookie = JSON.parse(contextCookie)
-//         return {
-//           props : {
-
-//           }
-//       }
-//     } else {
-//       return {
-//         props : {
-            
-//         }
-//         }
-//       };
-//     }
-//   } catch (err) {
-//     //notify(err?.response?.data?.message ?? err?.message, 'error');
-//     return {
-//       props : {
-            
-//       }
-//   }
-//}}
-
+import notify from "../../lib/notify";
 
 const CreateEvent = () => {
   const cookies = new Cookies();
@@ -66,20 +33,22 @@ const CreateEvent = () => {
   };
 
   const createEventHandler = async (e) => {
+    const eventData = 
+    {
+      guest_name: eventDetails.organizerName,         
+      guest_designation: eventDetails.tagLine,
+      guest_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
+      title: eventDetails.eventName,
+      registration_link: eventDetails.eventLink,
+      banner_image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
+      description: eventDetails.description,
+      event_time: formatTime()
+    };
     //e.preventDefault();
     try {
-      const data = await EventService.createNewEvent(userCookie , {
-        guest_name: eventDetails.organizerName,         
-        guest_designation: eventDetails.tagLine,
-        guest_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
-        title: eventDetails.eventName,
-        registration_link: eventDetails.eventLink,
-        banner_image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
-        description: eventDetails.description,
-        event_time: formatTime()
-      });
-      console.log(data);
+      const data = await EventService.createNewEvent(userCookie ,eventData);
+      notify(data.data.message);
     } catch (error) {
       console.log(error);
     }
