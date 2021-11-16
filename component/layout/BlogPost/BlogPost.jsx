@@ -43,6 +43,7 @@ export default function BlogPost(props) {
    * @returns {Promise}
    */
   const setVotes = async (type) => {
+    
     try {
       if (props.userId) {
         const response = await PostService.setVotes(
@@ -51,6 +52,7 @@ export default function BlogPost(props) {
           props.token
         );
         if (response.posts != null) {
+          
           setVoteCount(
             response.posts.votes.filter((item) => item.type == "up").length -
               response.posts.votes.filter((item) => item.type == "down").length
