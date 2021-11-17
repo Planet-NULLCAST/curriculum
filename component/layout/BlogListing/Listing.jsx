@@ -71,7 +71,7 @@ export default function Listing({
           <ListingItem blog={blog} />
         </div>
         <div className={styles.wrapBtn}>
-          {blog.length !== blogCount && (
+          {blog?.length !== blogCount && (
             <button className="btn btn--gray" onClick={handleLoadMore}>
               <span className="btn__text">Load more</span>
             </button>
