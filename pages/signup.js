@@ -171,11 +171,7 @@ export default function SignUp({ referer }) {
             )}${expires}`;
             localStorage.setItem("userNullcast", JSON.stringify(userData));
             // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-<<<<<<< HEAD
-            notify('Sign Up Successful')
-=======
             notify(data.message);
->>>>>>> d7492640ccb6f95c422c5895bdb16019945740c8
             if (referer) {
               router.back();
             } else {
