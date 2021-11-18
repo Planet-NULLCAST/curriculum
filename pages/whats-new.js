@@ -38,6 +38,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function whatsNew({blogs}) {
+  console.log(blogs)
   return (
     <>
       <Head>
@@ -45,7 +46,7 @@ export default function whatsNew({blogs}) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      { blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
+     {blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
       <SectionSwag />
       <SiteFooter />
     </>
