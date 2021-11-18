@@ -108,6 +108,7 @@ export default function Login({ referer }) {
             userData
           )}${expires}`;
           localStorage.setItem("userNullcast", JSON.stringify(userData));
+          notify(`${data.message}`);
           // console.log(document.cookie);
 
           // let progress = JSON.parse(
