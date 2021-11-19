@@ -27,18 +27,17 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
-    
+    notify(err?.response?.data?.message ?? err?.message, "error");
+
     return {
       props: {
         blogs: []
       }
-    }
+    };
   }
 }
 
-export default function whatsNew({blogs}) {
-  console.log(blogs)
+export default function whatsNew({ blogs }) {
   return (
     <>
       <Head>
@@ -46,7 +45,7 @@ export default function whatsNew({blogs}) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-     {blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
+      <WhatsNewPosts blogs={blogs} />
       <SectionSwag />
       <SiteFooter />
     </>
