@@ -10,7 +10,7 @@ import notify from "../../lib/notify";
 const CreateEvent = () => {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  console.log('cookies' , userCookie)
+  console.log("cookies", userCookie);
   const [eventDetails, setEventDetails] = useState({
     organizerImage: "",
     organizerName: "",
@@ -33,20 +33,18 @@ const CreateEvent = () => {
   };
 
   const createEventHandler = async (e) => {
-    const eventData = 
-    {
-      guest_name: eventDetails.organizerName,         
+    const eventData = {
+      guest_name: eventDetails.organizerName,
       guest_designation: eventDetails.tagLine,
-      guest_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
+      guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
       registration_link: eventDetails.eventLink,
-      banner_image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Nextjs-logo.svg/1200px-Nextjs-logo.svg.png",
+      banner_image: eventDetails.eventImage,
       description: eventDetails.description,
       event_time: formatTime()
     };
     try {
-      const data = await EventService.createNewEvent(userCookie ,eventData);
+      const data = await EventService.createNewEvent(userCookie, eventData);
       notify(data.data.message);
     } catch (error) {
       console.log(error);
@@ -93,6 +91,5 @@ const CreateEvent = () => {
     </div>
   );
 };
-
 
 export default CreateEvent;
