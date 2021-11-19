@@ -8,6 +8,7 @@ import PostService from "../../services/PostService";
 import { getCookieValue } from "../../lib/cookie";
 import Head from "next/head";
 import notify from "../../lib/notify";
+import { ProgressPlugin } from "webpack";
 
 // unsure on using getServerSideProps
 // if facing SEO issues refer
@@ -64,6 +65,24 @@ export async function getServerSideProps(context) {
   }
 }
 
+const HighlightedLink = ({ text = "" }) => {
+    var regexLink = new RegExp(`(${"^(https://www.youtube.com/).* $"})`, "gi");
+    var textParts = text.split(regexLink);
+    if(textParts.length != 1){
+      return (
+        textParts.filter(String).map((part) => {
+            return regexLink.test(part) ? (
+              <span style="color:blue;">{part}</span>
+            ) : (
+              <span>{part}</span>
+            );
+          })
+      );
+    }else{
+      return <span>{text}</span>;
+    }
+};
+
 export default function BlogListing(props) {
   const { html, primaryAuthor, title, bannerImage, createdAt } = props.posts;
   return (
@@ -81,7 +100,11 @@ export default function BlogListing(props) {
       <BlogPost
         userId={props.userId}
         token={props.token}
-        blog={props.posts}
+        blog = {
+        <HighlightedLink
+          text = {props.posts}
+        />
+        }
         html={html}
       />
       <SectionAuthor primaryAuthor={primaryAuthor} />
