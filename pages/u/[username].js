@@ -21,12 +21,12 @@ export async function getServerSideProps(context) {
   try {
     const username = context.params.username;
     let isThisUserTheCurrentLoggedIn = false;
-    const data  = await UserService.getUserByUsername(username);
+    const data = await UserService.getUserByUsername(username);
     const postParams = {
       limit: 10,
-      status: 'published',
+      status: "published"
     };
-    const response = await PostService.getLatestPosts(postParams);
+    const response = await PostService.getUserPostsByUser(username);
     /**
      * isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
      * in the profile details section
@@ -46,9 +46,9 @@ export async function getServerSideProps(context) {
     return {
       props: {
         userData: data.data,
-        postsCount: response.count,
-        posts: response.posts,
-        limit: response.limit,
+        postsCount: response.data.count,
+        posts: response.data.posts,
+        limit: response.data.limit
       }
     };
   } catch (err) {
