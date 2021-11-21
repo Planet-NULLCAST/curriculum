@@ -26,8 +26,8 @@ export async function getServerSideProps(context) {
     } else {
       return {
         props: {
-          posts: posts,
-          count: count,
+          posts: data.posts,
+          count: data.count,
           params: params
         }
       };
@@ -47,11 +47,11 @@ export default function TagName({ posts, params, count }) {
   };
   useEffect(async () => {
     try {
-      const { posts, count } = await PostService.getPostByTags(
+      const { data } = await PostService.getPostByTags(
         params.tagName,
         0
       );
-      setNewBlogs(posts)
+      setNewBlogs(data.posts)
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }

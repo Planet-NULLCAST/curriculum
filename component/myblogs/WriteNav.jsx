@@ -93,7 +93,6 @@ export default function WriteNav({
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-  console.log(currentPost, 'hola');
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
@@ -105,7 +104,7 @@ export default function WriteNav({
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
-          console.log(tag);
+          // console.log(tag);
           return tag;
         }
       })
@@ -344,12 +343,23 @@ export default function WriteNav({
           <span className="text-gray-500 ml-1">{"/ Edit"}</span>
         </div>
         <div className="items-center py-3 md:flex hidden">
-          <div
-            onClick={handlePublish}
-            className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-          >
-            <p>Publish</p>
-          </div>
+        <ModalConfirm
+                      trigger={
+                        <div
+                        
+                       className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+                     >
+                       <p>Publish</p>
+                     </div>
+                      }
+                      handleSubmit={handlePublish}
+                      purpose={"publish"}
+                      buttonColor={"green"}
+                      heading={"Are you sure"}
+                      text=" you want to publish this post?"
+                      secondaryText="This cannot be undone"
+                    />
+         
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"

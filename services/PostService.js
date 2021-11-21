@@ -123,14 +123,15 @@ async function uploadImage(imageFile, imageData) {
   // console.log(imageData);
   // console.log(s3Url);
   try {
-    const response = await axios.post(
+    const credLessAxios = axios.create({ withCredentials: false});
+    const response = await credLessAxios.post(
       `${s3Url}/dev/s3-presigned-url`,
       imageData
     );
     // console.log(response.data);
     //put with imageFile
     const uploadUrl = response.data;
-    const uploadResponse = await axios.put(uploadUrl, imageFile);
+    const uploadResponse = await credLessAxios.put(uploadUrl, imageFile);
     // console.log({ uploadResponse });
     const imageUrl = uploadResponse.config.url.split("?")[0];
     // console.log({ imageUrl });

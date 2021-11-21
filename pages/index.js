@@ -28,6 +28,7 @@ export async function getServerSideProps(context) {
     };
     const responsePost  = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
+    console.log(responsePost.data.posts, 'posts')
     return {
       props: {
         posts: responsePost.data.posts || [],
