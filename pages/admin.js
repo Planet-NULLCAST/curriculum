@@ -16,21 +16,12 @@ export async function getServerSideProps(context) {
       const cookie = JSON.parse(
         getCookieValue(context.req.headers.cookie, "userNullcast")
       );
-      const res = await PostService.isAdmin(cookie.id, cookie.accessToken);
-      if (res?.data) {
         return {
-          props: { admin: cookie }
+          props: {}
         };
-      } else {
-        return {
-          redirect: {
-            permanent: false,
-            destination: "/login"
-          }
-        };
-      }
     } else {
       return {
+        props: {},
         redirect: {
           permanent: false,
           destination: "/login"
@@ -40,6 +31,7 @@ export async function getServerSideProps(context) {
   } catch (err) {
     notify(err?.response?.data?.message ?? err?.message, 'error');
     return {
+      props: {},
       redirect: {
         permanent: false,
         destination: "/login"
@@ -48,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const Admin = (props) => {
+const Admin = () => {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
 
@@ -58,13 +50,13 @@ const Admin = (props) => {
     count: 0
   });
   const [pagination, setPagination] = useState({
-    pageNo: 1,
+    page: 1,
     limit: 10,
-    skip: 0,
-    optionsCategory: "",
-    optionsStatus: "",
-    order: -1,
-    fieldName: "updatedAt"
+    // optionstag: "",
+    status: "",
+    tag: "",
+    // order: -1,
+    // fieldName: "updatedAt"
   });
   const [loaded, setLoaded] = useState(false);
 
@@ -85,10 +77,19 @@ const Admin = (props) => {
    */
   async function getPosts(reqData) {
     try {
-      const data = await PostService.adminGetLatestPosts(reqData);
-
+      const data = await PostService.getPostsByUsers(reqData);
       const { posts, count } = data.data;
+      setPostData({ posts, count });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
+  }
 
+  async function getPostByTag(tagName, status) {
+    try {
+      const statusUpdate = { status: status };
+      const data  = await PostService.getPostByTags(tagName, statusUpdate);
+      const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
@@ -97,43 +98,44 @@ const Admin = (props) => {
 
   /**
    * page change event
-   * @param {*} pageNo new page change
+   * @param {*} page new page change
    * @param {*} limit limit of posts
    * @author athulraj2002
    */
-  const pageChange = (pageNo, limit) => {
+  const pageChange = (page, limit) => {
     const data = {
       ...pagination,
-      pageNo,
-      skip: pageNo == 1 ? 0 : (pageNo - 1) * 10
+      page,
+      limit,
+      skip: page == 1 ? 0 : (page - 1) * 10
     };
     setPagination(data);
     getPosts(data);
   };
 
   /**
-   * Function to get posts when category changes
-   * @param {*} category new category
+   * Function to get posts when tag changes
+   * @param {*} tag new tag
    * @author athulraj2002
    */
-  const filterCategoryPosts = (category) => {
+  const filterCategoryPosts = (tag) => {
     const data = {
       ...pagination,
-      optionsCategory: category,
-      pageNo: 1,
-      skip: 0
+      tag: tag,
+      page: 1,
+      // skip: 0
     };
     setPagination((previousState) => {
       return {
         ...previousState,
-        optionsCategory: category,
-        pageNo: 1,
-        skip: 0
+        tag: tag,
+        page: 1,
+        // skip: 0
       };
     });
 
-    setTimeout(() => {
-      getPosts(data);
+    setTimeout((status) => {
+      getPostByTag(data.tag, status);
     }, 100);
   };
 
@@ -143,9 +145,9 @@ const Admin = (props) => {
    * @author athulraj2002
    */
   const filterStatusPosts = (status) => {
-    const data = { ...pagination, optionsStatus: status, pageNo: 1, skip: 0 };
+    const data = { ...pagination, status: status, page: 1 };
     setPagination((previousState) => {
-      return { ...previousState, optionsStatus: status, pageNo: 1, skip: 0 };
+      return { ...previousState, status: status, page: 1};
     });
     setTimeout(() => {
       getPosts(data);
@@ -160,7 +162,7 @@ const Admin = (props) => {
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <AdminNavbar
-            changeCategory={(category) => filterCategoryPosts(category)}
+            changeTag={(tag) => filterCategoryPosts(tag)}
             changeStatus={(status) => filterStatusPosts(status)}
           />
 
@@ -176,7 +178,7 @@ const Admin = (props) => {
                 <Pagination
                   TotalCount={postData.count}
                   // CurrentPage={3}
-                  changePage={(pageNo, limit) => pageChange(pageNo, limit)}
+                  changePage={(page, limit) => pageChange(page, limit)}
                   pageNum={1}
                   limit={10}
                 />

@@ -17,11 +17,8 @@ export async function getServerSideProps(context) {
     const tagsArray = await TagService.getTags();
     // console.log(tagsArray);
     const foundTag = tagsArray.find((tag) => tag.name === params.tagName);
-    const { posts, count } = await PostService.getPostByTags(
-      params.tagName,
-      clickNo
-    );
-    // console.log(response);
+    const { data } = await PostService.getPostByTags(
+      params.tagName);
     if (!foundTag) {
       return {
         notFound: true

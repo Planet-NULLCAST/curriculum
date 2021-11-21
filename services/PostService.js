@@ -15,7 +15,7 @@ import {
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
-async function getPostsByUserId(reqData) {
+async function getPostsByUsers(reqData) {
   try {
     const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
@@ -161,10 +161,9 @@ async function uploadImage(imageFile, imageData) {
 // }
 
 
-async function getPostByTags(tagName) {
-  try {
-    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`);
-    console.log(data, 'success');
+async function getPostByTags(tagName,statusUpdate ) {
+  try {    
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`,statusUpdate);
     return data;
   } catch (err) {
     console.log(err);
@@ -190,22 +189,18 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     throw err;
   }
 }
-
-const isAdmin = async (id, token) => {
-  let url = getUrl();
+const isAdmin = async () => {
 
   try {
-    const { data } = await axios.get(`${url}/${adminUrl}/me`, {
-      headers: {
-        "x-access-token": `${token}`
-      }
-    });
+    const data = await axios.get(`${baseUrl}/${adminUrl}/me`);
+    console.log(data);
     return data;
   } catch (err) {
-    console.log("admin check err");
+    console.log(err,"admin check err");
     throw err;
   }
 };
+
 
 async function getPostsByQuery(query, clickNo) {
   let url = getUrl();
@@ -311,7 +306,7 @@ async function getPostsByMultipleTags(tags, clickNo) {
 
 const PostService = {
   getPostById,
-  getPostsByUserId,
+  getPostsByUsers,
   getPostBySlug,
   createPost,
   updatePostById,
