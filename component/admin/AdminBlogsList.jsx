@@ -8,21 +8,32 @@ import notify from "../../lib/notify";
 
 export default function AdminBlogsList({ posts, updated }) {
   const cookies = new Cookies();
-  const userCookie = cookies.get("userNullcast");
+  // const userCookie = cookies.get("userNullcast");
   /**
    * Function to approve a blog
    * @param {*} blog
    * @author athulraj2002
    * @returns null
+   * 
    */
+  async function updatePostById(updateData, newPostId) {
+    try {
+      const res = await PostService.updatePostById(updateData, newPostId);
+      if (res) {
+        notify(res?.message);
+      }
+      updated();
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, 'error');
+    }
+  }
+
   const approveBlog = async (blog) => {
     try {
-      const response = await PostService.adminChangePostStatus(
-        userCookie,
-        blog._id,
-        "published"
-      );
-      updated();
+      const newUpdatedPost = {
+        status: 'published',
+      };
+      updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -36,12 +47,10 @@ export default function AdminBlogsList({ posts, updated }) {
    */
   const rejectBlog = async (blog) => {
     try {
-      const response = await PostService.adminChangePostStatus(
-        userCookie,
-        blog._id,
-        "rejected"
-      );
-      updated();
+      const newUpdatedPost = {
+        status: 'rejected',
+      };
+      updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -49,12 +58,10 @@ export default function AdminBlogsList({ posts, updated }) {
 
   const unpublishBlog = async (blog) => {
     try {
-      const response = await PostService.adminChangePostStatus(
-        userCookie,
-        blog._id,
-        "pending"
-      );
-      updated();
+      const newUpdatedPost = {
+        status: 'pending',
+      };
+      updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -67,7 +74,7 @@ export default function AdminBlogsList({ posts, updated }) {
       <div className="w-full">
         {posts &&
           posts.map((item) => (
-            <div className={`${MyBlogStyles.oddBg} w-full`} key={item._id}>
+            <div className={`${MyBlogStyles.oddBg} w-full`} key={item.id}>
               <div
                 className={`flex flex-col md:flex-row md:items-center justify-between p-4`}
               >
@@ -75,7 +82,7 @@ export default function AdminBlogsList({ posts, updated }) {
                   <Link
                     href={{
                       pathname: `/posts/write`,
-                      query: { post_id: `${item._id}` }
+                      query: { post_id: `${item.id}` }
                     }}
                     className={`text-15 font-semibold mb-1 ${MyBlogStyles.color_blue_910}`}
                   >
@@ -89,9 +96,9 @@ export default function AdminBlogsList({ posts, updated }) {
                   <div className={`text-xs text-gray-400 pt-2`}>
                     {moment(item.updatedAt).format("LL")}
                     {" - "}
-                    <Link href={`/u/${item.primaryAuthor.username}`}>
+                    <Link href={`/u/${item.user.user_name}`}>
                       <a className="text-blue-500">
-                        {item.primaryAuthor.username}
+                        {item.user.user_name}
                       </a>
                     </Link>
                   </div>
@@ -101,7 +108,7 @@ export default function AdminBlogsList({ posts, updated }) {
                     href={
                       item.status === "published"
                         ? `/${item.slug}`
-                        : `/p/${item._id}`
+                        : `/p/${item.id}`
                     }
                   >
                     <div
@@ -182,7 +189,7 @@ export default function AdminBlogsList({ posts, updated }) {
                   <Link
                     href={{
                       pathname: `/posts/write`,
-                      query: { post_id: `${item._id}` }
+                      query: { post_id: `${item.id}` }
                     }}
                   >
                     <a target="_blank">
