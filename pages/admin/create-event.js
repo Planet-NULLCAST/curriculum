@@ -4,8 +4,52 @@ import OrganizerInfo from "../../component/admin/OrganizerInfo";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import EventService from "../../services/EventService";
 import moment from "moment";
+import PostService from '../../services/PostService'
 import Cookies from "universal-cookie";
 import notify from "../../lib/notify";
+import { getCookieValue } from "../../lib/cookie";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const cookie = JSON.parse(
+        getCookieValue(context.req.headers.cookie, "userNullcast")
+      );
+      const response = await PostService.isAdmin()
+      if(response?.data?.message === 'User has no admin access') {
+        return {
+          props: {},
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+        }
+      }
+      else {
+        return {
+          props : {}
+        }
+      }
+    } else {
+      return {
+        props: {},
+        redirect: {
+          permanent: false,
+          destination: "/login"
+        }
+      };
+    }
+  } catch (err) {
+    notify(err?.response?.data?.message ?? err?.message, 'error');
+    return {
+      props: {},
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
+  }
+}
 
 const CreateEvent = () => {
   const cookies = new Cookies();
