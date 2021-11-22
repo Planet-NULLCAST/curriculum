@@ -1,11 +1,76 @@
 import { useState } from "react";
 import EventInfo from "../../component/admin/EventInfo";
 import OrganizerInfo from "../../component/admin/OrganizerInfo";
+import UserService from "../../services/UserService";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import EventService from "../../services/EventService";
 import moment from "moment";
 import Cookies from "universal-cookie";
+import { getCookieValue } from "../../lib/cookie";
 import notify from "../../lib/notify";
+
+export async function getServerSideProps(context) {
+  try {
+    if (context.req.headers.cookie) {
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
+      );
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        const username = cookie.user_name;
+        const { data } = await UserService.getUserByUsername(username);
+        // removed roles from user data
+        // const skillsRes = await SkillService.getSkills();
+        if (data.roles[0] === "admin") {
+          return {
+            props: {
+              profileData: {}
+            }
+          };
+        } else {
+          return {
+            props: {
+              profileData: {}
+            },
+            redirect: {
+              permanent: false,
+              destination: "/"
+            }
+          };
+        }
+      } else {
+        return {
+          props: {
+            profileData: {}
+          },
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/"
+        }
+      };
+    }
+  } catch (err) {
+    notify(err?.response?.data?.message ?? err?.message, "error");
+    return {
+      props: {
+        profileData: {}
+      },
+      redirect: {
+        permanent: false,
+        destination: "/"
+      }
+    };
+  }
+}
 
 const CreateEvent = () => {
   const cookies = new Cookies();

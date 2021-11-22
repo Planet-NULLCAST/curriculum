@@ -19,12 +19,12 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
     getSettingsTags();
   }, []);
 
-  /** 
+  /**
    * gets tags from db and sets the tags
    * options in label and value format
    * @author athulraj2002
    */
-   async function getSettingsTags() {
+  async function getSettingsTags() {
     let resTagOptions = [];
     try {
       const res = await TagService.getTags();
@@ -36,9 +36,9 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
         };
       });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
-      // setTagOptions;
+    // setTagOptions;
     const allOption = {
       label: "ALL TAGS",
       value: ""
@@ -68,6 +68,9 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-end items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="flex items-center py-3">
+          <div class="bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
+            <a href="/admin/create-event">Create Event</a>
+          </div>
           <Select
             options={tagOptions}
             isMulti={false}

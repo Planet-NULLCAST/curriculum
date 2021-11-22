@@ -1,40 +1,74 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
-import Pagination from "../component/pagination/pagination";
-import MyBlogsstyles from "../styles/MyBlogs.module.css";
+import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
+import Pagination from "../../component/pagination/pagination";
+import UserService from "../../services/UserService";
+import MyBlogsstyles from "../../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
-import PostService from "../services/PostService";
-import AdminNavbar from "../component/admin/AdminNavbar";
-import AdminBlogsList from "../component/admin/AdminBlogsList";
-import { getCookieValue } from "../lib/cookie";
-import notify from "../lib/notify";
+import PostService from "../../services/PostService";
+import AdminNavbar from "../../component/admin/AdminNavbar";
+import AdminBlogsList from "../../component/admin/AdminBlogsList";
+import { getCookieValue } from "../../lib/cookie";
+import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
-      const cookie = JSON.parse(
-        getCookieValue(context.req.headers.cookie, "userNullcast")
+      const contextCookie = getCookieValue(
+        context.req.headers.cookie,
+        "userNullcast"
       );
+      if (contextCookie) {
+        const cookie = JSON.parse(contextCookie);
+        const username = cookie.user_name;
+        const { data } = await UserService.getUserByUsername(username);
+        // removed roles from user data
+        // const skillsRes = await SkillService.getSkills();
+        if (data.roles[0] === "admin") {
+          return {
+            props: {
+              profileData: {}
+            }
+          };
+        } else {
+          return {
+            props: {
+              profileData: {}
+            },
+            redirect: {
+              permanent: false,
+              destination: "/"
+            }
+          };
+        }
+      } else {
         return {
-          props: {}
+          props: {
+            profileData: {}
+          },
+          redirect: {
+            permanent: false,
+            destination: "/"
+          }
         };
+      }
     } else {
       return {
-        props: {},
         redirect: {
           permanent: false,
-          destination: "/login"
+          destination: "/"
         }
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
-      props: {},
+      props: {
+        profileData: {}
+      },
       redirect: {
         permanent: false,
-        destination: "/login"
+        destination: "/"
       }
     };
   }
@@ -54,7 +88,7 @@ const Admin = () => {
     limit: 10,
     // optionstag: "",
     status: "",
-    tag: "",
+    tag: ""
     // order: -1,
     // fieldName: "updatedAt"
   });
@@ -81,18 +115,20 @@ const Admin = () => {
       const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
   async function getPostByTag(tagName, status) {
     try {
-      const statusUpdate = { status: status };
-      const data  = await PostService.getPostByTags(tagName, statusUpdate);
+      const statusUpdate = {
+        status: status
+      };
+      const data = await PostService.getPostByTags(tagName, statusUpdate);
       const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
@@ -118,11 +154,12 @@ const Admin = () => {
    * @param {*} tag new tag
    * @author athulraj2002
    */
-  const filterCategoryPosts = (tag) => {
+  const filterCategoryPosts = (tag, status) => {
     const data = {
       ...pagination,
       tag: tag,
       page: 1,
+      status: status
       // skip: 0
     };
     setPagination((previousState) => {
@@ -130,12 +167,13 @@ const Admin = () => {
         ...previousState,
         tag: tag,
         page: 1,
+        status: status
         // skip: 0
       };
     });
 
-    setTimeout((status) => {
-      getPostByTag(data.tag, status);
+    setTimeout(() => {
+      getPostByTag(data.tag, data.status);
     }, 100);
   };
 
@@ -147,7 +185,7 @@ const Admin = () => {
   const filterStatusPosts = (status) => {
     const data = { ...pagination, status: status, page: 1 };
     setPagination((previousState) => {
-      return { ...previousState, status: status, page: 1};
+      return { ...previousState, status: status, page: 1 };
     });
     setTimeout(() => {
       getPosts(data);
