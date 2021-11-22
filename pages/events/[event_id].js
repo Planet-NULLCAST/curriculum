@@ -13,7 +13,6 @@ export async function getServerSideProps(context) {
   try {
     const eid = context.params.event_id;
     const response = await EventService.getEventById(eid);
-
     if (!response?.data) {
       return {
         redirect: {
