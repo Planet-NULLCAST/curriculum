@@ -12,6 +12,7 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
+const createEventUrl = `${apiVerUrl}/admin/event`;
 const eventIdUrl = `${apiVerUrl}/event`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
 const changeStatusUrl = "api/user/post";
@@ -54,6 +55,7 @@ const configVars = {
   postsUrl,
   allPostsUrl,
   eventsUrl,
+  createEventUrl,
   eventIdUrl,
   changeStatusUrl,
   createEventUrl,
@@ -72,7 +74,7 @@ const configVars = {
   skillUrl,
   publishedPostsUrl,
   // publishedPostsCountUrl,
-  logoutUrl,
+  logoutUrl
 };
 
 module.exports = configVars;

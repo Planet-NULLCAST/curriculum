@@ -1,6 +1,28 @@
-import Image from "next/image";
-
+import { useRef } from "react";
+import PostService from "../../services/PostService";
 const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
+  const ref = useRef();
+  const imageUploadHandler = async (e) => {
+    const imageFile = e.target.files[0];
+
+    const imageData = {
+      stage: "dev",
+      fileName: imageFile.name,
+      category: "events",
+      ContentType: imageFile.type
+    };
+
+    try {
+      const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
+
+      if (s3ImageUrl) {
+        console.log(s3ImageUrl);
+        setEventDetails((prev) => ({ ...prev, organizerImage: s3ImageUrl }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
@@ -11,13 +33,33 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
         ></div>
       </div>
       <div className="flex items-center">
-        <Image
-          src="/images/svgs/avatar.svg"
-          alt="profile image"
-          height={180}
-          width={180}
-          className="cursor-pointer"
-        />
+        <div className="relative">
+          <img
+            src={`${
+              eventDetails.organizerImage
+                ? eventDetails.organizerImage
+                : "/images/svgs/avatar.svg"
+            }`}
+            alt="profile image"
+            height={180}
+            width={180}
+            className="cursor-pointer rounded-full"
+          />
+          <div onClick={() => ref.current.click()}>
+            <label htmlFor="inputFiles" className="font-bold relative pl-8">
+              Change Photo
+              <input
+                type="file"
+                className="hidden absolute top-0 left-0 w-full flex-grow"
+                placeholder="uplaod image"
+                id="inputFile"
+                ref={ref}
+                accept="image/*"
+                onChange={imageUploadHandler}
+              />
+            </label>
+          </div>
+        </div>
         <div className="flex flex-col flex-grow ml-12">
           <div className="flex flex-col mb-3">
             <label

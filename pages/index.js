@@ -18,9 +18,9 @@ export async function getServerSideProps(context) {
     const postParams = {
       // sort_field: "published_at",
       status: "published",
-      // order: "ASC",
+      order: "DESC",
       limit: 4,
-      page: 1,
+      page: 1
       // with_table: "users"
     };
     const userParams = {
@@ -28,15 +28,15 @@ export async function getServerSideProps(context) {
     };
     const responsePost  = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
-    console.log(responsePost.data.posts, 'posts')
+    console.log(responsePost.data.posts, "posts");
     return {
       props: {
         posts: responsePost.data.posts || [],
-        user: data.users || [],
+        user: data.users || []
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return { props: { blog: [] } };
   }
 }

@@ -1,12 +1,11 @@
 import { useRef, useState } from "react";
-import PostService from '../../services/PostService'
+import PostService from "../../services/PostService";
 const EventInfo = ({ eventDetails, setEventDetails }) => {
-  const [fileName , setFileName] = useState("")
+  const [fileName, setFileName] = useState("");
   const ref = useRef();
   console.log(eventDetails?.eventImage);
 
   const imageUploadHandler = async (e) => {
-
     const imageFile = e.target.files[0];
 
     const imageData = {
@@ -14,19 +13,20 @@ const EventInfo = ({ eventDetails, setEventDetails }) => {
       fileName: imageFile.name,
       category: "events",
       ContentType: imageFile.type
-    }
+    };
 
     try {
       const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
 
-        if(s3ImageUrl){
-          console.log(s3ImageUrl)
-        }
+      if (s3ImageUrl) {
+        setFileName(imageFile.name);
+        console.log(s3ImageUrl);
+        setEventDetails((prev) => ({ ...prev, eventImage: s3ImageUrl }));
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    setFileName(imageFile.name)
-  }
+  };
 
   return (
     <div className="mx-10 mb-8">
@@ -154,12 +154,10 @@ const EventInfo = ({ eventDetails, setEventDetails }) => {
         onClick={() => ref.current.click()}
       >
         <label htmlFor="inputFiles" className="font-bold relative">
-          {fileName === ""
-            ? "Upload Image"
-            : fileName}
+          {fileName === "" ? "Upload Image" : fileName}
           <input
             type="file"
-            className="opacity-0 absolute top-0 left-0 w-full flex-grow"
+            className="hidden absolute top-0 left-0 w-full flex-grow"
             placeholder="uplaod image"
             id="inputFile"
             ref={ref}
