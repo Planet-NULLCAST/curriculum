@@ -19,7 +19,6 @@ export async function getServerSideProps(context) {
     const foundTag = tagsArray.find((tag) => tag.name === params.tagName);
     const { data } = await PostService.getPostByTags(
       params.tagName);
-    console.log(data, 'error');
     if (!foundTag) {
       return {
         notFound: true

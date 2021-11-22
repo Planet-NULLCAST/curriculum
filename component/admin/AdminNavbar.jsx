@@ -5,7 +5,7 @@ import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
 import notify from "../../lib/notify";
 
-export default function AdminNavbar({ changeCategory, changeStatus }) {
+export default function AdminNavbar({ changeTag, changeStatus }) {
   const statusOptions = [
     { label: "ALL POSTS", value: "" },
     // { label: "APPROVED", value: "approved" },
@@ -19,30 +19,26 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
     getSettingsTags();
   }, []);
 
-  /**
+  /** 
    * gets tags from db and sets the tags
    * options in label and value format
    * @author athulraj2002
    */
-  async function getSettingsTags() {
+   async function getSettingsTags() {
     let resTagOptions = [];
     try {
       const res = await TagService.getTags();
       // console.log("get tags response", res);
-      if (res && res.length) {
-         resTagOptions = res.data.map((tag) => {
-          return {
-            label: `${tag.name.toUpperCase()}`,
-            value: `${tag.name}`,
-            id: `${tag.id}`,
-          };
-        });
-      }
+      resTagOptions = res.map((tag) => {
+        return {
+          label: `${tag.name.toUpperCase()}`,
+          value: `${tag.name}`
+        };
+      });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
-
-    // setTagOptions;
+      // setTagOptions;
     const allOption = {
       label: "ALL TAGS",
       value: ""
@@ -58,7 +54,7 @@ export default function AdminNavbar({ changeCategory, changeStatus }) {
    * @returns new category
    * @author athulraj2002
    */
-  const selectCategory = (e) => changeCategory(e.value);
+  const selectCategory = (e) => changeTag(e.value);
 
   /**
    * Prop Function called when new status is choosen

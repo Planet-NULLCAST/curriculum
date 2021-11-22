@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
     const userParams = {
       limit: 10
     };
-    const responsePost = await PostService.getPostsByUserId(postParams);
+    const responsePost  = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
     console.log(responsePost.data.posts, "posts");
     return {

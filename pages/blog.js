@@ -24,8 +24,8 @@ export async function getServerSideProps() {
       page: 1
       // with_table: "users, tags"
     };
-    const { data } = await PostService.getPostsByUserId(postParams);
-    console.log(data.posts, "json");
+    const { data } = await PostService.getPostsByUsers(postParams);
+    console.log(data.posts,'json')
     if (data.posts.length > 0) {
       return {
         props: {
@@ -91,9 +91,8 @@ export default function BlogListing({ blog, count, limit }) {
       // with_table: "users, tags"
     };
     try {
-      const { data } = await PostService.getPostsByUserId(postParams);
-      console.log(data, "success");
-
+      const { data } = await PostService.getPostsByUsers(postParams);
+      console.log(data, 'success');  
       setNewBlogs((prevValue) => {
         return [...prevValue, ...data.posts];
       });

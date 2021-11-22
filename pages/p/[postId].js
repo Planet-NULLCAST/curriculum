@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
         // token = cookie.accessToken;
 
         const response = await PostService.getPostById(postId);
-        const data = await PostService.getPostsByUserId(userId);
+        const data = await PostService.getPostsByUsers(userId);
         const { count } = data.data;
         // console.log('ysggh',response);
         if (!response) {
