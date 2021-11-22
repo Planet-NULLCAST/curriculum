@@ -3,7 +3,7 @@ import {
   baseUrl,
   eventsUrl,
   eventIdUrl,
-  eventUrl
+  createEventUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
@@ -30,13 +30,16 @@ async function getEventById(eventId) {
   }
 }
 
-async function createNewEvent(userCookie ,eventData) {
+async function createNewEvent(userCookie, eventData) {
   try {
-    const response = await axios.post(`${baseUrl}/${eventUrl}` , eventData)
-    return response
+    const response = await axios.post(
+      `${baseUrl}/${createEventUrl}`,
+      eventData
+    );
+    return response;
   } catch (err) {
-      console.log(err);
-      throw err;
+    console.log(err);
+    throw err;
   }
 }
 
