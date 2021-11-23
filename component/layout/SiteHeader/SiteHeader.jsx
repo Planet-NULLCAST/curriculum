@@ -146,6 +146,13 @@ export default function HomeSpotlight() {
                         </Link>
                       </li>
                       <li>
+                        <Link href="/events">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
+                            Events
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
                         <Link href="/code-of-conduct">
                           <a onClick={() => setMenu(true)} className="w-full font-semibold">
                             Code of conduct
