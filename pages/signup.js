@@ -213,11 +213,12 @@ export default function SignUp({ referer }) {
           //   .catch((err) => {
           //     console.log(err.message);
           //   });
-          if (referer) {
-            router.back();
-          } else {
-            router.push("/");
-          }
+          // console.log(referer , 'here')
+          // if (referer) {
+          //   router.back();
+          // } else {
+          //   router.push("/");
+          // }
       } else {
           setIsLoading(false);
           if (!fName) {
