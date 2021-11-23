@@ -7,25 +7,8 @@ const EventInfo = ({ eventDetails, setEventDetails }) => {
 
   const imageUploadHandler = async (e) => {
     const imageFile = e.target.files[0];
-
-    const imageData = {
-      stage: "dev",
-      fileName: imageFile.name,
-      category: "events",
-      ContentType: imageFile.type
-    };
-
-    try {
-      const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-
-      if (s3ImageUrl) {
         setFileName(imageFile.name);
-        console.log(s3ImageUrl);
-        setEventDetails((prev) => ({ ...prev, eventImage: s3ImageUrl }));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+        setEventDetails((prev) => ({ ...prev, eventImage: imageFile }));
   };
 
   return (
