@@ -10,7 +10,7 @@ import {
   changeStatusUrl,
   tagUrl,
   adminUrl,
-  searchUrl,
+  searchUrl
   // publishedPostsCountUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
@@ -94,9 +94,11 @@ async function adminGetLatestPosts(reqParams) {
 }
 
 async function updatePostById(postId, postDetails) {
-  
   try {
-    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, postDetails);
+    const { data } = await axios.put(
+      `${baseUrl}/${postUrl}/${postId}`,
+      postDetails
+    );
     return data;
   } catch (err) {
     console.log(err);
@@ -123,7 +125,7 @@ async function uploadImage(imageFile, imageData) {
   // console.log(imageData);
   // console.log(s3Url);
   try {
-    const credLessAxios = axios.create({ withCredentials: false});
+    const credLessAxios = axios.create({ withCredentials: false });
     const response = await credLessAxios.post(
       `${s3Url}/dev/s3-presigned-url`,
       imageData
@@ -161,10 +163,13 @@ async function uploadImage(imageFile, imageData) {
 //   }
 // }
 
-
-async function getPostByTags(tagName,statusUpdate ) {
-  try {    
-    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`,statusUpdate);
+async function getPostByTags(tagName, statusUpdate) {
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/${postsUrl}/${tagName}`,
+      statusUpdate
+    );
+    console.log(data, "getpost");
     return data;
   } catch (err) {
     console.log(err);
@@ -191,17 +196,15 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
   }
 }
 const isAdmin = async () => {
-
   try {
     const data = await axios.get(`${baseUrl}/${adminUrl}/me`);
     console.log(data);
     return data;
   } catch (err) {
-    console.log(err,"admin check err");
+    console.log(err, "admin check err");
     throw err;
   }
 };
-
 
 async function getPostsByQuery(query, clickNo) {
   let url = getUrl();
@@ -224,7 +227,6 @@ async function getPostsByQuery(query, clickNo) {
  * @returns {Promise}
  */
 async function getUserPostsByUser(reqData) {
-  
   try {
     const { data } = await axios.get(`${baseUrl}/${postUser}`, {
       params: reqData
