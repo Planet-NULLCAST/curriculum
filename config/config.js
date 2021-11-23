@@ -12,15 +12,15 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
-const createEventUrl = `${apiVerUrl}/admin/event`;
 const eventIdUrl = `${apiVerUrl}/event`;
+const createEventUrl = `${apiVerUrl}/admin/event`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
 const signUpUrl = `${apiVerUrl}/user`;
 const userUrl = `${apiVerUrl}/user`;
 const usersUrl = `${apiVerUrl}/users`;
-const adminUrl = "api/admin";
+const adminUrl = `${apiVerUrl}/admin`;
 const tagUrl = `${apiVerUrl}/tags`;
 const postTagUrl = `${apiVerUrl}/post-tag`;
 const postTagsUrl = `${apiVerUrl}/post-tags`;
@@ -57,6 +57,7 @@ const configVars = {
   createEventUrl,
   eventIdUrl,
   changeStatusUrl,
+  createEventUrl,
   subscribeUrl,
   editorUrl,
   userUrl,

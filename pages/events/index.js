@@ -18,11 +18,12 @@ export async function getServerSideProps() {
       sort_field: "event_time",
       order: "ASC",
       limit: limit,
+      status: "drafted",
       page: 1,
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(postParams);
-    if (responseEvents.events.length > 0) {
+    if (responseEvents.count > 0) {
       return {
         props: {
           events: responseEvents.events,
@@ -34,7 +35,8 @@ export async function getServerSideProps() {
       return {
         props: {
           events: [],
-          count: 0
+          count: 0,
+          limit: 0
         }
       };
     }
@@ -47,7 +49,6 @@ export async function getServerSideProps() {
 }
 
 export default function EventListing({ events, count, limit }) {
-
   const [newEvents, setNewEvents] = useState(events);
 
   const currentCount = (count) => {
@@ -59,6 +60,7 @@ export default function EventListing({ events, count, limit }) {
       sort_field: "published_at",
       order: "ASC",
       limit: limit,
+      status: "drafted",
       page: 1,
       with_table: "users, tags"
     };
@@ -121,7 +123,7 @@ export default function EventListing({ events, count, limit }) {
         />
       ) : (
         <div className="flex items-center justify-center m-9 font-semibold">
-          There's no published blogs yet!
+          There's no events yet!
         </div>
       )}
       <SectionSwag />
