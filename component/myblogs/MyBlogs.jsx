@@ -32,7 +32,7 @@ export default function MyBlogs({ posts }) {
                     </a>
                   </Link>
                   <div className={`text-xs text-gray-400`}>
-                    {moment(item.updatedAt).format("LL")}
+                    {moment(item.created_at).format("LL")}
                   </div>
                 </div>
                 <div className="flex items-center">
