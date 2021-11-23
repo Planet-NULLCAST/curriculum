@@ -403,7 +403,7 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      src={userCookie.avatar || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">

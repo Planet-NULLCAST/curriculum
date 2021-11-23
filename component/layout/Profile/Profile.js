@@ -25,7 +25,7 @@ export default function Profile({ onLogout, username }) {
           <h4>{userCookie.full_name}</h4>
           <p>
             <img
-              src="/images/smallduck.svg"
+              src={userCookie.avatar || "/images/smallduck.svg"}
               alt="coin"
               height="18rem"
               width="18rem"
