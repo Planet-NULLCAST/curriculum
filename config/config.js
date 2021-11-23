@@ -12,7 +12,6 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
-const createEventUrl = `${apiVerUrl}/admin/event`;
 const eventIdUrl = `${apiVerUrl}/event`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
 const changeStatusUrl = "api/user/post";

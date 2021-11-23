@@ -163,13 +163,11 @@ async function uploadImage(imageFile, imageData) {
 //   }
 // }
 
-async function getPostByTags(tagName, statusUpdate) {
+async function getPostByTags(tagName, status) {
   try {
-    const { data } = await axios.get(
-      `${baseUrl}/${postsUrl}/${tagName}`,
-      statusUpdate
-    );
-    console.log(data, "getpost");
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
+      params: { status: "" }
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -195,10 +193,11 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
     throw err;
   }
 }
-const isAdmin = async () => {
+
+const isAdmin = async (cookie) => {
   try {
     const data = await axios.get(`${baseUrl}/${adminUrl}/me`);
-    console.log(data);
+    console.log(data, "data");
     return data;
   } catch (err) {
     console.log(err, "admin check err");
