@@ -8,6 +8,7 @@ import {
   postUser,
   postBySlug,
   changeStatusUrl,
+  adminReviewUrl,
   tagUrl,
   adminUrl,
   searchUrl
@@ -97,6 +98,19 @@ async function updatePostById(postId, postDetails) {
   try {
     const { data } = await axios.put(
       `${baseUrl}/${postUrl}/${postId}`,
+      postDetails
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function adminReview(postId, postDetails) {
+  try {
+    const { data } = await axios.put(
+      `${baseUrl}/${adminReviewUrl}/${postId}`,
       postDetails
     );
     return data;
@@ -288,6 +302,7 @@ const PostService = {
   getPostById,
   getPostsByUsers,
   getPostBySlug,
+  adminReview,
   createPost,
   updatePostById,
   deletePostById,
