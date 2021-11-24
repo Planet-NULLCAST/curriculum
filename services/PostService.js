@@ -60,12 +60,11 @@ async function createPost(post) {
 }
 
 async function getLatestPosts(reqParams) {
-  let url = getUrl();
   try {
-    const res = await axios.get(`${baseUrl}/${postsUrl}`, {
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqParams
     });
-    return res.data.data;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -217,12 +216,13 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} username
  * @returns {Promise}
  */
-async function getUserPostsByUser(reqData) {
+
+ async function getUserPostsByUser(reqParams) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${postUser}`, {
-      params: reqData
+    const res = await axios.get(`${baseUrl}/${postUser}`, {
+      params: reqParams
     });
-    return data;
+    return res.data;
   } catch (err) {
     console.log(err);
     throw err;

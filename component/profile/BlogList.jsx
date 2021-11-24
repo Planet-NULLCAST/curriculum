@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
   const [count, setCount] = useState(0);
-
   const handleViewMore = () => {
     let newCount = count + 1;
     setCount(newCount);
@@ -82,13 +81,13 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
         )}
       </div>
       <div className="w-full flex justify-center mt-8  items-center">
-        {posts.length !== postsCount && (
+        {postsCount > 2 && (
         <Link href={{
           pathname: "/posts",
-          query: { page: 1, tag: "", status: "" }
+          query: { page: 1, tag: "", status: "published" }
         }}>
           <a
-            // onClick={handleViewMore}
+            onClick={handleViewMore}
             className="py-1 px-6 text-sm font-semibold whitespace-nowrap border border-black bg-white text-black hover:bg-black hover:text-white duration-700 rounded"
           >
             View All
