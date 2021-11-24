@@ -5,9 +5,8 @@ import {
   eventIdUrl,
   createEventUrl
 } from "../config/config";
-import PostService from './PostService'
 import { getUrl } from "../lib/getUrl";
-
+import {getImageUrl} from '../pages/admin/create-event'
 async function getLatestEvents(reqParams) {
   let url = getUrl();
   try {
@@ -31,21 +30,6 @@ async function getEventById(eventId) {
   }
 }
 
-async function getImageUrl(eventData , response) {
-  return Promise.all([PostService.uploadImage(eventData.guest_image , {
-    stage: "dev",
-    fileName: eventData.guest_image.name,
-    id: response.data.data.id,
-    category: "events",
-    ContentType: "image/png"
-  }), PostService.uploadImage(eventData.banner_image , {
-    stage: "dev",
-    fileName: eventData.banner_image.name,
-    id: response.data.data.id,
-    category: "events",
-    ContentType: "image/png"
-  })])
-}
 
 async function createNewEvent(userCookie, eventData) {
   try {
@@ -61,10 +45,10 @@ async function createNewEvent(userCookie, eventData) {
     if(response){
       const res = await getImageUrl(eventData , response)
       console.log(res)
-      response = await axios.put(`${baseUrl}/${createEventUrl}/${response.data.data.id}`,{
+      response = await updateEvent({
         guest_image : res[0],
         banner_image : res[1]
-      })
+      }, response.data.data.id)
       console.log(response.data)
       return response
     }
@@ -74,10 +58,23 @@ async function createNewEvent(userCookie, eventData) {
   }
 }
 
+async function updateEvent(updatedData , eventId) {
+  try {
+    const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,updatedData)
+    if(response){
+      return response
+    }
+  } catch (error) {
+    console.log(err);
+    throw err;
+  }
+}
+
 const EventService = {
   getLatestEvents,
   getEventById,
-  createNewEvent
+  createNewEvent,
+  updateEvent
 };
 
 module.exports = EventService;

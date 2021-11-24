@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import PostService from "../../services/PostService";
 const EventInfo = ({ eventDetails, setEventDetails }) => {
   const [fileName, setFileName] = useState("");
   const ref = useRef();
@@ -102,6 +101,7 @@ const EventInfo = ({ eventDetails, setEventDetails }) => {
           <input
             type="date"
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
+            min={new Date().toISOString().split('T')[0]}
             name="event date"
             placeholder="choose"
             value={eventDetails.eventDate}
