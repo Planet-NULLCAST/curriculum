@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
-import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
 import ImageCropper from "../component/popup/ImageCropper";
@@ -15,6 +14,7 @@ import CreatableSelect from "react-select/creatable";
 import SkillService from "../services/SkillService";
 import TagService from "../services/TagService";
 import notify from "../lib/notify";
+import SharedService from "../services/SharedService";
 
 export async function getServerSideProps(context) {
   try {
@@ -286,7 +286,7 @@ export default function Settings({ profileData, _skills }) {
       setLoading(true);
       notify("Uploading image in progress");
       try {
-        let s3ImageUrl = await PostService.uploadImage(image, imageData);
+        let s3ImageUrl = await SharedService.uploadImage(image, imageData);
         s3ImageUrl += "?bustcache=" + new Date().getTime();
         setImage(s3ImageUrl);
 
