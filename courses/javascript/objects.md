@@ -5,94 +5,94 @@ next: "prototypes"
 prev: "comparisons"
 contentOnly: false
 testCase: [
-			{
-				id: 1,
-				case: ["let user = {};", "let user = {}"],
-				hint: "Defining the object user",
-				isCorrect: false
-			},
-			{
-				id: 2,
-				case: [
-					`user.name = 'Lionel'`,
-					`user.name = 'Lionel';`,
-					`user.name = "Lionel"`,
-					`user.name = "Lionel";`,
-					`user['name'] = 'Lionel'`,
-					`user['name'] = 'Lionel';`,
-					`user['name'] = "Lionel"`,
-					`user['name'] = "Lionel";`,
-					`user["name"] = 'Lionel'`,
-					`user["name"] = 'Lionel';`,
-					`user["name"] = "Lionel"`,
-					`user["name"] = "Lionel";`,
-				],
-				hint: 'Add property "name" with value "Lionel"',
-				isCorrect: false
-			},
-			{
-				id: 3,
-				case: [
-					`user.surName = 'Messi'`,
-					`user.surName = 'Messi';`,
-					`user.surName = "Messi"`,
-					`user.surName = "Messi";`,
-					`user['surName'] = 'Messi'`,
-					`user['surName'] = 'Messi';`,
-					`user['surName'] = "Messi"`,
-					`user['surName'] = "Messi";`,
-					`user["surName"] = 'Messi'`,
-					`user["surName"] = 'Messi';`,
-					`user["surName"] = "Messi"`,
-					`user["surName"] = "Messi";`,
-				],
-				hint: 'Add property "surName" with value "Messi"',
-				isCorrect: false
-			},
-			{
-				id: 4,
-				case: [
-					`user.noInternationTrophy = true`,
-					`user.noInternationTrophy = true;`,
-					`user['noInternationTrophy'] = true`,
-					`user['noInternationTrophy'] = true;`,
-					`user["noInternationTrophy"] = true`,
-					`user["noInternationTrophy"] = true;`,
-				],
-				hint: 'Add property "noInternationalTrophy" with value true',
-				isCorrect: false
-			},
-			{
-				id: 5,
-				case: [
-					`user.name = 'Leo'`,
-					`user.name = 'Leo';`,
-					`user.name = "Leo"`,
-					`user.name = "Leo";`,
-					`user['name'] = 'Leo'`,
-					`user['name'] = 'Leo';`,
-					`user['name'] = "Leo"`,
-					`user['name'] = "Leo";`,
-					`user["name"] = 'Leo'`,
-					`user["name"] = 'Leo';`,
-					`user["name"] = "Leo"`,
-					`user["name"] = "Leo";`,
-				],
-				hint: 'Change the value of the name to "Leo"',
-				isCorrect: false
-			},
-			{
-				id: 6,
-				case: [
-					'delete user.noInternationTrophy',
-					'delete user.noInternationTrophy;',
-					`delete user['noInternationTrophy']`,
-					`delete user['noInternationTrophy'];`,
-					'delete user["noInternationTrophy"]',
-					'delete user["noInternationTrophy"];',
-				]
-			}
+	{
+		id: 1,
+		case: ["let user = {};", "let user = {}"],
+		hint: "Defining the object user",
+		isCorrect: false
+	},
+	{
+		id: 2,
+		case: [
+			`user.name = 'Lionel'`,
+			`user.name = 'Lionel';`,
+			`user.name = "Lionel"`,
+			`user.name = "Lionel";`,
+			`user['name'] = 'Lionel'`,
+			`user['name'] = 'Lionel';`,
+			`user['name'] = "Lionel"`,
+			`user['name'] = "Lionel";`,
+			`user["name"] = 'Lionel'`,
+			`user["name"] = 'Lionel';`,
+			`user["name"] = "Lionel"`,
+			`user["name"] = "Lionel";`,
+		],
+		hint: 'Add property "name" with value "Lionel"',
+		isCorrect: false
+	},
+	{
+		id: 3,
+		case: [
+			`user.surName = 'Messi'`,
+			`user.surName = 'Messi';`,
+			`user.surName = "Messi"`,
+			`user.surName = "Messi";`,
+			`user['surName'] = 'Messi'`,
+			`user['surName'] = 'Messi';`,
+			`user['surName'] = "Messi"`,
+			`user['surName'] = "Messi";`,
+			`user["surName"] = 'Messi'`,
+			`user["surName"] = 'Messi';`,
+			`user["surName"] = "Messi"`,
+			`user["surName"] = "Messi";`,
+		],
+		hint: 'Add property "surName" with value "Messi"',
+		isCorrect: false
+	},
+	{
+		id: 4,
+		case: [
+			`user.noInternationTrophy = true`,
+			`user.noInternationTrophy = true;`,
+			`user['noInternationTrophy'] = true`,
+			`user['noInternationTrophy'] = true;`,
+			`user["noInternationTrophy"] = true`,
+			`user["noInternationTrophy"] = true;`,
+		],
+		hint: 'Add property "noInternationalTrophy" with value true',
+		isCorrect: false
+	},
+	{
+		id: 5,
+		case: [
+			`user.name = 'Leo'`,
+			`user.name = 'Leo';`,
+			`user.name = "Leo"`,
+			`user.name = "Leo";`,
+			`user['name'] = 'Leo'`,
+			`user['name'] = 'Leo';`,
+			`user['name'] = "Leo"`,
+			`user['name'] = "Leo";`,
+			`user["name"] = 'Leo'`,
+			`user["name"] = 'Leo';`,
+			`user["name"] = "Leo"`,
+			`user["name"] = "Leo";`,
+		],
+		hint: 'Change the value of the name to "Leo"',
+		isCorrect: false
+	},
+	{
+		id: 6,
+		case: [
+			'delete user.noInternationTrophy',
+			'delete user.noInternationTrophy;',
+			`delete user['noInternationTrophy']`,
+			`delete user['noInternationTrophy'];`,
+			'delete user["noInternationTrophy"]',
+			'delete user["noInternationTrophy"];',
 		]
+	}
+]
 ---
 
 `Objects` are used to store keyed collections of various data and more complex entities. In JavaScript, objects penetrate almost every aspect of the language. So we must understand them first before going in-depth anywhere else.
