@@ -18,7 +18,7 @@ export default function AdminBlogsList({ posts, updated }) {
    */
   async function updatePostById(updateData, newPostId) {
     try {
-      const res = await PostService.updatePostById(updateData, newPostId);
+      const res = await PostService.adminReview(updateData, newPostId);
       if (res) {
         notify(res?.message);
       }
