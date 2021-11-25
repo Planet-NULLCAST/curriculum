@@ -183,12 +183,17 @@ export default function WriteNav({
       slug: postUrl,
       mobiledoc: currentPost.mobiledoc,
     };
-
+    if (settingsData.slug === ""){
+      delete settingsData.slug;
+      getSettings(settingsData);
+    }
+    else {
+      getSettings(settingsData);
+    }
     // console.log(
     //   Object.values(settingsData).some((k) => k !== "" || k !== null)
     // );
     // send prop
-    getSettings(settingsData);
   };
 
   /**
