@@ -69,7 +69,8 @@ export async function getServerSideProps(context) {
 }
 
 export default function BlogListing(props,response) {
-  const { html, title, banner_image, created_by, user } = props.posts;
+  const { html, title, banner_image, created_at, user } = props.posts;
+  //console.log("date",props.posts)
   const count = props.count;
   return (
     <>
@@ -80,7 +81,7 @@ export default function BlogListing(props,response) {
       <BlogSpotlight
         title={title}
         bannerImage={banner_image}
-        createdAt={created_by}
+        createdAt={created_at}
         primaryAuthor={user}
       />
       <BlogPost
