@@ -4,7 +4,9 @@ import {
   allPostsUrl,
   postUrl,
   postsUrl,
+  getVoteUrl,
   s3Url,
+  setVoteUrl,
   postUser,
   postBySlug,
   changeStatusUrl,
@@ -252,18 +254,24 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} token
  * @returns {Promise}
  */
-async function setVotes(type, postId, token) {
-  const url = getUrl();
+ async function getVotes(postId) {
 
   try {
-    const { data } = await axios.put(
-      `${url}/${postUrl}/vote/${postId}`,
-      { type: type },
-      {
-        headers: {
-          "x-access-token": `${token}`
-        }
-      }
+    const { data } = await axios.get(
+      `${baseUrl}/${getVoteUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function setVotes(value, postId) {
+
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${setVoteUrl}/${postId}`,
+      { value: value }
     );
     return data;
   } catch (err) {
@@ -315,6 +323,7 @@ const PostService = {
   getUserPostsByUser,
   // getPublishedPostsCountByUserId,
   setVotes,
+  getVotes,
   getPostsByMultipleTags
 };
 

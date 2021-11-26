@@ -25,7 +25,6 @@ export async function getServerSideProps() {
       // with_table: "users, tags"
     };
     const { data } = await PostService.getPostsByUsers(postParams);
-    console.log(data.posts,'json')
     if (data.posts.length > 0) {
       return {
         props: {

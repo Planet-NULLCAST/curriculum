@@ -7,7 +7,6 @@ import notify from "../../../lib/notify";
 
 export default function SectionAuthor({ primaryAuthor, postCount }) {
   const { bio, user_name, avatar } = primaryAuthor;
-console.log(postCount);
   useEffect(() => {
   }, [primaryAuthor]);
   return (

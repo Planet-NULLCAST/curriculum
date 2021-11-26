@@ -50,7 +50,7 @@ export default function ListingFeatured({ blog }) {
               </p>
 
               <Details
-                username={blog?.user.username}
+                username={blog?.user.user_name}
                 avatar={blog?.user.avatar}
               />
             </div>

@@ -36,9 +36,13 @@ const changePasswordUrl = `${apiVerUrl}/update-password`;
 const publishedPostsUrl = "api/posts/published";
 //  const publishedPostsCountUrl = "api/posts/published/count";
 const logoutUrl = `${apiVerUrl}/logout`;
+const setVoteUrl = `${apiVerUrl}/post-vote`;
+const getVoteUrl = `${apiVerUrl}/post-votes`;
 
 const configVars = {
   baseUrl,
+  setVoteUrl,
+  getVoteUrl,
   postTagsUrl,
   postSkillsUrl,
   postSkillUrl,
