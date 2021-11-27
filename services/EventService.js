@@ -19,7 +19,15 @@ async function getLatestEvents(reqParams) {
     throw err;
   }
 }
-
+async function getallevents(){
+  try{
+    const {data} = await axios.get(`${baseUrl}/api/v1/events`);
+    return data;
+  }
+  catch(err){
+    console.log(err)
+  }
+}
 async function getEventById(eventId) {
   try {
     const { data } = await axios.get(`${baseUrl}/${eventIdUrl}/${eventId}`);
@@ -44,7 +52,8 @@ async function createNewEvent(userCookie, eventData) {
 const EventService = {
   getLatestEvents,
   getEventById,
-  createNewEvent
+  createNewEvent,
+  getallevents
 };
 
 module.exports = EventService;

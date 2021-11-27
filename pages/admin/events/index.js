@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import Pagination from "../../component/pagination/pagination";
-import UserService from "../../services/UserService";
-import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
+import Pagination from "../../../component/pagination/pagination";
+import UserService from "../../../services/UserService";
+import MyBlogsstyles from "../../../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
-import PostService from "../../services/PostService";
-import AdminNavbar from "../../component/admin/AdminNavbar";
-import AdminBlogsList from "../../component/admin/AdminBlogsList";
-import { getCookieValue } from "../../lib/cookie";
-import notify from "../../lib/notify";
+import EventService from '../../../services/EventService'
+import AdminEventList from '../../../component/admin/AdminEventList'
+import { getCookieValue } from "../../../lib/cookie";
+import notify from "../../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -79,10 +78,11 @@ const Admin = () => {
   const userCookie = cookies.get("userNullcast");
 
   //   state
-  const [postData, setPostData] = useState({
-    posts: [],
-    count: 0
-  });
+  const [eventdata, setEventdata] = useState({
+    events:[],
+    count:'0'
+  })
+  console.log(eventdata)
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -97,7 +97,7 @@ const Admin = () => {
   //   effects
   useEffect(() => {
     if (userCookie) {
-      getPosts(pagination);
+      getevents(pagination);
       setLoaded(true);
     }
   }, []);
@@ -109,30 +109,16 @@ const Admin = () => {
    * @param {*} reqData data for pagination and filter
    * @author athulraj2002
    */
-  async function getPosts(reqData) {
-    try {
-      const data = await PostService.getPostsByUsers(reqData);
-      const { posts, count } = data.data;
-      setPostData({ posts, count });
-    } catch (err) { 
+  async function getevents(reqData) {
+    try{
+      const data = await EventService.getallevents();
+      const {events,count} = data.data;
+      setEventdata({events,count});
+    }
+    catch(err){
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
-  }
-
-  async function getPostByTag(tagName, status) {
-    try {
-      const statusUpdate = {
-        status: status
-      };
-      const data = await PostService.getPostByTags(tagName, statusUpdate);
-      const { posts, count } = data.data;
-      setPostData({ posts, count });
-    } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, "error");
-    }
-  }
-
-  /**
+  }  /**
    * page change event
    * @param {*} page new page change
    * @param {*} limit limit of posts
@@ -199,22 +185,21 @@ const Admin = () => {
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
-          <AdminNavbar
-            changeTag={(tag) => filterCategoryPosts(tag)}
-            changeStatus={(status) => filterStatusPosts(status)}
-          />
+       <div className='bg-white flex flex-row items-center rounded shadow-sm h-sub-nav justify-end'>
+       <div class="bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
+            <a href="/admin/create-event">Create Event</a>
+          </div>
+       </div>
 
-          {postData.posts?.length ? (
+          {eventdata.events?.length ? (
             <div>
-              <AdminBlogsList
-                posts={postData.posts}
-                updated={() => getPosts(pagination)}
-              />
+              <AdminEventList events={eventdata.events} />
+              
               <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
               >
                 <Pagination
-                  TotalCount={postData.count}
+                  TotalCount={eventdata.count}
                   // CurrentPage={3}
                   changePage={(page, limit) => pageChange(page, limit)}
                   pageNum={1}
