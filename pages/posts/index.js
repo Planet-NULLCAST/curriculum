@@ -74,6 +74,8 @@ export default function Posts() {
     setTagFilter(router.query.tag);
     setStatusFilter(router.query.status);
     const newReqData = {
+      sort_field: "updated_at",
+      order: "DESC",
       page: router.query.page,
       limit: postData.limit,
       tag: router.query.tag,
@@ -87,8 +89,7 @@ export default function Posts() {
     // console.log("getposts call");
     try {
       const userId = userCookie.id;
-      console.log("user",userId);
-      const data = await PostService.getUserPostsByUser(reqData);
+      const data = await PostService.getUserPostsByUser(userId, reqData);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {
@@ -105,8 +106,6 @@ export default function Posts() {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-
-  console.log('change page', postData.posts);
 
   const changePage = (newPageNo) => {
     // console.log("change page: ", newPageNo, tagFilter, statusFilter);

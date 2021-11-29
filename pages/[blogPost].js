@@ -58,6 +58,20 @@ export default function BlogListing({ blog , relatedPosts }) {
   // const {}
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
+  
+  useEffect(() => {
+    getUserPostCount();
+}, []);
+
+  const getUserPostCount = async () => {
+    const UserId = blog.user.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getPostCount(UserId, postParams);
+    console.log(response.data.count, 'count');  
+    setPostsCount(response.data.count);
+  };
 
   return (
     <>

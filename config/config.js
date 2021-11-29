@@ -27,7 +27,8 @@ const postTagUrl = `${apiVerUrl}/post-tag`;
 const postTagsUrl = `${apiVerUrl}/post-tags`;
 const postSkillUrl = `${apiVerUrl}/user-tag`;
 const postSkillsUrl = `${apiVerUrl}/user-tags`;
-const CreateTagUrl = `${apiVerUrl}/tag`;
+const createTagUrl = `${apiVerUrl}/tag`;
+const postCount = `${apiVerUrl}/posts-count`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
@@ -41,6 +42,7 @@ const getVoteUrl = `${apiVerUrl}/post-votes`;
 
 const configVars = {
   baseUrl,
+  postCount,
   setVoteUrl,
   getVoteUrl,
   postTagsUrl,
@@ -69,7 +71,7 @@ const configVars = {
   userUrl,
   adminUrl,
   tagUrl,
-  CreateTagUrl,
+  createTagUrl,
   serverUrl,
   searchUrl,
   forgotPasswordUrl,
