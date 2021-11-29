@@ -68,9 +68,7 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-end items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="flex items-center py-3">
-          <div class="bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
-            <a href="/admin/create-event">Create Event</a>
-          </div>
+          
           <Select
             options={tagOptions}
             isMulti={false}
@@ -91,7 +89,11 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
             placeholder="Select Status"
             // closeMenuOnSelect={false}
           />
+           <div class="bg-black h-8 ml-4 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
+              <a href="/admin/events/create-event">Create Event</a>
+            </div>
         </div>
+        
       </div>
     </div>
   );

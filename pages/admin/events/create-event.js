@@ -1,13 +1,13 @@
 import { useState } from "react";
-import EventInfo from "../../component/admin/EventInfo";
-import OrganizerInfo from "../../component/admin/OrganizerInfo";
-import UserService from "../../services/UserService";
-import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import EventService from "../../services/EventService";
+import EventInfo from "../../../component/admin/EventInfo";
+import OrganizerInfo from "../../../component/admin/OrganizerInfo";
+import UserService from "../../../services/UserService";
+import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
+import EventService from "../../../services/EventService";
 import moment from "moment";
 import Cookies from "universal-cookie";
-import { getCookieValue } from "../../lib/cookie";
-import notify from "../../lib/notify";
+import { getCookieValue } from "../../../lib/cookie";
+import notify from "../../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {

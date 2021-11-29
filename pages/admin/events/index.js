@@ -5,10 +5,11 @@ import Pagination from "../../../component/pagination/pagination";
 import UserService from "../../../services/UserService";
 import MyBlogsstyles from "../../../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
-import EventService from '../../../services/EventService'
-import AdminEventList from '../../../component/admin/AdminEventList'
+import EventService from "../../../services/EventService";
+import AdminEventList from "../../../component/admin/AdminEventList";
 import { getCookieValue } from "../../../lib/cookie";
 import notify from "../../../lib/notify";
+import AdminNavbar from "../../../component/admin/AdminNavbar";
 
 export async function getServerSideProps(context) {
   try {
@@ -79,10 +80,9 @@ const Admin = () => {
 
   //   state
   const [eventdata, setEventdata] = useState({
-    events:[],
-    count:'0'
-  })
-  console.log(eventdata)
+    events: [],
+    count: "0"
+  });
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -110,15 +110,15 @@ const Admin = () => {
    * @author athulraj2002
    */
   async function getevents(reqData) {
-    try{
+    try {
       const data = await EventService.getallevents();
-      const {events,count} = data.data;
-      setEventdata({events,count});
-    }
-    catch(err){
+      const { events, count } = data.data;
+      setEventdata({ events, count });
+    } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
-  }  /**
+  }
+  /**
    * page change event
    * @param {*} page new page change
    * @param {*} limit limit of posts
@@ -132,7 +132,7 @@ const Admin = () => {
       skip: page == 1 ? 0 : (page - 1) * 10
     };
     setPagination(data);
-    getPosts(data);
+    getevents(data);
   };
 
   /**
@@ -180,21 +180,20 @@ const Admin = () => {
   return (
     <div>
       <Head>
-        <title>Admin | Nullcast</title>
+        <title>Admin | Events | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
-       <div className='bg-white flex flex-row items-center rounded shadow-sm h-sub-nav justify-end'>
-       <div class="bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
-            <a href="/admin/create-event">Create Event</a>
-          </div>
-       </div>
+          <AdminNavbar
+            changeTag={(tag) => filterCategoryPosts(tag)}
+            changeStatus={(status) => filterStatusPosts(status)}
+          />
 
           {eventdata.events?.length ? (
             <div>
               <AdminEventList events={eventdata.events} />
-              
+
               <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}
               >

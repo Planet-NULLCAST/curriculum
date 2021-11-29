@@ -48,12 +48,23 @@ async function createNewEvent(userCookie, eventData) {
     throw err;
   }
 }
+async function deleteEvent(eventId){
+  try{
+    const {data} = await axios.delete(`${baseUrl}/api/v1/admin/event/${eventId}`)
+    console.log(data)
+    return data
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
 
 const EventService = {
   getLatestEvents,
   getEventById,
   createNewEvent,
-  getallevents
+  getallevents,
+  deleteEvent
 };
 
 module.exports = EventService;
