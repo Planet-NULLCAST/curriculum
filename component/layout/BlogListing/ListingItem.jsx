@@ -44,7 +44,7 @@ export default function ListingItem(props) {
         </p>
       </div>
       <Details
-        username={item.user.username}
+        username={item.user.user_name}
         avatar={item.user.avatar}
       />
     </div>
