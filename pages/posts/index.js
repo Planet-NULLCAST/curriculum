@@ -131,7 +131,7 @@ export default function Posts() {
           {loaded ? (
             postData.posts.length > 0 ? (
               <div>
-                <MyBlogs posts={postData.posts} currentPage={postData.page} />
+                <MyBlogs posts={postData.posts} currentPage={postData.page} fetchPosts={() => getPosts()} />
               </div>
             ) : !tagFilter && !statusFilter ? (
               <div className="text-gray-700 text-center font-semibold mt-8">

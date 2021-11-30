@@ -35,7 +35,6 @@ export default function WriteNav({
   const [currentPost, setCurrentPost] = useState({
     id: 0,
     banner_image: "",
-    // canonicalUrl: "",
     tags: [],
     tagsId: [],
     shortDescription: "",
@@ -44,8 +43,6 @@ export default function WriteNav({
     slug: ""
   });
   useEffect(() => {
-    console.log("writenavprop", { post });
-
     setCurrentPost(prevValue => ({ ...prevValue, ...post }));
     // userState.setTags();
   }, [post]);
@@ -71,7 +68,7 @@ export default function WriteNav({
   /**
    * gets tags from db and sets the tags
    * options in label and value format
-   * @author akhilalekha
+   * @author jasir
    */
   async function getSettingsTags() {
     try {
@@ -97,7 +94,7 @@ export default function WriteNav({
   /**
    * posts tags to db and sets state for user tags
    * @param e react select handle change event
-   * @author akhilalekha
+   * @author jasir
    */
   const handleTags = async (e) => {
     // console.log("handle tags", e);
@@ -150,57 +147,37 @@ export default function WriteNav({
   /**
    * gets form data and passes to parent getsettings function
    * @param e form submit event
-   * @author akhilalekha
+   * @author jasir
    */
   const formSubmit = async (e) => {
     //get form settings data - imageUpload canonicalUrl tags shortDescription metaTitle metaDescription
     e.preventDefault();
-    // console.log(e.target);
-
     const postUrl = e.target.slug.value || "";
-    // console.log({ postUrl });
-    // console.log(`${baseUrl}/${postUrl}`);
-    // let tags = Array.from(e.target.tags) || "";
-    // // console.log("tags length: ", tags.length);
-    // if (tags.length > 0) {
-    //   tags = tags.map((tag) => tag.value);
-    //   // console.log("multiple tags", tags);
-    // } else {
-    //   tags = e.target.tags.value;
-    //   // console.log("single tag", tags);
-    // }
-
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
     const settingsData = {
-      // tags: tagsId,
-      // url: `p/${currentPost._id}`,
       banner_image: currentPost.banner_image ? currentPost.banner_image : null,
-      // shortDescription: shortDes,
+      og_description: shortDes,
       meta_title: metaTitle,
-      // metaDescription: metaDes,
+      meta_description: metaDes,
       slug: postUrl,
       mobiledoc: currentPost.mobiledoc,
     };
-    if (settingsData.slug === ""){
+    if (settingsData.slug === "") {
       delete settingsData.slug;
       getSettings(settingsData);
     }
     else {
       getSettings(settingsData);
     }
-    // console.log(
-    //   Object.values(settingsData).some((k) => k !== "" || k !== null)
-    // );
-    // send prop
   };
 
   /**
    * gets form data and passes to parent getsettings function
    * @param e handle change event for other fields
    * except tags and image
-   * @author akhilalekha
+   * @author jasir
    */
 
   const handleChange = (e) => {
@@ -219,16 +196,9 @@ export default function WriteNav({
   /**
    * gets img data and uploads to s3 bucket
    * @param e handle change event for file upload field
-   * @author akhilalekha
+   * @author jasir
    */
   const handleImageUpload = async (image) => {
-    // console.log(e.target.files[0]);
-    // const imageUrl = URL.createObjectURL(e.target.files[0]);
-    // console.log(imageUrl);
-    // setImageSrc(imageUrl);
-
-    // console.log(e.target.files[0]);
-    // const imageFile = e.target.files[0] || "";
     const imageFile = image;
     const imageData = {
       stage: "dev",
@@ -240,7 +210,6 @@ export default function WriteNav({
     setLoading(true);
     try {
       const s3ImageUrl = await SharedService.uploadImage(imageFile, imageData);
-      // console.log(s3ImageUrl);
 
       setCurrentPost((prevValue) => {
         return {
@@ -258,7 +227,7 @@ export default function WriteNav({
   /**
    * resets banner image state when user clicks on delete
    * @param e handle change event for img delete button
-   * @author akhilalekha
+   * @author jasir
    */
   const handleImageDelete = async (e) => {
     setCurrentPost((prevValue) => {
@@ -273,16 +242,15 @@ export default function WriteNav({
 
   /**
    * deletes post by id
-   * @author akhilalekha
+   * @author jasir
    */
   async function deletePost() {
     try {
-      const { msg, data } = await PostService.deletePostById(
+      const { message } = await PostService.deletePostById(
         userCookie,
         currentPost.id
       );
-      // console.log(msg);
-      notify("Post deleted successfully");
+      notify(message);
       router.push({
         pathname: "/posts",
         query: {
@@ -297,15 +265,13 @@ export default function WriteNav({
   }
 
   const handleBackOption = () => {
-    // console.log(previousUrl);
     router.push(previousUrl);
   };
 
   const handlePublish = () => {
     const res = submitForReview();
-    res.then((msg) => {
+    res.then((message) => {
       handlePopup();
-      // console.log(msg);
     });
   };
   const handlePopup = () => {
@@ -349,23 +315,23 @@ export default function WriteNav({
           <span className="text-gray-500 ml-1">{"/ Edit"}</span>
         </div>
         <div className="items-center py-3 md:flex hidden">
-        <ModalConfirm
-                      trigger={
-                        <div
-                        
-                       className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-                     >
-                       <p>Publish</p>
-                     </div>
-                      }
-                      handleSubmit={handlePublish}
-                      purpose={"publish"}
-                      buttonColor={"green"}
-                      heading={"Are you sure"}
-                      text=" you want to publish this post?"
-                      secondaryText="This cannot be undone"
-                    />
-         
+          <ModalConfirm
+            trigger={
+              <div
+
+                className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
+              >
+                <p>Publish</p>
+              </div>
+            }
+            handleSubmit={handlePublish}
+            purpose={"publish"}
+            buttonColor={"green"}
+            heading={"Are you sure"}
+            text=" you want to publish this post?"
+            secondaryText="This cannot be undone"
+          />
+
           <div
             onClick={saveToDraft}
             className="bg-black hover:bg-white border border-black text-white hover:text-black flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"

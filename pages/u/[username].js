@@ -120,8 +120,6 @@ export default function Username({ userData }) {
     });
   };
   
-  console.log(userData, 'userPostsCount');  
-
   return (
     <div>
       <Head>
