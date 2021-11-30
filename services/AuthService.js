@@ -68,23 +68,19 @@ async function resetPassword(password, token) {
 }
 
 async function changePassword(passwords, userCookie) {
-  // console.log({ passwords });
-  // console.log(userId);
   const item = {
-    currentPassword: passwords.currentPassword,
-    newPassword: passwords.confirmPass,
-    userId: userCookie.id
+    current_password: passwords.currentPassword,
+    new_password: passwords.confirmPass,
+    user_name: userCookie.user_name
   };
   try {
-    const { data } = await axios.post(`${baseUrl}/${changePasswordUrl}`, item, {
+    const { data } = await axios.put(`${baseUrl}/${changePasswordUrl}`, item, {
       headers: {
         "x-access-token": `${userCookie.accessToken}`
       }
     });
-    // console.log(data);
     return data;
   } catch (err) {
-    // console.log(err.response.data);
     throw err;
   }
 }
