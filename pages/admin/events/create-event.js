@@ -8,8 +8,9 @@ import moment from "moment";
 import Cookies from "universal-cookie";
 import notify from "../../../lib/notify";
 import { useRouter } from "next/router";
-import { getCookieValue } from "../../lib/cookie";
-import SharedService from "../../services/SharedService";
+import SharedService from "../../../services/SharedService";
+import { getCookieValue } from "../../../lib/cookie";
+
 
 export async function getServerSideProps(context) {
   try {
@@ -102,7 +103,9 @@ const CreateEvent = () => {
     try {
       const data = await EventService.getEventById(reqData);
       const finaldata = data.data;
-      console.log(finaldata);
+      const date = moment(finaldata.event_time).format('YYYY-MM-DD')
+      const time = moment(finaldata.event_time).format('HH:SS')
+      console.log(date, time)
       setEventDetails({
         organizerImage: finaldata.guest_image,
         organizerName: finaldata.guest_name,
@@ -111,8 +114,8 @@ const CreateEvent = () => {
         eventLocation:finaldata.location,
         eventDescription: finaldata.description,
         eventLink: finaldata.registration_link,
-        eventDate: '2020-10-15',
-        eventTime: "10.30",
+        eventDate: date,
+        eventTime: time,
         eventImage: finaldata.banner_image
       });
     } catch (err) {
