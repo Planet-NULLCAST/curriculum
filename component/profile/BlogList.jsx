@@ -14,7 +14,7 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
   return (
     <div className={`bg-white shadow-sm rounded p-4 mt-4 `}>
       <div className="flex justify-between items-center">
-        <span className="font-bold">Blog</span>
+        <span className="font-bold">Blogs</span>
       </div>
       <div className="flex flex-wrap pb-2 w-full">
         {posts?.length > 0 ? (
@@ -29,10 +29,10 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
                 <div
                   className={`flex justify-between rounded border p-3 w-full`}
                 >
-                  {blog.bannerImage ? (
+                  {blog.banner_image  ? (
                     <div className="w-32 h-32 rounded-md flex items-center justify-center text-white">
                       <img
-                        src={blog.bannerImage}
+                        src={blog.banner_image}
                         alt="banner"
                         className="rounded-md w-32 h-32 object-cover"
                       ></img>
@@ -60,7 +60,7 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
                         <p className="text-xs">123</p> */}
                       </div>
                       <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
-                        {moment(blog.publishedAt).format("LL")}
+                        {moment(blog.published_at).format("LL")}
                       </p>
                     </div>
                   </div>

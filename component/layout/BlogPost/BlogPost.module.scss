@@ -121,7 +121,7 @@ div.code {
     width: min(350px, 20vw);
   }
   @screen 2xl {
-    width: min(350px, 23vw);
+    width: min(350px, 20vw);
   }
   @media (max-width: 1200px) {
     @apply p-0 w-auto rounded-sm;
@@ -142,7 +142,7 @@ div.code {
     &:before {
       @apply mr-4;
       counter-increment: count;
-      content: "0" counter(count);
+      content: counter(count);
     }
   }
   [class*="linkUnderline"] {

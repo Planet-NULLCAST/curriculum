@@ -28,7 +28,6 @@ export async function getServerSideProps(context) {
         const cookie = JSON.parse(contextCookie);
         const userId = cookie.id;
         const username = context.params.username;
-        const id = context.params.username;
 
     // let isThisUserTheCurrentLoggedIn = false;
     const data = await UserService.getUserByUsername(username);
@@ -70,9 +69,11 @@ export default function Username({ userData }) {
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
   const [postsLimit, setPostsLimit] = useState();
-
+  
+  console.log("userdata", userData.id);
   useEffect(() => {
       getPublishedUserPosts();
+      getUserPostCount();
   }, []);
 
   const changeNav = (data) => {
@@ -80,14 +81,25 @@ export default function Username({ userData }) {
   };
 
   const getPublishedUserPosts = async () => {
+    
+    const UserId = userData.id;
     const postParams = {
       status: "published",
     };
-    const response = await PostService.getUserPostsByUser(postParams);
+    const response = await PostService.getUserPostsByUser(UserId, postParams);
     console.log(response.data.posts, 'error');  
     setNewBlogs(response.data.posts)
-    setPostsCount(response.data.count);
     setPostsLimit(response.data.limit);
+  };
+
+  const getUserPostCount = async () => {
+    const UserId = userData.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getPostCount(UserId, postParams);
+    console.log(response.data.count, 'count');  
+    setPostsCount(response.data.count);
   };
 
 
@@ -107,6 +119,8 @@ export default function Username({ userData }) {
       return [...prevValue, ...responsePost.posts];
     });
   };
+  
+  console.log(userData, 'userPostsCount');  
 
   return (
     <div>

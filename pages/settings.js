@@ -27,8 +27,10 @@ export async function getServerSideProps(context) {
         const cookie = JSON.parse(contextCookie);
         const username = cookie.user_name;
         const { data } = await UserService.getUserByUsername(username);
-        // removed roles from user data
-        delete data.roles;        
+        // removed roles id dob from user data
+        delete data.roles;
+        delete data.id;
+        delete data.dob;
         // const skillsRes = await SkillService.getSkills();
         return {
           props: {
@@ -403,7 +405,7 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={userCookie.avatar || "/images/svgs/avatar.svg"}
+                      src={profileData.avatar || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">
