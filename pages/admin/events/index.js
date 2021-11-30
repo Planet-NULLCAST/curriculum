@@ -110,12 +110,11 @@ const Admin = () => {
    * @author athulraj2002
    */
   async function getevents(reqData) {
-    console.log(reqData)
     try {
       const data = await EventService.getLatestEvents(reqData);
-      console.log(data)
       const { events, count } = data;
       setEventdata({ events, count });
+      console.log(eventdata)
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
@@ -196,7 +195,9 @@ const Admin = () => {
 
           {eventdata.events?.length ? (
             <div>
-              <AdminEventList events={eventdata.events} />
+              <AdminEventList events={eventdata.events} refresh={()=>{
+                getevents()
+              }} />
 
               <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}

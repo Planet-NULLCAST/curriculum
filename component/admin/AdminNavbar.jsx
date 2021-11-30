@@ -80,16 +80,17 @@ export default function AdminNavbar({ changeTag, changeStatus, event }) {
             // closeMenuOnSelect={false}
           />
         }
+          {event ? "" :
           <Select
-            options={statusOptions}
-            isMulti={false}
-            onChange={(e) => selectStatus(e)}
-            className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
-            classNamePrefix="Blog Status"
-            clearValue={() => undefined}
-            placeholder="Select Status"
-            // closeMenuOnSelect={false}
-          />
+          options={statusOptions}
+          isMulti={false}
+          onChange={(e) => selectStatus(e)}
+          className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
+          classNamePrefix="Blog Status"
+          clearValue={() => undefined}
+          placeholder="Select Status"
+          // closeMenuOnSelect={false}
+        />}
            <div class="bg-black h-8 ml-4 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
               <a href="/admin/events/create-event">Create Event</a>
             </div>

@@ -49,6 +49,16 @@ async function createNewEvent(userCookie, eventData) {
     throw err;
   }
 }
+async function updateEvent(userCookie, eventData, eventid) {
+  try {
+    const response = await axios.put(`${baseUrl}/api/v1/admin/event/${eventid}` , eventData)
+    console.log(response);
+    return response
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 async function deleteEvent(eventId){
   try{
     const {data} = await axios.delete(`${baseUrl}/api/v1/admin/event/${eventId}`)
@@ -78,7 +88,8 @@ const EventService = {
   createNewEvent,
   getallevents,
   deleteEvent,
-  getEventbyStatus
+  getEventbyStatus,
+  updateEvent
 };
 
 module.exports = EventService;

@@ -127,7 +127,6 @@ export default function AdminBlogsList({ posts, updated }) {
                       </>
                     </div>
                   </Link>
-
                   {item.status == "published" ? (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}

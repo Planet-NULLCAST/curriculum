@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EventInfo from "../../../component/admin/EventInfo";
 import OrganizerInfo from "../../../component/admin/OrganizerInfo";
 import UserService from "../../../services/UserService";
@@ -8,6 +8,7 @@ import moment from "moment";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../../../lib/cookie";
 import notify from "../../../lib/notify";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   try {
@@ -73,6 +74,34 @@ export async function getServerSideProps(context) {
 }
 
 const CreateEvent = () => {
+  const router = useRouter()
+  const [eventID, setEventID] = useState(router.query.id);
+  useEffect(() => {
+    setTimeout(() => {
+      eventID && getevents(eventID);
+    }, 100);
+  }, []);
+  async function getevents(reqData) {
+    try {
+      const data = await EventService.getEventById(reqData);
+      const finaldata = data.data;
+      console.log(finaldata);
+      setEventDetails({
+        organizerImage: finaldata.guest_image,
+        organizerName: finaldata.guest_name,
+        tagLine: finaldata.guest_bio,
+        eventName:finaldata.title,
+        eventLocation:finaldata.location,
+        eventDescription: finaldata.description,
+        eventLink: finaldata.registration_link,
+        eventDate: '2020-10-15',
+        eventTime: "10.30",
+        eventImage: finaldata.banner_image
+      });
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  }
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   console.log("cookies", userCookie);
@@ -105,12 +134,38 @@ const CreateEvent = () => {
       title: eventDetails.eventName,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
-      description: eventDetails.description,
+      description: eventDetails.eventDescription,
       event_time: formatTime()
     };
     try {
       const data = await EventService.createNewEvent(userCookie, eventData);
       notify(data.data.message);
+      router.push('/admin/events')
+    } catch (error) {
+      console.log(error);
+    }
+    formatTime();
+  };
+
+  const createUpdateHandler = async (e) => {
+    const eventData = {
+      guest_name: eventDetails.organizerName,
+      guest_designation: eventDetails.tagLine,
+      guest_image: eventDetails.organizerImage,
+      title: eventDetails.eventName,
+      registration_link: eventDetails.eventLink,
+      banner_image: eventDetails.eventImage,
+      description: eventDetails.eventDescription,
+      event_time: formatTime()
+    };
+    try {
+      const data = await EventService.updateEvent(
+        userCookie,
+        eventData,
+        eventID
+      );
+      notify(data.data.message);
+      router.push('/admin/events')
     } catch (error) {
       console.log(error);
     }
@@ -146,10 +201,12 @@ const CreateEvent = () => {
           </button>
           <button
             className="border-2 border-black bg-black px-8 py-2 rounded text-white"
-            onClick={(e) => createEventHandler(e)}
+            onClick={(e) =>
+              eventID ? createUpdateHandler(e) : createEventHandler(e)
+            }
             type="button"
           >
-            Donate
+            {eventID ? "Update" : "Create"}
           </button>
         </div>
       </div>
