@@ -45,11 +45,13 @@ export default function Pagination({ TotalCount, changePage, pageNum, limit }) {
   const nextBut = () => {
     if (pageNo !== TotalPages) {
       setpageNo(pageNo + 1);
+      console.log(pageNo);
     }
   };
   const prevBut = () => {
     if (pageNo !== 1) {
       setpageNo(pageNo - 1);
+      console.log(pageNo);
     }
   };
   return (

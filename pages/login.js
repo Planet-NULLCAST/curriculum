@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
+      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
       if (contextCookie) {
         return {
           redirect: {
@@ -86,6 +86,11 @@ export default function Login({ referer }) {
       setEmailValid(false);
       return;
     }
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(document.querySelector("#email").value && !document.querySelector("#email").value.match(regexEmail)){
+      setEmailValid(false);
+      return;
+    }
     e.preventDefault();
     setIsLoading(true);
     // console.log(e.target);
@@ -103,6 +108,7 @@ export default function Login({ referer }) {
             userData
           )}${expires}`;
           localStorage.setItem("userNullcast", JSON.stringify(userData));
+          notify(`${data.message}`);
           // console.log(document.cookie);
 
           // let progress = JSON.parse(
@@ -165,7 +171,7 @@ export default function Login({ referer }) {
       </Head>
       <Link href="/">
         <img
-          src="/images/nullcast.svg"
+          src="/images/logo.png"
           alt="logo"
           className="fixed left-5 lg:left-10 top-5 lg:top-10 z-50 cursor-pointer"
         ></img>
@@ -222,16 +228,16 @@ export default function Login({ referer }) {
                       </label>
                       <input
                         placeholder="Enter email"
-                        maxLength="30"
                         className={`inputStyle placeholder-gray-600 pr-3 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
                         type="text"
-                        onBlur={(e) => emailValidator(e)}
+                        //onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
-                          if (!validEmail) {
-                            emailValidator(e);
-                          }
+                          setEmailValid(true)
+                          // if (!validEmail) {
+                          //   emailValidator(e);
+                          // }
                         }}
                       />
                       {validEmail ? (
@@ -251,7 +257,6 @@ export default function Login({ referer }) {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          maxLength="50"
                           className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"

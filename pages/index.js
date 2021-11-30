@@ -16,33 +16,33 @@ import notify from "../lib/notify";
 export async function getServerSideProps(context) {
   try {
     const postParams = {
-      sort_field: "published_at",
+      // sort_field: "published_at",
       status: "published",
-      order: "ASC",
+      order: "DESC",
       limit: 4,
-      page: 1,
-      with_table: "users"
+      page: 1
+      // with_table: "users"
     };
     const userParams = {
       limit: 10
     };
-    const responsePost = await PostService.getLatestPosts(postParams);
-    // console.log(responsePost.posts[0].user);
-    const responseUser = await UserService.getLatestUsers(userParams);
-    // console.log(responseUser);
+    const responsePost  = await PostService.getPostsByUsers(postParams);
+    const { data } = await UserService.getLatestUsers(userParams);
+    console.log(responsePost.data.posts, "posts");
     return {
       props: {
-        posts: responsePost.posts || [],
-        user: responseUser
+        posts: responsePost.data.posts || [],
+        user: data.users || []
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return { props: { blog: [] } };
   }
 }
-
 export default function Home({ posts, user }) {
+  // console.log(user,'s');
+
   // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
@@ -78,7 +78,7 @@ export default function Home({ posts, user }) {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      {posts && posts[0] && <SectionBlogs posts={posts} />}
+      {posts && <SectionBlogs posts={posts} />}
 
       <SectionVideos />
       {user && <SectionUsers user={user} />}

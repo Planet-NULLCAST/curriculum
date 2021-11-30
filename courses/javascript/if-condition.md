@@ -32,7 +32,7 @@ testCase: [
 		]
 ---
 
-The if(...) statement evaluates a condition in parentheses and, if the result is true, executes a block of code.
+The `if(...)` statement evaluates a condition in parentheses and, if the result is `true`, executes a block of code.
 
 ```javascript
 if (year == 2021) {
@@ -40,9 +40,9 @@ if (year == 2021) {
 }
 ```
 
-## The else clause
+## The `else` clause
 
-The if statement may contain an optional “else” block. It executes when the condition is falsy.
+The `if` statement may contain an optional `else` block. It executes when the condition is falsy.
 
 ```javascript
 if (year == 2021) {
@@ -56,10 +56,10 @@ if (year == 2021) {
 
 ## Complete the tasks below:
 
-- Create a variable "a" of type let with value 5
+- Create a variable `a` of type let with value 5
 
-- Check whether a equals 5
+- Check whether `a` equals 5
 
-- If a equals 5, print true in console
+- If `a` equals 5, print `true` in console
 
 - Use closing curly braces

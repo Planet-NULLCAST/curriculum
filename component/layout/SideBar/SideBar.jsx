@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import UserState from "../../../context/user/userContext";
 
-export default function SideBar({ onToggle, toggle, course }) {
+export default function SideBar({ onToggle, toggle, course, courseRef }) {
   const titles = course.chapters;
   // console.log({ titles });
   // console.log(course.courseUrl);
@@ -48,12 +48,16 @@ export default function SideBar({ onToggle, toggle, course }) {
           {titles.map((title) => (
             <li
               key={title.chapterId}
-              className={`flex flex-row justify-between items-center text-center text-gray-700 border-l-4 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
+              className={`flex flex-row justify-between items-center  text-gray-700 border-l-4 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
             >
               <Link
                 href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}
               >
-                <a onClick={handleClick}>{title.chapterName}</a>
+                <a  onClick={() =>{
+                  console.log('j');
+                  courseRef.current.scrollTo({top: 0, left: 0,behavior: 'smooth'});
+                  handleClick()
+                  }}>{title.chapterName}</a>
               </Link>
               {chapters?.includes(title.chapterUrl) && (
                 <img

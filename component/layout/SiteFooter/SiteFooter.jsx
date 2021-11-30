@@ -82,7 +82,7 @@ export default function SiteFooter() {
               </li>
               <li>
                 <Link href="/blog">
-                  <a>Blog</a>
+                  <a>Blogs</a>
                 </Link>
               </li>
               <li>

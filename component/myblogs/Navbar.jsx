@@ -69,7 +69,7 @@ export default function Navbar() {
     setTag(newTag);
     router.push({
       pathname: "/posts",
-      query: { pageNo: 1, tag: newTag, status: status }
+      query: { page: 1, tag: newTag, status: status }
     });
   };
 
@@ -78,7 +78,7 @@ export default function Navbar() {
     setStatus(newStatus);
     router.push({
       pathname: "/posts",
-      query: { pageNo: 1, tag: tag, status: newStatus }
+      query: { page: 1, tag: tag, status: newStatus }
     });
   };
 
@@ -93,7 +93,9 @@ export default function Navbar() {
           pathname: "/posts/write",
           query: { post_id: post.id }
         });
+        
       }
+      notify(message,'success')
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }

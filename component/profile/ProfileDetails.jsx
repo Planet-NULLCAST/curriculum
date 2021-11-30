@@ -3,7 +3,7 @@ import Profilestyles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProfileDetails({ userData }) {
+export default function ProfileDetails({ userData, userCurrentLogin }) {
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -12,7 +12,7 @@ export default function ProfileDetails({ userData }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
           >
             <div className="flex">
-              {userData.isThisUserTheCurrentLoggedIn && (
+              {`${userData.id}` === userCurrentLogin && (
                 <Link href="/settings">
                   <a>
                     <img
@@ -28,7 +28,7 @@ export default function ProfileDetails({ userData }) {
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
                   <Image
-                    src={userData.avatar}
+                    src={userData?.avatar || '/images/dummy0.png' }
                     alt="avatar"
                     className="rounded-full h-24 w-24"
                     layout="fill"

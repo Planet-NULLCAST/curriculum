@@ -5,25 +5,9 @@ import PostService from "../../../services/PostService";
 import { useEffect, useState } from "react";
 import notify from "../../../lib/notify";
 
-export default function SectionAuthor({ primaryAuthor }) {
-  const { bio, username, avatar } = primaryAuthor;
-
-  const [count, setCount] = useState();
-
-  const getPostsCountByUserId = async () => {
-    try {
-      const res = await PostService.getPublishedPostsCountByUserId(
-        primaryAuthor._id
-      );
-      // console.log(count);
-      setCount(res.count);
-    } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
-    }
-  };
-
+export default function SectionAuthor({ primaryAuthor, postCount }) {
+  const { bio, user_name, avatar } = primaryAuthor;
   useEffect(() => {
-    getPostsCountByUserId();
   }, [primaryAuthor]);
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
@@ -31,7 +15,7 @@ export default function SectionAuthor({ primaryAuthor }) {
         <div className="flex items-center justify-between mb-7">
           <h2>About the Author</h2>
           <span>
-            <Link href={`/u/${username}`}>
+            <Link href={`/u/${user_name}`}>
               <a className={`${styles.profileLink} linkUnderline`}>
                 View Profile
               </a>
@@ -40,11 +24,11 @@ export default function SectionAuthor({ primaryAuthor }) {
         </div>
         <div className={styles.widget}>
           <div className={styles.details}>
-            <AuthorDetails username={username} avatar={avatar} />
+            <AuthorDetails username={user_name} avatar={avatar} />
 
             <div className={styles.stats}>
               <div className={styles.statsItem}>
-                <strong>{count}</strong>
+                <strong>{postCount}</strong>
                 <span>Blogs</span>
               </div>
               <div className={styles.statsItem}>

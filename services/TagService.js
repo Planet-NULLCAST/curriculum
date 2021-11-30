@@ -1,19 +1,22 @@
 const axios = require("axios");
-import { baseUrl, tagUrl } from "../config/config";
-import { getUrl } from "../lib/getUrl";
+import {
+  baseUrl,
+  tagUrl,
+  createTagUrl,
+  postTagsUrl,
+  postTagUrl
+} from "../config/config";
 
 async function getTags(filterWhatsNew) {
-  let url = getUrl();
-
   try {
     const { data } = await axios.get(
-      `${url}/${tagUrl}`
+      `${baseUrl}/${tagUrl}`
       // {
       //   params: { filterWhatsNew }
       // }
     );
-    // console.log(data);
-    return data;
+    console.log(data);
+    return data.data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -23,16 +26,46 @@ async function getTags(filterWhatsNew) {
 async function postTags(userCookie, newTag) {
   try {
     const { data } = await axios.post(
-      `${baseUrl}/${tagUrl}`,
-      { tags: newTag },
+      `${baseUrl}/${createTagUrl}`,
+      { name: newTag[0], meta_title: newTag[0] },
       {
         headers: {
           "x-access-token": `${userCookie.accessToken}`
         }
       }
     );
-    // console.log(data);
-    return data.msg;
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+async function postSaveTags(userCookie, Tags) {
+  try {
+    const { data } = await axios.post(`${baseUrl}/${postTagsUrl}`, Tags, {
+      headers: {
+        "x-access-token": `${userCookie.accessToken}`
+      }
+    });
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function deletePostTag(userCookie, tagId, postId) {
+  try {
+    const { data } = await axios.delete(
+      `${baseUrl}/${postTagUrl}/${tagId}-${postId}`,
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -41,7 +74,9 @@ async function postTags(userCookie, newTag) {
 
 const TagService = {
   getTags,
-  postTags
+  postSaveTags,
+  postTags,
+  deletePostTag
 };
 
 module.exports = TagService;

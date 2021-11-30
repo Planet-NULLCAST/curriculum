@@ -12,6 +12,7 @@ import { signUp } from "../services/AuthService";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import notify from "../lib/notify";
+import moment from "moment";
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
@@ -162,10 +163,25 @@ export default function SignUp({ referer }) {
       if (fName && password && email && username && terms) {
           try {
             const data = await signUp(email, password, fName, username);
-            router.push("/login");
-            sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+            const newDate = new Date(moment().add(30, "days")).toUTCString();
+            const expires = `; expires=${newDate}`;
+            const userData = data.user;
+            document.cookie = `userNullcast=${JSON.stringify(
+              userData
+            )}${expires}`;
+            localStorage.setItem("userNullcast", JSON.stringify(userData));
+            // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+            notify(data.message);
+            if (referer) {
+              router.back();
+            } else {
+              router.push("/");
+            }
           } catch (err) {
-            notify(err?.response?.data?.message ?? err?.message, 'error');
+            setIsLoading(false);
+            // const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
+            //console.log(errorMessage)
+            notify(err.response.data.message || err.message, 'error');
           }
 
           // let progress = JSON.parse(
@@ -197,11 +213,12 @@ export default function SignUp({ referer }) {
           //   .catch((err) => {
           //     console.log(err.message);
           //   });
-          if (referer) {
-            router.back();
-          } else {
-            router.push("/");
-          }
+          // console.log(referer , 'here')
+          // if (referer) {
+          //   router.back();
+          // } else {
+          //   router.push("/");
+          // }
       } else {
           setIsLoading(false);
           if (!fName) {
@@ -230,7 +247,7 @@ export default function SignUp({ referer }) {
       </Head>
       <Link href="/">
         <img
-          src="/images/nullcast.svg"
+          src="/images/logo.png"
           alt="logo"
           className="fixed left-5 lg:left-14 top-5 lg:top-14 z-50 cursor-pointer"
         ></img>
@@ -293,12 +310,11 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter full name"
-                            maxLength="50"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
                             type="text"
-                            onBlur={(e) => handleName(e)}
+                            // onBlur={(e) => handleName(e)}
                             onChange={(e) => {
                               if (validName !== "") {
                                 handleName(e);
@@ -332,7 +348,6 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter username"
-                            maxLength="15"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="username"
                             name="username"
@@ -371,7 +386,6 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter email"
-                            maxLength="30"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="email"
                             name="email"

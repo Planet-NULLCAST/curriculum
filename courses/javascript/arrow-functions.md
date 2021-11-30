@@ -2,51 +2,51 @@
 title: "Introduction To Javascript"
 subheading: "Arrow Functions"
 prev: "function"
-next: ""
-testCase:
-  [
-    {
-      id: 1,
-      case: ["const firstName = 'Gabe'", "const firstName = 'Gabe';"],
-      hint: "declare a string variable firstName",
-      isCorrect: false
-    },
-    {
-      id: 2,
-      case: ["const lastName = 'Newell'", "const lastName = 'Newell';"],
-      hint: "declare a string variable lastName",
-      isCorrect: false
-    },
-    {
-      id: 3,
-      case:
-        [
-          "const showFirstName = (firstName) => console.log(firstName);",
-          "const showFirstName = (firstName) => console.log(firstName)"
-        ],
-      hint: "define an arrow function `showFirstName` with type `const`",
-      isCorrect: false
-    },
-    {
-      id: 4,
-      case: ["const showFullName = (firstName, lastName) => {"],
-      hint: "define an arrow function `showFullName` with type `const`",
-      isCorrect: false
-    },
-    {
-      id: 5,
-      case: ["console.log(firstName);", "console.log(firstName)"],
-      hint: "console the `firstName`",
-      isCorrect: false
-    },
-    {
-      id: 6,
-      case: ["console.log(lastName);", "console.log(lastName)"],
-      hint: "console the `lastName`",
-      isCorrect: false
-    },
-    { id: 7, case: ["};", "}"], hint: "missing `}` bracket", isCorrect: false }
-  ]
+next: "asynchronous-behaviour-and-event-loop"
+testCase: [
+            {
+                id: 1,
+                case: ["const firstName = 'Gabe'", "const firstName = 'Gabe';" ],
+                hint: "declare a string variable firstName",
+                isCorrect: false
+            },
+            {
+                id: 2,
+                case: ["const lastName = 'Newell'", "const lastName = 'Newell';" ],
+                hint: "declare a string variable lastName",
+                isCorrect: false
+            },
+            {
+                id: 3,
+                case: ["const showFirstName = (firstName) => console.log(firstName);", "const showFirstName = (firstName) => console.log(firstName)"],
+                hint: "define an arrow function `showFirstName` with type `const`",
+                isCorrect: false
+            },
+            {
+                id: 4,
+                case: ["const showFullName = (firstName, lastName) => {"],
+                hint: "define an arrow function `showFullName` with type `const`",
+                isCorrect: false
+            },
+            {
+                id: 5,
+                case: ["console.log(firstName);", "console.log(firstName)"],
+                hint: "console the `firstName`",
+                isCorrect: false
+            },
+            {
+                id: 6,
+                case: ["console.log(lastName);", "console.log(lastName)"],
+                hint: "console the `lastName`",
+                isCorrect: false
+            },
+            {
+                id: 7,
+                case: ["};", "}"],
+                hint: "missing `}` bracket",
+                isCorrect: false
+            }
+]
 ---
 
 Previously called fat `arrow functions` which was introduced in ECMAScript 2015 for a reduced syntax as compared to `function` expressions. `Arrow functions` have the following form:

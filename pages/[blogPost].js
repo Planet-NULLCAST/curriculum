@@ -21,35 +21,16 @@ export async function getServerSideProps(context) {
   try {
     const slug = context.params.blogPost;
     const response = await PostService.getPostBySlug(slug);
-    // console.log(response.data.blog.tags[0]);
-    const relatedPostsTag = response.data.blog.tags[0]
-      ? response.data.blog.tags[0]
-      : "";
-    let relatedPostsResponse = "";
-    if (relatedPostsTag) {
-      relatedPostsResponse = await PostService.getPostByTags(
-        relatedPostsTag,
-        0
-      );
-      // console.log(relatedPostsResponse);
-    }
-
-    if (!response?.data) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
-        }
-      };
-    }
+    const tagName = response.data.tags[0].name; 
+    const { data }  = await PostService.getPostByTags(tagName);
     return {
       props: {
-        blog: response.data.blog,
-        relatedPosts: relatedPostsResponse.posts
+        blog: response.data,
+        relatedPosts: data.posts,
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       redirect: {
         permanent: false,
@@ -59,15 +40,17 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing({ blog, relatedPosts }) {
+export default function BlogListing({ blog , relatedPosts }) {
+  // console.log("bloga", relatedPosts, 'error');
+  const [postsCount, setPostsCount] = useState(0);
   const {
     html,
-    primaryAuthor,
+    user,
     title,
-    bannerImage,
-    createdAt,
+    banner_image,
+    created_at,
     canonicalUrl,
-    publishedAt,
+    published_at,
     updatedAt,
     metaDescription
   } = blog;
@@ -75,7 +58,21 @@ export default function BlogListing({ blog, relatedPosts }) {
   // const {}
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  // console.log({ blog });
+  
+  useEffect(() => {
+    getUserPostCount();
+}, []);
+
+  const getUserPostCount = async () => {
+    const UserId = blog.user.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getPostCount(UserId, postParams);
+    console.log(response.data.count, 'count');  
+    setPostsCount(response.data.count);
+  };
+
   return (
     <>
       <SiteHeader />
@@ -97,23 +94,23 @@ export default function BlogListing({ blog, relatedPosts }) {
               },
               "author": {
                 "@type": "Person",
-                "name": `${primaryAuthor.fullName}`,
+                "name": `${user.user_name}`,
                 "image": {
                   "@type": "ImageObject",
-                  "url": `${primaryAuthor.avatar}`,
+                  "url": `${user.avatar}`,
                   "width": 1200,
                   "height": 1200
                 },
-                "url": `${url}/u/${primaryAuthor.username}`,
+                "url": `${url}/u/${user.user_name}`,
                 "sameAs": []
               },
               "headline": `${title}`,
               "url": `${canonicalUrl}`,
-              "datePublished": `${publishedAt}`,
+              "datePublished": `${published_at}`,
               "dateModified": `${updatedAt}`,
               "image": {
                 "@type": "ImageObject",
-                "url": `${bannerImage}`,
+                "url": `${banner_image}`,
                 "width": 1500,
                 "height": 843
               },
@@ -129,26 +126,26 @@ export default function BlogListing({ blog, relatedPosts }) {
         <meta property="og:title" content={blog.title} />
         <meta property="og:description" content={blog.metaDescription} />
         <meta property="og:url" content={blog.canonicalUrl} />
-        <meta property="og:image" content={blog.bannerImage} />
-        <meta property="article:published_time" content={blog.publishedAt} />
+        <meta property="og:image" content={blog.banner_image} />
+        <meta property="article:published_time" content={blog.published_at} />
         <meta property="article:modified_time" content={blog.updatedAt} />
         <meta property="article:tag" content={blog.tags[0]} />
 
-        <meta name="twitter:card" content={blog.bannerImage} />
+        <meta name="twitter:card" content={blog.banner_image} />
         <meta name="twitter:title" content={blog.title} />
         <meta name="twitter:description" content={blog.metaDescription} />
         <meta name="twitter:url" content={blog.canonicalUrl} />
-        <meta name="twitter:image" content={blog.bannerImage} />
+        <meta name="twitter:image" content={blog.banner_image} />
         <meta name="twitter:label1" content="Written By" />
-        <meta name="twitter:data1" content={blog.primaryAuthor.fullName} />
+        <meta name="twitter:data1" content={blog.user.user_name} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
       <BlogSpotlight
         title={title}
-        bannerImage={bannerImage}
-        createdAt={createdAt}
-        primaryAuthor={primaryAuthor}
+        bannerImage={banner_image}
+        createdAt={created_at}
+        primaryAuthor={user}
       />
       <BlogPost
         userId={userCookie ? userCookie.id : ""}
@@ -156,7 +153,7 @@ export default function BlogListing({ blog, relatedPosts }) {
         blog={blog}
         html={html}
       />
-      <SectionAuthor primaryAuthor={primaryAuthor} />
+      <SectionAuthor primaryAuthor={user}  postCount={postsCount} />
       <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />
       <SiteFooter />

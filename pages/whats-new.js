@@ -17,27 +17,27 @@ export async function getServerSideProps(context) {
     if (tag) {
       searchArray = ["whats-new", tag];
     }
-    const { posts, count } = await PostService.getPostsByMultipleTags(
-      searchArray,
-      0
-    );
+    const {
+      data: { posts, count }
+    } = await PostService.getPostByTags(searchArray, 0);
     return {
       props: {
         blogs: posts
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
-    
+    notify(err?.response?.data?.message ?? err?.message, "error");
+
     return {
       props: {
         blogs: []
       }
-    }
+    };
   }
 }
 
-export default function whatsNew({blogs}) {
+export default function whatsNew({ blogs }) {
+  console.log(blogs);
   return (
     <>
       <Head>
@@ -45,7 +45,7 @@ export default function whatsNew({blogs}) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      { blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
+      {blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
       <SectionSwag />
       <SiteFooter />
     </>

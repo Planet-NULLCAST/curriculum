@@ -68,7 +68,8 @@ export default function HomeSpotlight() {
           <Link href="/">
             <a onClick={() => setMenu(true)}>
               <img
-                src="/images/nullcast.svg"
+              class="object-contain"
+                src="/images/logo.png"
                 alt="logo"
                 height="120rem"
                 width="120rem"
@@ -105,7 +106,7 @@ export default function HomeSpotlight() {
                     <Link
                       href={{
                         pathname: "/posts",
-                        query: { pageNo: 1, tag: "", status: "" }
+                        query: { page: 1, tag: "", status: "" }
                       }}
                     >
                       <a onClick={() => setMenu(true)}>
@@ -141,7 +142,14 @@ export default function HomeSpotlight() {
                       <li>
                         <Link href="/blog">
                           <a onClick={() => setMenu(true)} className="w-full font-semibold">
-                            Blog
+                            Blogs
+                          </a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/events">
+                          <a onClick={() => setMenu(true)} className="w-full font-semibold">
+                            Events
                           </a>
                         </Link>
                       </li>

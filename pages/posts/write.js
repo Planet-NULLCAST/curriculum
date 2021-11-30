@@ -154,13 +154,13 @@ export default function Write({
     }
   }
 
+
   async function updatePostById(updateData, newPostId) {
     try {
       const res = await PostService.updatePostById(updateData, newPostId);
-      console.log("updated post response", res);
-      // if (msg) {
-      //   notify(msg);
-      // }
+      if (res) {
+        notify(res?.message);
+      }
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
@@ -171,48 +171,46 @@ export default function Write({
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
       // wait for the response post message to get the post from the state
-      // console.log({ postElement });
       // console.log(postElement.current.scratch);
-      const newMobiledoc = postElement.current.scratch;
-      const title = postElement.current.titleScratch || "[Untitled]";
+      const newMobiledoc = postElement?.current.scratch;
+      const title = postElement?.current.titleScratch || "[Untitled]";
 
       if (postId) {
         //updatePost
         const newUpdatedPost = {
+          status: 'drafted',
           title: title,
-          mobiledoc: newMobiledoc
+          mobiledoc: newMobiledoc,
         };
-        console.log({ newUpdatedPost });
-        updatePostById(newUpdatedPost, postId);
+        updatePostById(postId, newUpdatedPost); 
+        notify();  
       }
     }, 500);
+    
   };
 
   async function submitForReview() {
+    iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
+    setTimeout(() => {
     //change status to "pending" if submitted for review
-    // console.log(postId);
+    const newMobiledoc = postElement?.current.scratch;
+    const title = postElement?.current.titleScratch || "[Untitled]";
     try {
       const statusUpdate = {
-        status: "pending"
+        status: "pending",
+        title: title,
+        mobiledoc: newMobiledoc,
       };
-      const msg = await PostService.changePostStatus(
-        userCookie,
-        postId,
-        statusUpdate
-      );
-      // console.log(msg);
-      if (msg) {
-        // notify(msg);
-        return msg;
-      }
+      updatePostById(postId,statusUpdate);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
+  }, 500);
   }
 
   const getSettings = async (settingsData) => {
     if (postId) {
-      updatePostById(settingsData, postId);
+      updatePostById(postId,settingsData);
     }
   };
 

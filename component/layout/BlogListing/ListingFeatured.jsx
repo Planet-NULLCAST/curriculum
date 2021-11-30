@@ -34,8 +34,8 @@ export default function ListingFeatured({ blog }) {
           <Fade>
             <div className={` ${styles.text} md:w-2/3 md:pl-6`}>
               <div className="tags">
-                <Link href={`/tag/${blog?.tags[0].name}`}>
-                  <a className="tags__item">{blog?.tags[0].name}</a>
+                <Link href={`/tag/${blog?.tags[0]?.name}`}>
+                  <a className="tags__item">{blog?.tags[0]?.name}</a>
                 </Link>
               </div>
               <h3>
@@ -50,7 +50,7 @@ export default function ListingFeatured({ blog }) {
               </p>
 
               <Details
-                username={blog?.user.username}
+                username={blog?.user.user_name}
                 avatar={blog?.user.avatar}
               />
             </div>
