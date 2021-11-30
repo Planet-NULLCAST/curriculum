@@ -2,7 +2,7 @@ const axios = require("axios");
 import {
   baseUrl,
   tagUrl,
-  CreateTagUrl,
+  createTagUrl,
   postTagsUrl,
   postTagUrl
 } from "../config/config";
@@ -26,7 +26,7 @@ async function getTags(filterWhatsNew) {
 async function postTags(userCookie, newTag) {
   try {
     const { data } = await axios.post(
-      `${baseUrl}/${CreateTagUrl}`,
+      `${baseUrl}/${createTagUrl}`,
       { name: newTag[0], meta_title: newTag[0] },
       {
         headers: {

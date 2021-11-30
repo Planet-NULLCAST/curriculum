@@ -27,8 +27,8 @@ export default function ListingItem(props) {
         </a>
       </Fade>
       <div>
-        {item.tag?.length > 0 ? (
-          <Tags _tags={item.tag} />
+        {item.tags?.length > 0 ? (
+          <Tags _tags={item.tags} />
         ) : (
           <div className="tags h-9"></div>
         )}

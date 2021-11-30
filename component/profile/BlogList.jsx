@@ -10,7 +10,6 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
     setCount(newCount);
     getNewPostsWithCount(newCount);
   };
-  console.log(posts, 'BlogList');
 
   return (
     <div className={`bg-white shadow-sm rounded p-4 mt-4 `}>
@@ -61,7 +60,7 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
                         <p className="text-xs">123</p> */}
                       </div>
                       <p className="text-gray-600 font-semibold mt-3 mb-1 text-xs">
-                        {moment(blog.publishedAt).format("LL")}
+                        {moment(blog.published_at).format("LL")}
                       </p>
                     </div>
                   </div>

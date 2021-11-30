@@ -6,6 +6,7 @@ import {
   postsUrl,
   getVoteUrl,
   s3Url,
+  postCount,
   setVoteUrl,
   postUser,
   postBySlug,
@@ -219,9 +220,9 @@ async function getPostsByQuery(query, clickNo) {
  * @returns {Promise}
  */
 
- async function getUserPostsByUser(reqParams) {
+ async function getUserPostsByUser(UserId, reqParams) {
   try {
-    const res = await axios.get(`${baseUrl}/${postUser}`, {
+    const res = await axios.get(`${baseUrl}/${postUser}/${UserId}`, {
       params: reqParams
     });
     return res.data;
@@ -248,10 +249,8 @@ async function getPostsByQuery(query, clickNo) {
 
 /**
  * Service to call updatePostVote Api
- * @author sNkr-10
- * @param {String} type
+ * @author JasirTp
  * @param {String} postId
- * @param {String} token
  * @returns {Promise}
  */
  async function getVotes(postId) {
@@ -273,6 +272,26 @@ async function setVotes(value, postId) {
       `${baseUrl}/${setVoteUrl}/${postId}`,
       { value: value }
     );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+/**
+ * Service to call PostCount Api
+ * @author JasirTp
+ * @param {String} userId 
+ * @returns {Promise}
+ */
+ async function getPostCount(userId, postDetails) {
+
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/${postCount}/${userId}`,{
+        params: postDetails 
+      });
     return data;
   } catch (err) {
     console.log(err);
@@ -312,6 +331,7 @@ const PostService = {
   getPostBySlug,
   adminReview,
   createPost,
+  getPostCount,
   updatePostById,
   deletePostById,
   getLatestPosts,

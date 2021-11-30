@@ -32,7 +32,7 @@ export default function ProfileDetails({ userData }) {
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
                   <Image
-                    src={userCookie?.avatar || '/images/dummy0.png' }
+                    src={userData?.avatar || '/images/dummy0.png' }
                     alt="avatar"
                     className="rounded-full h-24 w-24"
                     layout="fill"
