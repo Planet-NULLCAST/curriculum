@@ -59,11 +59,11 @@ export async function getServerSideProps(context) {
     return {
       props: {
         profileData: []
+      },
+      redirect: {
+        permanent: false,
+        destination: "/"
       }
-      // redirect: {
-      //   permanent: false,
-      //   destination: "/"
-      // }
     };
   }
 }
