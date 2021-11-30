@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EventInfo from "../../../component/admin/EventInfo";
 import OrganizerInfo from "../../../component/admin/OrganizerInfo";
+import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
 import UserService from "../../../services/UserService";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import EventService from "../../../services/EventService";
@@ -94,6 +95,7 @@ export async function getImageUrl(eventData , response) {
 const CreateEvent = () => {
   const router = useRouter()
   const [eventID, setEventID] = useState(router.query.id);
+  const [isLoading , setIsLoading] = useState(false)
   useEffect(() => {
     setTimeout(() => {
       eventID && getevents(eventID);
@@ -161,9 +163,13 @@ const CreateEvent = () => {
       event_time: formatTime()
     };
     try {
+      setIsLoading(true)
       const data = await EventService.createNewEvent(userCookie, eventData);
-      notify(data.data.message);
-      router.push('/admin/events')
+      if(data){
+        setIsLoading(false)
+        notify(data.data.message);
+        router.push('/admin/events')
+      }
     } catch (error) {
       console.log(error);
     }
@@ -223,12 +229,13 @@ const CreateEvent = () => {
             Cancel
           </button>
           <button
-            className="border-2 border-black bg-black px-8 py-2 rounded text-white"
+            className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white ${isLoading && "opacity-50 cursor-not-allowed"}`}
             onClick={(e) =>
               eventID ? createUpdateHandler(e) : createEventHandler(e)
             }
             type="button"
           >
+             {isLoading && <LoadIcon color="#fff" height="23px" />}
             {eventID ? "Update" : "Create"}
           </button>
         </div>
