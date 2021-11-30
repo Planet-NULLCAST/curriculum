@@ -38,7 +38,7 @@ export default function SkillSet({ userData }) {
                               className={`px-5 h-7 rounded flex justify-center items-center mr-2 text-sm mb-2 font-semibold	${Profilestyles?.skillCard}`}
                               key={skill}
                             >
-                              {skill.toUpperCase()}
+                              {skill.name.toUpperCase()}
                             </div>
                           )}
                         </>

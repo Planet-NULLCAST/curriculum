@@ -34,6 +34,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         userData: data.data,
+        userCurrentLogin: userId,
       }
     };
       } else {
@@ -64,7 +65,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Username({ userData }) {
+export default function Username({ userData, userCurrentLogin }) {
   const [currentNav, setCurrentNav] = useState("profile");
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
@@ -130,7 +131,7 @@ export default function Username({ userData }) {
         <Navbar changeNav={changeNav} currentNav={currentNav} />
         <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
-            <ProfileDetails userData={userData} />
+            <ProfileDetails userData={userData} userCurrentLogin= {userCurrentLogin} />
             <SkillSet userData={userData} />
             {currentNav === "profile" && (
               <>
