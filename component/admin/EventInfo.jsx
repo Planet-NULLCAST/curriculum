@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
-const EventInfo = ({ eventDetails, setEventDetails }) => {
+
+
+export default function EventInfo ({ eventDetails, setEventDetails }) {
   const [fileName, setFileName] = useState("");
   const ref = useRef();
   console.log(eventDetails?.eventImage);
@@ -152,5 +154,3 @@ const EventInfo = ({ eventDetails, setEventDetails }) => {
     </div>
   );
 };
-
-export default EventInfo;
