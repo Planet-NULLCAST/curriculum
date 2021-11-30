@@ -51,7 +51,7 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
             type="text"
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event location"
-            placeholder="paste location here"
+            placeholder="Paste location here"
             value={eventDetails.eventLocation}
             onChange={(e) =>
               setEventDetails((prev) => ({
@@ -68,8 +68,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
         </label>
         <textarea
           type="text"
-          className="bg-gray-100 rounded border-grayBorder border-2 resize-none"
+          className="bg-gray-100 p-4 rounded border-grayBorder border-2 resize-none"
           name="description"
+          placeholder = "Add description here"
           rows="4"
           value={eventDetails.eventDescription}
           onChange={(e) =>
