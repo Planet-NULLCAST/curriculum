@@ -496,7 +496,7 @@ export default function Settings({ profileData, _skills }) {
                 <CreatableSelect
                   options={tagOptions}
                   isMulti
-                  className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
+                  className="basic-multi-select w-full mb-4 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                   classNamePrefix="Skills"
                   clearValue={() => undefined}
                   placeholder="Skills"
