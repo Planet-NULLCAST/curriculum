@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
-import Pagination from "../../component/pagination/pagination";
-import UserService from "../../services/UserService";
-import MyBlogsstyles from "../../styles/MyBlogs.module.css";
+import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
+import Pagination from "../../../component/pagination/pagination";
+import UserService from "../../../services/UserService";
+import MyBlogsstyles from "../../../styles/MyBlogs.module.css";
 import Cookies from "universal-cookie";
-import PostService from "../../services/PostService";
-import AdminNavbar from "../../component/admin/AdminNavbar";
-import AdminBlogsList from "../../component/admin/AdminBlogsList";
-import { getCookieValue } from "../../lib/cookie";
-import notify from "../../lib/notify";
+import PostService from "../../../services/PostService";
+import AdminNavbar from "../../../component/admin/AdminNavbar";
+import AdminBlogsList from "../../../component/admin/AdminBlogsList";
+import { getCookieValue } from "../../../lib/cookie";
+import notify from "../../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -114,7 +114,7 @@ const Admin = () => {
       const data = await PostService.getPostsByUsers(reqData);
       const { posts, count } = data.data;
       setPostData({ posts, count });
-    } catch (err) {
+    } catch (err) { 
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
@@ -194,7 +194,7 @@ const Admin = () => {
   return (
     <div>
       <Head>
-        <title>Admin | Nullcast</title>
+        <title>Admin | Blogs | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">

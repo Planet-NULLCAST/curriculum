@@ -5,13 +5,13 @@ import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
 import notify from "../../lib/notify";
 
-export default function AdminNavbar({ changeTag, changeStatus }) {
+export default function AdminNavbar({ changeTag, changeStatus, event }) {
   const statusOptions = [
-    { label: "ALL POSTS", value: "" },
+    { label:event? "ALL EVENTS" : "ALL POSTS", value: "" },
     // { label: "APPROVED", value: "approved" },
     { label: "PENDING", value: "pending" },
     { label: "REJECTED", value: "rejected" },
-    { label: "PUBLISHED", value: "published" }
+    { label: "PUBLISHED", value: "published" },
   ];
   const [tagOptions, setTagOptions] = useState([]);
 
@@ -68,9 +68,7 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-end items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="flex items-center py-3">
-          <div class="bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
-            <a href="/admin/create-event">Create Event</a>
-          </div>
+          {event ? " " :
           <Select
             options={tagOptions}
             isMulti={false}
@@ -81,17 +79,23 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
             placeholder="Select Tag"
             // closeMenuOnSelect={false}
           />
+        }
+          {event ? "" :
           <Select
-            options={statusOptions}
-            isMulti={false}
-            onChange={(e) => selectStatus(e)}
-            className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
-            classNamePrefix="Blog Status"
-            clearValue={() => undefined}
-            placeholder="Select Status"
-            // closeMenuOnSelect={false}
-          />
+          options={statusOptions}
+          isMulti={false}
+          onChange={(e) => selectStatus(e)}
+          className={`basic-single postFilter md:block hidden m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer  ${styles.min_w_10}`}
+          classNamePrefix="Blog Status"
+          clearValue={() => undefined}
+          placeholder="Select Status"
+          // closeMenuOnSelect={false}
+        />}
+           <div class="bg-black h-8 ml-4 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
+              <a href="/admin/events/create-event">Create Event</a>
+            </div>
         </div>
+        
       </div>
     </div>
   );
