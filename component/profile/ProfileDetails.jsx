@@ -2,12 +2,8 @@ import Trails from "../profile/Trails";
 import Profilestyles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import Cookies from "universal-cookie";
 
-export default function ProfileDetails({ userData }) {
-  const cookies = new Cookies();
-  const userCookie = cookies.get("userNullcast");
-  console.log(userCookie);
+export default function ProfileDetails({ userData, userCurrentLogin }) {
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -16,7 +12,7 @@ export default function ProfileDetails({ userData }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
           >
             <div className="flex">
-              {userData.isThisUserTheCurrentLoggedIn && (
+              {`${userData.id}` === userCurrentLogin && (
                 <Link href="/settings">
                   <a>
                     <img
