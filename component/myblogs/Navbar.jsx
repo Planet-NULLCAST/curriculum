@@ -93,7 +93,9 @@ export default function Navbar() {
           pathname: "/posts/write",
           query: { post_id: post.id }
         });
+        
       }
+      notify(message,'success')
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
