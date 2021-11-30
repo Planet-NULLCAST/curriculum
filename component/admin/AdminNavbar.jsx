@@ -5,13 +5,13 @@ import styles from "../myblogs/blogs.module.scss";
 import TagService from "../../services/TagService";
 import notify from "../../lib/notify";
 
-export default function AdminNavbar({ changeTag, changeStatus }) {
+export default function AdminNavbar({ changeTag, changeStatus, event }) {
   const statusOptions = [
-    { label: "ALL POSTS", value: "" },
+    { label:event? "ALL EVENTS" : "ALL POSTS", value: "" },
     // { label: "APPROVED", value: "approved" },
     { label: "PENDING", value: "pending" },
     { label: "REJECTED", value: "rejected" },
-    { label: "PUBLISHED", value: "published" }
+    { label: "PUBLISHED", value: "published" },
   ];
   const [tagOptions, setTagOptions] = useState([]);
 
@@ -68,7 +68,7 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-end items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="flex items-center py-3">
-          
+          {event ? " " :
           <Select
             options={tagOptions}
             isMulti={false}
@@ -79,6 +79,7 @@ export default function AdminNavbar({ changeTag, changeStatus }) {
             placeholder="Select Tag"
             // closeMenuOnSelect={false}
           />
+        }
           <Select
             options={statusOptions}
             isMulti={false}

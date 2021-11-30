@@ -8,6 +8,7 @@ import {
 import { getUrl } from "../lib/getUrl";
 
 async function getLatestEvents(reqParams) {
+  console.log(reqParams)
   let url = getUrl();
   try {
     const res = await axios.get(`${url}/${eventsUrl}`, {
@@ -58,13 +59,26 @@ async function deleteEvent(eventId){
     throw err;
   }
 }
+async function getEventbyStatus(req){
+  console.log(req)
+  try{
+      const {data} = await axios.get(`${baseUrl}/v1/events?status=${req.status}`)
+      console.log(data)
+      return data
+  }
+  catch(err){
+    console.log(err);
+    throw err;
+  }
+}
 
 const EventService = {
   getLatestEvents,
   getEventById,
   createNewEvent,
   getallevents,
-  deleteEvent
+  deleteEvent,
+  getEventbyStatus
 };
 
 module.exports = EventService;

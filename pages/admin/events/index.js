@@ -110,9 +110,11 @@ const Admin = () => {
    * @author athulraj2002
    */
   async function getevents(reqData) {
+    console.log(reqData)
     try {
-      const data = await EventService.getallevents();
-      const { events, count } = data.data;
+      const data = await EventService.getLatestEvents(reqData);
+      console.log(data)
+      const { events, count } = data;
       setEventdata({ events, count });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
@@ -168,13 +170,14 @@ const Admin = () => {
    * @param {*} status new status
    * @author athulraj2002
    */
-  const filterStatusPosts = (status) => {
-    const data = { ...pagination, status: status, page: 1 };
+
+  const filterStatusEvents = (status) => {
+    const data = { ...pagination, status: status, page: 1, limit:10 };
     setPagination((previousState) => {
-      return { ...previousState, status: status, page: 1 };
+      return { ...previousState, status: status, page: 1, limit:10 };
     });
     setTimeout(() => {
-      getPosts(data);
+      getevents(data);
     }, 100);
   };
   return (
@@ -186,8 +189,9 @@ const Admin = () => {
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <AdminNavbar
+            event={true}
             changeTag={(tag) => filterCategoryPosts(tag)}
-            changeStatus={(status) => filterStatusPosts(status)}
+            changeStatus={(status) => filterStatusEvents(status)}
           />
 
           {eventdata.events?.length ? (
