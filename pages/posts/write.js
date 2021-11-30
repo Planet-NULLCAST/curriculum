@@ -171,7 +171,6 @@ export default function Write({
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
       // wait for the response post message to get the post from the state
-      console.log(postElement.current.scratch );
       // console.log(postElement.current.scratch);
       const newMobiledoc = postElement?.current.scratch;
       const title = postElement?.current.titleScratch || "[Untitled]";
@@ -192,18 +191,21 @@ export default function Write({
 
   async function submitForReview() {
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
+    setTimeout(() => {
     //change status to "pending" if submitted for review
-    // console.log(postId);
+    const newMobiledoc = postElement?.current.scratch;
+    const title = postElement?.current.titleScratch || "[Untitled]";
     try {
       const statusUpdate = {
         status: "pending",
-        // mobiledoc: postElement.current.scratch,
-        mobiledoc: post.mobiledoc,
+        title: title,
+        mobiledoc: newMobiledoc,
       };
       updatePostById(postId,statusUpdate);
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
+  }, 500);
   }
 
   const getSettings = async (settingsData) => {
