@@ -68,7 +68,8 @@ export default function HomeSpotlight() {
           <Link href="/">
             <a onClick={() => setMenu(true)}>
               <img
-                src="/images/nullcast.svg"
+              class="object-contain"
+                src="/images/logo.png"
                 alt="logo"
                 height="120rem"
                 width="120rem"

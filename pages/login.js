@@ -171,7 +171,7 @@ export default function Login({ referer }) {
       </Head>
       <Link href="/">
         <img
-          src="/images/nullcast.svg"
+          src="/images/logo.png"
           alt="logo"
           className="fixed left-5 lg:left-10 top-5 lg:top-10 z-50 cursor-pointer"
         ></img>

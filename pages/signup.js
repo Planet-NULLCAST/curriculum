@@ -247,7 +247,7 @@ export default function SignUp({ referer }) {
       </Head>
       <Link href="/">
         <img
-          src="/images/nullcast.svg"
+          src="/images/logo.png"
           alt="logo"
           className="fixed left-5 lg:left-14 top-5 lg:top-14 z-50 cursor-pointer"
         ></img>
