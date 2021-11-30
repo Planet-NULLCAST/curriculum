@@ -21,7 +21,11 @@ export async function getServerSideProps(context) {
       params.tagName);
     if (!foundTag) {
       return {
-        notFound: true
+        props: {
+          posts: {},
+          count: {},
+          params: {}
+        }
       };
     } else {
       return {

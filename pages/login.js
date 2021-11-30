@@ -228,7 +228,6 @@ export default function Login({ referer }) {
                       </label>
                       <input
                         placeholder="Enter email"
-                        maxLength="30"
                         className={`inputStyle placeholder-gray-600 pr-3 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
@@ -258,7 +257,6 @@ export default function Login({ referer }) {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          maxLength="50"
                           className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"

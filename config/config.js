@@ -7,6 +7,7 @@ const apiVerUrl = "api/v1";
 const authUrl = "/api/auth";
 const enrolUrl = "/api/enrol";
 const postUrl = `${apiVerUrl}/post`;
+const adminReviewUrl = `${apiVerUrl}/admin/post`;
 const postBySlug = `${apiVerUrl}/post-by-slug`;
 const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
@@ -26,7 +27,8 @@ const postTagUrl = `${apiVerUrl}/post-tag`;
 const postTagsUrl = `${apiVerUrl}/post-tags`;
 const postSkillUrl = `${apiVerUrl}/user-tag`;
 const postSkillsUrl = `${apiVerUrl}/user-tags`;
-const CreateTagUrl = `${apiVerUrl}/tag`;
+const createTagUrl = `${apiVerUrl}/tag`;
+const postCount = `${apiVerUrl}/posts-count`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = "api/auth/reset-password";
@@ -35,9 +37,14 @@ const changePasswordUrl = `${apiVerUrl}/update-password`;
 const publishedPostsUrl = "api/posts/published";
 //  const publishedPostsCountUrl = "api/posts/published/count";
 const logoutUrl = `${apiVerUrl}/logout`;
+const setVoteUrl = `${apiVerUrl}/post-vote`;
+const getVoteUrl = `${apiVerUrl}/post-votes`;
 
 const configVars = {
   baseUrl,
+  postCount,
+  setVoteUrl,
+  getVoteUrl,
   postTagsUrl,
   postSkillsUrl,
   postSkillUrl,
@@ -50,6 +57,7 @@ const configVars = {
   authUrl,
   enrolUrl,
   postUrl,
+  adminReviewUrl,
   postBySlug,
   postsUrl,
   allPostsUrl,
@@ -63,7 +71,7 @@ const configVars = {
   userUrl,
   adminUrl,
   tagUrl,
-  CreateTagUrl,
+  createTagUrl,
   serverUrl,
   searchUrl,
   forgotPasswordUrl,

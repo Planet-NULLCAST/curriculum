@@ -18,7 +18,7 @@ export default function AdminBlogsList({ posts, updated }) {
    */
   async function updatePostById(updateData, newPostId) {
     try {
-      const res = await PostService.updatePostById(updateData, newPostId);
+      const res = await PostService.adminReview(updateData, newPostId);
       if (res) {
         notify(res?.message);
       }
@@ -94,7 +94,7 @@ export default function AdminBlogsList({ posts, updated }) {
                     </a>
                   </Link>
                   <div className={`text-xs text-gray-400 pt-2`}>
-                    {moment(item.updatedAt).format("LL")}
+                    {moment(item.updated_at).format("LL")}
                     {" - "}
                     <Link href={`/u/${item.user.user_name}`}>
                       <a className="text-blue-500">

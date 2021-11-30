@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import Navbar from "../../component/profile/Navbar";
@@ -12,26 +12,13 @@ import LuckEgg from "../../component/profile/LuckEgg";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import UserService from "../../services/UserService";
 import PostService from "../../services/PostService";
-
+import Cookies from "universal-cookie";
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
 import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
-    const username = context.params.username;
-    let isThisUserTheCurrentLoggedIn = false;
-    const data = await UserService.getUserByUsername(username);
-    const postParams = {
-      limit: 10,
-      status: "published"
-    };
-    const response = await PostService.getUserPostsByUser(username);
-    /**
-     * isThisUserTheCurrentLoggedIn is used to show/hide the edit icon
-     * in the profile details section
-     */
-
     if (context.req.headers.cookie) {
       const contextCookie = getCookieValue(
         context.req.headers.cookie,
@@ -39,18 +26,32 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-        isThisUserTheCurrentLoggedIn = cookie.id === data.id;
-        data.isThisUserTheCurrentLoggedIn = isThisUserTheCurrentLoggedIn;
-      }
-    }
+        const userId = cookie.id;
+        const username = context.params.username;
+
+    // let isThisUserTheCurrentLoggedIn = false;
+    const data = await UserService.getUserByUsername(username);
     return {
       props: {
         userData: data.data,
-        postsCount: response.data.count,
-        posts: response.data.posts,
-        limit: response.data.limit
       }
     };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/404"
+          }
+        };
+      }
+    } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/404"
+        }
+      };
+    }
   } catch (err) {
     //Redirect to 404 page if there is any kind of error
     // console.log(err);
@@ -63,29 +64,63 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function Username({ userData, postsCount, posts, limit }) {
-  const [currentNav, setcurrentNav] = useState("profile");
-  const [newBlogs, setNewBlogs] = useState(posts);
+export default function Username({ userData }) {
+  const [currentNav, setCurrentNav] = useState("profile");
+  const [newBlogs, setNewBlogs] = useState();
+  const [postsCount, setPostsCount] = useState();
+  const [postsLimit, setPostsLimit] = useState();
+  
+  console.log("userdata", userData.id);
+  useEffect(() => {
+      getPublishedUserPosts();
+      getUserPostCount();
+  }, []);
 
   const changeNav = (data) => {
-    setcurrentNav(data);
+    setCurrentNav(data);
   };
 
-  const getNewPostsWithCount = (count) => {
-    getNewPosts(count);
+  const getPublishedUserPosts = async () => {
+    
+    const UserId = userData.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getUserPostsByUser(UserId, postParams);
+    console.log(response.data.posts, 'error');  
+    setNewBlogs(response.data.posts)
+    setPostsLimit(response.data.limit);
   };
 
-  const getNewPosts = async (clickNo) => {
-    const responsePost = await PostService.getPublishedPostsByUserId(
-      userData.id,
-      limit,
-      clickNo
-    );
+  const getUserPostCount = async () => {
+    const UserId = userData.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getPostCount(UserId, postParams);
+    console.log(response.data.count, 'count');  
+    setPostsCount(response.data.count);
+  };
+
+
+  const getNewPostsWithCount = (postsCount) => {
+    getNewPosts(postsCount);
+  };
+
+  const getNewPosts = async (count) => {
+    const postParams = {
+      status: "published",
+      count: count,
+      order: "DESC",
+    };
+    const responsePost = await PostService.getUserPostsByUser(postParams);
 
     setNewBlogs((prevValue) => {
       return [...prevValue, ...responsePost.posts];
     });
   };
+  
+  console.log(userData, 'userPostsCount');  
 
   return (
     <div>
@@ -114,7 +149,7 @@ export default function Username({ userData, postsCount, posts, limit }) {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            {/* <Count postsCount={postsCount} /> */}
+            <Count postsCount={postsCount} />
             <FollowersList />
           </div>
         </div>

@@ -6,9 +6,10 @@ import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import EventService from "../../../services/EventService";
 import moment from "moment";
 import Cookies from "universal-cookie";
-import { getCookieValue } from "../../../lib/cookie";
 import notify from "../../../lib/notify";
 import { useRouter } from "next/router";
+import { getCookieValue } from "../../lib/cookie";
+import SharedService from "../../services/SharedService";
 
 export async function getServerSideProps(context) {
   try {
@@ -73,6 +74,22 @@ export async function getServerSideProps(context) {
   }
 }
 
+export async function getImageUrl(eventData , response) {
+  return Promise.all([SharedService.uploadImage(eventData.guest_image , {
+    stage: "dev",
+    fileName: eventData.guest_image.name,
+    id: response.data.data.id,
+    category: "events",
+    ContentType: "image/png"
+  }), SharedService.uploadImage(eventData.banner_image , {
+    stage: "dev",
+    fileName: eventData.banner_image.name,
+    id: response.data.data.id,
+    category: "events",
+    ContentType: "image/png"
+  })])
+}
+
 const CreateEvent = () => {
   const router = useRouter()
   const [eventID, setEventID] = useState(router.query.id);
@@ -126,12 +143,15 @@ const CreateEvent = () => {
     return isoDate;
   };
 
+
+
   const createEventHandler = async (e) => {
     const eventData = {
       guest_name: eventDetails.organizerName,
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      location : eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,

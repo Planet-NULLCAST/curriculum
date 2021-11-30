@@ -21,7 +21,6 @@ export async function getServerSideProps(context) {
   try {
     const slug = context.params.blogPost;
     const response = await PostService.getPostBySlug(slug);
-    console.log(response.data.tags[0].name, "Plost");
     const tagName = response.data.tags[0].name; 
     const { data }  = await PostService.getPostByTags(tagName);
     return {
@@ -42,7 +41,8 @@ export async function getServerSideProps(context) {
 }
 
 export default function BlogListing({ blog , relatedPosts }) {
-  console.log("bloga", relatedPosts, 'error');
+  // console.log("bloga", relatedPosts, 'error');
+  const [postsCount, setPostsCount] = useState(0);
   const {
     html,
     user,
@@ -58,7 +58,21 @@ export default function BlogListing({ blog , relatedPosts }) {
   // const {}
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  // console.log({ blog });
+  
+  useEffect(() => {
+    getUserPostCount();
+}, []);
+
+  const getUserPostCount = async () => {
+    const UserId = blog.user.id;
+    const postParams = {
+      status: "published",
+    };
+    const response = await PostService.getPostCount(UserId, postParams);
+    console.log(response.data.count, 'count');  
+    setPostsCount(response.data.count);
+  };
+
   return (
     <>
       <SiteHeader />
@@ -139,7 +153,7 @@ export default function BlogListing({ blog , relatedPosts }) {
         blog={blog}
         html={html}
       />
-      <SectionAuthor primaryAuthor={user} />
+      <SectionAuthor primaryAuthor={user}  postCount={postsCount} />
       <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />
       <SiteFooter />

@@ -310,7 +310,6 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter full name"
-                            maxLength="50"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="fullName"
                             name="fullName"
@@ -349,7 +348,6 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter username"
-                            maxLength="15"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="username"
                             name="username"
@@ -388,7 +386,6 @@ export default function SignUp({ referer }) {
                           </label>
                           <input
                             placeholder="Enter email"
-                            maxLength="30"
                             className={`inputStyle pr-3 placeholder-gray-600 ${Loginstyles.inputGreen}`}
                             id="email"
                             name="email"

@@ -1,27 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import PostService from "../../services/PostService";
 const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
+  const [image ,  setImage] = useState("")
   const ref = useRef();
   const imageUploadHandler = async (e) => {
     const imageFile = e.target.files[0];
-
-    const imageData = {
-      stage: "dev",
-      fileName: imageFile.name,
-      category: "events",
-      ContentType: imageFile.type
-    };
-
-    try {
-      const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
-
-      if (s3ImageUrl) {
-        console.log(s3ImageUrl);
-        setEventDetails((prev) => ({ ...prev, organizerImage: s3ImageUrl }));
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(imageFile)
+    setEventDetails((prev) => ({ ...prev, organizerImage: imageFile }))
+    setImage(URL.createObjectURL(imageFile))
   };
   return (
     <div className="mx-10 mb-8">
@@ -36,8 +22,8 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
         <div className="relative">
           <img
             src={`${
-              eventDetails.organizerImage
-                ? eventDetails.organizerImage
+              eventDetails.organizerImage && image
+                ? image
                 : "/images/svgs/avatar.svg"
             }`}
             alt="profile image"

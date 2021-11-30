@@ -53,31 +53,36 @@ let courses = [
       },
       {
         chapterId: 10,
+        chapterUrl: "objects",
+        chapterName: 'Objects'
+      },
+      {
+        chapterId: 11,
         chapterUrl: "prototypes",
         chapterName: "Prototypes"
       },
       {
-        chapterId: 11,
+        chapterId: 12,
         chapterUrl: "function",
         chapterName: "Function"
       },
       {
-        chapterId: 12,
+        chapterId: 13,
         chapterUrl: "type-conversion",
         chapterName: "Type Conversion"
       },
       {
-        chapterId: 13,
+        chapterId: 14,
         chapterUrl: "arrow-functions",
         chapterName: "Arrow Functions"
       },
       {
-        chapterId: 14,
+        chapterId: 15,
         chapterUrl: "asynchronous-behaviour-and-event-loop",
         chapterName: "Asynchronous Behaviour And Event Loop"
       },
       {
-        chapterId: 15,
+        chapterId: 16,
         chapterUrl: "foreach-map-filter",
         chapterName: "Foreach vs Map vs Filter"
       }

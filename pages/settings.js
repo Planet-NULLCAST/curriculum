@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
-import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
 import ImageCropper from "../component/popup/ImageCropper";
@@ -15,6 +14,7 @@ import CreatableSelect from "react-select/creatable";
 import SkillService from "../services/SkillService";
 import TagService from "../services/TagService";
 import notify from "../lib/notify";
+import SharedService from "../services/SharedService";
 
 export async function getServerSideProps(context) {
   try {
@@ -27,8 +27,10 @@ export async function getServerSideProps(context) {
         const cookie = JSON.parse(contextCookie);
         const username = cookie.user_name;
         const { data } = await UserService.getUserByUsername(username);
-        // removed roles from user data
-        delete data.roles;        
+        // removed roles id dob from user data
+        delete data.roles;
+        delete data.id;
+        delete data.dob;
         // const skillsRes = await SkillService.getSkills();
         return {
           props: {
@@ -286,7 +288,7 @@ export default function Settings({ profileData, _skills }) {
       setLoading(true);
       notify("Uploading image in progress");
       try {
-        let s3ImageUrl = await PostService.uploadImage(image, imageData);
+        let s3ImageUrl = await SharedService.uploadImage(image, imageData);
         s3ImageUrl += "?bustcache=" + new Date().getTime();
         setImage(s3ImageUrl);
 
@@ -403,7 +405,7 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      src={profileData.avatar || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">

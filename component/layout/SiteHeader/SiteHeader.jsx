@@ -141,7 +141,7 @@ export default function HomeSpotlight() {
                       <li>
                         <Link href="/blog">
                           <a onClick={() => setMenu(true)} className="w-full font-semibold">
-                            Blog
+                            Blogs
                           </a>
                         </Link>
                       </li>

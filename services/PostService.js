@@ -4,10 +4,14 @@ import {
   allPostsUrl,
   postUrl,
   postsUrl,
+  getVoteUrl,
   s3Url,
+  postCount,
+  setVoteUrl,
   postUser,
   postBySlug,
   changeStatusUrl,
+  adminReviewUrl,
   tagUrl,
   adminUrl,
   searchUrl
@@ -59,12 +63,11 @@ async function createPost(post) {
 }
 
 async function getLatestPosts(reqParams) {
-  let url = getUrl();
   try {
-    const res = await axios.get(`${baseUrl}/${postsUrl}`, {
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqParams
     });
-    return res.data.data;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -106,6 +109,19 @@ async function updatePostById(postId, postDetails) {
   }
 }
 
+async function adminReview(postId, postDetails) {
+  try {
+    const { data } = await axios.put(
+      `${baseUrl}/${adminReviewUrl}/${postId}`,
+      postDetails
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 async function deletePostById(userCookie, postId) {
   try {
     const { data } = await axios.delete(`${baseUrl}/${postUrl}/${postId}`, {
@@ -120,29 +136,7 @@ async function deletePostById(userCookie, postId) {
   }
 }
 
-async function uploadImage(imageFile, imageData) {
-  // get url from s3url and send imagefile to that url
-  // console.log(imageData);
-  // console.log(s3Url);
-  try {
-    const credLessAxios = axios.create({ withCredentials: false });
-    const response = await credLessAxios.post(
-      `${s3Url}/dev/s3-presigned-url`,
-      imageData
-    );
-    // console.log(response.data);
-    //put with imageFile
-    const uploadUrl = response.data;
-    const uploadResponse = await credLessAxios.put(uploadUrl, imageFile);
-    // console.log({ uploadResponse });
-    const imageUrl = uploadResponse.config.url.split("?")[0];
-    // console.log({ imageUrl });
-    return imageUrl;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
+
 
 // async function changePostStatus(userCookie, postId, statusUpdate) {
 //   try {
@@ -225,12 +219,13 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} username
  * @returns {Promise}
  */
-async function getUserPostsByUser(reqData) {
+
+ async function getUserPostsByUser(UserId, reqParams) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${postUser}`, {
-      params: reqData
+    const res = await axios.get(`${baseUrl}/${postUser}/${UserId}`, {
+      params: reqParams
     });
-    return data;
+    return res.data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -254,25 +249,49 @@ async function getUserPostsByUser(reqData) {
 
 /**
  * Service to call updatePostVote Api
- * @author sNkr-10
- * @param {String} type
+ * @author JasirTp
  * @param {String} postId
- * @param {String} token
  * @returns {Promise}
  */
-async function setVotes(type, postId, token) {
-  const url = getUrl();
+ async function getVotes(postId) {
 
   try {
-    const { data } = await axios.put(
-      `${url}/${postUrl}/vote/${postId}`,
-      { type: type },
-      {
-        headers: {
-          "x-access-token": `${token}`
-        }
-      }
+    const { data } = await axios.get(
+      `${baseUrl}/${getVoteUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function setVotes(value, postId) {
+
+  try {
+    const { data } = await axios.post(
+      `${baseUrl}/${setVoteUrl}/${postId}`,
+      { value: value }
     );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+/**
+ * Service to call PostCount Api
+ * @author JasirTp
+ * @param {String} userId 
+ * @returns {Promise}
+ */
+ async function getPostCount(userId, postDetails) {
+
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/${postCount}/${userId}`,{
+        params: postDetails 
+      });
     return data;
   } catch (err) {
     console.log(err);
@@ -310,10 +329,11 @@ const PostService = {
   getPostById,
   getPostsByUsers,
   getPostBySlug,
+  adminReview,
   createPost,
+  getPostCount,
   updatePostById,
   deletePostById,
-  uploadImage,
   getLatestPosts,
   getPostByTags,
   getPostsByQuery,
@@ -323,6 +343,7 @@ const PostService = {
   getUserPostsByUser,
   // getPublishedPostsCountByUserId,
   setVotes,
+  getVotes,
   getPostsByMultipleTags
 };
 

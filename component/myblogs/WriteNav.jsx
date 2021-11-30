@@ -13,6 +13,7 @@ import Fade from "react-reveal/Fade";
 import InfoPopup from "../modal/InfoPopup";
 import Modal from "../modal/Modal";
 import notify from "../../lib/notify";
+import SharedService from "../../services/SharedService";
 
 export default function WriteNav({
   saveToDraft,
@@ -182,12 +183,17 @@ export default function WriteNav({
       slug: postUrl,
       mobiledoc: currentPost.mobiledoc,
     };
-
+    if (settingsData.slug === ""){
+      delete settingsData.slug;
+      getSettings(settingsData);
+    }
+    else {
+      getSettings(settingsData);
+    }
     // console.log(
     //   Object.values(settingsData).some((k) => k !== "" || k !== null)
     // );
     // send prop
-    getSettings(settingsData);
   };
 
   /**
@@ -233,7 +239,7 @@ export default function WriteNav({
     };
     setLoading(true);
     try {
-      const s3ImageUrl = await PostService.uploadImage(imageFile, imageData);
+      const s3ImageUrl = await SharedService.uploadImage(imageFile, imageData);
       // console.log(s3ImageUrl);
 
       setCurrentPost((prevValue) => {

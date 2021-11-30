@@ -9,6 +9,7 @@ export default function EventSpotlight({ data }) {
     guest_designation,
     guest_image,
     guest_bio,
+    registration_link
   } = data;
 
   return (

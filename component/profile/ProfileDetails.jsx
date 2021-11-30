@@ -2,8 +2,12 @@ import Trails from "../profile/Trails";
 import Profilestyles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import Cookies from "universal-cookie";
 
 export default function ProfileDetails({ userData }) {
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+  console.log(userCookie);
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -28,7 +32,7 @@ export default function ProfileDetails({ userData }) {
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
                   <Image
-                    src={userData.avatar === null ? '/images/dummy0.png' : userData.avatar }
+                    src={userData?.avatar || '/images/dummy0.png' }
                     alt="avatar"
                     className="rounded-full h-24 w-24"
                     layout="fill"
