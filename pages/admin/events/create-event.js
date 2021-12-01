@@ -28,7 +28,8 @@ export async function getServerSideProps(context) {
         if (data.roles[0] === "admin") {
           return {
             props: {
-              profileData: {}
+              profileData: {},
+              referer: context.req.headers.referer ? context.req.headers.referer : ""
             }
           };
         } else {
@@ -172,8 +173,9 @@ const validateForm = (eventDetails, setEventDetailsError) => {
   return isValid;
 };
 
-const CreateEvent = () => {
-  const router = useRouter();
+
+const CreateEvent = ({referer}) => {
+  const router = useRouter()
   const [eventID, setEventID] = useState(router.query.id);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -286,20 +288,26 @@ const CreateEvent = () => {
 
   const clearEventHandler = (e) => {
     const clearEventDetails = {
-      organizerImage: "",
-      organizerName: "",
-      tagLine: "",
-      eventName: "",
-      eventLocation: "",
-      eventDescription: "",
-      eventLink: "",
-      eventDate: "",
-      eventTime: "",
-      eventImage: ""
-    };
-    setEventDetails(clearEventDetails);
-  };
-
+    organizerImage: "",
+    organizerName: "",
+    tagLine: "",
+    eventName: "",
+    eventLocation: "",
+    eventDescription: "",
+    eventLink: "",
+    eventDate: "",
+    eventTime: "",
+    eventImage: ""
+    }
+    setEventDetails(clearEventDetails)
+    if(referer){
+      router.back()
+    }
+    else{
+      router.push('/admin/events')
+    }
+  }
+  
   return (
     <div className="bg-gray-100 min-h-full pb-5">
       <SiteHeader />
