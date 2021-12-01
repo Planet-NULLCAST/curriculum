@@ -43,11 +43,11 @@ testCase:
   ]
 ---
 
-A function(a.k.a method) is basically a set of instructions that performs a certain task. It can receive inputs and can also return values to where the function has been called.
+A `function`(a.k.a method) is basically a set of instructions that performs a certain task. It can receive inputs and can also return values to where the function has been called.
 
 ## Functions in JavaScript
 
-In Javascript, a function is declared using the **“function“** keyword. For example:
+In Javascript, a function is declared using the `function` keyword. For example:
 
 ```javascript
 function printText(text1, text2) {
@@ -59,19 +59,19 @@ let str2 = "world!";
 printText(str1, str2); //   Hello world!
 ```
 
-From the above code snippet a function consist of:
+From the above code snippet a function consist of :
 
 - The name of the function **_printText_**.
 
-- The variables enclosed in parentheses are the parameters of that function.
+- The variables enclosed in parentheses are the `parameters` of that function.
 
 - The function body enclosed in curly brackets, which contains the JavaScript statements that describes the function
 
-- Finally we invoke the function call by the statement **_printText(str1,str2);_**. The values of _str1_ and _str2_ are copied to _text1_ and _text2_ respectively.
+- Finally we invoke the function call by the statement `printText(str1,str2);`. The values of `str1` and `str2` are copied to `text1` and `text2` respectively.
 
 ## A function can return values as well
 
-The **_return_** keyword is used to return a value from a function. Let's see an example:
+The `return` keyword is used to return a value from a function. Let's see an example:
 
 ```javascript
 function multiplyTen(num) {
@@ -83,10 +83,10 @@ console.log(num); // 50
 
 ## Complete the task below
 
-- create a function named **_addTwoNumbers_** with parameters **num1** and **num2**.
+- create a function named `addTwoNumbers` with parameters `num1` and `num2`.
 
-- Inside the function store **num1 + num2** to a const datatype **sum**.
+- Inside the function store `num1 + num2` to a const datatype `sum`.
 
-- The function should should return the **sum**
+- The function should return the `sum`
 
 - Then print the return from the function. Pass 5 and 6 as the function arguments.
