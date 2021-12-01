@@ -145,7 +145,7 @@ export default function Login({ referer }) {
           // } else {
           //   router.push("/");
           // }
-          if (referer) {
+          if (referer.split('/')[3] !== "forgot-password") {
             router.back();
           } else {
             router.push("/");
