@@ -12,6 +12,7 @@ import SharedService from "../../../services/SharedService";
 import { getCookieValue } from "../../../lib/cookie";
 
 
+
 export async function getServerSideProps(context) {
   try {
     if (context.req.headers.cookie) {
@@ -91,6 +92,69 @@ export async function getImageUrl(eventData , response) {
   })])
 }
 
+
+const validateForm = (eventDetails , setEventDetailsError) => {
+  let isValid = false
+  if(eventDetails.organizerName.trim()){
+    setEventDetailsError(prev => ({...prev , organizerNameError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , organizerNameError : "Enter Organizer's Name"}))
+  }
+  if(eventDetails.tagLine.trim()){
+    setEventDetailsError(prev => ({...prev , tagLineError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , tagLineError : "Enter Organizer's Tag"}))
+  }
+  if(eventDetails.eventName.trim()){
+    setEventDetailsError(prev => ({...prev , eventNameError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventNameError : "Enter Event Name"}))
+  }
+  if(eventDetails.eventLocation.trim()){
+    setEventDetailsError(prev => ({...prev , eventLocationError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventLocationError : "Enter Event Location"}))
+  }
+  if(eventDetails.eventDescription.trim()){
+    setEventDetailsError(prev => ({...prev , eventDescriptionError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventDescriptionError : "Enter Event Description"}))
+  }
+  if(eventDetails.eventLink.trim()){
+    setEventDetailsError(prev => ({...prev , eventLinkError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventLinkError : "Enter Event Link"}))
+  }
+  if(eventDetails.eventDate.trim()){
+    setEventDetailsError(prev => ({...prev , eventDateError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventDateError : "Enter Event Date"}))
+  }
+  if(eventDetails.eventTime.trim()){
+    setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
+  }
+  else {
+    isValid = false
+    setEventDetailsError(prev => ({...prev , eventTimeError : "Enter Event Time"}))
+  }
+
+  return isValid
+}
+
 const CreateEvent = () => {
   const router = useRouter()
   const [eventID, setEventID] = useState(router.query.id);
@@ -137,7 +201,18 @@ const CreateEvent = () => {
     eventTime: "",
     eventImage: ""
   });
-
+  const [eventDetailsError, setEventDetailsError] = useState({
+    organizerImageError: "",
+    organizerNameError: "",
+    tagLineError: "",
+    eventNameError: "",
+    eventLocationError: "",
+    eventDescriptionError: "",
+    eventLinkError: "",
+    eventDateError: "",
+    eventTimeError: "",
+    eventImageError: ""
+  });
   const formatTime = () => {
     let isoDate = moment(
       `${eventDetails.eventDate} ${eventDetails.eventTime}`
@@ -160,6 +235,7 @@ const CreateEvent = () => {
       description: eventDetails.eventDescription,
       event_time: formatTime()
     };
+    if(validateForm(eventDetails , setEventDetailsError)){
     try {
       const data = await EventService.createNewEvent(userCookie, eventData);
       notify(data.data.message);
@@ -167,7 +243,7 @@ const CreateEvent = () => {
     } catch (error) {
       console.log(error);
     }
-    formatTime();
+  }
   };
 
   const createUpdateHandler = async (e) => {
@@ -213,10 +289,14 @@ const CreateEvent = () => {
         <OrganizerInfo
           eventDetails={eventDetails}
           setEventDetails={setEventDetails}
+          eventDetailsError = {eventDetailsError}
+          setEventDetailsError = {setEventDetailsError}
         />
         <EventInfo
           eventDetails={eventDetails}
           setEventDetails={setEventDetails}
+          eventDetailsError = {eventDetailsError}
+          setEventDetailsError = {setEventDetailsError}
         />
         <div className="flex items-center justify-end mx-10 mb-6">
           <button className="border-2 border-black bg-white px-8 py-2 rounded mr-5">
