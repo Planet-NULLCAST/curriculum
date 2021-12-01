@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import PostService from "../../services/PostService";
-const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
+const OrganizerInfo = ({ eventDetails, setEventDetails ,  eventDetailsError , setEventDetailsError }) => {
   const [image ,  setImage] = useState("")
   const ref = useRef();
   const imageUploadHandler = async (e) => {
@@ -9,6 +9,22 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
     setEventDetails((prev) => ({ ...prev, organizerImage: imageFile }))
     setImage(URL.createObjectURL(imageFile))
   };
+
+  const organizerNameValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , organizerNameError : "Enter Organizer's Name"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , organizerNameError : ""}))
+    }
+  }
+
+  const organizerDesignationValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , tagLineError : "Enter Organizer's Tag"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , tagLineError : ""}))
+    }
+  }
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
@@ -60,6 +76,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
               name="organizer name"
               placeholder="Organizer Name"
               value={eventDetails.organizerName}
+              onBlur = {(e) => organizerNameValidation(e)}
               onChange={(e) =>
                 setEventDetails((prev) => ({
                   ...prev,
@@ -67,6 +84,9 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
                 }))
               }
             />
+            {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.organizerNameError}
+                        </span>}
           </div>
           <div className="flex flex-col">
             <label className="mb-2 text-sm font-semibold" htmlFor="Tag Line">
@@ -78,6 +98,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
               name="Tag Line"
               placeholder="Tag here"
               value={eventDetails.tagLine}
+              onBlur = {(e) => organizerDesignationValidation(e)}
               onChange={(e) =>
                 setEventDetails((prev) => ({
                   ...prev,
@@ -85,6 +106,9 @@ const OrganizerInfo = ({ eventDetails, setEventDetails }) => {
                 }))
               }
             />
+            {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.tagLineError}
+                        </span>}
           </div>
         </div>
       </div>

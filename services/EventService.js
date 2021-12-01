@@ -5,6 +5,7 @@ import {
   eventIdUrl,
   createEventUrl
 } from "../config/config";
+import {getImageUrl} from '../pages/admin/events/create-event'
 import { getUrl } from "../lib/getUrl";
 async function getLatestEvents(reqParams) {
 
