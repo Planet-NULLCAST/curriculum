@@ -143,6 +143,8 @@ const Admin = () => {
       ...pagination,
       page,
       limit,
+      sort_field: 'updated_at',
+      order: 'DESC',
       skip: page == 1 ? 0 : (page - 1) * 10
     };
     setPagination(data);
@@ -158,6 +160,8 @@ const Admin = () => {
     const data = {
       ...pagination,
       tag: tag,
+      sort_field: 'updated_at',
+      order: 'DESC',
       page: 1,
       status: status
       // skip: 0
@@ -183,7 +187,8 @@ const Admin = () => {
    * @author athulraj2002
    */
   const filterStatusPosts = (status) => {
-    const data = { ...pagination, status: status, page: 1 };
+    const data = { ...pagination, status: status, page: 1,    sort_field: 'updated_at',
+    order: 'DESC', };
     setPagination((previousState) => {
       return { ...previousState, status: status, page: 1 };
     });
