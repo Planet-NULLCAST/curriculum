@@ -45,7 +45,7 @@ export default function whatsNew({ blogs }) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      {blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
+      <WhatsNewPosts blogs={blogs} />
       <SectionSwag />
       <SiteFooter />
     </>

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 
-export default function EventInfo ({ eventDetails, setEventDetails }) {
+export default function EventInfo ({ eventDetails, setEventDetails , eventDetailsError , setEventDetailsError }) {
   const [fileName, setFileName] = useState("");
   const ref = useRef();
   console.log(eventDetails?.eventImage);
@@ -12,6 +12,52 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
         setEventDetails((prev) => ({ ...prev, eventImage: imageFile }));
   };
 
+  const eventNameValidation  = (e) => {
+      if(e.target.value === "") {
+        setEventDetailsError(prev => ({...prev , eventNameError : "Enter Event Name"}))
+      } else {
+        setEventDetailsError(prev => ({...prev , eventNameError : ""}))
+      }
+  }
+
+  const eventLocationValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , eventLocationError : "Enter Event Details"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , eventLocationError : ""}))
+    }
+  }
+
+  const eventDescriptionValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , eventDescriptionError : "Enter Event Description"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , eventDescriptionError : ""}))
+    }
+  }
+
+  const eventLinkValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , eventLinkError : "Enter Event Link"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , eventLinkError : ""}))
+    }
+  }
+
+  const eventDateValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , eventDateError : "Enter Event Date"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , eventDateError : ""}))
+    }
+  }
+  const eventTimeValidation = (e) => {
+    if(e.target.value === "") {
+      setEventDetailsError(prev => ({...prev , eventTimeError : "Enter Event Time"}))
+    } else {
+      setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
+    }
+  }
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">
@@ -38,7 +84,11 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
                 eventName: e.target.value
               }))
             }
+            onBlur = {(e) => eventNameValidation(e)}
           />
+          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventNameError}
+                        </span>}
         </div>
         <div className="flex flex-col w-full ml-3">
           <label
@@ -51,8 +101,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
             type="text"
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event location"
-            placeholder="paste location here"
+            placeholder="Paste location here"
             value={eventDetails.eventLocation}
+            onBlur = {(e) => eventLocationValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -60,6 +111,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
               }))
             }
           />
+          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventLocationError}
+                        </span>}
         </div>
       </div>
       <div className="flex flex-col w-full mb-4">
@@ -68,10 +122,12 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
         </label>
         <textarea
           type="text"
-          className="bg-gray-100 rounded border-grayBorder border-2 resize-none"
+          className="bg-gray-100 p-4 rounded border-grayBorder border-2 resize-none"
           name="description"
+          placeholder = "Add description here"
           rows="4"
           value={eventDetails.eventDescription}
+          onBlur = {(e) => eventDescriptionValidation(e)}
           onChange={(e) =>
             setEventDetails((prev) => ({
               ...prev,
@@ -79,6 +135,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
             }))
           }
         />
+        {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventDescriptionError}
+                        </span>}
       </div>
       <div className="flex flex-col w-full mb-4">
         <label className="mb-2 text-sm font-semibold" htmlFor="event link">
@@ -90,10 +149,14 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
           name="event link"
           placeholder="Link Here"
           value={eventDetails.eventLink}
+          onBlur = {(e) => eventLinkValidation(e)}
           onChange={(e) =>
             setEventDetails((prev) => ({ ...prev, eventLink: e.target.value }))
           }
         />
+        {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventLinkError}
+                        </span>}
       </div>
       <div className="flex justify-center item-center mb-5">
         <div className="flex flex-col w-full mr-3">
@@ -107,6 +170,7 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
             name="event date"
             placeholder="choose"
             value={eventDetails.eventDate}
+            onBlur = {(e) => eventDateValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -114,6 +178,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
               }))
             }
           />
+          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventDateError}
+                        </span>}
         </div>
         <div className="flex flex-col w-full ml-3">
           <label className="mb-2 text-sm font-semibold" htmlFor="event time">
@@ -125,6 +192,7 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
             name="event time"
             placeholder="choose"
             value={eventDetails.eventTime}
+            onBlur = {(e) => eventTimeValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -132,6 +200,9 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
               }))
             }
           />
+          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.eventTimeError}
+                        </span>}
         </div>
       </div>
       <div
@@ -139,7 +210,7 @@ export default function EventInfo ({ eventDetails, setEventDetails }) {
         onClick={() => ref.current.click()}
       >
         <label htmlFor="inputFiles" className="font-bold relative">
-          {fileName === "" ? "Upload Image" : fileName}
+          {eventDetails?.eventImage === "" ? "Upload Image" : eventDetails?.eventImage.name}
           <input
             type="file"
             className="hidden absolute top-0 left-0 w-full flex-grow"

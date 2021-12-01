@@ -59,11 +59,11 @@ export async function getServerSideProps(context) {
     return {
       props: {
         profileData: []
+      },
+      redirect: {
+        permanent: false,
+        destination: "/"
       }
-      // redirect: {
-      //   permanent: false,
-      //   destination: "/"
-      // }
     };
   }
 }
@@ -431,7 +431,6 @@ export default function Settings({ profileData, _skills }) {
                     </figcaption>
                   </figure>
                 </div>
-
                 {/* {profile.avatar && (
                   <div>
                     <ModalConfirm
@@ -452,7 +451,6 @@ export default function Settings({ profileData, _skills }) {
                   </div>
                 )} */}
               </div>
-
               <form className="flex flex-wrap" onSubmit={handleSettings}>
                 <div className="w-full mb-4">
                   <label htmlFor="full_name">Name</label>
@@ -496,7 +494,7 @@ export default function Settings({ profileData, _skills }) {
                 <CreatableSelect
                   options={tagOptions}
                   isMulti
-                  className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
+                  className="basic-multi-select w-full mb-4 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                   classNamePrefix="Skills"
                   clearValue={() => undefined}
                   placeholder="Skills"
@@ -586,7 +584,7 @@ export default function Settings({ profileData, _skills }) {
                   )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github Username</label>
+                  <label htmlFor="github">GitHub Username</label>
                   <input
                     id="github"
                     name="github"
