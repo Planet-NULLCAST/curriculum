@@ -271,6 +271,22 @@ const CreateEvent = () => {
     formatTime();
   };
 
+  const clearEventHandler = (e) => {
+    const clearEventDetails = {
+      organizerImage: "",
+    organizerName: "",
+    tagLine: "",
+    eventName: "",
+    eventLocation: "",
+    eventDescription: "",
+    eventLink: "",
+    eventDate: "",
+    eventTime: "",
+    eventImage: ""
+    }
+    setEventDetails(clearEventDetails)
+  }
+
   return (
     <div className="bg-gray-100 min-h-full pb-5">
       <SiteHeader />
@@ -299,7 +315,7 @@ const CreateEvent = () => {
           setEventDetailsError = {setEventDetailsError}
         />
         <div className="flex items-center justify-end mx-10 mb-6">
-          <button className="border-2 border-black bg-white px-8 py-2 rounded mr-5">
+          <button className="border-2 border-black bg-white px-8 py-2 rounded mr-5" onClick = {(e) => clearEventHandler(e)}>
             Cancel
           </button>
           <button
