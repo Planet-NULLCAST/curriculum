@@ -387,13 +387,13 @@ export default function WriteNav({
                       className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${!currentPost.bannerImage && "cursor-pointer"
                         }`}
                     >
-                      {currentPost.bannerImage ? (
+                      {currentPost.banner_image ? (
                         <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
                           {loading ? (
                             <div>Loading...</div>
                           ) : (
                             <img
-                              src={currentPost.bannerImage}
+                              src={currentPost.banner_image}
                               alt="banner"
                               width="100%"
                             />
