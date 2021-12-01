@@ -586,7 +586,7 @@ export default function Settings({ profileData, _skills }) {
                   )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github Username</label>
+                  <label htmlFor="github">GitHub Username</label>
                   <input
                     id="github"
                     name="github"
