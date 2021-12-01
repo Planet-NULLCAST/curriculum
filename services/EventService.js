@@ -19,7 +19,7 @@ async function getLatestEvents(reqParams) {
     throw err;
   }
 }
-async function getallevents(){
+async function getAllEvents(){
   try{
     const {data} = await axios.get(`${baseUrl}/api/v1/events`);
     return data;
@@ -70,7 +70,7 @@ async function deleteEvent(eventId){
     throw err;
   }
 }
-async function getEventbyStatus(req){
+async function getEventByStatus(req){
   try{
       const {data} = await axios.get(`${baseUrl}/v1/events?status=${req.status}`)
       return data
@@ -80,7 +80,7 @@ async function getEventbyStatus(req){
   }
 }
 
-async function updateEvent(updatedData , eventId) {
+async function updateEvent(eventId, updatedData) {
   try {
     const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,updatedData)
     if(response){
@@ -95,9 +95,9 @@ const EventService = {
   getLatestEvents,
   getEventById,
   createNewEvent,
-  getallevents,
+  getAllEvents,
   deleteEvent,
-  getEventbyStatus,
+  getEventByStatus,
   updateEvent
 };
 
