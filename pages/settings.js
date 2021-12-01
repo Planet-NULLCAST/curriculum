@@ -431,7 +431,6 @@ export default function Settings({ profileData, _skills }) {
                     </figcaption>
                   </figure>
                 </div>
-
                 {/* {profile.avatar && (
                   <div>
                     <ModalConfirm
@@ -452,7 +451,6 @@ export default function Settings({ profileData, _skills }) {
                   </div>
                 )} */}
               </div>
-
               <form className="flex flex-wrap" onSubmit={handleSettings}>
                 <div className="w-full mb-4">
                   <label htmlFor="full_name">Name</label>
