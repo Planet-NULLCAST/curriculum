@@ -96,27 +96,26 @@ const CreateEvent = () => {
   const [eventID, setEventID] = useState(router.query.id);
   useEffect(() => {
     setTimeout(() => {
-      eventID && getevents(eventID);
+      eventID && getEvents(eventID);
     }, 100);
   }, []);
-  async function getevents(reqData) {
+  async function getEvents(reqData) {
     try {
       const data = await EventService.getEventById(reqData);
-      const finaldata = data.data;
-      const date = moment(finaldata.event_time).format('YYYY-MM-DD')
-      const time = moment(finaldata.event_time).format('HH:SS')
-      console.log(date, time)
+      const finalData = data.data;
+      const date = moment(finalData.event_time).format('YYYY-MM-DD')
+      const time = moment(finalData.event_time).format('HH:SS')
       setEventDetails({
-        organizerImage: finaldata.guest_image,
-        organizerName: finaldata.guest_name,
-        tagLine: finaldata.guest_bio,
-        eventName:finaldata.title,
-        eventLocation:finaldata.location,
-        eventDescription: finaldata.description,
-        eventLink: finaldata.registration_link,
+        organizerImage: finalData.guest_image,
+        organizerName: finalData.guest_name,
+        tagLine: finalData.guest_designation,
+        eventName:finalData.title,
+        eventLocation:finalData.location,
+        eventDescription: finalData.description,
+        eventLink: finalData.registration_link,
         eventDate: date,
         eventTime: time,
-        eventImage: finaldata.banner_image
+        eventImage: finalData.banner_image
       });
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
@@ -124,7 +123,6 @@ const CreateEvent = () => {
   }
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  console.log("cookies", userCookie);
   const [eventDetails, setEventDetails] = useState({
     organizerImage: "",
     organizerName: "",
@@ -142,11 +140,8 @@ const CreateEvent = () => {
     let isoDate = moment(
       `${eventDetails.eventDate} ${eventDetails.eventTime}`
     ).format();
-    console.log(isoDate);
     return isoDate;
   };
-
-
 
   const createEventHandler = async (e) => {
     const eventData = {
@@ -164,8 +159,8 @@ const CreateEvent = () => {
       const data = await EventService.createNewEvent(userCookie, eventData);
       notify(data.data.message);
       router.push('/admin/events')
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
     formatTime();
   };
@@ -183,14 +178,13 @@ const CreateEvent = () => {
     };
     try {
       const data = await EventService.updateEvent(
-        userCookie,
+        eventID,
         eventData,
-        eventID
       );
       notify(data.data.message);
       router.push('/admin/events')
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
     formatTime();
   };
