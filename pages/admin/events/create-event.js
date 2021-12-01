@@ -30,7 +30,8 @@ export async function getServerSideProps(context) {
         if (data.roles[0] === "admin") {
           return {
             props: {
-              profileData: {}
+              profileData: {},
+              referer: context.req.headers.referer ? context.req.headers.referer : ""
             }
           };
         } else {
@@ -156,7 +157,7 @@ const validateForm = (eventDetails , setEventDetailsError) => {
   return isValid
 }
 
-const CreateEvent = () => {
+const CreateEvent = ({referer}) => {
   const router = useRouter()
   const [eventID, setEventID] = useState(router.query.id);
   const [isLoading , setIsLoading] = useState(false)
@@ -291,6 +292,12 @@ const CreateEvent = () => {
     eventImage: ""
     }
     setEventDetails(clearEventDetails)
+    if(referer){
+      router.back()
+    }
+    else{
+      router.push('/admin/events')
+    }
   }
 
   return (
