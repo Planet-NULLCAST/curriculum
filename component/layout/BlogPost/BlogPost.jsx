@@ -26,9 +26,6 @@ export default function BlogPost(props) {
    */
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
   const [voteType, setVoteType] = useState();
-  useEffect(() => {
-    getVoteType();
-  }, []);
   const [voteCount, setVoteCount] = useState(0);
 
   const getVoteCount = async () => {
@@ -57,6 +54,7 @@ export default function BlogPost(props) {
 
   useEffect(() => {
     getVoteCount();
+    getVoteType();
   }, []);
 
   /**
