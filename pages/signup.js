@@ -8,6 +8,7 @@ import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import { signUp } from "../services/AuthService";
+import SubscribeService from '../services/SubscribeService'
 
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
@@ -145,7 +146,7 @@ export default function SignUp({ referer }) {
   // Getting token from cookie
   const cookies = new Cookies();
   const userToken = cookies.get("token");
-
+ 
   async function handleClick(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -158,7 +159,14 @@ export default function SignUp({ referer }) {
     if (!email) {
       setEmailValid(false);
     }
-
+    async function subscribeNewsletter(email){
+      try{
+        const response = await SubscribeService.addSubscription(email);
+        console.log(response)
+      }catch(err){
+        console.log(err)
+      }
+    }
     if (validEmail) {
       if (fName && password && email && username && terms) {
           try {
@@ -171,6 +179,7 @@ export default function SignUp({ referer }) {
             )}${expires}`;
             localStorage.setItem("userNullcast", JSON.stringify(userData));
             // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+            nsletter && subscribeNewsletter(email)
             notify(data.message);
             if (referer) {
               router.back();
@@ -240,6 +249,9 @@ export default function SignUp({ referer }) {
       }
     }
   }
+
+  // * news letter subscription 
+  const [nsletter, setNsletter] = useState(false)
   return (
     <div className="w-full min-h-screen bg-white flex">
       <Head>
@@ -485,6 +497,7 @@ export default function SignUp({ referer }) {
                             id="updates"
                             name="updates"
                             value="updates"
+                            onChange={()=>setNsletter(!nsletter)}
                           />
                           <label
                             htmlFor="updates"

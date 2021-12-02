@@ -1,12 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
-
-import { baseUrl, subscribeUrl } from "../../../config/config";
+import SubscribeService from "../../../services/SubscribeService";
 import validateEmail from "../../../lib/validateEmail";
-
 import styles from "./SiteFooter.module.scss";
 import notify from "../../../lib/notify";
 
@@ -16,25 +12,21 @@ export default function SiteFooter() {
   const addSubscriber = async (e) => {
     e.preventDefault();
     const newEmail = e.target.email.value;
-
     const isValid = validateEmail(newEmail);
     setIsValidEmail(isValid);
-
-    if (isValid) {
-      const emailData = {
-        email: newEmail
-      };
-      const { data } = await axios.post(
-        `${baseUrl}/${subscribeUrl}`,
-        emailData
-      );
-      // console.log(data);
-      notify(data.msg);
-    }
+    document.cookie !== '' ? isValid && subscribe(newEmail) : notify('Please login for subscribe', 'error') ;
+    
   };
+  async function subscribe(email) {
+    try {
+      const response = await SubscribeService.addSubscription(email);
+      notify(response.data.message, "success");
+    } catch (err) {
+      console.log(err.message, "error");
+    }
+  }
 
   const handleChangeEmail = (e) => {
-    // console.log(e.target.value);
     if (isValidEmail === false) {
       const isValid = validateEmail(e.target.value);
       setIsValidEmail(isValid);
