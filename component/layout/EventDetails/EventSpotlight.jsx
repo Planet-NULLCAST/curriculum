@@ -2,7 +2,7 @@ import BookEvent from "./BookEvent";
 import styles from "./EventSpotlight.module.scss";
 import GuestDetails from "./GuestDetails";
 
-export default function EventSpotlight({ data, showwindow }) {
+export default function EventSpotlight({ data, showWindow }) {
   const {
     banner_image,
     guest_name,
@@ -17,7 +17,7 @@ export default function EventSpotlight({ data, showwindow }) {
         <div className={styles.postWrap}>
           <figure>{banner_image && <img src={banner_image} alt="Event Image" />}</figure>
           <div className={styles.bookEvent}>
-            <BookEvent data={data} showshare={showwindow} />
+            <BookEvent data={data} showShare={showWindow} />
           </div>
           <div className={styles.author}>
             <GuestDetails name={guest_name} avatar={guest_image} desig={guest_designation} />

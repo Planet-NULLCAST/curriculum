@@ -4,12 +4,12 @@ import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
 import EventService from "../../services/EventService";
 import Cookies from "universal-cookie";
-import { url, logoPath } from "../../seoschema/schema";
+import { url,logoPath } from "../../seoschema/schema";
 import notify from "../../lib/notify";
 import EventSpotlight from "../../component/layout/EventDetails/EventSpotlight";
 import Detail from "../../component/layout/EventDetails/Detail";
 import ShareEvent from "../../component/layout/EventDetails/ShareEvent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export async function getServerSideProps(context) {
   try {
@@ -61,11 +61,8 @@ export default function BlogListing({ event }) {
   } = event;
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  const [viewshare, setViewshare] = useState(true)
-  const url = window.location.href
-  const showwindow = (id) => {
-    setViewshare(true)
-  }
+  const [viewshare, setViewshare] = useState(false)
+  let pageUrl = window.location.href  
   return (
     <>
       <Head>
@@ -132,8 +129,8 @@ export default function BlogListing({ event }) {
         <meta property="og:image:height" content="630" />
       </Head>
       <SiteHeader />
-      {viewshare && <ShareEvent location={url} hidewindow={()=> setViewshare(false)} />}
-      <EventSpotlight showwindow={()=> setViewshare(true)}  data={event} />
+      {viewshare && <ShareEvent location={pageUrl} hidewindow={()=> setViewshare(false)} />}
+      <EventSpotlight showWindow={()=> setViewshare(true)}  data={event} />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />

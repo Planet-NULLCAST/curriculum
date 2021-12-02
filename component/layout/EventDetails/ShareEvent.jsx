@@ -10,7 +10,7 @@ import {
 import { FacebookIcon, TwitterIcon, LinkedinIcon, WhatsappIcon } from "react-share";
 function ShareEvent({ hidewindow, location }) {
   const url = location;
-  const copytoclipboard = () => {
+  const copyToClipBoard = () => {
     navigator.clipboard.writeText(url);
     notify("Copied to clipboard", "success");
   };
@@ -50,7 +50,7 @@ function ShareEvent({ hidewindow, location }) {
         </div>
         <div>
           <input
-            onClick={copytoclipboard}
+            onClick={copyToClipBoard}
             type="text"
             name="link"
             id="link"
