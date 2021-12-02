@@ -213,7 +213,7 @@ const Admin = () => {
             </div>
           ) : (
             <div className="text-gray-700 text-center font-semibold mt-8">
-              Oops ! No posts!
+              Oops ! No Events!
             </div>
           )}
         </div>

@@ -96,7 +96,7 @@ export async function getImageUrl(eventData, response) {
 }
 
 const validateForm = (eventDetails, setEventDetailsError) => {
-  let isValid = false;
+  let isValid = true;
   if (eventDetails.organizerName.trim()) {
     setEventDetailsError((prev) => ({ ...prev, organizerNameError: "" }));
   } else {
