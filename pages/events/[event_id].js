@@ -62,7 +62,7 @@ export default function BlogListing({ event }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [viewshare, setViewshare] = useState(false)
-  let pageUrl = window.location.href  
+  let pageUrl = 'dummy url'  
   return (
     <>
       <Head>
