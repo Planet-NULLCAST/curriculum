@@ -8,6 +8,8 @@ import { url, logoPath } from "../../seoschema/schema";
 import notify from "../../lib/notify";
 import EventSpotlight from "../../component/layout/EventDetails/EventSpotlight";
 import Detail from "../../component/layout/EventDetails/Detail";
+import ShareEvent from "../../component/layout/EventDetails/ShareEvent";
+import { useState } from "react";
 
 export async function getServerSideProps(context) {
   try {
@@ -59,6 +61,11 @@ export default function BlogListing({ event }) {
   } = event;
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
+  const [viewshare, setViewshare] = useState(true)
+  const url = window.location.href
+  const showwindow = (id) => {
+    setViewshare(true)
+  }
   return (
     <>
       <Head>
@@ -125,7 +132,8 @@ export default function BlogListing({ event }) {
         <meta property="og:image:height" content="630" />
       </Head>
       <SiteHeader />
-      <EventSpotlight data={event} />
+      {viewshare && <ShareEvent location={url} hidewindow={()=> setViewshare(false)} />}
+      <EventSpotlight showwindow={()=> setViewshare(true)}  data={event} />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />

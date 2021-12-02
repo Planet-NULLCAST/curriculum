@@ -2,7 +2,7 @@ import styles from "./BookEvent.module.scss";
 import moment from "moment";
 import Link from "next/link";
 
-export default function BookEvent({ data }) {
+export default function BookEvent({ data,showshare }) {
   const { meta_title, description, event_time, location, registration_link } = data;
   return (
     <div className={styles.Book_Wrap}>
@@ -26,7 +26,7 @@ export default function BookEvent({ data }) {
           BOOK NOW
         </a>
       </Link>
-      <button className={styles.share}>SHARE EVENT</button>
+      <button className={styles.share} onClick={showshare}>SHARE EVENT</button>
     </div>
   );
 }

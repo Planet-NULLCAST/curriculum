@@ -53,6 +53,7 @@
     "react-reveal": "^1.2.2",
     "react-select": "^4.3.1",
     "react-share": "^4.4.0",
+    "react-share-social": "^0.1.48",
     "react-slick": "^0.28.1",
     "react-toastify": "^7.0.4",
     "reactjs-popup": "^2.0.4",
