@@ -39,9 +39,11 @@ const publishedPostsUrl = "api/posts/published";
 const logoutUrl = `${apiVerUrl}/logout`;
 const setVoteUrl = `${apiVerUrl}/post-vote`;
 const getVoteUrl = `${apiVerUrl}/post-votes`;
+const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 
 const configVars = {
   baseUrl,
+  getVoteTypeUrl,
   postCount,
   setVoteUrl,
   getVoteUrl,

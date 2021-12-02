@@ -25,39 +25,37 @@ export default function BlogPost(props) {
    * @author sNkr-10
    */
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
-  const [voteType, setVoteType] = useState(0);
-  console.log(voteType, 'voteType');
-  useEffect(() => {
-    const votes = props.blog.votes?.find((item) => item.userId == props.userId);
-    if (votes) {
-      setVoteType(votes.type);
-    }
-  }, [props.blog]);
+  const [voteType, setVoteType] = useState();
   const [voteCount, setVoteCount] = useState(0);
 
   const getVoteCount = async () => {
     try {
-        const response = await PostService.getVotes(
-          props.blog.id,
-        );
-        console.log(response, 'vote value');
-        if (response.data != null) {
-          setVoteCount(
-            response.data.upvotes -
-            response.data.downvotes
-          );
-          console.log(voteCount); 
-        }
-        return response;
+      const response = await PostService.getVotes(props.blog.id);
+      if (response.data != null) {
+        setVoteCount(response.data.upvotes - response.data.downvotes);
+      }
+      return response;
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  };
+
+  const getVoteType = async () => {
+    try {
+      const response = await PostService.getVotesType(props.blog.id);
+      if (response.data != null) {
+        setVoteType(response.data.vote_kind);
+      }
+      return response;
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
   useEffect(() => {
     getVoteCount();
+    getVoteType();
   }, []);
-
 
   /**
    * function triggered during upvotes/downvotes
@@ -67,18 +65,15 @@ export default function BlogPost(props) {
   const setVotes = async (value) => {
     try {
       if (props.userId) {
-        const response = await PostService.setVotes(
-          value,
-          props.blog.id,
-        );        
+        const response = await PostService.setVotes(value, props.blog.id);
         if (response.data != null) {
           getVoteCount();
-          setVoteType(value);
+          getVoteType();
         }
         return response;
       }
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
@@ -87,7 +82,7 @@ export default function BlogPost(props) {
     if (props.userId != props.blog.user.id) {
       setVotes(value);
     }
-    !props.userId && notify("Please login for further actions", 'dark');
+    !props.userId && notify("Please login for further actions", "dark");
   };
 
   const [headings, setHeadings] = useState();
@@ -100,7 +95,6 @@ export default function BlogPost(props) {
         text: item.innerText
       };
     });
-    // console.log({ h2Tags });
     setHeadings(hTags);
     hljs.highlightAll();
   }, []);
@@ -141,7 +135,12 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={() => handleClick(1)} className="uo">
+                  <a
+                    onClick={() => {
+                      handleClick(1);
+                    }}
+                    className="up"
+                  >
                     <svg
                       width="37"
                       height="28"
@@ -151,12 +150,17 @@ export default function BlogPost(props) {
                     >
                       <path
                         d="M14.805 2.013L.977 22.21C.338 23.144 0 24.084 0 24.865c0 1.51 1.212 2.445 3.241 2.445h29.886c2.027 0 3.237-.933 3.237-2.44 0-.783-.339-1.707-.98-2.642L21.557 2.02C20.666.72 19.467 0 18.18 0c-1.286 0-2.484.712-3.375 2.013z"
-                        fill={voteType == 1 ? "#ff590f" : "#CFCFCF"}
+                        fill={voteType == "up" ? "#ff590f" : "#CFCFCF"}
                       />
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={() => handleClick(-1)} className="down">
+                  <a
+                    onClick={() => {
+                      handleClick(-1);
+                    }}
+                    className="down"
+                  >
                     <svg
                       width="37"
                       height="28"
@@ -166,7 +170,7 @@ export default function BlogPost(props) {
                     >
                       <path
                         d="M14.805 25.751L.977 5.553C.338 4.62 0 3.68 0 2.899 0 1.389 1.212.454 3.241.454h29.886c2.027 0 3.237.933 3.237 2.44 0 .782-.339 1.707-.98 2.642L21.557 25.744c-.891 1.3-2.09 2.02-3.377 2.02-1.286 0-2.484-.712-3.375-2.013z"
-                        fill={voteType == -1 ? "#ff590f" : "#CFCFCF"}
+                        fill={voteType == "down" ? "#ff590f" : "#CFCFCF"}
                       />
                     </svg>
                   </a>

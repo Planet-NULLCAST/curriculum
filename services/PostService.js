@@ -9,6 +9,7 @@ import {
   postCount,
   setVoteUrl,
   postUser,
+  getVoteTypeUrl,
   postBySlug,
   changeStatusUrl,
   adminReviewUrl,
@@ -136,8 +137,6 @@ async function deletePostById(userCookie, postId) {
   }
 }
 
-
-
 // async function changePostStatus(userCookie, postId, statusUpdate) {
 //   try {
 //     const { data } = await axios.post(
@@ -220,7 +219,7 @@ async function getPostsByQuery(query, clickNo) {
  * @returns {Promise}
  */
 
- async function getUserPostsByUser(UserId, reqParams) {
+async function getUserPostsByUser(UserId, reqParams) {
   try {
     const res = await axios.get(`${baseUrl}/${postUser}/${UserId}`, {
       params: reqParams
@@ -253,11 +252,19 @@ async function getPostsByQuery(query, clickNo) {
  * @param {String} postId
  * @returns {Promise}
  */
- async function getVotes(postId) {
-
+async function getVotes(postId) {
   try {
-    const { data } = await axios.get(
-      `${baseUrl}/${getVoteUrl}/${postId}`);
+    const { data } = await axios.get(`${baseUrl}/${getVoteUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function getVotesType(postId) {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getVoteTypeUrl}/${postId}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -266,12 +273,10 @@ async function getPostsByQuery(query, clickNo) {
 }
 
 async function setVotes(value, postId) {
-
   try {
-    const { data } = await axios.post(
-      `${baseUrl}/${setVoteUrl}/${postId}`,
-      { value: value }
-    );
+    const { data } = await axios.post(`${baseUrl}/${setVoteUrl}/${postId}`, {
+      value: value
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -282,16 +287,14 @@ async function setVotes(value, postId) {
 /**
  * Service to call PostCount Api
  * @author JasirTp
- * @param {String} userId 
+ * @param {String} userId
  * @returns {Promise}
  */
- async function getPostCount(userId, postDetails) {
-
+async function getPostCount(userId, postDetails) {
   try {
-    const { data } = await axios.get(
-      `${baseUrl}/${postCount}/${userId}`,{
-        params: postDetails 
-      });
+    const { data } = await axios.get(`${baseUrl}/${postCount}/${userId}`, {
+      params: postDetails
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -327,6 +330,7 @@ async function getPostsByMultipleTags(tags, clickNo) {
 
 const PostService = {
   getPostById,
+  getVotesType,
   getPostsByUsers,
   getPostBySlug,
   adminReview,
