@@ -18,7 +18,7 @@ export async function getServerSideProps() {
       sort_field: "event_time",
       order: "ASC",
       limit: limit,
-      status: "drafted",
+      status: "published",
       page: 1,
       with_table: "users, tags"
     };

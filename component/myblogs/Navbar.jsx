@@ -121,7 +121,7 @@ export default function Navbar() {
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full md:px-5 px-3">
         <div className="cursor-pointer h-16 flex justify-center items-center relative">
-          <span className="mt-1 text-gray-900">My Post</span>
+          <span className="mt-1 text-gray-900">My Posts</span>
           <div className="border border-b-4 border-gray-900 absolute bottom-0 left-0 w-full"></div>
         </div>
         <div className="flex items-center py-3">
