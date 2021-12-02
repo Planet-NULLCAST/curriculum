@@ -69,7 +69,6 @@ export default function BlogListing({ blog , relatedPosts }) {
       status: "published",
     };
     const response = await PostService.getPostCount(UserId, postParams);
-    console.log(response.data.count, 'count');  
     setPostsCount(response.data.count);
   };
 

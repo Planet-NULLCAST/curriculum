@@ -9,6 +9,7 @@ import {
   postCount,
   setVoteUrl,
   postUser,
+  getVoteTypeUrl,
   postBySlug,
   changeStatusUrl,
   adminReviewUrl,
@@ -265,6 +266,18 @@ async function getPostsByQuery(query, clickNo) {
   }
 }
 
+async function getVotesType(postId) {
+
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/${getVoteTypeUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 async function setVotes(value, postId) {
 
   try {
@@ -327,6 +340,7 @@ async function getPostsByMultipleTags(tags, clickNo) {
 
 const PostService = {
   getPostById,
+  getVotesType,
   getPostsByUsers,
   getPostBySlug,
   adminReview,
