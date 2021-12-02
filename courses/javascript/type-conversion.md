@@ -21,13 +21,19 @@ testCase:
     },
     {
       id: 2,
-      case: ["const sum = a + b;"],
+      case: [
+        "const sum = a + b;",
+        "const sum = a + b"
+      ],
       hint: "sum should store the result of performing an ADD operation on the numb",
       isCorrect: false
     },
     {
       id: 3,
-      case: ["const result = Number(sum);"],
+      case: [
+        "const result = Number(sum);",
+        "const result = Number(sum)"
+        ],
       hint: "Please re check the code and formatting.",
       isCorrect: false
     }
@@ -129,7 +135,7 @@ Number("99 88"); // returns NaN
 
 The conversion rule:
 
-Values that are intuitively “empty”, like 0, `an empty string`, `null`, `undefined`, and `NaN`, become `false`.
+Values that are intuitively “empty”, like 0, `""`, `null`, `undefined`, and `NaN`, become `false`.
 Other values become `true`.
 
 Explicit conversions to boolean can be done with the help of `Boolean()` method. For example:

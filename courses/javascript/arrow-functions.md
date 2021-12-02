@@ -87,7 +87,7 @@ const namesLength = names.map(function (name) {
 console.log(namesLength);
 ```
 
-Using _arrow functions_ :
+Using ```arrow functions``` :
 
 ```js
 const names = ["Kratos", "Mario", "Nathan", "Lara"];
