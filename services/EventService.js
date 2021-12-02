@@ -51,10 +51,10 @@ async function createNewEvent(userCookie, eventData) {
     })
     if(response){
       const res = await getImageUrl(eventData , response)
-      response = await updateEvent({
+      response = await updateEvent(response.data.data.id , {
         guest_image : res[0],
         banner_image : res[1]
-      }, response.data.data.id)
+      })
       return response
     }
   } catch (err) {
