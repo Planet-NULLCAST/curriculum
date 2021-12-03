@@ -94,6 +94,10 @@ export default function Settings({ profileData, _skills }) {
     website: ""
   });
   const [image, setImage] = useState("");
+
+  // User avatar image
+  const [userAvatarImage, setUserAvatarImage] = useState(profileData.avatar);
+
   useEffect(() => {
     getSettingsTags();
   }, []);
@@ -101,17 +105,18 @@ export default function Settings({ profileData, _skills }) {
   useEffect(() => {
     setProfile({ ...profileData });
     setImage(profileData.avatar);
-    // console.log(profileData);
+    // console.log(profileData.avatar);
     // console.log(_skills);
     setAllSkills(_skills);
   }, []);
 
   const updateProfile = async (newProfile) => {
     try {
-      const profileData = newProfile ? ({...newProfile}) : ({...profile});
+      const profileData = newProfile ? { ...newProfile } : { ...profile };
       delete profileData.skills;
       const response = await UserService.updateProfileByUserId(
-        userCookie, profileData
+        userCookie,
+        profileData
       );
       notify(response.message);
       setLoading(false);
@@ -175,32 +180,42 @@ export default function Settings({ profileData, _skills }) {
         setProfile((prevValue) => {
           return {
             ...prevValue,
-            skills: [...e, { value: res.name, id: res.id, name: res.name, label: res.name }],
+            skills: [
+              ...e,
+              { value: res.name, id: res.id, name: res.name, label: res.name }
+            ]
           };
         });
-      }
-      else {
+      } else {
         // gets new added tag and closed tag using filter
-        const addTag = e.filter(({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1));
+        const addTag = e.filter(
+          ({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1)
+        );
         // const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
-        const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        const removeTag = profile.skills.filter(
+          ({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1)
+        );
         if (addTag.length) {
-          const arr = addTag.map(({ id }) => { return { tag_id: id } })
+          const arr = addTag.map(({ id }) => {
+            return { tag_id: id };
+          });
           const res = await SkillService.postSaveSkills(userCookie, arr);
         }
         if (removeTag.length) {
-          const res = await SkillService.deletePostSkill(userCookie, removeTag[0].id);
+          const res = await SkillService.deletePostSkill(
+            userCookie,
+            removeTag[0].id
+          );
         }
         setProfile((prevValue) => {
           return {
             ...prevValue,
-            skills: [...e],
+            skills: [...e]
           };
         });
       }
-
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
@@ -277,6 +292,8 @@ export default function Settings({ profileData, _skills }) {
   };
 
   const uploadImage = async (image) => {
+    console.log(image);
+
     if (image) {
       const imageData = {
         stage: "dev",
@@ -298,6 +315,7 @@ export default function Settings({ profileData, _skills }) {
         userCookie.avatar = s3ImageUrl;
         document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
         updateProfile({ ...profile, avatar: s3ImageUrl });
+        setUserAvatarImage(s3ImageUrl);
       } catch (error) {
         setLoading(false);
         notify("Image upload failed", "error");
@@ -405,7 +423,7 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={profileData.avatar || "/images/svgs/avatar.svg"}
+                      src={userAvatarImage || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">
