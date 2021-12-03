@@ -315,6 +315,7 @@ export default function Settings({ profileData, _skills }) {
         userCookie.avatar = s3ImageUrl;
         document.cookie = `userNullcast=${JSON.stringify(userCookie)}`;
         updateProfile({ ...profile, avatar: s3ImageUrl });
+        // Updating new user avatar image
         setUserAvatarImage(s3ImageUrl);
       } catch (error) {
         setLoading(false);
