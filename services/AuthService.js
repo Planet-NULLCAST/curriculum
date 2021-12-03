@@ -12,7 +12,7 @@ import {
 
 async function sendEmail(email) {
   const item = {
-    email: email
+    to: email
   };
   try {
     const { data } = await axios.post(`${baseUrl}/${forgotPasswordUrl}`, item);
