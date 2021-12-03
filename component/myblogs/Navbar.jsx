@@ -17,7 +17,7 @@ export default function Navbar() {
   const [tag, setTag] = useState(null);
   const [status, setStatus] = useState(null);
   const [tagOptions, setTagOptions] = useState([]);
-
+  const [addactive, setAddactive] = useState(true)
   const statusOptions = [
     { label: "ALL STATUS", value: "" },
     { label: "PENDING", value: "pending" },
@@ -88,20 +88,24 @@ export default function Navbar() {
         data: { data: post, message }
       } = await PostService.createPost(createThisPost);
       // notify(message);
+      
       if (post.created_by === Number(userCookie.id)) {
+        setAddactive(true)
         router.push({
           pathname: "/posts/write",
           query: { post_id: post.id }
-        });
+        }); 
         
       }
       notify(message,'success')
     } catch (err) {
+      setAddactive(true)
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   };
 
   const handleAddNewPost = () => {
+    setAddactive(false)
     const newPost = {
       html: '',
       title: "[Untitled]",
@@ -160,7 +164,7 @@ export default function Navbar() {
 
           {/* Add a New Post creates a new post and goes to /posts/write/:postId  */}
           <div
-            onClick={handleAddNewPost}
+            onClick={()=> addactive && handleAddNewPost()}
             className={`bg-black h-8 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 ${styles.h_40px}`}
           >
             <p>Add a New Post</p>
