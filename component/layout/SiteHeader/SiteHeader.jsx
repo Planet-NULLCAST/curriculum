@@ -6,7 +6,7 @@ import Link from "next/link";
 import Cookies from "universal-cookie";
 import { logout } from "../../../services/AuthService";
 
-export default function HomeSpotlight() {
+export default function HomeSpotlight({userName}) {
   const router = useRouter();
   const _cookies = new Cookies();
   const [menu, setMenu] = useState(false);
@@ -68,7 +68,7 @@ export default function HomeSpotlight() {
           <Link href="/">
             <a onClick={() => setMenu(true)}>
               <img
-              class="object-contain"
+              className="object-contain"
                 src="/images/logo.png"
                 alt="logo"
                 height="120rem"
@@ -173,7 +173,7 @@ export default function HomeSpotlight() {
           <div className={styles.wrapBtn}>
             {cookies ? (
               <div className="flex flex-row justify-center items-center">
-                <Profile onLogout={() => logout()} />
+                <Profile onLogout={() => logout()} userName = {userName}/>
               </div>
             ) : (
               <a href="/login" className="btn btn--black">
