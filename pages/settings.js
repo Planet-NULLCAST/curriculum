@@ -115,7 +115,6 @@ export default function Settings({ profileData, _skills }) {
       const response = await UserService.updateProfileByUserId(
         userCookie, profileData
       );
-      console.log(response)
       if(response){
         setUserName(response.data.full_name)
         document.cookie = `userNullcast=${JSON.stringify(
