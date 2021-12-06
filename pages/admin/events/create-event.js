@@ -76,23 +76,60 @@ export async function getServerSideProps(context) {
   }
 }
 
-export async function getImageUrl(eventData, response) {
-  return Promise.all([
-    SharedService.uploadImage(eventData.guest_image, {
-      stage: "dev",
-      fileName: eventData.guest_image.name,
-      id: response.data.data.id,
-      category: "events",
-      ContentType: "image/png"
-    }),
-    SharedService.uploadImage(eventData.banner_image, {
-      stage: "dev",
-      fileName: eventData.banner_image.name,
-      id: response.data.data.id,
-      category: "events",
-      ContentType: "image/png"
-    })
-  ]);
+export async function getImageUrl(eventData, eventId) {
+  console.log(eventData)
+  if(eventData?.banner_image?.name && eventData?.guest_image?.name){
+    return Promise.all([
+      SharedService.uploadImage(eventData.guest_image, {
+        stage: "dev",
+        fileName: eventData.guest_image.name,
+        id: eventId,
+        category: "events",
+        ContentType: "image/png"
+      }),
+      SharedService.uploadImage(eventData.banner_image, {
+        stage: "dev",
+        fileName: eventData.banner_image.name,
+        id: eventId,
+        category: "events",
+        ContentType: "image/png"
+      })
+    ]);
+  }
+  else if(eventData?.banner_image?.name){
+    try {
+      const resp = await SharedService.uploadImage(eventData.banner_image, {
+        stage: "dev",
+        fileName: eventData.banner_image.name,
+        id: eventId,
+        category: "events",
+        ContentType: "image/png"
+      })
+      if(resp){
+        console.log("banner" , resp)
+        return {url : resp , type : "banner"}
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+  else if(eventData?.guest_image?.name) {
+    try {
+      const resp =  await SharedService.uploadImage(eventData.guest_image, {
+        stage: "dev",
+        fileName: eventData.guest_image.name,
+        id: eventId,
+        category: "events",
+        ContentType: "image/png"
+      })
+      if(resp) {
+        console.log("gueest" , resp)
+        return {url : resp , type : "guest"}
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 const validateForm = (eventDetails, setEventDetailsError) => {

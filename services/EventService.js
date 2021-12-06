@@ -50,7 +50,7 @@ async function createNewEvent(userCookie, eventData) {
       event_time: eventData.event_time
     })
     if(response){
-      const res = await getImageUrl(eventData , response)
+      const res = await getImageUrl(eventData , response.data.data.id)
       response = await updateEvent(response.data.data.id , {
         guest_image : res[0],
         banner_image : res[1]
@@ -81,14 +81,45 @@ async function getEventByStatus(req){
 }
 
 async function updateEvent(eventId, updatedData) {
-  try {
-    const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,updatedData)
+  console.log(updatedData)
+  if(updatedData?.guest_name){
+    try {
+      const res = await getImageUrl(updatedData , eventId)
+      if(res) {
+        console.log(res)
+        if(typeof res === 'object' && !res.url){
+        const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,{...updatedData , guest_image : res[0] , banner_image : res[1]})
+        if(response){
+          return response
+        }
+      }
+      else if(res.type === 'guest'){
+        const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,{...updatedData , guest_image : res.url })
+        if(response){
+          return response
+        }
+      }
+      else if(res.type === 'banner'){
+        const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`,{...updatedData , banner_image : res.url })
+        if(response){
+          return response
+        }
+      }
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+ else {
+   try {
+    const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`, updatedData)
     if(response){
       return response
     }
-  } catch (error) {
-    throw err;
-  }
+   } catch (error) {
+     throw error
+   }
+ }
 }
 
 const EventService = {
