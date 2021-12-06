@@ -101,4 +101,4 @@ const EventService = {
   updateEvent
 };
 
-module.exports = EventService;
+export default EventService

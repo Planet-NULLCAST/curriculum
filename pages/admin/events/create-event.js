@@ -179,14 +179,15 @@ const CreateEvent = ({referer}) => {
   const [eventID, setEventID] = useState(router.query.id);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
+    (() => {
       eventID && getEvents(eventID);
-    }, 100);
+    })();
   }, []);
   async function getEvents(reqData) {
     try {
       const data = await EventService.getEventById(reqData);
       const finalData = data.data;
+      console.log(finalData)
       const date = moment(finalData.event_time).format("YYYY-MM-DD");
       const time = moment(finalData.event_time).format("HH:SS");
       setEventDetails({
@@ -202,6 +203,7 @@ const CreateEvent = ({referer}) => {
         eventImage: finalData.banner_image
       });
     } catch (err) {
+      console.log(err)
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }

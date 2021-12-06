@@ -38,9 +38,9 @@ const OrganizerInfo = ({ eventDetails, setEventDetails ,  eventDetailsError , se
         <div className="relative">
           <img
             src={`${
-              eventDetails.organizerImage && image
-                ? image
-                : "/images/svgs/avatar.svg"
+              eventDetails.organizerImage
+                ? eventDetails.organizerImage 
+                : image ? image : "/images/svgs/avatar.svg"
             }`}
             alt="profile image"
             height={180}
