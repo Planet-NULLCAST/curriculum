@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Image from 'next/image'
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
 import Cookies from "universal-cookie";
@@ -413,7 +414,8 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={profileData.avatar || "/images/svgs/avatar.svg"}
+                      key={image}
+                      src={ image || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">
