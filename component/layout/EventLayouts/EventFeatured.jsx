@@ -6,6 +6,7 @@ import moment from "moment";
 import EventDate from "./EventDate";
 
 export default function EventFeatured({ event }) {
+  console.log(event, 'javascript')
   return (
     event && (
       <section className={styles.section}>
@@ -42,7 +43,7 @@ export default function EventFeatured({ event }) {
             <div className={`${styles.text} md:w-2/3 md:pl-6`}>
               <h3>
                 <Link href={`/events/${event?.id}`}>
-                  <a>{event?.meta_title}</a>
+                  <a>{event?.title}</a>
                 </Link>
               </h3>
               <div className={styles.count}>
