@@ -38,8 +38,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails ,  eventDetailsError , se
         <div className="relative">
           <img
             src={`${
-              eventDetails.organizerImage && image
-                ? image
+              eventDetails.organizerImage ? eventDetails.organizerImage.name ? image : eventDetails.organizerImage 
                 : "/images/svgs/avatar.svg"
             }`}
             alt="profile image"
