@@ -145,10 +145,10 @@ export default function Login({ referer }) {
           // } else {
           //   router.push("/");
           // }
-          if (referer.split('/')[3] !== "forgot-password") {
-            router.back();
-          } else {
+          if (referer.split('/')[3] === "forgot-password" || referer.split('/')[3].includes("reset-password")) {
             router.push("/");
+          } else {
+            router.back();
           }
         } catch (err) {
           setIsLoading(false);
