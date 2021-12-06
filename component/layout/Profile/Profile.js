@@ -8,7 +8,6 @@ export default function Profile({ onLogout, userName }) {
   // const userData = JSON.parse(sessionStorage.getItem("userNullcast"));
 	const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  console.log(userCookie , 'profile')
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>

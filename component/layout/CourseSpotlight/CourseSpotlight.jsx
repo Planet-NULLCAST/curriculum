@@ -1,10 +1,12 @@
 import styles from "./CourseSpotlight.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from 'next/router'
 
 export default function CourseSpotlight({ contents }) {
   let bg = contents.bgimage;
-  // console.log(bg);
+  const {query : {courseName}} = useRouter()
+  
   return (
     <section
       className={`${styles.spotlight} ${contents.bgimage}`}
@@ -22,7 +24,7 @@ export default function CourseSpotlight({ contents }) {
               href={
                 contents.type === "courses"
                   ? "#courses"
-                  : "/curriculum/javascript/introduction"
+                  : `/curriculum/${courseName}/introduction`
               }
             >
               <a className="btn btn--purple">
