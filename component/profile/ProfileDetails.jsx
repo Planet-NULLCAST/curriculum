@@ -19,6 +19,7 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
                       className="absolute top-4 right-4"
                       src="/images/profileedit.svg"
                       alt="edit profile"
+                      style = {{padding : "0.5rem"}}
                     />
                   </a>
                 </Link>
