@@ -106,6 +106,17 @@ async function updateEvent(eventId, updatedData) {
         }
       }
       }
+      else {
+        try {
+         const response = await axios.put(`${baseUrl}/${createEventUrl}/${eventId}`, updatedData)
+         console.log(response)
+         if(response){
+           return response
+         }
+        } catch (error) {
+          throw error
+        }
+      }
     } catch (err) {
       throw err;
     }
