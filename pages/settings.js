@@ -72,6 +72,7 @@ export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
+  const [userName , setUserName] = useState(userCookie?.full_name)
   const [allSkills, setAllSkills] = useState(_skills);
   const [tagOptions, setTagOptions] = useState([]);
   const [profile, setProfile] = useState({
@@ -113,8 +114,15 @@ export default function Settings({ profileData, _skills }) {
       const response = await UserService.updateProfileByUserId(
         userCookie, profileData
       );
-      notify(response.message);
-      setLoading(false);
+      console.log(response)
+      if(response){
+        setUserName(response.data.full_name)
+        document.cookie = `userNullcast=${JSON.stringify(
+          {...userCookie , full_name : response.data.full_name , user_name : response.data.user_name , avatar : response.data.avatar}
+        )}`
+        notify(response.message);
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
       notify(err?.response?.data?.message, "error");
@@ -280,7 +288,7 @@ export default function Settings({ profileData, _skills }) {
     if (image) {
       const imageData = {
         stage: "dev",
-        fileName: userCookie.username + ".png",
+        fileName: userCookie.user_name + ".png",
         id: userCookie.id,
         category: "profiles",
         ContentType: "image/png"
@@ -343,7 +351,7 @@ export default function Settings({ profileData, _skills }) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader userName = {userName}/>
       <Head>
         <title>Settings</title>
       </Head>

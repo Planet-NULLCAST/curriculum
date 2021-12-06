@@ -2,13 +2,13 @@ import styles from "./Profile.module.scss";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 
-export default function Profile({ onLogout, username }) {
+export default function Profile({ onLogout, userName }) {
 
   // Retrieving userdata from session storage which is in string format
   // const userData = JSON.parse(sessionStorage.getItem("userNullcast"));
 	const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-
+  console.log(userCookie , 'profile')
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
@@ -22,7 +22,7 @@ export default function Profile({ onLogout, username }) {
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{userCookie.full_name}</h4>
+          <h4>{userName ? userName : userCookie.full_name}</h4>
           <p>
             <img
               src={userCookie.avatar || "/images/smallduck.svg"}
