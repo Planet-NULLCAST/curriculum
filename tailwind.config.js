@@ -49,7 +49,6 @@ module.exports = {
       screens: {
         992: "992px"
       },
-      backdropOpacity: ["hover"],
       width: {
         "1/7": "14.2857143%",
         "2/7": "28.5714286%",
@@ -62,7 +61,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      opacity: ["disabled"]
+      opacity: ["disabled"],
+      brightness: ['hover'],
+      backdropOpacity: ["hover"],
     }
   },
   plugins: []
