@@ -10,6 +10,15 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 
 export async function getServerSideProps(context) {
+  const { token } = context.query;
+  if (!token || token == "") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login"
+      }
+    };
+  }
   return {
     props: {
       query: context.query
@@ -25,6 +34,7 @@ export default function resetPassword({ query }) {
   });
   const [validNewPassword, setValidNewPassword] = useState("");
   const [validConfirmPassword, setValidConfirmPassword] = useState("");
+  const [hidePass, setHidePass] = useState({eye: false, confirmEye: false});
 
   const handleOnBlur = (e) => {
     const { name, value } = e.target;
@@ -68,8 +78,8 @@ export default function resetPassword({ query }) {
   const resetPassword = async (newPass) => {
     try {
       const response = await AuthService.resetPassword(newPass, query.token);
-      console.log(response.status);
-      if (response.status === 201) {
+      if (response.status === 201 || 200) {
+        notify(response?.data?.message ?? "Password Changed Successfully")
         router.push("/login");
       }
     } catch (err) {
@@ -141,11 +151,23 @@ export default function resetPassword({ query }) {
                           className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="newPassword"
                           name="newPassword"
-                          type="text"
+                          type={`${hidePass.eye ? "text" : "password"}`}
                           onChange={handleInputChange}
                           onBlur={handleOnBlur}
                           value={password.newPassword}
                         />
+                        <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
+                          <img
+                            src={`/images/${hidePass.eye ? "eyecross.svg" : "eye.svg"}`}
+                            className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                            onClick={() => setHidePass((prev) => {
+                              return {
+                                ...prev,
+                                eye: !prev.eye
+                              }
+                            })}
+                          ></img>
+                        </div>
                       </div>
                       {validNewPassword === "empty" && (
                         <p className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
@@ -175,11 +197,23 @@ export default function resetPassword({ query }) {
                           className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="confirmPassword"
                           name="confirmPassword"
-                          type="text"
+                          type={`${hidePass.confirmEye ? "text" : "password"}`}
                           onBlur={handleOnBlur}
                           onChange={handleInputChange}
                           value={password.confirmPassword}
                         />
+                        <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
+                          <img
+                            src={`/images/${hidePass.confirmEye ? "eyecross.svg" : "eye.svg"}`}
+                            className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
+                            onClick={() => setHidePass((prev) => {
+                              return {
+                                ...prev,
+                                confirmEye: !prev.confirmEye
+                              }
+                            })}
+                          ></img>
+                        </div>
                       </div>
                       {validConfirmPassword === "empty" && (
                         <p className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
