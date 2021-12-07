@@ -36,7 +36,7 @@ export default function EventItems({ events }) {
       <div>
         <h3>
           <Link href={`/events/${item.id}`}>
-            <a>{item.meta_title}</a>
+            <a>{item.title}</a>
           </Link>
         </h3>
 

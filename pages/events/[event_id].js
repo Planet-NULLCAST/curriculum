@@ -4,7 +4,7 @@ import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
 import EventService from "../../services/EventService";
 import Cookies from "universal-cookie";
-import { url,logoPath } from "../../seoschema/schema";
+import { url, logoPath } from "../../seoschema/schema";
 import notify from "../../lib/notify";
 import EventSpotlight from "../../component/layout/EventDetails/EventSpotlight";
 import Detail from "../../component/layout/EventDetails/Detail";
@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       redirect: {
         permanent: false,
@@ -57,12 +57,12 @@ export default function BlogListing({ event }) {
     description,
     location,
     primary_tag,
-    event_time,
+    event_time
   } = event;
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  const [viewshare, setViewshare] = useState(false)
-  let pageUrl = 'dummy url'  
+  const [viewShare, setViewShare] = useState(false);
+  let pageUrl = registration_link;
   return (
     <>
       <Head>
@@ -75,17 +75,20 @@ export default function BlogListing({ event }) {
               "name": `${meta_title}`,
               "startDate": `${event_time}`,
               "endDate": `${event_time}`.split("T")[0] + "T17:30:00.000Z",
-              "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+              "eventAttendanceMode":
+                "https://schema.org/MixedEventAttendanceMode",
               "eventStatus": "https://schema.org/EventScheduled",
-              "location": [{
-                "@type": "VirtualLocation",
-                "url": `${registration_link}`
-              },
-              {
-                "@type": "Place",
-                "name": `${location}`,
-                "address": {}
-              }],
+              "location": [
+                {
+                  "@type": "VirtualLocation",
+                  "url": `${registration_link}`
+                },
+                {
+                  "@type": "Place",
+                  "name": `${location}`,
+                  "address": {}
+                }
+              ],
               "image": [`${banner_image}`],
               "description": `${description}`,
               "about": `${description}`,
@@ -98,7 +101,7 @@ export default function BlogListing({ event }) {
                   "url": `${guest_image}`,
                   "width": 1200,
                   "height": 1200
-                },
+                }
               },
               "organizer": {
                 "@type": "Organization",
@@ -117,7 +120,10 @@ export default function BlogListing({ event }) {
         <meta property="og:url" content={`${url}/events/${id}`} />
         <meta property="og:image" content={banner_image} />
         <meta property="event:start_time" content={event_time} />
-        <meta property="event:end_time" content={`${event_time}`.split("T")[0] + "T17:30:00.000Z"} />
+        <meta
+          property="event:end_time"
+          content={`${event_time}`.split("T")[0] + "T17:30:00.000Z"}
+        />
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta name="twitter:title" content={meta_title} />
         <meta name="twitter:description" content={description} />
@@ -129,8 +135,10 @@ export default function BlogListing({ event }) {
         <meta property="og:image:height" content="630" />
       </Head>
       <SiteHeader />
-      {viewshare && <ShareEvent location={pageUrl} hidewindow={()=> setViewshare(false)} />}
-      <EventSpotlight showWindow={()=> setViewshare(true)}  data={event} />
+      {viewShare && (
+        <ShareEvent location={pageUrl} hidewindow={() => setViewShare(false)} />
+      )}
+      <EventSpotlight showWindow={() => setViewShare(true)} data={event} />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />
