@@ -35,16 +35,16 @@ function ShareEvent({ hidewindow, location }) {
           </div>
         </div>
         <div>
-          <FacebookShareButton url={url}>
+          <FacebookShareButton url={url} className={styles.icons}>
             <FacebookIcon size={32} />
           </FacebookShareButton>
-          <LinkedinShareButton url={url}>
+          <LinkedinShareButton url={url} className={styles.icons}>
             <LinkedinIcon size={32} />
           </LinkedinShareButton>
-          <TwitterShareButton url={url}>
+          <TwitterShareButton url={url} className={styles.icons}>
             <TwitterIcon size={32} />
           </TwitterShareButton>
-          <WhatsappShareButton url={url}>
+          <WhatsappShareButton url={url} className={styles.icons}>
             <WhatsappIcon size={32} />
           </WhatsappShareButton>
         </div>
