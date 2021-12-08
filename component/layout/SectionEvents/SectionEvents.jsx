@@ -1,8 +1,9 @@
 import styles from './SectionEvents.module.scss';
 import Image from 'next/image';
+import moment from "moment";
 import Fade from 'react-reveal/Fade';
 
-export default function SectionEvents()  {
+export default function SectionEvents( { events } ) {
     return (
         <section className={styles.section}>
             <div className='container'>
@@ -15,16 +16,16 @@ export default function SectionEvents()  {
                 <div className={styles.event}>
                     <figure>
                         <Image
-                            src="/images/temp/event1.png"
-                            alt=""
+                        src={events[0].banner_image}
+                        alt=""
                             width={978}
                             height={539} 
                         />
                         <figcaption>
                             <h3>
-                                <span>Google I/O Extended 2019 Watch Party - Trivandrum</span>
+                                <span>{events[0].title}</span>
                             </h3>
-                            <p>May 11/2021, 10.00am - 01.00pm</p>
+                            <p>{moment(events?.event_time).format('MMMM Do YYYY, h:mm a')}</p>
                         </figcaption>
                     </figure>
                 </div>
