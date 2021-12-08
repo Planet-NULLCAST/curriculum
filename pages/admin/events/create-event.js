@@ -311,6 +311,7 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,

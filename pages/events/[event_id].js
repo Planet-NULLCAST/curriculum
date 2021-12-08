@@ -136,7 +136,7 @@ export default function BlogListing({ event }) {
       </Head>
       <SiteHeader />
       {viewShare && (
-        <ShareEvent location={pageUrl} hidewindow={() => setViewShare(false)} />
+        <ShareEvent location={pageUrl} hideWindow={() => setViewShare(false)} />
       )}
       <EventSpotlight showWindow={() => setViewShare(true)} data={event} />
       <Detail event={event} />

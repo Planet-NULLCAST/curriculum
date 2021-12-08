@@ -6,7 +6,6 @@ import moment from "moment";
 import EventDate from "./EventDate";
 
 export default function EventFeatured({ event }) {
-  console.log(event, 'javascript')
   return (
     event && (
       <section className={styles.section}>
