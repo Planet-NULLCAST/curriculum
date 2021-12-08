@@ -210,7 +210,7 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
         onClick={() => ref.current.click()}
       >
         <label htmlFor="inputFiles" className="font-bold relative">
-          {eventDetails?.eventImage === "" ? "Upload Image" : eventDetails?.eventImage?.name}
+          {eventDetails?.eventImage === "" ? "Upload Image" : eventDetails?.eventImage?.name ? eventDetails?.eventImage?.name : eventDetails?.eventImage.split('/')[6]}          
           <input
             type="file"
             className="hidden absolute top-0 left-0 w-full flex-grow"
