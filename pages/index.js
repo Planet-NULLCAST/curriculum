@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
     const userParams = {
       limit: 10
     };
-    const responsePost  = await PostService.getPostsByUsers(postParams);
+    const responsePost = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
     const eventParams = {
       sort_field: "event_time",
@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
       props: {
         posts: responsePost.data.posts || [],
         user: data.users || [],
-        events: responseEvents.events || [],
+        events: responseEvents.events || []
         // count: responseEvents.count,
         // limit: responseEvents.limit
       }
@@ -53,7 +53,6 @@ export async function getServerSideProps(context) {
   }
 }
 export default function Home({ posts, user, events }) {
-
   return (
     <div className="wrap">
       <Head>
