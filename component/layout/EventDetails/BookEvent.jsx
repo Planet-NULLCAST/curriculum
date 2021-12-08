@@ -2,8 +2,10 @@ import styles from "./BookEvent.module.scss";
 import moment from "moment";
 import Link from "next/link";
 
+
 export default function BookEvent({ data,showShare }) {
-  const { meta_title, description, event_time, location, registration_link } = data;
+  const { title, description, event_time, location, registration_link } = data;
+  console.log(data)
   return (
     <div className={styles.Book_Wrap}>
       <p className={styles.Book_Title}>Date and Time</p>
@@ -13,7 +15,7 @@ export default function BookEvent({ data,showShare }) {
         </span>
         <span className="time">{moment(event_time).format("LT")}</span>
       </div>
-      <Link href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${meta_title}&dates=${event_time}&details=For+details,+Visit+this+link+:+${registration_link}&location=${location}&sf=true&output=xml`}>
+      <Link href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${event_time}&details=For+details,+Visit+this+link+:+${registration_link}&location=${location}&sf=true&output=xml`}>
         <a target="_blank" className={styles.calender} rel="nofollow">
           <span className={styles.icon}>
             +
