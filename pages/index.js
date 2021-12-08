@@ -92,7 +92,7 @@ export default function Home({ posts, user, events }) {
       <SectionVideos />
       {user && <SectionUsers user={user} />}
 
-      <SectionEvents events={events} />
+      {events && <SectionEvents events={events} />}
       <SectionSwag />
       <SiteFooter />
     </div>
