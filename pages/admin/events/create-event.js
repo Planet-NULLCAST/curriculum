@@ -299,7 +299,6 @@ const CreateEvent = ({referer}) => {
           router.push("/admin/events");
         }
       } catch (err) {
-        setIsLoading(false)
         notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
@@ -317,15 +316,10 @@ const CreateEvent = ({referer}) => {
       event_time: formatTime()
     };
     try {
-      setIsLoading(true)
       const data = await EventService.updateEvent(eventID, eventData);
-      if(data){
-        setIsLoading(false)
       notify(data.data.message);
       router.push("/admin/events");
-      }
     } catch (err) {
-      setIsLoading(false)
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
     formatTime();
