@@ -41,10 +41,11 @@ const OrganizerInfo = ({ eventDetails, setEventDetails ,  eventDetailsError , se
               eventDetails.organizerImage ? eventDetails.organizerImage.name ? image : eventDetails.organizerImage 
                 : "/images/svgs/avatar.svg"
             }`}
+            onClick = {() => ref.current.click()}
             alt="profile image"
             height={180}
             width={180}
-            className="cursor-pointer rounded-full"
+            className="cursor-pointer rounded-full filter hover:brightness-75"
           />
           <div onClick={() => ref.current.click()}>
             <label htmlFor="inputFiles" className="font-bold relative pl-8">
