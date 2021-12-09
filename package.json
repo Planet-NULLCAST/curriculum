@@ -74,7 +74,7 @@
     "fast-glob": "^3.2.5",
     "husky": "^7.0.2",
     "postcss": "^8.2.10",
-    "tailwindcss": "^2.1.1",
+    "tailwindcss": "^2.2.19",
     "webpack": "^5.33.2"
   }
 }
