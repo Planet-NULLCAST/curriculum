@@ -59,6 +59,9 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
                 onChange={imageUploadHandler}
               />
             </label>
+            {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+                          {eventDetailsError.organizerImageError}
+                        </span>}
           </div>
         </div>
         <div className="flex flex-col flex-grow ml-12">

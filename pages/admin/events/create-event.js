@@ -143,6 +143,13 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       organizerNameError: "Enter Organizer's Name"
     }));
   }
+  if(eventDetails.organizerImage){
+    setEventDetailsError((prev) => ({ ...prev, organizerImageError: "" }));
+  }
+  else{
+    isValid = false
+    setEventDetailsError((prev) => ({ ...prev, organizerImageError: "Choose Organizer's Image" }));
+  }
   if (eventDetails.tagLine.trim()) {
     setEventDetailsError((prev) => ({ ...prev, tagLineError: "" }));
   } else {
@@ -206,7 +213,13 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       eventTimeError: "Enter Event Time"
     }));
   }
-
+  if(eventDetails.eventImage){
+    setEventDetailsError((prev) => ({ ...prev, eventImageError: "" }));
+  }
+  else{
+    isValid = false
+    setEventDetailsError((prev) => ({ ...prev, eventImageError: "Choose a Banner Image" }));
+  }
   return isValid;
 };
 
