@@ -20,7 +20,7 @@ export default function SectionEvents({ events }) {
         <div className={styles.event}>
           <figure>
             <Image
-              src={events?.banner_image ? events.banner_image : ''}
+              src={events?.banner_image ? events.banner_image : '/'}
               alt=""
               width={978}
               height={539}
