@@ -20,14 +20,14 @@ export default function SectionEvents({ events }) {
         <div className={styles.event}>
           <figure>
             <Image
-              src={events[0].banner_image}
+              src={events?.banner_image ? events.banner_image : '/'}
               alt=""
               width={978}
               height={539}
             />
             <figcaption>
               <h3>
-                <span>{events[0].title}</span>
+                <span>{events?.title}</span>
               </h3>
               <p>{moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}</p>
             </figcaption>
