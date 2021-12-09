@@ -93,6 +93,7 @@ const Admin = () => {
     // fieldName: "updatedAt"
   });
   const [loaded, setLoaded] = useState(false);
+  const [status, setStatus] = useState("published")
 
   //   effects
   useEffect(() => {
@@ -121,10 +122,7 @@ const Admin = () => {
 
   async function getPostByTag(tagName, status) {
     try {
-      const statusUpdate = {
-        status: status
-      };
-      const data = await PostService.getPostByTags(tagName, statusUpdate);
+      const data = await PostService.getPostByTags(tagName, status);
       const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
@@ -177,6 +175,7 @@ const Admin = () => {
     });
 
     setTimeout(() => {
+      console.log(data)
       getPostByTag(data.tag, data.status);
     }, 100);
   };
@@ -187,6 +186,7 @@ const Admin = () => {
    * @author athulraj2002
    */
   const filterStatusPosts = (status) => {
+    setStatus(status)
     const data = { ...pagination, status: status, page: 1,    sort_field: 'updated_at',
     order: 'DESC', };
     setPagination((previousState) => {
@@ -205,7 +205,7 @@ const Admin = () => {
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <AdminNavbar
-            changeTag={(tag) => filterCategoryPosts(tag)}
+            changeTag={(tag) => filterCategoryPosts(tag,status)}
             changeStatus={(status) => filterStatusPosts(status)}
           />
 

@@ -1,13 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 
 export default function EventInfo ({ eventDetails, setEventDetails , eventDetailsError , setEventDetailsError }) {
   const [fileName, setFileName] = useState("");
   const ref = useRef();
-  console.log(eventDetails?.eventImage);
-
+  const [pimg, setPimg] = useState('')
   const imageUploadHandler = async (e) => {
     const imageFile = e.target.files[0];
+        setPimg(imageFile)
         setFileName(imageFile.name);
         setEventDetails((prev) => ({ ...prev, eventImage: imageFile }));
   };

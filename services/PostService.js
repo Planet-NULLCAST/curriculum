@@ -159,7 +159,7 @@ async function deletePostById(userCookie, postId) {
 async function getPostByTags(tagName, status) {
   try {
     const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
-      params: { status: "" }
+      params: { status: status }
     });
     return data;
   } catch (err) {
