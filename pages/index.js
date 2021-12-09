@@ -42,14 +42,14 @@ export async function getServerSideProps(context) {
       props: {
         posts: responsePost.data.posts || [],
         user: data.users || [],
-        events: responseEvents.events || []
+        events: responseEvents?.events[0] || [],
         // count: responseEvents.count,
         // limit: responseEvents.limit
       }
     };
   } catch (err) {
     notify(err?.response?.data?.message ?? err?.message, "error");
-    return { props: { blog: [] } };
+    return { props: { blog: [], event: [],} };
   }
 }
 export default function Home({ posts, user, events }) {

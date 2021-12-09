@@ -69,12 +69,12 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.4.0",
     "cross-env": "^7.0.3",
     "fast-glob": "^3.2.5",
     "husky": "^7.0.2",
-    "postcss": "^8.2.10",
-    "tailwindcss": "^2.1.1",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^2.2.19",
     "webpack": "^5.33.2"
   }
 }
