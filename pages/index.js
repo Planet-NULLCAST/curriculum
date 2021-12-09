@@ -9,6 +9,7 @@ import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 import "../styles/Home.module.scss";
 import PostService from "../services/PostService";
+import EventService from "../services/EventService";
 import UserService from "../services/UserService";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
 import notify from "../lib/notify";
@@ -26,24 +27,32 @@ export async function getServerSideProps(context) {
     const userParams = {
       limit: 10
     };
-    const responsePost  = await PostService.getPostsByUsers(postParams);
+    const responsePost = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
-    console.log(responsePost.data.posts, "posts");
+    const eventParams = {
+      sort_field: "event_time",
+      order: "ASC",
+      limit: 1,
+      status: "published",
+      page: 1,
+      with_table: "users, tags"
+    };
+    const responseEvents = await EventService.getLatestEvents(eventParams);
     return {
       props: {
         posts: responsePost.data.posts || [],
-        user: data.users || []
+        user: data.users || [],
+        events: responseEvents?.events[0] || [],
+        // count: responseEvents.count,
+        // limit: responseEvents.limit
       }
     };
   } catch (err) {
     notify(err?.response?.data?.message ?? err?.message, "error");
-    return { props: { blog: [] } };
+    return { props: { blog: [], event: [],} };
   }
 }
-export default function Home({ posts, user }) {
-  // console.log(user,'s');
-
-  // console.log(process.env.ENV, baseUrl, clientUrl);
+export default function Home({ posts, user, events }) {
   return (
     <div className="wrap">
       <Head>
@@ -83,7 +92,7 @@ export default function Home({ posts, user }) {
       <SectionVideos />
       {user && <SectionUsers user={user} />}
 
-      <SectionEvents />
+      {events && <SectionEvents events={events} />}
       <SectionSwag />
       <SiteFooter />
     </div>
