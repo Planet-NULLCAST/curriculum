@@ -122,9 +122,6 @@ const Admin = () => {
 
   async function getPostByTag(tagName, status) {
     try {
-      const statusUpdate = {
-        status: status
-      };
       const data = await PostService.getPostByTags(tagName, status);
       const { posts, count } = data.data;
       setPostData({ posts, count });
