@@ -8,13 +8,13 @@ import javascript from "highlight.js/lib/languages/javascript";
 
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
-import { courses } from "../../../courses/meta";
+import {  courses } from "../../../courses/meta";
 import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
 import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
 import UserState from "../../../context/user/userContext";
-import { enrollCourse } from "../../../services/CurriculamService";
+import { chapterFinished } from "../../../services/CurriculamService";
 
 const axios = require("axios");
 import "highlight.js/styles/tomorrow-night-blue.css";
@@ -29,7 +29,6 @@ export async function getStaticPaths() {
     fallback: false
   };
 }
-
 export async function getStaticProps({ params }) {
   const { courseName, chapterName } = params;
   const chapterData = await getChapterData(params);
@@ -44,25 +43,25 @@ export async function getStaticProps({ params }) {
 export default function Chapter({ chapterData, chapterName, courseName }) {
   const userState = useContext(UserState);
   const course = useRef();
-
   const [toggle, setToggle] = useState(false);
   function handleToggle() {
     setToggle(!toggle);
   }
   const router = useRouter();
   const { testCase, contentOnly } = chapterData;
-  const cookies = new Cookies();
-  const userCookie = cookies.get("userNullcast");
+  //const cookies = new Cookies();
+  //const userCookie = cookies.get("userNullcast");
   const clickHandle = async (courseName, chapterName) => {
     if (contentOnly) {
       try {
-        const data = await enrollCourse(courseName, chapterName);
+        const data = await chapterFinished(courseName, chapterName);
         if (data.entryAdded) {
           console.log("👍 Chapter Is Completed!");
         } else {
           console.log(`👍 ${data}`);
         }
       } catch (err) {
+        console.log(err)
         notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
