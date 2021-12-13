@@ -14,6 +14,7 @@ export default function CourseSpotlight({ contents }) {
     try {
       await enrollCourse(courseName)
     } catch (err) {
+      if(err?.response?.data?.message.split(" ")[0] !== "duplicate")
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }

@@ -61,8 +61,9 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
           console.log(`👍 ${data}`);
         }
       } catch (err) {
-        console.log(err)
-        notify(err?.response?.data?.message ?? err?.message, "error");
+        console.log(err.response)
+        if(err?.response?.data?.message.split(" ")[0] !== "duplicate")
+          notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
 
