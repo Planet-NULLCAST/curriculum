@@ -44,7 +44,6 @@ export default function BlogPost(props) {
     try {
       if (props.userId) {
         const response = await PostService.getVotesType(props.blog.id);
-        console.log('e', response)
         if (response.data != null) {
           setVoteType(response?.data?.vote_kind);
         }
