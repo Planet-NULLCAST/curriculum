@@ -42,11 +42,16 @@ export default function BlogPost(props) {
 
   const getVoteType = async () => {
     try {
-      const response = await PostService.getVotesType(props.blog.id);
-      if (response.data != null) {
-        setVoteType(response.data.vote_kind);
+      if (props.userId) {
+        const response = await PostService.getVotesType(props.blog.id);
+        console.log('e', response)
+        if (response.data != null) {
+          setVoteType(response?.data?.vote_kind);
+        }
+        return response;
+
       }
-      return response;
+
     } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
