@@ -31,7 +31,7 @@ async function chapterFinished(courseName, chapterName) {
   let cookies = new Cookies();
   let usercookie = cookies.get("userNullcast");
   const {data : {data : {id}}} = await axios.get(`${baseUrl}/api/v1/course/${courseName}`)
-  const resp = await axios.get(`${baseUrl}/api/v1/chapter/${chapterName.split("-").join(" ").toLowerCase()}`)
+  const resp = await axios.get(`${baseUrl}/api/v1/chapter/${chapterName !== "naming-standard-bem" ?chapterName.split("-").join(" ").toLowerCase() : "naming standard-bem"}`)
   console.log(resp)
   if (usercookie && id && resp) {
     try {
