@@ -58,7 +58,9 @@ export default function BlogPost(props) {
 
   useEffect(() => {
     getVoteCount();
-    getVoteType();
+    if(props.vote !== false) {
+      getVoteType();
+    }
   }, []);
 
   /**

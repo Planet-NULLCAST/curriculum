@@ -31,8 +31,11 @@ export async function getServerSideProps(context) {
         // token = cookie.accessToken;
 
         const response = await PostService.getPostById(postId);
-        const data = await PostService.getPostsByUsers(userId);
-        const { count } = data.data;
+        const postParams = {
+          status: "published",
+        };
+        const count = await PostService.getPostCount(userId, postParams);
+        console.log(count.data.count, 'count')
         // console.log('ysggh',response);
         if (!response) {
           return {
@@ -45,7 +48,7 @@ export async function getServerSideProps(context) {
         return {
           props: {
             posts: response.data,
-            count: count,
+            count: count.data.count,
             // token: token,
             userId: userId,
           }
@@ -69,7 +72,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function BlogListing(props,response) {
-  const { html, title, banner_image, created_by, user } = props.posts;
+  const { html, title, banner_image, created_at, user } = props.posts;
   const count = props.count;
   return (
     <>
@@ -80,12 +83,12 @@ export default function BlogListing(props,response) {
       <BlogSpotlight
         title={title}
         bannerImage={banner_image}
-        createdAt={created_by}
+        createdAt={created_at}
         primaryAuthor={user}
       />
       <BlogPost
         userId={props.userId}
-        // token={props.token}
+        vote={false}
         blog={props.posts}
         html={html}
       />
