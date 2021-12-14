@@ -44,21 +44,24 @@ export default function BlogPost(props) {
     try {
       if (props.userId) {
         const response = await PostService.getVotesType(props.blog.id);
+        console.log("e", response);
         if (response.data != null) {
           setVoteType(response?.data?.vote_kind);
         }
         return response;
-
       }
-
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, "error");
+      console.log(err.message);
+      // this for temp need to change it from backend
+      if (err.message !== "Request failed with status code 500") {
+        notify(err?.response?.data?.message ?? err?.message, "error");
+      }
     }
   };
 
   useEffect(() => {
     getVoteCount();
-    if(props.vote !== false) {
+    if (props.vote !== false) {
       getVoteType();
     }
   }, []);
