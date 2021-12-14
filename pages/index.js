@@ -13,6 +13,7 @@ import EventService from "../services/EventService";
 import UserService from "../services/UserService";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
 import notify from "../lib/notify";
+import { addCourses } from "../courses/meta";
 
 export async function getServerSideProps(context) {
   try {
@@ -52,6 +53,7 @@ export async function getServerSideProps(context) {
     return { props: { blog: [], event: [],} };
   }
 }
+//addCourses()
 export default function Home({ posts, user, events }) {
   return (
     <div className="wrap">

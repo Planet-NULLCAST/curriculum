@@ -28,7 +28,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function CourseName({ courseData, params }) {
-  // console.log(courseData, params);
+  console.log(courseData, params);
   const currentCourseName = params.courseName;
 
   let currentCourse = getCourse(currentCourseName);

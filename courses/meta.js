@@ -237,7 +237,7 @@ let courses = [
 async function addCourses() {
   // console.log("in add courses");
   axios
-    .post(baseUrl, courses)
+    .post(`${baseUrl}/api/v1/courses-chapters`, courses)
     .then((res) => console.log("sent courses", res.data))
     .catch((err) => console.log(err));
 }
