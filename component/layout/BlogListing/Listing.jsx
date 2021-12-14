@@ -11,7 +11,8 @@ export default function Listing({
   currentCount,
   blogCount,
   tagsArray,
-  resetCount
+  resetCount,
+  limit
 }) {
   const [count, setCount] = useState(0);
   const router = useRouter();
@@ -20,9 +21,7 @@ export default function Listing({
     const size = 5;
     newTagsArray = tagsArray.slice(0, size);
   }
-
   const handleLoadMore = (e) => {
-    // console.log("clicked");
     let newCount = count + 1;
     if (resetCount) newCount = count;
     setCount(newCount);
@@ -71,7 +70,7 @@ export default function Listing({
           <ListingItem blog={blog} />
         </div>
         <div className={styles.wrapBtn}>
-          {blog?.length !== blogCount && (
+          {blogCount > blog?.length && (
             <button className="btn btn--gray" onClick={handleLoadMore}>
               <span className="btn__text">Load more</span>
             </button>
