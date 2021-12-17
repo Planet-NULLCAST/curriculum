@@ -143,6 +143,13 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       organizerNameError: "Enter Organizer's Name"
     }));
   }
+  if(eventDetails.organizerImage){
+    setEventDetailsError((prev) => ({ ...prev, organizerImageError: "" }));
+  }
+  else{
+    isValid = false
+    setEventDetailsError((prev) => ({ ...prev, organizerImageError: "Choose Organizer's Image" }));
+  }
   if (eventDetails.tagLine.trim()) {
     setEventDetailsError((prev) => ({ ...prev, tagLineError: "" }));
   } else {
@@ -206,7 +213,13 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       eventTimeError: "Enter Event Time"
     }));
   }
-
+  if(eventDetails.eventImage){
+    setEventDetailsError((prev) => ({ ...prev, eventImageError: "" }));
+  }
+  else{
+    isValid = false
+    setEventDetailsError((prev) => ({ ...prev, eventImageError: "Choose a Banner Image" }));
+  }
   return isValid;
 };
 
@@ -299,6 +312,7 @@ const CreateEvent = ({referer}) => {
           router.push("/admin/events");
         }
       } catch (err) {
+        setIsLoading(false)
         notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
@@ -310,16 +324,22 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,
       event_time: formatTime()
     };
     try {
+      setIsLoading(true)
       const data = await EventService.updateEvent(eventID, eventData);
+      if(data){
+        setIsLoading(false)
       notify(data.data.message);
       router.push("/admin/events");
+      }
     } catch (err) {
+      setIsLoading(false)
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
     formatTime();

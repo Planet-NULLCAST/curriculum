@@ -43,9 +43,11 @@ export default function ListingFeatured({ blog }) {
                   <a>{blog?.title}</a>
                 </Link>
               </h3>
-              <p>{blog?.metaDescription}</p>
+              <p>{blog?.meta_description}</p>
               <p className={styles.time}>
-                <span>{moment(blog?.published_at).format("MMMM Do, YYYY")}</span>
+                <span>
+                  {moment(blog?.published_at).format("MMMM Do, YYYY")}
+                </span>
                 {/* <span>5 Min Read</span> */}
               </p>
 

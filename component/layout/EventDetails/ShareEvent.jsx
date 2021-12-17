@@ -9,7 +9,7 @@ import {
   EmailShareButton,
 } from "react-share";
 import { FacebookIcon, TwitterIcon, LinkedinIcon, WhatsappIcon, EmailIcon } from "react-share";
-function ShareEvent({ hidewindow, location }) {
+function ShareEvent({ hideWindow, location }) {
   const url = location;
   const copyToClipBoard = () => {
     navigator.clipboard.writeText(url);
@@ -20,7 +20,7 @@ function ShareEvent({ hidewindow, location }) {
       <div className={styles.card} >
         <div className={styles.topbar}>
           <div>Share</div>
-          <div onClick={hidewindow} className={styles.close}>
+          <div onClick={hideWindow} className={styles.close}>
             <svg
               width="12"
               height="12"

@@ -22,10 +22,10 @@ import { getUrl } from "../lib/getUrl";
 
 async function getPostsByUsers(reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
+    const response = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
-    return data;
+    return response.data;
   } catch (err) {
     throw err;
   }
@@ -33,7 +33,6 @@ async function getPostsByUsers(reqData) {
 
 async function getPostById(postId) {
   try {
-    // console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`);
     return data;
   } catch (err) {
