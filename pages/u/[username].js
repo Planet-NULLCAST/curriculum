@@ -71,7 +71,6 @@ export default function Username({ userData, userCurrentLogin }) {
   const [postsCount, setPostsCount] = useState();
   const [postsLimit, setPostsLimit] = useState();
   
-  console.log("userdata", userData.id);
   useEffect(() => {
       getPublishedUserPosts();
       getUserPostCount();
