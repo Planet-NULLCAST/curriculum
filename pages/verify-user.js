@@ -9,39 +9,33 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import Cookies from "universal-cookie";
 import moment from "moment";
-import { signIn } from "../services/AuthService";
+import { signIn, emailToken } from "../services/AuthService";
 
 import { getCookieValue } from "../lib/cookie";
 import notify from "../lib/notify";
 
-export async function getServerSideProps(context) {
-  // console.log(context.req.headers.referer);
+export async function getServerSideProps({ query }) {
   try {
-    if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
-      if (contextCookie) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: "/"
-          }
-        };
-      }
-    }
-    return {
-      props: {
-        referer: context.req.headers.referer ? context.req.headers.referer : ""
-      }
-    };
+    const token = query.token;
+    const data = await emailToken(token);
+    if (data) {
+      return {
+        props: {
+          verify: data.message,
+        }
+      };
+    } 
   } catch (err) {
-    console.log(err);
     return {
-      props: {}
+      redirect: {
+        permanent: false,
+        destination: "/404"
+      }
     };
   }
 }
 
-export default function Login({ referer }) {
+export default function verifyLogin({ referer, verify }) {
   const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
@@ -51,6 +45,10 @@ export default function Login({ referer }) {
   useEffect(() => {
     document.getElementById("email").focus();
   }, []);
+
+  if(verify){
+    notify(verify);
+  }
 
   const eyeClick = (e) => {
     setHidePassword((prevState) => {
@@ -87,7 +85,10 @@ export default function Login({ referer }) {
       return;
     }
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(document.querySelector("#email").value && !document.querySelector("#email").value.match(regexEmail)){
+    if (
+      document.querySelector("#email").value &&
+      !document.querySelector("#email").value.match(regexEmail)
+    ) {
       setEmailValid(false);
       return;
     }
@@ -145,14 +146,17 @@ export default function Login({ referer }) {
           // } else {
           //   router.push("/");
           // }
-          if (referer.split('/')[3] === "forgot-password" || referer.split('/')[3].includes("reset-password")) {
+          if (
+            referer.split("/")[3] === "forgot-password" ||
+            referer.split("/")[3].includes("reset-password")
+          ) {
             router.push("/");
           } else {
             router.back();
           }
         } catch (err) {
           setIsLoading(false);
-          notify(err?.response?.data?.message ?? err?.message, 'error');
+          notify(err?.response?.data?.message ?? err?.message, "error");
         }
       }
     } else {
@@ -167,7 +171,7 @@ export default function Login({ referer }) {
   return (
     <div>
       <Head>
-        <title>verify | Nullcast</title>
+        <title>Login | Nullcast</title>
       </Head>
       <Link href="/">
         <img
@@ -234,7 +238,7 @@ export default function Login({ referer }) {
                         type="text"
                         //onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
-                          setEmailValid(true)
+                          setEmailValid(true);
                           // if (!validEmail) {
                           //   emailValidator(e);
                           // }

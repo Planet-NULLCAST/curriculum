@@ -7,7 +7,7 @@ import Link from "next/link";
 import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
-import { signUp } from "../services/AuthService";
+import { signUp, emailVerification } from "../services/AuthService";
 import SubscribeService from '../services/SubscribeService'
 
 import { useRouter } from "next/router";
@@ -167,30 +167,42 @@ export default function SignUp({ referer }) {
         console.log(err)
       }
     }
+    async function sentEmailVarification(email){
+      try{
+        const response = await emailVerification(email);
+        console.log(response)
+        notify(response.message);
+      }catch(err){
+        console.log(err)
+      }
+    }
     if (validEmail) {
       if (fName && password && email && username && terms) {
           try {
             const data = await signUp(email, password, fName, username);
-            const newDate = new Date(moment().add(30, "days")).toUTCString();
-            const expires = `; expires=${newDate}`;
-            const userData = data.user;
-            document.cookie = `userNullcast=${JSON.stringify(
-              userData
-            )}${expires}`;
-            localStorage.setItem("userNullcast", JSON.stringify(userData));
+            email && sentEmailVarification(email)
+            // const newDate = new Date(moment().add(30, "days")).toUTCString();
+            // const expires = `; expires=${newDate}`;
+            // const userData = data.user;
+            // document.cookie = `userNullcast=${JSON.stringify(
+            //   userData
+            // )}${expires}`;
+            // localStorage.setItem("userNullcast", JSON.stringify(userData));
             // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
+            
             nsletter && subscribeNewsletter(email)
-            notify(data.message);
-            if (referer) {
-              router.back();
-            } else {
-              router.push("/");
-            }
+            setIsLoading(false);
+            // notify(data.message);
+            // if (referer) {
+            //   router.back();
+            // } else {
+            //   // router.push("/");
+            // }
           } catch (err) {
             setIsLoading(false);
             // const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
             //console.log(errorMessage)
-            notify(err.response.data.message || err.message, 'error');
+            notify(err?.response?.data?.message || err?.message, 'error');
           }
 
           // let progress = JSON.parse(

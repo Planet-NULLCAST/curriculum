@@ -18,8 +18,9 @@ const createEventUrl = `${apiVerUrl}/admin/event`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
-const signUpUrl = `${apiVerUrl}/user`;
 const userUrl = `${apiVerUrl}/user`;
+const verificationMail = `${apiVerUrl}/send-verification-mail`;
+const emailTokenUrl = `${apiVerUrl}/verify-user`;
 const usersUrl = `${apiVerUrl}/users`;
 const adminUrl = `${apiVerUrl}/admin`;
 const tagUrl = `${apiVerUrl}/tags`;
@@ -44,6 +45,7 @@ const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 const configVars = {
   baseUrl,
   getVoteTypeUrl,
+  emailTokenUrl,
   postCount,
   setVoteUrl,
   getVoteUrl,
@@ -53,7 +55,8 @@ const configVars = {
   postTagUrl,
   postUser,
   loginUrl,
-  signUpUrl,
+  userUrl,
+  verificationMail,
   clientUrl,
   s3Url,
   authUrl,
@@ -70,7 +73,6 @@ const configVars = {
   createEventUrl,
   subscribeUrl,
   editorUrl,
-  userUrl,
   adminUrl,
   tagUrl,
   createTagUrl,
