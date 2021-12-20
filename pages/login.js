@@ -15,6 +15,7 @@ import { getCookieValue } from "../lib/cookie";
 import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
+  const verify = context.query.verify;
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
@@ -24,24 +25,28 @@ export async function getServerSideProps(context) {
           redirect: {
             permanent: false,
             destination: "/"
-          }
+          },
         };
       }
     }
     return {
       props: {
-        referer: context.req.headers.referer ? context.req.headers.referer : ""
+        referer: context.req.headers.referer ? context.req.headers.referer : "",
+        verify: verify || '',
       }
     };
   } catch (err) {
     console.log(err);
     return {
-      props: {}
+      props: {
+        verify: '',
+      }
     };
   }
 }
 
-export default function Login({ referer }) {
+export default function Login({ referer, verify }) {
+
   const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
@@ -57,6 +62,11 @@ export default function Login({ referer }) {
       return !prevState;
     });
   };
+
+  if(verify !== '') {
+    notify(verify);
+  };
+
   const emailValidator = (e) => {
     let emailAddress = e.target.value;
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

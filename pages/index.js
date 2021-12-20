@@ -40,10 +40,11 @@ export async function getServerSideProps(context) {
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(eventParams);
+    console.log(responseEvents, 'events');
     return {
       props: {
-        posts: responsePost.data.posts || [],
-        user: data.users || [],
+        posts: responsePost?.data?.posts || [],
+        user: data?.users || [],
         events: responseEvents?.events[0] || [],
         // count: responseEvents.count,
         // limit: responseEvents.limit
@@ -51,7 +52,7 @@ export async function getServerSideProps(context) {
     };
   } catch (err) {
     notify(err?.response?.data?.message ?? err?.message, "error");
-    return { props: { blog: [], event: [],} };
+    return { props: { posts: [], events: [], user: []} };
   }
 }
 //addCourses()
