@@ -167,7 +167,7 @@ export default function Login({ referer }) {
   return (
     <div>
       <Head>
-        <title>verify | Nullcast</title>
+        <title>Login | Nullcast</title>
       </Head>
       <Link href="/">
         <img
