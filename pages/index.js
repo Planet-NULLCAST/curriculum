@@ -31,6 +31,7 @@ export async function getServerSideProps(context) {
     };
     const responsePost = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
+    // console.log(data.users, 'd' );
     const eventParams = {
       sort_field: "event_time",
       order: "ASC",
@@ -51,12 +52,14 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
+    console.log(err);
     notify(err?.response?.data?.message ?? err?.message, "error");
     return { props: { posts: [], events: [], user: []} };
   }
 }
 //addCourses()
 export default function Home({ posts, user, events }) {
+  console.log(events, 'error');
   return (
     <div className="wrap">
       <Head>
