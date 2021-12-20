@@ -205,7 +205,18 @@ const validateForm = (eventDetails, setEventDetailsError) => {
     }));
   }
   if (eventDetails.eventTime.trim()) {
-    setEventDetailsError((prev) => ({ ...prev, eventTimeError: "" }));
+    if(eventDetails.eventDate && eventDetails.eventDate === new Date().toISOString().split('T')[0]){
+      if(new Date().getHours() + ":" + new Date().getMinutes() > eventDetails.eventTime){
+        isValid = false
+        setEventDetailsError(prev => ({...prev , eventTimeError : "Time has already passed"}))
+      }
+      else {
+        setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
+      }
+    }
+    else{
+      setEventDetailsError((prev) => ({ ...prev, eventTimeError: "" }));
+    }
   } else {
     isValid = false;
     setEventDetailsError((prev) => ({
