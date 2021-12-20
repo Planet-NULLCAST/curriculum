@@ -22,7 +22,8 @@ export async function getServerSideProps(context) {
       status: "published",
       order: "DESC",
       limit: 4,
-      page: 1
+      page: 1, 
+      sort_field: "featured"
       // with_table: "users"
     };
     const userParams = {
