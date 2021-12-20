@@ -30,8 +30,8 @@ export async function getServerSideProps() {
         props: {
           blog: data.posts,
           // tagsArray: tagsArray,
-          count: 2,
-          limit: limit
+          count: Number(data.count),
+          limit: limit,
         }
       };
     } else {
@@ -76,6 +76,7 @@ export default function BlogListing({ blog, count, limit }) {
   ];
   const [newBlogs, setNewBlogs] = useState(blog);
 
+
   const currentCount = (count) => {
     getNewPosts(count);
   };
@@ -83,15 +84,14 @@ export default function BlogListing({ blog, count, limit }) {
   const getNewPosts = async (clickNo) => {
     const postParams = {
       // sort_field: "published_at",
-      // order: "ASC",
+      order: "DESC",
       status: "published",
       limit: limit,
-      page: 1
+      page: clickNo+1
       // with_table: "users, tags"
     };
     try {
       const { data } = await PostService.getPostsByUsers(postParams);
-      console.log(data, 'success');  
       setNewBlogs((prevValue) => {
         return [...prevValue, ...data.posts];
       });
@@ -146,6 +146,7 @@ export default function BlogListing({ blog, count, limit }) {
           tagsArray={tagsArray}
           currentCount={currentCount}
           blogCount={count}
+          limit = {limit}
         />
       ) : (
         <div className="flex items-center justify-center m-9 font-semibold">
