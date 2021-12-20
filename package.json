@@ -14,7 +14,7 @@
     "release": "standard-version"
   },
   "engines": {
-    "npm": "please-use-yarn",
+    "npm": ">= 7",
     "yarn": ">= 1.17.3",
     "node": ">= 12.5.0"
   },
