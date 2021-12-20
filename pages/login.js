@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
     console.log(err);
     return {
       props: {
-        verify: null,
+        verify: '',
       }
     };
   }
