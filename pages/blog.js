@@ -17,7 +17,7 @@ export async function getServerSideProps() {
 
   try {
     const postParams = {
-      // sort_field: "published_at",
+      sort_field: "featured",
       order: "DESC",
       status: "published",
       limit: limit,
