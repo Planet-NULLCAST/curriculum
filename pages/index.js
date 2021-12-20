@@ -31,6 +31,7 @@ export async function getServerSideProps(context) {
     };
     const responsePost = await PostService.getPostsByUsers(postParams);
     const { data } = await UserService.getLatestUsers(userParams);
+    // console.log(data.users, 'd' );
     const eventParams = {
       sort_field: "event_time",
       order: "ASC",
@@ -40,22 +41,25 @@ export async function getServerSideProps(context) {
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(eventParams);
+    console.log(responseEvents, 'events');
     return {
       props: {
-        posts: responsePost.data.posts || [],
-        user: data.users || [],
+        posts: responsePost?.data?.posts || [],
+        user: data?.users || [],
         events: responseEvents?.events[0] || [],
         // count: responseEvents.count,
         // limit: responseEvents.limit
       }
     };
   } catch (err) {
+    console.log(err);
     notify(err?.response?.data?.message ?? err?.message, "error");
-    return { props: { blog: [], event: [],} };
+    return { props: { posts: [], events: [], user: []} };
   }
 }
 //addCourses()
 export default function Home({ posts, user, events }) {
+  console.log(events, 'error');
   return (
     <div className="wrap">
       <Head>
