@@ -52,12 +52,13 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
     }
   }
   const eventTimeValidation = (e) => {
-    if(e.target.value === "") {
+    if(e.target.value === "") { 
       setEventDetailsError(prev => ({...prev , eventTimeError : "Enter Event Time"}))
     } else {
-      setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
-    }
-  }
+          setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
+        }
+      }
+
   return (
     <div className="mx-10 mb-8">
       <div className="flex mb-6 items-center justify-center">

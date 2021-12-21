@@ -94,7 +94,7 @@ export default function AdminNavbar({ changeTag, changeStatus, event }) {
           placeholder="Select Status"
           // closeMenuOnSelect={false}
         />}
-          {router.pathname.split('/')[2] === 'events' && <div class="bg-black h-8 ml-4 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
+          {router.pathname.split('/')[2] === 'events' && <div className="bg-black h-8 ml-4 hover:bg-white border border-black text-white hover:text-black hidden md:flex items-center text-sm font-semibold px-4 py-2 md:mr-3 rounded-sm cursor-pointer duration-700 blogs_h_40px__3sE3c">
               <a href="/admin/events/create-event">Create Event</a>
             </div>}
         </div>
