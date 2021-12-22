@@ -28,10 +28,10 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
               {/* picture */}
               <div className="relative">
                 <div className="rounded-full h-24 w-24 bg-blue-200 overflow-hidden">
-                  <Image
+                  <img
                     src={userData?.avatar || '/images/dummy0.png' }
                     alt="avatar"
-                    className="rounded-full h-24 w-24"
+                    className="rounded-full max-h-24 max-w-24"
                     layout="fill"
                   />
                 </div>
