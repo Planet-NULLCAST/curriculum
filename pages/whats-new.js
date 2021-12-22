@@ -13,13 +13,15 @@ import notify from "../lib/notify";
 export async function getServerSideProps(context) {
   try {
     let tag = context.query.tag;
+    console.log(tag)
     let searchArray = ["whats-new"];
-    if (tag) {
-      searchArray = ["whats-new", tag];
+    if (tag == undefined) {
+      // searchArray = ["whats-new", tag];
+      tag='whats-new'
     }
     const {
       data: { posts, count }
-    } = await PostService.getPostByTags(searchArray, 0);
+    } = await PostService.getPostByTags(tag);
     return {
       props: {
         blogs: posts
