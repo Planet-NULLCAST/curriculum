@@ -101,15 +101,15 @@ export default function Home({ posts, user, events }) {
       </Head>
       <LoadingOverlay
         active={loading}
-        spinner={<SyncLoader color="#fff" />}
+        spinner={<SyncLoader color="#000" />}
         className="w-full h-screen"
         styles={{
           overlay: (base) => ({
             ...base,
             background: "#fff",
             color: "#fff",
-            backgroundImage: 'url("/images/xmasbg.svg")',
-            backgroundSize: "cover",
+            backgroundImage: 'url("/images/gif/xma.gif")',
+            backgroundSize: "contain",
             fontSize: 36,
             fontWeight: "600",
             display: "flex",
