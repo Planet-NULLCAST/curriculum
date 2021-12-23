@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Image from 'next/image'
+import Image from "next/image";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
 import Cookies from "universal-cookie";
@@ -73,7 +73,7 @@ export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
-  const [userName , setUserName] = useState(userCookie?.full_name)
+  const [userName, setUserName] = useState(userCookie?.full_name);
   const [allSkills, setAllSkills] = useState(_skills);
   const [tagOptions, setTagOptions] = useState([]);
   const [profile, setProfile] = useState({
@@ -110,16 +110,20 @@ export default function Settings({ profileData, _skills }) {
 
   const updateProfile = async (newProfile) => {
     try {
-      const profileData = newProfile ? ({...newProfile}) : ({...profile});
+      const profileData = newProfile ? { ...newProfile } : { ...profile };
       delete profileData.skills;
       const response = await UserService.updateProfileByUserId(
-        userCookie, profileData
+        userCookie,
+        profileData
       );
-      if(response){
-        setUserName(response.data.full_name)
-        document.cookie = `userNullcast=${JSON.stringify(
-          {...userCookie , full_name : response.data.full_name , user_name : response.data.user_name , avatar : response.data.avatar}
-        )}`
+      if (response) {
+        setUserName(response.data.full_name);
+        document.cookie = `userNullcast=${JSON.stringify({
+          ...userCookie,
+          full_name: response.data.full_name,
+          user_name: response.data.user_name,
+          avatar: response.data.avatar
+        })}`;
         notify(response.message);
         setLoading(false);
       }
@@ -166,6 +170,9 @@ export default function Settings({ profileData, _skills }) {
 
   const handleSkills = async (e) => {
     // console.log("handle skills", e);
+    if (e.length === 0) {
+      const res = await SkillService.deletePostSkills(userCookie);
+    }
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -183,32 +190,42 @@ export default function Settings({ profileData, _skills }) {
         setProfile((prevValue) => {
           return {
             ...prevValue,
-            skills: [...e, { value: res.name, id: res.id, name: res.name, label: res.name }],
+            skills: [
+              ...e,
+              { value: res.name, id: res.id, name: res.name, label: res.name }
+            ]
           };
         });
-      }
-      else {
+      } else {
         // gets new added tag and closed tag using filter
-        const addTag = e.filter(({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1));
+        const addTag = e.filter(
+          ({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1)
+        );
         // const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
-        const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        const removeTag = profile.skills.filter(
+          ({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1)
+        );
         if (addTag.length) {
-          const arr = addTag.map(({ id }) => { return { tag_id: id } })
+          const arr = addTag.map(({ id }) => {
+            return { tag_id: id };
+          });
           const res = await SkillService.postSaveSkills(userCookie, arr);
         }
         if (removeTag.length) {
-          const res = await SkillService.deletePostSkill(userCookie, removeTag[0].id);
+          const res = await SkillService.deletePostSkill(
+            userCookie,
+            removeTag[0].id
+          );
         }
         setProfile((prevValue) => {
           return {
             ...prevValue,
-            skills: [...e],
+            skills: [...e]
           };
         });
       }
-
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
@@ -351,7 +368,7 @@ export default function Settings({ profileData, _skills }) {
 
   return (
     <>
-      <SiteHeader userName = {userName}/>
+      <SiteHeader userName={userName} />
       <Head>
         <title>Settings</title>
       </Head>
@@ -414,7 +431,7 @@ export default function Settings({ profileData, _skills }) {
                     />
                     <img
                       key={image}
-                      src={ image || "/images/svgs/avatar.svg"}
+                      src={image || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">
