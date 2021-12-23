@@ -147,7 +147,7 @@ export default function Settings({ profileData, _skills }) {
       const res = await TagService.getTags();
       // console.log("get tags response", res);
       if (res && res.length) {
-        const resTagOptions = res.map((tag) => {
+        const resTagOptions = res.sort((a, b) => (a.name > b.name) ? 1 : -1).map((tag) => {
           return {
             label: `${tag.name.toUpperCase()}`,
             value: `${tag.name}`,
