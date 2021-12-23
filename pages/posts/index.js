@@ -73,6 +73,10 @@ export default function Posts() {
   useEffect(() => {
     setTagFilter(router.query.tag);
     setStatusFilter(router.query.status);
+    getPosts();
+  }, [router.query.page, router.query.tag, router.query.status]);
+
+  async function getPosts() {
     const newReqData = {
       sort_field: "updated_at",
       order: "DESC",
@@ -82,14 +86,9 @@ export default function Posts() {
       status: router.query.status,
       with_table: ["user"]
     };
-    getPosts(newReqData);
-  }, [router.query.page, router.query.tag, router.query.status]);
-
-  async function getPosts(reqData) {
-    // console.log("getposts call");
     try {
       const userId = userCookie.id;
-      const data = await PostService.getUserPostsByUser(userId, reqData);
+      const data = await PostService.getUserPostsByUser(userId, newReqData);
       const { posts, count } = data.data;
       console.log({ posts });
       if (data) {
