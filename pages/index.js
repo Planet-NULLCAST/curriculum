@@ -13,7 +13,10 @@ import EventService from "../services/EventService";
 import UserService from "../services/UserService";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
 import notify from "../lib/notify";
+import LoadingOverlay from "react-loading-overlay";
 import { addCourses } from "../courses/meta";
+import { useEffect, useState } from "react";
+import { SyncLoader } from "react-spinners";
 
 export async function getServerSideProps(context) {
   try {
@@ -22,7 +25,7 @@ export async function getServerSideProps(context) {
       status: "published",
       order: "DESC",
       limit: 4,
-      page: 1, 
+      page: 1,
       sort_field: "featured"
       // with_table: "users"
     };
@@ -40,23 +43,30 @@ export async function getServerSideProps(context) {
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(eventParams);
-    console.log(responseEvents, 'events');
+    console.log(responseEvents, "events");
     return {
       props: {
         posts: responsePost?.data?.posts || [],
         user: data?.users || [],
-        events: responseEvents?.events[0] || [],
+        events: responseEvents?.events[0] || []
         // count: responseEvents.count,
         // limit: responseEvents.limit
       }
     };
   } catch (err) {
     notify(err?.response?.data?.message ?? err?.message, "error");
-    return { props: { posts: [], events: [], user: []} };
+    return { props: { posts: [], events: [], user: [] } };
   }
 }
 //addCourses()
 export default function Home({ posts, user, events }) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
   return (
     <div className="wrap">
       <Head>
@@ -89,16 +99,36 @@ export default function Home({ posts, user, events }) {
         <meta property="og:image:width" content="352" />
         <meta property="og:image:height" content="212" />
       </Head>
-      <SiteHeader />
-      <HomeSpotlight />
-      {posts && <SectionBlogs posts={posts} />}
+      <LoadingOverlay
+        active={loading}
+        spinner={<SyncLoader color="#000" />}
+        className="w-full h-screen"
+        styles={{
+          overlay: (base) => ({
+            ...base,
+            background: "#fff",
+            color: "#fff",
+            backgroundImage: 'url("/images/gif/xma.gif")',
+            backgroundSize: "contain",
+            fontSize: 36,
+            fontWeight: "600",
+            display: "flex",
+            flexDirection: "column",
+            position:'fixed'
+          })
+        }}
+      >
+        <SiteHeader />
+        <HomeSpotlight />
+        {posts && <SectionBlogs posts={posts} />}
 
-      <SectionVideos />
-      {user && <SectionUsers user={user} />}
+        <SectionVideos />
+        {user && <SectionUsers user={user} />}
 
-      {events && <SectionEvents events={events} />}
-      <SectionSwag />
-      <SiteFooter />
+        {events && <SectionEvents events={events} />}
+        <SectionSwag />
+        <SiteFooter />
+      </LoadingOverlay>
     </div>
   );
 }
