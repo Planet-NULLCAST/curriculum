@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function SkillSet({ userData }) {
-  // console.log(userData);
   const [showTenPlus, setShowTenPlus] = useState(false);
 
   return (
@@ -15,7 +14,7 @@ export default function SkillSet({ userData }) {
         <div className="flex flex-wrap h-auto mt-2">
           {userData?.skills?.length > 0 ? (
             <>
-              {userData?.skills?.map(
+              {userData?.skills?.sort((a, b) => (a.name > b.name) ? 1 : -1).map(
                 (skill, index) =>
                   index < 10 && (
                     <div
@@ -31,7 +30,7 @@ export default function SkillSet({ userData }) {
                 userData?.skills?.length > 10 && (
                   <>
                     <Fade>
-                      {userData?.skills?.map((skill, index) => (
+                      {userData?.skills?.sort((a, b) => (a.name > b.name) ? 1 : -1).map((skill, index) => (
                         <>
                           {index >= 10 && (
                             <div
