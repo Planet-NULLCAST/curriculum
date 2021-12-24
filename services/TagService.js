@@ -72,11 +72,29 @@ async function deletePostTag(userCookie, tagId, postId) {
   }
 }
 
+async function deletePostTags(userCookie, postId) {
+  try {
+    const { data } = await axios.delete(
+      `${baseUrl}/${postTagsUrl}/${postId}`,
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 const TagService = {
   getTags,
   postSaveTags,
   postTags,
-  deletePostTag
+  deletePostTag,
+  deletePostTags
 };
 
 module.exports = TagService;

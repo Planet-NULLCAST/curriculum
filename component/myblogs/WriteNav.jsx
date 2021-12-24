@@ -43,7 +43,7 @@ export default function WriteNav({
     slug: ""
   });
   useEffect(() => {
-    setCurrentPost(prevValue => ({ ...prevValue, ...post }));
+    setCurrentPost((prevValue) => ({ ...prevValue, ...post }));
     // userState.setTags();
   }, [post]);
 
@@ -75,12 +75,12 @@ export default function WriteNav({
       const res = await TagService.getTags();
       // console.log("get tags response", res);
       if (res && res.length) {
-        const resTagOptions = res.map((tag) => {
+        const resTagOptions = res.sort((a, b) => (a.name > b.name) ? 1 : -1).map((tag) => {
           return {
             label: `${tag.name.toUpperCase()}`,
             value: `${tag.name}`,
             id: tag.id,
-            name: `${tag.name}`,
+            name: `${tag.name}`
           };
         });
         // setTagOptions;
@@ -88,7 +88,7 @@ export default function WriteNav({
         setTagOptions(resTagOptions);
       }
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
   /**
@@ -98,7 +98,9 @@ export default function WriteNav({
    */
   const handleTags = async (e) => {
     // console.log("handle tags", e);
-
+    if (e.length === 0) {
+      const res = await TagService.deletePostTags(userCookie, currentPost.id);
+    }
     const newTag = e
       .filter((tag) => {
         if (tag.__isNew__ === true) {
@@ -116,31 +118,42 @@ export default function WriteNav({
         setCurrentPost((prevValue) => {
           return {
             ...prevValue,
-            tags: [...e, { value: res.name, id: res.id, name: res.name, label: res.name }],
+            tags: [
+              ...e,
+              { value: res.name, id: res.id, name: res.name, label: res.name }
+            ]
           };
         });
-      }
-      else {
+      } else {
         // gets new added tag and closed tag using filter
-        const addTag = e.filter(({ id: id1 }) => !currentPost.tags.some(({ id: id2 }) => id2 === id1));
-        const removeTag = currentPost.tags.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        const addTag = e.filter(
+          ({ id: id1 }) => !currentPost.tags.some(({ id: id2 }) => id2 === id1)
+        );
+        const removeTag = currentPost.tags.filter(
+          ({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1)
+        );
         if (addTag.length) {
-          const arr = addTag.map(({ id }) => { return { tag_id: id, post_id: currentPost.id } })
+          const arr = addTag.map(({ id }) => {
+            return { tag_id: id, post_id: currentPost.id };
+          });
           const res = await TagService.postSaveTags(userCookie, arr);
         }
         if (removeTag.length) {
-          const res = await TagService.deletePostTag(userCookie, removeTag[0].id, currentPost.id);
+          const res = await TagService.deletePostTag(
+            userCookie,
+            removeTag[0].id,
+            currentPost.id
+          );
         }
         setCurrentPost((prevValue) => {
           return {
             ...prevValue,
-            tags: [...e],
+            tags: [...e]
           };
         });
       }
-
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
@@ -162,13 +175,12 @@ export default function WriteNav({
       meta_title: metaTitle,
       meta_description: metaDes,
       slug: postUrl,
-      mobiledoc: currentPost.mobiledoc,
+      mobiledoc: currentPost.mobiledoc
     };
     if (settingsData.slug === "") {
       delete settingsData.slug;
       getSettings(settingsData);
-    }
-    else {
+    } else {
       getSettings(settingsData);
     }
   };
@@ -218,7 +230,7 @@ export default function WriteNav({
         };
       });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
     setLoading(false);
   };
@@ -235,7 +247,7 @@ export default function WriteNav({
         ...prevValue,
         bannerImage: "",
         imageUrl: "",
-        image: "",
+        image: ""
       };
     });
   };
@@ -260,7 +272,7 @@ export default function WriteNav({
         }
       });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
@@ -317,10 +329,7 @@ export default function WriteNav({
         <div className="items-center py-3 md:flex hidden">
           <ModalConfirm
             trigger={
-              <div
-
-                className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700"
-              >
+              <div className="bg-green-710 hover:bg-white border border-green-710 text-white hover-green-pink-710 flex items-center text-sm font-semibold px-4 py-2 mr-3 rounded-sm cursor-pointer duration-700">
                 <p>Publish</p>
               </div>
             }
@@ -384,8 +393,9 @@ export default function WriteNav({
                   </div>
                   <div className="flex flex-col p-5 mt-16 mb-24 h-calcSettings">
                     <div
-                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${!currentPost.bannerImage && "cursor-pointer"
-                        }`}
+                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
+                        !currentPost.bannerImage && "cursor-pointer"
+                      }`}
                     >
                       {currentPost.banner_image ? (
                         <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
@@ -405,7 +415,7 @@ export default function WriteNav({
                               trigger={
                                 <div
                                   className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
-                                // onClick={handleImageDelete}
+                                  // onClick={handleImageDelete}
                                 >
                                   <Image
                                     src="/images/svgs/delwhite.svg"
@@ -422,7 +432,7 @@ export default function WriteNav({
                               buttonColor={"red"}
                               heading={"Are you sure"}
                               text="Are you sure you want to delete this image?"
-                            // secondaryText="This cannot be undone"
+                              // secondaryText="This cannot be undone"
                             />
                           </div>
                         </div>
@@ -438,7 +448,7 @@ export default function WriteNav({
                                 name="imageUpload"
                                 onInput={handleImage}
                                 ref={imgRef}
-                              // value={imageSrc}
+                                // value={imageSrc}
                               />
                             }
                             handleSubmit={handleImageUpload}
@@ -509,12 +519,12 @@ export default function WriteNav({
                         placeholder="Tags"
                         closeMenuOnSelect={false}
                         name="tags"
-                        value={currentPost?.tags?.map((tag) => {
+                        value={currentPost?.tags?.sort((a, b) => (a.name > b.name) ? 1 : -1).map((tag) => {
                           return {
                             label: `${tag.name.toUpperCase()}`,
                             value: `${tag.name}`,
                             id: tag.id,
-                            name: `${tag.name}`,
+                            name: `${tag.name}`
                           };
                         })}
                         onChange={(e) => handleTags(e)}
@@ -590,8 +600,9 @@ export default function WriteNav({
                   <div className="w-full flex mb-3">
                     <div className="w-1/2 pr-1">
                       <button
-                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${loading ? "disabled:opacity-50" : ""
-                          }`}
+                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
+                          loading ? "disabled:opacity-50" : ""
+                        }`}
                         type="submit"
                         disabled={loading}
                       >

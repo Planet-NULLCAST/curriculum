@@ -46,10 +46,29 @@ async function deletePostSkill(userCookie, tagId) {
   }
 }
 
+async function deletePostSkills(userCookie) {
+  try {
+    const { data } = await axios.delete(
+      `${baseUrl}/${postSkillsUrl}`,
+      {
+        headers: {
+          "x-access-token": `${userCookie.accessToken}`
+        }
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 const SkillService = {
   getSkills,
   postSaveSkills,
-  deletePostSkill
+  deletePostSkill,
+  deletePostSkills
+  
 };
 
 module.exports = SkillService;
