@@ -20,15 +20,9 @@ export default function HomeSpotlight() {
 
   return (
     <section className={styles.spotlight}>
-      {/* <div className={styles.stars}></div>
-      <div className={styles.twinkling}></div> */}
-       <div className={styles.mainSnow}>
-        <div className={styles.snow}></div>
-        {Array.from({ length: 300 }, (_, i) => (
-          <div className={styles.snow}></div>
-        ))}
-      </div>
-      <div className="">
+      <div className={styles.stars}></div>
+      <div className={styles.twinkling}></div>
+      <div>
         <h2>
           <span className={styles.spotlight__title} id="title1">
             Planet Nullcast
