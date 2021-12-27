@@ -112,10 +112,13 @@ const Admin = () => {
   async function getevents(reqData) {
     try {
       const data = await EventService.getLatestEvents(reqData);
+      if(data){
       const { events, count } = data;
       setEventdata({ events, count });
       console.log(eventdata)
+      }
     } catch (err) {
+      console.log(err, 'error')
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
