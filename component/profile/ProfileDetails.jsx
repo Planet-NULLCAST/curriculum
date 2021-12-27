@@ -7,9 +7,9 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
-        <div className={`w-2/5 px-1 h-auto py-1 ${Profilestyles?.min_w_18}`}>
+        <div className={`w-2/5 px-1 py-1 h-44 ${Profilestyles?.min_w_18}`}>
           <div
-            className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110}`}
+            className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110} overflow-auto`}
           >
             <div className="flex">
               {`${userData.id}` === userCurrentLogin && (
@@ -61,7 +61,7 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
               </div>
             </div>
             {/* description */}
-            <div className="mt-3 text-sm">{userData.bio}</div>
+            <div className="mt-3 text-sm overflow-auto">{userData.bio}</div>
           </div>
         </div>
         <Trails />
