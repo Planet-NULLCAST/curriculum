@@ -10,7 +10,7 @@ export default function EvListing({ events, eventCount, currentCount }) {
     setCount(newCount);
     currentCount(newCount);
   };
-
+  
   return (
     <section className={styles.listing}>
       <div className="container container--small">
@@ -18,7 +18,7 @@ export default function EvListing({ events, eventCount, currentCount }) {
           <EventItems events={events} />
         </div>
         <div className={styles.wrapBtn}>
-          {events.length !== eventCount && (
+          {events.length < Number(eventCount) && (
             <button className="btn btn--gray" onClick={handleLoadMore}>
               <span className="btn__text">Load more</span>
             </button>

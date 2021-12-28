@@ -54,19 +54,18 @@ export default function EventListing({ events, count, limit }) {
   const currentCount = (count) => {
     getNewEvents(count);
   };
-
   const getNewEvents = async (clickNo) => {
     const postParams = {
       sort_field: "published_at",
       order: "ASC",
       limit: limit,
       status: "drafted",
-      page: 1,
+      page: clickNo+1,
       with_table: "users, tags"
     };
     try {
       const responseEvents = await EventService.getLatestEvents(postParams);
-
+      if(responseEvents)
       setNewEvents((prevValue) => {
         return [...prevValue, ...responseEvents.events];
       });
