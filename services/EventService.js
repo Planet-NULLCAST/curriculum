@@ -43,10 +43,8 @@ async function getEventById(eventId) {
 async function getEventBySlug(slug) {
   try {
     const { data } = await axios.get(`${baseUrl}/${eventSlugUrl}/${slug}`);
-    console.log(data);
     return data;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
