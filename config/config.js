@@ -14,6 +14,7 @@ const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
 const eventIdUrl = `${apiVerUrl}/event`;
+const eventSlugUrl = `${apiVerUrl}/event-by-slug`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
@@ -44,6 +45,7 @@ const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 
 const configVars = {
   baseUrl,
+  eventSlugUrl,
   getVoteTypeUrl,
   emailTokenUrl,
   postCount,
