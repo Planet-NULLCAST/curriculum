@@ -63,6 +63,9 @@ export default function BlogListing({ event }) {
   const userCookie = cookies.get("userNullcast");
   const [viewShare, setViewShare] = useState(false);
   let pageUrl = registration_link;
+  useEffect(() => {
+    viewShare ? document.body.classList.add('overflow-hidden'): document.body.classList.remove('overflow-hidden')
+  }, [viewShare])
   return (
     <>
       <Head>
