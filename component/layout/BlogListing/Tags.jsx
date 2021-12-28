@@ -37,7 +37,7 @@ export default function Tags({ _tags }) {
               {moretags.map((tag, ind) => (
                 <Link href={`/tag/${tag.name}`} key={ind}>
                   <a className="hover:text-blue-900">{`${tag.name}${
-                    ind !== moretags - 1 && ", "
+                    ind !== moretags.length - 1 ? ", " : " " 
                   }`}</a>
                 </Link>
               ))}
