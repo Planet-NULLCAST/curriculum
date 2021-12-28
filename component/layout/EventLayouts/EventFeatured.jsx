@@ -12,7 +12,7 @@ export default function EventFeatured({ event }) {
         <div className="container container--small md:flex">
           <div className="md:w-1/3 md:pr-6">
             <Fade>
-              <Link href={`/events/${event?.id}`}>
+              <Link href={`/e/${event?.slug}`}>
                 <a>
                   <figure>
                     {event.banner_image && (
@@ -41,7 +41,7 @@ export default function EventFeatured({ event }) {
           <Fade>
             <div className={`${styles.text} md:w-2/3 md:pl-6`}>
               <h3>
-                <Link href={`/events/${event?.id}`}>
+                <Link href={`/e/${event?.slug}`}>
                   <a>{event?.title}</a>
                 </Link>
               </h3>

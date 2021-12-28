@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 
 export async function getServerSideProps(context) {
   try {
-    const eid = context.params.event_id;
-    const response = await EventService.getEventById(eid);
+    const slug = context.params.event_slug;
+    const response = await EventService.getEventBySlug(slug);
     if (!response?.data) {
       return {
         redirect: {
@@ -57,6 +57,7 @@ export default function BlogListing({ event }) {
     description,
     location,
     primary_tag,
+    slug,
     event_time
   } = event;
   const cookies = new Cookies();
@@ -113,11 +114,11 @@ export default function BlogListing({ event }) {
         ></script>
         <title>{meta_title}</title>
         <meta name="description" content={description} />
-        <link rel="canonical" href={`${url}/events/${id}`} />
+        <link rel="canonical" href={`${url}/e/${slug}`} />
         <meta property="og:type" content="events.event" />
         <meta property="og:title" content={meta_title} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={`${url}/events/${id}`} />
+        <meta property="og:url" content={`${url}/e/${slug}`} />
         <meta property="og:image" content={banner_image} />
         <meta property="event:start_time" content={event_time} />
         <meta
@@ -127,7 +128,7 @@ export default function BlogListing({ event }) {
         <meta name="twitter:card" content={"summary_large_image"} />
         <meta name="twitter:title" content={meta_title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:url" content={`${url}/events/${id}`} />
+        <meta name="twitter:url" content={`${url}/e/${slug}`} />
         <meta name="twitter:image" content={banner_image} />
         <meta name="twitter:label1" content="Taken By" />
         <meta name="twitter:data1" content={guest_name} />

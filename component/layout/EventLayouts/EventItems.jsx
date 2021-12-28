@@ -8,7 +8,7 @@ export default function EventItems({ events }) {
   return events.map((item, key) => (
     <div className={styles.listing__item} key={"Event_Item_" + key}>
       <Fade>
-        <a href={`/events/${item.id}`}>
+        <a href={`/e/${item.slug}`}>
           {item.banner_image && (
             <figure className={styles.listing__figure}>
               <Image
@@ -35,7 +35,7 @@ export default function EventItems({ events }) {
       </Fade>
       <div>
         <h3>
-          <Link href={`/events/${item.id}`}>
+          <Link href={`/e/${item.slug}`}>
             <a>{item.title}</a>
           </Link>
         </h3>
