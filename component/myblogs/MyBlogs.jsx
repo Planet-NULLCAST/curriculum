@@ -109,7 +109,7 @@ export default function MyBlogs({ posts, fetchPosts }) {
                       query: { post_id: item.post_id }
                     }}
                   >
-                    <a target="_blank">
+                    <a>
                       <div
                         className={`flex items-center px-4 justify-center rounded-full h-8 cursor-pointer hover:opacity-50 duration-500 ${MyBlogsstyles.linkBg}`}
                       >
