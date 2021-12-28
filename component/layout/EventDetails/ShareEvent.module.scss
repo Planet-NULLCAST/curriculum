@@ -9,7 +9,7 @@
   border-radius: 14px;
 }
 .topbar {
-  @apply flex justify-between font-bold text-xl my-2;
+  @apply flex justify-between items-center font-bold text-xl ;
 }
 .link {
   @apply p-2;
@@ -40,6 +40,12 @@
 }
 .close {
   cursor: pointer;
+  width: 40px;
+  height: 40px;
+  // background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .icons {
   margin-right: 40px;
