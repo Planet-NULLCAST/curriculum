@@ -66,7 +66,7 @@ export default function EventListing({ events, count, limit }) {
     };
     try {
       const responseEvents = await EventService.getLatestEvents(postParams);
-
+      if(responseEvents)
       setNewEvents((prevValue) => {
         return [...prevValue, ...responseEvents.events];
       });
