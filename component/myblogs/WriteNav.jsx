@@ -277,7 +277,7 @@ export default function WriteNav({
   }
 
   const handleBackOption = () => {
-    router.push(previousUrl);
+    router.push('/posts?page=1&tag=&status=');
   };
 
   const handlePublish = () => {
