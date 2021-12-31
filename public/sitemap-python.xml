@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>http://localhost:3000/curriculum/python/introduction</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/python/hello-world</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/python/datatypes</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/python/if-condition</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod>
+  </url>
+</urlset>

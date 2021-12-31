@@ -1,10 +1,19 @@
 const axios = require("axios");
-import { baseUrl, usersUrl, userUrl } from "../config/config";
+import { baseUrl, usersUrl, userUrl, getUsersUrl } from "../config/config";
 // import { getUrl } from "../lib/getUrl";
 
 async function getLatestUsers(reqParams) {
   try {
     const { data } = await axios.get(`${baseUrl}/${usersUrl}`,reqParams);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+//get all users
+async function getAllUsers() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getUsersUrl}`);
     return data;
   } catch (err) {
     throw err;
@@ -59,6 +68,7 @@ async function updateProfileByUserId(userCookie, reqData) {
 const UserService = {
   getLatestUsers,
   getUserByUsername,
+  getAllUsers,
   updateProfileByUserId,
   // getProfileByUserId
 };

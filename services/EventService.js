@@ -4,7 +4,8 @@ import {
   eventsUrl,
   eventIdUrl,
   createEventUrl,
-  eventSlugUrl
+  eventSlugUrl,
+  getAllEventsUrl,
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
 import { getUrl } from "../lib/getUrl";
@@ -30,6 +31,17 @@ async function getAllEvents() {
     throw err;
   }
 }
+
+// get all events sitemap
+async function getAllEventsSlug() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getAllEventsUrl}`);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
 
 async function getEventById(eventId) {
   try {
@@ -165,6 +177,7 @@ const EventService = {
   getEventBySlug,
   createNewEvent,
   getAllEvents,
+  getAllEventsSlug,
   deleteEvent,
   getEventByStatus,
   updateEvent

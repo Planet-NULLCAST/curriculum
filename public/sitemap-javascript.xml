@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/introduction</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/hello-world</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/variables</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/datatypes</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/logical-operators</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/if-condition</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/switch-statement</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/arithmetic-operators</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/comparisons</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/objects</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/prototypes</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/function</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/type-conversion</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/arrow-functions</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc
+      >http://localhost:3000/curriculum/javascript/asynchronous-behaviour-and-event-loop</loc
+    >
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/javascript/foreach-map-filter</loc>
+    <lastmod>2021-12-31T05:07:57.025Z</lastmod>
+  </url>
+</urlset>

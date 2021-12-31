@@ -20,6 +20,7 @@ const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
 const userUrl = `${apiVerUrl}/user`;
+const getUsersUrl = `${apiVerUrl}/users-username`;
 const verificationMail = `${apiVerUrl}/send-verification-mail`;
 const emailTokenUrl = `${apiVerUrl}/verify-user`;
 const usersUrl = `${apiVerUrl}/users`;
@@ -31,6 +32,8 @@ const postSkillUrl = `${apiVerUrl}/user-tag`;
 const postSkillsUrl = `${apiVerUrl}/user-tags`;
 const createTagUrl = `${apiVerUrl}/tag`;
 const postCount = `${apiVerUrl}/posts-count`;
+const allPostUrl = `${apiVerUrl}/posts-url`;
+const getAllEventsUrl = `${apiVerUrl}/events-url`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = `${apiVerUrl}/recovery`;
@@ -45,6 +48,9 @@ const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 
 const configVars = {
   baseUrl,
+  allPostUrl,
+  getUsersUrl,
+  getAllEventsUrl,
   eventSlugUrl,
   getVoteTypeUrl,
   emailTokenUrl,
