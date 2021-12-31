@@ -13,6 +13,7 @@ import {
   postBySlug,
   changeStatusUrl,
   adminReviewUrl,
+  allPostUrl,
   tagUrl,
   adminUrl,
   searchUrl
@@ -26,6 +27,15 @@ async function getPostsByUsers(reqData) {
       params: reqData
     });
     return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+//get all posts
+async function getAllPosts() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${allPostUrl}`);
+    return data;
   } catch (err) {
     throw err;
   }
@@ -342,6 +352,7 @@ const PostService = {
   getPostsByQuery,
   adminChangePostStatus,
   adminGetLatestPosts,
+  getAllPosts,
   isAdmin,
   getUserPostsByUser,
   // getPublishedPostsCountByUserId,
