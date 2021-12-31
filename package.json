@@ -60,5 +60,14 @@
     "prettier": "^2.5.1",
     "tailwindcss": "^2.2.19",
     "webpack": "^5.33.2"
+    
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "module": "esnext"
   }
 }
