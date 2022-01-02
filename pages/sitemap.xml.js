@@ -1,6 +1,5 @@
 import fs from "fs";
 import prettier from "prettier";
-// import initServices from '../initialize-services';
 import UserService from "../services/UserService";
 import PostService from "../services/PostService";
 import EventService from "../services/EventService";
