@@ -59,7 +59,6 @@ async function getAllCourses() {
 
 //Main function for sitemap generation
 export async function generateSitemap(courses) {
-  // await initServices(); //To connect to postgres
   try {
     const mainSitemap = []; // This array is used for the root sitemap.
     const dirname = "."; // The project directory.
