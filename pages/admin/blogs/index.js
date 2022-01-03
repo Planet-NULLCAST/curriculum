@@ -88,12 +88,12 @@ const Admin = () => {
     limit: 10,
     // optionstag: "",
     status: "",
-    tag: ""
-    // order: -1,
+    tag: "",
+    order: "DESC",
     // fieldName: "updatedAt"
   });
   const [loaded, setLoaded] = useState(false);
-  const [status, setStatus] = useState("published")
+  const [status, setStatus] = useState("")
 
   //   effects
   useEffect(() => {
@@ -120,9 +120,9 @@ const Admin = () => {
     }
   }
 
-  async function getPostByTag(tagName, status) {
+  async function getPostByTag(tagName, status , newData) {
     try {
-      const data = await PostService.getPostByTags(tagName, status);
+      const data = await PostService.getPostByTags(tagName, status , newData);
       const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
@@ -146,7 +146,12 @@ const Admin = () => {
       skip: page == 1 ? 0 : (page - 1) * 10
     };
     setPagination(data);
-    getPosts(data);
+    if(data?.tag){
+      getPostByTag(null , null , data);
+    }
+    else{
+      getPosts(data , "from page");
+    }
   };
 
   /**
@@ -175,7 +180,6 @@ const Admin = () => {
     });
 
     setTimeout(() => {
-      console.log(data)
       getPostByTag(data.tag, data.status);
     }, 100);
   };
@@ -193,7 +197,12 @@ const Admin = () => {
       return { ...previousState, status: status, page: 1 };
     });
     setTimeout(() => {
-      getPosts(data);
+      if(data?.tag){
+      getPostByTag(data.tag, data.status);
+      }
+      else{
+        getPosts(data);
+      }
     }, 100);
   };
   return (

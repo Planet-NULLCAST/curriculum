@@ -165,16 +165,24 @@ async function deletePostById(userCookie, postId) {
 //   }
 // }
 
-async function getPostByTags(tagName, status) {
+async function getPostByTags(tagName, status , data) {
+  if(data){
+      const response = await axios.get(`${baseUrl}/${postsUrl}/${data?.tag}` , {
+        params : data
+      })
+      return response.data
+  }
+  else{
   try {
-    const { data } = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
+    const response = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
       params: { status: status }
     });
-    return data;
+    return response.data;
   } catch (err) {
     console.log(err);
     throw err;
   }
+}
 }
 
 async function adminChangePostStatus(userCookie, postId, statusUpdate) {
