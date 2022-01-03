@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/introduction</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/html</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/html-accessibility</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/css</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/naming-standard-bem</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/js-basics</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc
+      >http://localhost:3000/curriculum/ui-mastery/learn-css-flexbox-and-media-queries</loc
+    >
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/bootstrap-basics</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/sass</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/scss</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/ui-debug-tools</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/optimization</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/ui-standards</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/progressive-web-apps</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-1</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-2</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-3</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-4</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-5</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-6</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-7</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod> </url
+  >,
+  <url>
+    <loc>http://localhost:3000/curriculum/ui-mastery/workshop-practise-8</loc>
+    <lastmod>2022-01-03T16:25:03.512Z</lastmod>
+  </url>
+</urlset>
