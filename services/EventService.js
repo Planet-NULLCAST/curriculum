@@ -4,11 +4,11 @@ import {
   eventsUrl,
   eventIdUrl,
   createEventUrl,
-  eventSlugUrl
+  eventSlugUrl,
+  getAllEventsUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
 import { getUrl } from "../lib/getUrl";
-
 
 async function getLatestEvents(reqParams) {
   let url = getUrl();
@@ -25,6 +25,16 @@ async function getLatestEvents(reqParams) {
 async function getAllEvents() {
   try {
     const { data } = await axios.get(`${baseUrl}/api/v1/events`);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// get all events sitemap
+async function getAllEventsSlug() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getAllEventsUrl}`);
     return data;
   } catch (err) {
     throw err;
@@ -165,6 +175,7 @@ const EventService = {
   getEventBySlug,
   createNewEvent,
   getAllEvents,
+  getAllEventsSlug,
   deleteEvent,
   getEventByStatus,
   updateEvent
