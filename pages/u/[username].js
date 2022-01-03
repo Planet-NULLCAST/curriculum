@@ -29,14 +29,14 @@ export async function getServerSideProps(context) {
         const userId = cookie.id;
         const username = context.params.username;
 
-    // let isThisUserTheCurrentLoggedIn = false;
-    const data = await UserService.getUserByUsername(username);
-    return {
-      props: {
-        userData: data.data,
-        userCurrentLogin: userId,
-      }
-    };
+        // let isThisUserTheCurrentLoggedIn = false;
+        const data = await UserService.getUserByUsername(username);
+        return {
+          props: {
+            userData: data.data,
+            userCurrentLogin: userId
+          }
+        };
       } else {
         return {
           redirect: {
@@ -70,10 +70,10 @@ export default function Username({ userData, userCurrentLogin }) {
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
   const [postsLimit, setPostsLimit] = useState();
-  
+
   useEffect(() => {
-      getPublishedUserPosts();
-      getUserPostCount();
+    getPublishedUserPosts();
+    getUserPostCount();
   }, []);
 
   const changeNav = (data) => {
@@ -81,27 +81,25 @@ export default function Username({ userData, userCurrentLogin }) {
   };
 
   const getPublishedUserPosts = async () => {
-    
     const UserId = userData.id;
     const postParams = {
-      status: "published",
+      status: "published"
     };
     const response = await PostService.getUserPostsByUser(UserId, postParams);
-    console.log(response.data.posts, 'error');  
-    setNewBlogs(response.data.posts)
+    console.log(response.data.posts, "error");
+    setNewBlogs(response.data.posts);
     setPostsLimit(response.data.limit);
   };
 
   const getUserPostCount = async () => {
     const UserId = userData.id;
     const postParams = {
-      status: "published",
+      status: "published"
     };
     const response = await PostService.getPostCount(UserId, postParams);
-    console.log(response.data.count, 'count');  
+    console.log(response.data.count, "count");
     setPostsCount(response.data.count);
   };
-
 
   const getNewPostsWithCount = (postsCount) => {
     getNewPosts(postsCount);
@@ -111,7 +109,7 @@ export default function Username({ userData, userCurrentLogin }) {
     const postParams = {
       status: "published",
       count: count,
-      order: "DESC",
+      order: "DESC"
     };
     const responsePost = await PostService.getUserPostsByUser(postParams);
 
@@ -119,7 +117,7 @@ export default function Username({ userData, userCurrentLogin }) {
       return [...prevValue, ...responsePost.posts];
     });
   };
-  
+
   return (
     <div>
       <Head>
@@ -130,7 +128,10 @@ export default function Username({ userData, userCurrentLogin }) {
         <Navbar changeNav={changeNav} currentNav={currentNav} />
         <div className="flex lg:flex-row flex-col max-w-panel min-h-screen">
           <div className="flex flex-col lg:w-3/4 w-full">
-            <ProfileDetails userData={userData} userCurrentLogin= {userCurrentLogin} />
+            <ProfileDetails
+              userData={userData}
+              userCurrentLogin={userCurrentLogin}
+            />
             <SkillSet userData={userData} />
             {currentNav === "profile" && (
               <>
