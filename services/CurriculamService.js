@@ -4,47 +4,64 @@ import Cookies from "universal-cookie";
 
 async function enrollCourse(courseName) {
   let cookies = new Cookies();
-  let usercookie = cookies.get("userNullcast");
-  const {data : {data : {id}}} = await axios.get(`${baseUrl}/api/v1/course/${courseName}`)
-  console.log(id)
-  if(id){
-  try {
-    const resp = await axios.post(`${baseUrl}/api/v1/user-course` , {
-        course_id : Number(id),
-    },
-    {
-      headers: {
-        "x-access-token": `${usercookie.accesToken}`
-      }
-    })
-    if(resp){
-      console.log(resp)
-      return resp.data
+  let userCookie = cookies.get("userNullcast");
+  const {
+    data: {
+      data: { id }
     }
-  } catch (error) {
-    throw error
+  } = await axios.get(`${baseUrl}/api/v1/course/${courseName}`);
+  console.log(id);
+  if (id) {
+    try {
+      const resp = await axios.post(
+        `${baseUrl}/api/v1/user-course`,
+        {
+          course_id: Number(id)
+        },
+        {
+          headers: {
+            "x-access-token": `${userCookie.accesToken}`
+          }
+        }
+      );
+      if (resp) {
+        console.log(resp);
+        return resp.data;
+      }
+    } catch (error) {
+      throw error;
+    }
   }
-}
 }
 
 async function chapterFinished(courseName, chapterName) {
   let cookies = new Cookies();
-  let usercookie = cookies.get("userNullcast");
-  const {data : {data : {id}}} = await axios.get(`${baseUrl}/api/v1/course/${courseName}`)
-  const resp = await axios.get(`${baseUrl}/api/v1/chapter/${chapterName !== "naming-standard-bem" ?chapterName.split("-").join(" ").toLowerCase() : "naming standard-bem"}`)
-  console.log(resp)
-  if (usercookie && id && resp) {
+  let userCookie = cookies.get("userNullcast");
+  const {
+    data: {
+      data: { id }
+    }
+  } = await axios.get(`${baseUrl}/api/v1/course/${courseName}`);
+  const resp = await axios.get(
+    `${baseUrl}/api/v1/chapter/${
+      chapterName !== "naming-standard-bem"
+        ? chapterName.split("-").join(" ").toLowerCase()
+        : "naming standard-bem"
+    }`
+  );
+  console.log(resp);
+  if (userCookie && id && resp) {
     try {
       const { data } = await axios.post(
         `${baseUrl}/api/v1/user-chapter`,
         {
-          user_id : usercookie.id,
-          course_id : Number(id),
-          chapter_id : Number(resp.data.data.id)
+          user_id: userCookie.id,
+          course_id: Number(id),
+          chapter_id: Number(resp.data.data.id)
         },
         {
           headers: {
-            "x-access-token": `${usercookie.accesToken}`
+            "x-access-token": `${userCookie.accesToken}`
           }
         }
       );
