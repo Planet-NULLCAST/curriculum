@@ -180,7 +180,10 @@ const Admin = () => {
     });
 
     setTimeout(() => {
+     if(data?.tag)
       getPostByTag(data.tag, data.status);
+    else  
+      getPosts(data)
     }, 100);
   };
 
