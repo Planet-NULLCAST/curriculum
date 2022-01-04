@@ -8,7 +8,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 
 import { getAllChapterIds, getChapterData } from "../../../lib/jslist";
 import { getCourse } from "../../../lib/getCourse";
-import {  courses } from "../../../courses/meta";
+import { courses } from "../../../courses/meta";
 import Editor from "../../../component/editor/Editor";
 import Output from "../../../component/layout/Output/Output";
 import Sidebar from "../../../component/layout/SideBar/SideBar";
@@ -49,21 +49,23 @@ export default function Chapter({ chapterData, chapterName, courseName }) {
   }
   const router = useRouter();
   const { testCase, contentOnly } = chapterData;
-  //const cookies = new Cookies();
-  //const userCookie = cookies.get("userNullcast");
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
   const clickHandle = async (courseName, chapterName) => {
-    if (contentOnly) {
-      try {
-        const data = await chapterFinished(courseName, chapterName);
-        if (data.entryAdded) {
-          console.log("👍 Chapter Is Completed!");
-        } else {
-          console.log(`👍 ${data}`);
+    if (userCookie) {
+      if (contentOnly) {
+        try {
+          const data = await chapterFinished(courseName, chapterName);
+          if (data) {
+            console.log("👍 Chapter Is Completed!");
+          } else {
+            console.log(`👍 ${data}`);
+          }
+        } catch (err) {
+          console.log(err);
+          if (err?.response?.data?.message.split(" ")[0] !== "duplicate")
+            notify(err?.response?.data?.message ?? err?.message, "error");
         }
-      } catch (err) {
-        console.log(err.response)
-        if(err?.response?.data?.message.split(" ")[0] !== "duplicate")
-          notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
 
