@@ -17,7 +17,7 @@ contentOnly: true
 - HTML elements tell the browser how to display the content
 - HTML elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,7 +29,7 @@ contentOnly: true
   </html>
 ```
 
-- Doctype: Declaration in the document of which version of the HTML standard is following
+- Doctype: Declaration in the document of which version of the HTML standard is following.
   The declaration is not an HTML tag. It is an "information" to the browser about what document type to expect.
   In HTML 5, the declaration is simple:
 
@@ -37,9 +37,9 @@ contentOnly: true
   <!DOCTYPE html>
   ```
 
-- html : Root element which wraps our whole document
-- head : It contains document metadata(used by the browsers or search engines), related documents, links
-- body : It contains document data which is displayed in the browser
+- html: Root element which wraps our whole document
+- head: It contains document metadata (used by the browsers or search engines), related documents, links
+- body: It contains document data which is displayed in the browser
 
 [Click here](https://validator.w3.org/#validate_by_input) to validate your HTML code.
 
@@ -49,16 +49,16 @@ contentOnly: true
 
 ### head element
 
-It is primartily about metadata, the information that is used by the browser or search engine and not necessarily displayed to the user.
+It is primarily about metadata, the information that is used by the browser or search engine and not necessarily displayed to the user.
 
-- title : Title of the document. It is also used in the search engine optimisation.
+- title: Title of the document. It is also used in the search engine optimisation.
   element
-  - Use longer tiles(avoid one or two words)
+  - Use longer tiles (avoid one or two words)
   - Search engines will display 50-60 characteres, so not to have more than that.
-- meta : Allows to specify the metadata of the document(information about the author etc). It is used by the browser, search engines or othe web services.
+- meta: Allows to specify the metadata of the document(information about the author etc). It is used by the browser, search engines or othe web services.
 - script: Specifies the script
-- style : Defines the style to apply to the body of the document
-- link : Indicates some related docments
+- style: Defines the style to apply to the body of the document
+- link: Indicates some related docments
 
 ### body element
 
@@ -66,35 +66,37 @@ It defines the body of the document. It includes all the contents of an HTML doc
 
 ### id v/s class
 
-#### ID
+### ID
 
 - ID's are unique.
 - Each element can have only one ID
 - Each page can have only one element with that ID
 
-#### Class
+
+### Class
 
 - Classes are not unique
 - We can used multiple class on same element or same class on multiple elements
 
 [Read more](https://css-tricks.com/the-difference-between-id-and-class/)
 
+
 ### Headings
 
 These are important for SEO. Search engines use the headings to index the structure and content of your web pages.
 
-#### H1
+### H1
 
 - Primary heading of the document
 - Used by search engines - should include one in a page
 
-#### H2-H6
+### H2-H6
 
 - H2 defines a less important heading than h1 and h6 is the least important heading.
 
 ### Lists
 
-#### Unordered list
+### Unordered list
 
 Bullet list. List them with some bullet to the left side.
 
@@ -106,7 +108,7 @@ Bullet list. List them with some bullet to the left side.
 </ul>
 ```
 
-#### Ordered list
+### Ordered list
 
 Items are marked with numbers or alpha labels.
 
@@ -198,7 +200,7 @@ Used to encapsulate a figure as a single item, and contain a caption for the fig
 
 **Reference :**
 
-1. https://www.youtube.com/watch?v=dMK_3lH1YPo
+1. [https://www.youtube.com/watch?v=dMK_3lH1YPo](https://www.youtube.com/watch?v=dMK_3lH1YPo)
 
 ### HTML Layout Technique - CSS Flexbox Layout
 
@@ -209,11 +211,12 @@ Before the Flexbox Layout module, there were four layout modes:
 - Table, for two-dimensional table data
 - Positioned, for explicit position of an element
 
+
 The Flexible Box Layout Module, makes it easier to design flexible responsive layout structure without using float or positioning.
 
 Use of flexbox ensures that elements behave predictably when the page layout must accommodate different screen sizes and different display devices.
 
 **Reference :**
 
-- https://www.youtube.com/watch?v=aRMIdKRYg6cs
-- https://css-tricks.com/snippets/css/a-guide-to-flexbox
+- [https://www.youtube.com/watch?v=aRMIdKRYg6cs](https://www.youtube.com/watch?v=aRMIdKRYg6cs)
+- [https://css-tricks.com/snippets/css/a-guide-to-flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox)
