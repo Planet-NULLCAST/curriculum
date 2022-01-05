@@ -38,8 +38,16 @@ module.exports = {
         yellowBg: "#F7DA5B",
         orange: "#FF590F",
         dark: "#0E181E",
-        grayBorder: "#DEDEDE"
-      },
+        grayBorder: "#DEDEDE",
+        achOrange : "#FF9100",
+        achOrangeLight : "#FCEBE6",
+        achBlue : "#30BFF1",
+        achBlueLight : "#E8F9FF",
+        achGreen: "#11D12B",
+        achGreenLight : "#F0FFF2",
+        achPink : "#F064C2",
+        achPinkLight : "#FFF9FD" 
+       },
       fontFamily: {
         darker: ["Darker Grotesque", "Open Sans", "sans-serif"]
       },
