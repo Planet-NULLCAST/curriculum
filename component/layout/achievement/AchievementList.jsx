@@ -19,7 +19,7 @@ const AchievementList = ({achievements}) => {
       {
         achievements.map(each => {
           return(
-          <div className={`flex flex-col p-4 bg-${getBg(each?.type)?.bg} rounded border`}>
+          <div className={`flex flex-col p-4 bg-${getBg(each?.type)?.bg} rounded border`} key={each.id}>
             <div className="flex align-center pb-2.5">
               <div className={`bg-${getBg(each?.type)?.trophy} w-12 h-12 relative rounded border`}>
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute left-2 bottom-2.5">
