@@ -2,8 +2,35 @@ import Trails from "../profile/Trails";
 import Profilestyles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import UserService from '../../services/UserService'
 
-export default function ProfileDetails({ userData, userCurrentLogin }) {
+
+export default function ProfileDetails({ userData, userCurrentLogin , isFollowing , setIsFollowing , getFollowerList }) {
+  console.log({ userData, userCurrentLogin  })
+
+  const followUser = async (id) => {
+     const resp = await UserService.followUser(id)
+     if(resp){
+      const checkIfFollowed = await UserService.isFollwed(id)
+      if(checkIfFollowed){
+        setIsFollowing(checkIfFollowed.is_follower)
+        getFollowerList()
+      }
+     }
+  }
+
+  const unFollowUser = async (id) => {
+      const resp = await UserService.removeFollower(id)
+      if(resp){
+        console.log(resp)
+        const checkIfFollowed = await UserService.isFollwed(id)
+        if(checkIfFollowed){
+          setIsFollowing(false)
+          getFollowerList()
+        }
+      }
+  }
+
   return (
     <div className="bg-white shadow-sm rounded pt-3 pb-4">
       <div className="flex flex-wrap h-auto px-4">
@@ -50,6 +77,9 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
                 <h3 className="my-1 text-sm font-medium">
                   @{userData.user_name}
                 </h3>
+                {isFollowing !== null && Number(userCurrentLogin) !== userData?.id && <button className="text-sm py-1.5 px-4 rounded" style={{backgroundColor : "#E8D3D3"}} onClick={!isFollowing ? () => followUser(userData?.id) : () => unFollowUser(userData?.id)}>
+                  {isFollowing ? "Unfollow" : "Follow"}
+                </button>}
                 <div className="flex flex-row my-1">
                   <img
                     className="mr-2"

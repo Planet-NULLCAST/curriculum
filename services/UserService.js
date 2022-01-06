@@ -1,5 +1,5 @@
 const axios = require("axios");
-import { baseUrl, usersUrl, userUrl, getUsersUrl } from "../config/config";
+import { baseUrl, usersUrl, userUrl, getUsersUrl, getFollowersUrl, addorRemoveFollowers, isFollwing } from "../config/config";
 // import { getUrl } from "../lib/getUrl";
 
 async function getLatestUsers(reqParams) {
@@ -48,11 +48,61 @@ async function updateProfileByUserId(userCookie, reqData) {
   }
 }
 
+async function getUserFollowers(userId){
+    try {
+      const {data} = await axios.get(`${baseUrl}/${getFollowersUrl}/${userId}`)
+      return data.data
+    } catch (error) {
+      throw error
+    }
+}
+
+async function followUser(follwedId){
+   try {
+     const {data} = await axios.post(`${baseUrl}/${addorRemoveFollowers}` , {
+       following_id : follwedId
+     })
+     console.log(data)
+     return data.data
+   } catch (error) {
+     throw error
+   }
+}
+
+async function isFollwed(id){
+  try {
+    const {data} = await axios.get(`${baseUrl}/${isFollwing}/${id}`)
+    return data?.data
+  } catch (error) {
+    console.log(error?.response?.data)
+    if(error?.response?.data?.message === "You are neither following nor followed by this user"){
+        return error?.response?.data
+    }
+    else{
+    throw error
+    }
+  }
+}
+
+async function removeFollower(id){
+  try {
+    const {data} = await axios.delete(`${baseUrl}/${addorRemoveFollowers}/${id}`)
+    console.log(data)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 const UserService = {
   getLatestUsers,
   getUserByUsername,
   getAllUsers,
-  updateProfileByUserId
+  updateProfileByUserId,
+  getUserFollowers,
+  followUser,
+  removeFollower,
+  isFollwed
 };
 
 module.exports = UserService;
