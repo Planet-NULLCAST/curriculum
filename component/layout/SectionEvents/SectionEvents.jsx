@@ -29,7 +29,7 @@ export default function SectionEvents({ events }) {
               <h3>
                 <span>{events?.title}</span>
               </h3>
-              <p>{moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}</p>
+              <p>{events?.event_time && moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}</p>
             </figcaption>
           </figure>
         </div>
