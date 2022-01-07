@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import EventInfo from "../../../component/admin/EventInfo";
 import OrganizerInfo from "../../../component/admin/OrganizerInfo";
 import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
@@ -380,6 +381,9 @@ const CreateEvent = ({referer}) => {
   
   return (
     <div className="bg-gray-100 min-h-full pb-5">
+      <Head>
+          <title>Admin | Create Event | Nullcast</title>
+      </Head>
       <SiteHeader />
       <div className="bg-white max-w-6xl mx-auto flex  mt-3.5">
         <div className="px-4">
