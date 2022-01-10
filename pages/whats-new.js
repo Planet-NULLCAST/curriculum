@@ -19,9 +19,10 @@ export async function getServerSideProps(context) {
       // searchArray = ["whats-new", tag];
       tag='whats-new'
     }
+    const status = 'published'
     const {
       data: { posts, count }
-    } = await PostService.getPostByTags(tag);
+    } = await PostService.getPostByTags(tag,status);
     return {
       props: {
         blogs: posts

@@ -57,6 +57,7 @@ export async function getServerSideProps(context) {
 }
 //addCourses()
 export default function Home({ posts, user, events }) {
+  console.log(events)
   return (
     <div className="wrap">
       <Head>
