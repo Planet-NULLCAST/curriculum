@@ -48,9 +48,11 @@ async function updateProfileByUserId(userCookie, reqData) {
   }
 }
 
-async function getUserFollowers(userId){
+async function getUserFollowers(userId, newData){
     try {
-      const {data} = await axios.get(`${baseUrl}/${getFollowersUrl}/${userId}`)
+      const {data} = await axios.get(`${baseUrl}/${getFollowersUrl}/${userId}`,{
+          params : newData
+      })
       return data.data
     } catch (error) {
       throw error

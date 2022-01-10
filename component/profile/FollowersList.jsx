@@ -1,60 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
 let id = 1;
-export default function FollowersList({followDetails}) {
-  const followers = [
-    {
-      name: "Liam Olivia Anna",
-      image: "/images/pic1.png"
-    },
-    {
-      name: "Noah Emma",
-      image: "/images/pic2.png"
-    },
-    {
-      name: "Oliver Ava",
-      image: "/images/pic1.png"
-    },
-    {
-      name: "William Sophia",
-      image: ""
-    },
-    {
-      name: "James Charlotte",
-      image: "/images/pic1.png"
-    },
-    {
-      name: "Benjamin Amel",
-      image: ""
-    },
-    {
-      name: "William Sophi",
-      image: "/images/pic2.png"
-    },
-    {
-      name: "James Charlotte",
-      image: ""
-    },
-    {
-      name: "Benjamin Amelia",
-      image: ""
-    },
-    {
-      name: "Oliver Eva",
-      image: "/images/pic1.png"
-    }
-  ];
+export default function FollowersList({followDetails , getFollowerList}) {
+
+  const [pageNo , setPageNo] = useState(0)
+
   const shortName = (e) => {
     var matches = e.match(/\b(\w)/g);
     var acronym = matches.join("");
     return acronym.substring(0, 2);
   };
   console.log(followDetails)
+
+  const getNextFollowers = (e) => {
+    let newPageNo = pageNo+1
+    e.preventDefault()
+      setPageNo(newPageNo)
+      getFollowerList(newPageNo)
+  }
   return (
     <div>
       <div className="flex justify-between items-center mt-5">
         <span className="font-bold">Followers</span>
-       {Number(followDetails?.followerscount) > followDetails?.followers.length && <a href="" className="underline text-sm font-semibold">
+        {Number(followDetails?.followerscount) > followDetails?.followers.length && <a href="" className="underline text-sm font-semibold" onClick={(e) => getNextFollowers(e)}>
           View All
         </a>}
       </div>

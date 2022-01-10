@@ -88,16 +88,25 @@ export default function Username({ userData, userCurrentLogin }) {
     const resp = await UserService.isFollwed(id)
     if(resp?.is_follower){
       setIsFollowing(resp.is_follower)
-    }
+    } 
     else{
       setIsFollowing(false)
     }
   }
 
-  const getFollowerList = async () => {
-    const response = await UserService.getUserFollowers(userData.id)
+  const getFollowerList = async (page = 0) => {
+    const params = {
+      page : page+1,
+    }
+    const response = await UserService.getUserFollowers(userData.id , params)
     if(response){
-      setFollowDetails(response)
+      if(followDetails?.followers){
+        console.log(response)
+        setFollowDetails(prev => ({...prev , followers : [...prev.followers , ...response?.followers]}))
+      }
+      else {
+        setFollowDetails(response)
+      }
     }
   }
   const getPublishedUserPosts = async () => {
@@ -172,7 +181,7 @@ export default function Username({ userData, userCurrentLogin }) {
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
             {postsCount && followDetails && <Count postsCount={postsCount} followDetails = {followDetails} />}
-            {followDetails && <FollowersList followDetails = {followDetails}/>}
+            {followDetails && <FollowersList followDetails = {followDetails} getFollowerList = {getFollowerList}/>}
           </div>
         </div>
       </div>
