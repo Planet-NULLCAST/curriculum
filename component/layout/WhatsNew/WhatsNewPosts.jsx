@@ -196,7 +196,7 @@ export default function WhatsNewPosts({ blogs }) {
           </section>
         </>
       ) : (
-        <div className={styles.content}>Nothing Found</div>
+        <div></div>
       )}
     </div>
   );
