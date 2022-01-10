@@ -1,6 +1,16 @@
 const path = require("path");
 
+// Nextjs 404s on buildManifest across multiple EC2 instances
+//https://stackoverflow.com/questions/63817674/nextjs-404s-on-buildmanifest-across-multiple-ec2-instances
+
+const execSync = require("child_process").execSync;
+
+const lastCommitCommand = "git rev-parse HEAD";
+
 module.exports = {
+  async generateBuildId() {
+    return execSync(lastCommitCommand).toString().trim();
+  },
   productionBrowserSourceMaps: process.env.GENERATE_SOURCEMAP,
   images: {
     domains: ["nullcast-assets.s3.amazonaws.com"]
@@ -14,6 +24,7 @@ module.exports = {
     };
     return config;
   },
+  
   env: {
     BASE_URL: process.env.BASE_URL,
     CLIENT_URL: process.env.CLIENT_URL,
