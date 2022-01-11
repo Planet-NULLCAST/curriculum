@@ -10,7 +10,6 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
     setCount(newCount);
     getNewPostsWithCount(newCount);
   };
-
   return (
     <div className={`bg-white shadow-sm rounded p-4 mt-4 `}>
       <div className="flex justify-between items-center">
@@ -18,10 +17,10 @@ export default function BlogList({ posts, getNewPostsWithCount, postsCount }) {
         <span className="font-bold">Blogs</span>
         </div>
         <div>
-          <Link href={'/'}>
+         {posts?.length > 4 &&  <Link href={'/blog'}>
           
           <a className={'text-sm underline font-semibold'}>
-            View all</a></Link>
+            View all</a></Link>}
         </div>
       </div>
       <div className="flex flex-wrap pb-2 w-full">
