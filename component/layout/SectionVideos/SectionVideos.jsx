@@ -11,13 +11,13 @@ export default function SectionVideos() {
             <div className={styles.videoItem}>
               <figure>
                 <Image
-                  src="/images/temp/video1.png"
+                  src="/images/temp/yvideo2.png"
                   alt="Video1"
                   width={432}
                   height={586}
                   layout="responsive"
                 />
-                <a href="/" className={styles.play}>
+                <a href="https://www.youtube.com/watch?v=EL6F9h7UgUA" className={styles.play}>
                   <svg
                     width="151"
                     height="104"
@@ -43,7 +43,7 @@ export default function SectionVideos() {
                 </a>
                 <figcaption>
                   <h3>
-                    <a href="/">All you need to know about Supabase</a>
+                    <a href="/">What is (Simple Notification Service) SNS? | Nullcast</a>
                   </h3>
                 </figcaption>
               </figure>
@@ -52,13 +52,13 @@ export default function SectionVideos() {
             <div className={styles.videoItem}>
               <figure>
                 <Image
-                  src="/images/temp/video2.png"
+                  src="/images/temp/yvideo1.png"
                   alt="Video2"
                   width={432}
                   height={586}
                   layout="responsive"
                 />
-                <a href="/" className={styles.play}>
+                <a href="https://m.youtube.com/watch?v=XcSKzYaBV3c" className={styles.play}>
                   <svg
                     width="151"
                     height="104"
@@ -83,7 +83,7 @@ export default function SectionVideos() {
                   </svg>
                 </a>
                 <figcaption>
-                  <h3>All you need to know about Supabase</h3>
+                  <h3>What is Zapier?</h3>
                 </figcaption>
               </figure>
             </div>
@@ -91,13 +91,13 @@ export default function SectionVideos() {
             <div className={styles.videoItem}>
               <figure>
                 <Image
-                  src="/images/temp/video3.png"
+                  src="/images/temp/yvideo3.png"
                   alt="Video3"
                   width={432}
                   height={586}
                   layout="responsive"
                 />
-                <a href="/" className={styles.play}>
+                <a href="https://m.youtube.com/watch?v=YP48OZtsOpU" className={styles.play}>
                   <svg
                     width="151"
                     height="104"
@@ -122,7 +122,7 @@ export default function SectionVideos() {
                   </svg>
                 </a>
                 <figcaption>
-                  <h3>All you need to know about Supabase</h3>
+                  <h3>IoT Communication Protocol | Nullcast</h3>
                 </figcaption>
               </figure>
             </div>

@@ -18,20 +18,28 @@ export default function SectionEvents({ events }) {
           </div>
         </Fade>
         <div className={styles.event}>
-          <figure>
-            <Image
-              src={events?.banner_image ? events.banner_image : '/'}
-              alt=""
-              width={978}
-              height={539}
-            />
-            <figcaption>
-              <h3>
-                <span>{events?.title}</span>
-              </h3>
-              <p>{events?.event_time && moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}</p>
-            </figcaption>
-          </figure>
+          {events?.length > 0 ? (
+            <figure>
+              <Image
+                src={events?.banner_image ? events.banner_image : "/"}
+                alt=""
+                width={978}
+                height={539}
+              />
+              <figcaption>
+                <h3>
+                  <span>{events?.title}</span>
+                </h3>
+                <p>
+                  {moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}
+                </p>
+              </figcaption>
+            </figure>
+          ) : (
+            <div className="flex items-center justify-center m-9 font-semibold">
+              There's no events yet!
+            </div>
+          )}
         </div>
       </div>
     </section>
