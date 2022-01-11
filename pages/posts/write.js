@@ -10,7 +10,6 @@ import PostService from "../../services/PostService";
 import { editorUrl } from "../../config/config";
 import { getCookieValue } from "../../lib/cookie";
 import notify from "../../lib/notify";
-import { data } from "remark";
 
 const TARGET = editorUrl;
 
