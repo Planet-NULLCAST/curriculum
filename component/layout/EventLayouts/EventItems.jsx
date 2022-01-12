@@ -5,6 +5,14 @@ import Fade from "react-reveal/Fade";
 import moment from "moment";
 
 export default function EventItems({ events }) {
+
+  function truncate(string, length){
+    if (string.length > length)
+        return string.substring(0,length)+'...';
+    else
+        return string;
+  };
+
   return events.map((item, key) => (
     <div className={styles.listing__item} key={"Event_Item_" + key}>
       <Fade>
@@ -36,7 +44,7 @@ export default function EventItems({ events }) {
       <div>
         <h3>
           <Link href={`/e/${item.slug}`}>
-            <a>{item.title}</a>
+            <a>{truncate(item.title, 42)}</a>
           </Link>
         </h3>
 
@@ -54,7 +62,7 @@ export default function EventItems({ events }) {
           <span className={styles.icon}>
             <img src="/images/location-pin.svg" alt="location_Icon" />
           </span>
-          <span className={styles.location}>{item?.location}</span>
+          <span className={styles.location}>{truncate(item?.location,30)}</span>
         </p>
       </div>
     </div>
