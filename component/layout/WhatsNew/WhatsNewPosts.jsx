@@ -27,23 +27,24 @@ export default function WhatsNewPosts({ blogs }) {
   const createMarkup = (value) => {
     return { __html: value };
   };
-  const boxdata = [
-    {
-      head: "Set a Fallback Placeholder in Message Templates 📝",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    },
-    {
-      head: "How To Choose A Headless CMS",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    },
-    {
-      head: "Front-End Boilerplates & Starter Kits",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    }
-  ];
+  // const boxdata = [
+  //   {
+  //     head: "Set a Fallback Placeholder in Message Templates 📝",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "How To Choose A Headless CMS",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "Front-End Boilerplates & Starter Kits",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   }
+  // ];
+ 
   return (
     <div className={styles.wrapperHeader}>
       <section className={styles.header}>
@@ -156,7 +157,7 @@ export default function WhatsNewPosts({ blogs }) {
               </div>
             </div>
           </section>
-          <section className={styles.Container}>
+          {/* <section className={styles.Container}>
             {boxdata.map((obj) => {
               return (
                 <div className={styles.rowbox}>
@@ -168,9 +169,9 @@ export default function WhatsNewPosts({ blogs }) {
                 </div>
               );
             })}
-          </section>
+          </section> */}
           <section className={styles.Container}>
-            {blogs.map((post, index) => (
+            {blogs.slice(1).map((post, index) => (
               <div className={styles.content__box} key={index}>
                 <div
                   style={{ backgroundImage: `url(${post.banner_image})` }}
@@ -185,7 +186,7 @@ export default function WhatsNewPosts({ blogs }) {
                     <span className="btn__text">Learn more</span>
                   </a>
                 </Link>
-              </div>
+              </div>  
 
               // <div
               //   style={{ flexDirection: index % 2 != 0 ? "row-reverse" : "row" }}
