@@ -175,7 +175,6 @@ export default function WriteNav({
       meta_title: metaTitle,
       meta_description: metaDes,
       slug: postUrl,
-      mobiledoc: currentPost.mobiledoc
     };
     if (settingsData.slug === "") {
       delete settingsData.slug;

@@ -42,7 +42,7 @@ node_modules/
 jspm_packages/
 
 # Sitemap xml files
-public/sitemap
+public/sitemap*.xml
 
 # TypeScript v1 declaration files
 typings/
