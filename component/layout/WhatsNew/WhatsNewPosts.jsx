@@ -1,12 +1,29 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import validateEmail from '../../../lib/validateEmail'
+import SubscribeService from '../../../services/SubscribeService'
+import notify from "../../../lib/notify";
 
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
   const router = useRouter();
-
+  const [useremail, setUseremail] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState("");
+  const subscribe = () => {
+    const isValid = validateEmail(useremail);
+    setIsValidEmail(isValid);
+    document.cookie !== '' ? isValid && addsubscription(useremail) : notify('Please login for subscribe', 'error') ;
+  }
+  async function addsubscription(email) {
+    try {
+      const response = await SubscribeService.addSubscription(email);
+      notify(response.data.message, "success");
+    } catch (err) {
+      notify("user already subscribed", "error");
+    }
+  }
   const createMarkup = (value) => {
     return { __html: value };
   };
@@ -117,15 +134,23 @@ export default function WhatsNewPosts({ blogs }) {
                   your inbox. 🎁
                 </div>
                 <div>
+                {isValidEmail !== "" && isValidEmail === false && (
+                <p className="text-sm text-red-400 text-left  font-bold">
+                  Please enter a valid email
+                </p>
+              )}
                   <input
                     type="email"
                     name="email"
                     id="email"
                     placeholder="enter your email"
                     className={styles.sub_input}
+                    onChange={(e)=> setUseremail(e.target.value)}
                   />
+             
+              
                 </div>
-                <button className="btn btn--small" type="submit">
+                <button className="btn btn--small" type="submit" onClick={subscribe}>
                   <span className="btn__text">Subscribe</span>
                 </button>
               </div>
@@ -146,7 +171,7 @@ export default function WhatsNewPosts({ blogs }) {
           </section>
           <section className={styles.Container}>
             {blogs.map((post, index) => (
-              <div className={styles.content__box}>
+              <div className={styles.content__box} key={index}>
                 <div
                   style={{ backgroundImage: `url(${post.banner_image})` }}
                   className={styles.boximg}
