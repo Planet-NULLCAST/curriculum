@@ -1,3 +1,5 @@
+import moment from "moment"
+
 const AchievementList = ({achievements}) => {
   console.log(achievements)
   const getBg = (type) => {
@@ -14,8 +16,17 @@ const AchievementList = ({achievements}) => {
         return {bg : "achPinkLight", trophy : "achPink"}
       }
   }
+
+  const convertDate = () => {
+    const date = moment().format('ll')
+    let splited = date.split(' ')
+    console.log(splited)
+    const dd = splited[1].split(',')[0] > 9 ? splited[1].split(',')[0] : `0${splited[1].split(',')[0]}`
+    return `${dd} ${splited[0]} ${splited[2]}`
+  }
+
   return (
-    <div className="grid grid-cols-3 gap-6 py-6 px-4 mx-auto">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 py-6 px-4 mx-auto">
       {
         achievements.map(each => {
           return(
@@ -41,16 +52,16 @@ const AchievementList = ({achievements}) => {
                     src="/images/smallduck.svg"
                     alt="small duck"
                   />
-                  <p className="text-lg font-bold leading-6">{each?.points}</p>
+                  <p className="text-lg font-bold leading-6 text-gray-600">{each?.points}</p>
                 </div>
               </div>
             </div>
-            <p className="text-sm leading-6 font-semibold pb-1">{each?.description}</p>
+            <p className="text-sm leading-6 font-semibold pb-1 text-gray-800">{each?.description}</p>
             <div className="flex items-center w-full">
-              <div>
-              <p className="text-sm leading-6 font-semibold text-gray-500">{each?.date}</p>
+              <div className="flex-grow">
+              <p className="text-sm leading-6 font-semibold text-gray-500">{convertDate()}</p>
               </div>
-              {each?.isProgress && <div className="relative w-full">
+              {each?.isProgress && <div className="relative" style={{width : "72%"}}>
                 <small className="absolute right-0 bottom-1 font-semibold text-gray-700">30%</small>
                 <div className="h-1 bg-gray-200 rounded-full w-full">
                   <div className="bg-achOrange w-4/12 h-1 rounded-full"></div>
