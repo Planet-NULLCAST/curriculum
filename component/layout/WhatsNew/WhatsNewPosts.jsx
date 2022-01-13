@@ -1,32 +1,50 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import validateEmail from '../../../lib/validateEmail'
+import SubscribeService from '../../../services/SubscribeService'
+import notify from "../../../lib/notify";
 
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
   const router = useRouter();
-
+  const [useremail, setUseremail] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState("");
+  const subscribe = () => {
+    const isValid = validateEmail(useremail);
+    setIsValidEmail(isValid);
+    document.cookie !== '' ? isValid && addsubscription(useremail) : notify('Please login for subscribe', 'error') ;
+  }
+  async function addsubscription(email) {
+    try {
+      const response = await SubscribeService.addSubscription(email);
+      notify(response.data.message, "success");
+    } catch (err) {
+      notify("user already subscribed", "error");
+    }
+  }
   const createMarkup = (value) => {
     return { __html: value };
   };
-  const boxdata = [
-    {
-      head: "Set a Fallback Placeholder in Message Templates 📝",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    },
-    {
-      head: "How To Choose A Headless CMS",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    },
-    {
-      head: "Front-End Boilerplates & Starter Kits",
-      content:
-        "This information is also super helpful for our support team should you run into an issue..."
-    }
-  ];
+  // const boxdata = [
+  //   {
+  //     head: "Set a Fallback Placeholder in Message Templates 📝",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "How To Choose A Headless CMS",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "Front-End Boilerplates & Starter Kits",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   }
+  // ];
+ 
   return (
     <div className={styles.wrapperHeader}>
       <section className={styles.header}>
@@ -117,21 +135,29 @@ export default function WhatsNewPosts({ blogs }) {
                   your inbox. 🎁
                 </div>
                 <div>
+                {isValidEmail !== "" && isValidEmail === false && (
+                <p className="text-sm text-red-400 text-left  font-bold">
+                  Please enter a valid email
+                </p>
+              )}
                   <input
                     type="email"
                     name="email"
                     id="email"
                     placeholder="enter your email"
                     className={styles.sub_input}
+                    onChange={(e)=> setUseremail(e.target.value)}
                   />
+             
+              
                 </div>
-                <button className="btn btn--small" type="submit">
+                <button className="btn btn--small" type="submit" onClick={subscribe}>
                   <span className="btn__text">Subscribe</span>
                 </button>
               </div>
             </div>
           </section>
-          <section className={styles.Container}>
+          {/* <section className={styles.Container}>
             {boxdata.map((obj) => {
               return (
                 <div className={styles.rowbox}>
@@ -143,10 +169,10 @@ export default function WhatsNewPosts({ blogs }) {
                 </div>
               );
             })}
-          </section>
+          </section> */}
           <section className={styles.Container}>
-            {blogs.map((post, index) => (
-              <div className={styles.content__box}>
+            {blogs.slice(1).map((post, index) => (
+              <div className={styles.content__box} key={index}>
                 <div
                   style={{ backgroundImage: `url(${post.banner_image})` }}
                   className={styles.boximg}
@@ -160,7 +186,7 @@ export default function WhatsNewPosts({ blogs }) {
                     <span className="btn__text">Learn more</span>
                   </a>
                 </Link>
-              </div>
+              </div>  
 
               // <div
               //   style={{ flexDirection: index % 2 != 0 ? "row-reverse" : "row" }}
