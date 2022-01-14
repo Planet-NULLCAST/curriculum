@@ -57,7 +57,6 @@ export default function EventListing({ events, count, limit }) {
   };
 
   // check event time with current
-
   useEffect(() => {
     eventsHandler(newEvents);
   });
