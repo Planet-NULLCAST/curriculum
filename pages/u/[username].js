@@ -46,11 +46,11 @@ export async function getServerSideProps(context) {
         };
       }
     } else {
+      const data = await UserService.getUserByUsername(context.params.username);
       return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
-        }
+         props : {
+            userData : data?.data
+         }
       };
     }
   } catch (err) {
