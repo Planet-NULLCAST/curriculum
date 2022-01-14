@@ -262,6 +262,7 @@ const CreateEvent = ({referer}) => {
         eventLink: finalData.registration_link,
         eventDate: date,
         eventTime: time,
+        // meta_title: finalData.title,
         eventImage: finalData.banner_image
       });
     } catch (err) {
@@ -308,10 +309,12 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      meta_title: eventDetails.eventName,
       location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
-      description: eventDetails.eventDescription,
+      description: eventDetails.description,
+      meta_description: eventDetails.description,
       event_time: formatTime()
     };
     if (validateForm(eventDetails, setEventDetailsError)) {
@@ -336,10 +339,12 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      meta_title: eventDetails.eventName,
       location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,
+      meta_description: eventDetails.description,
       event_time: formatTime()
     };
     try {
@@ -348,7 +353,7 @@ const CreateEvent = ({referer}) => {
       if(data){
         setIsLoading(false)
       notify(data.data.message);
-      router.push("/admin/events");
+      // router.push("/admin/events");
       }
     } catch (err) {
       setIsLoading(false)
