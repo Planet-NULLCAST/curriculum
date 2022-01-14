@@ -1,7 +1,6 @@
 import moment from "moment"
 
-const AchievementList = ({achievements}) => {
-  console.log(achievements)
+const AchievementList = ({achievement}) => {
   const getBg = (type) => {
       if(type === "contributer"){
         return {bg : "achOrangeLight", trophy : "achOrange"}
@@ -20,7 +19,6 @@ const AchievementList = ({achievements}) => {
   const convertDate = () => {
     const date = moment().format('ll')
     let splited = date.split(' ')
-    console.log(splited)
     const dd = splited[1].split(',')[0] > 9 ? splited[1].split(',')[0] : `0${splited[1].split(',')[0]}`
     return `${dd} ${splited[0]} ${splited[2]}`
   }
@@ -28,7 +26,7 @@ const AchievementList = ({achievements}) => {
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 py-6 px-4 mx-auto">
       {
-        achievements.map(each => {
+        achievement.map(each => {
           return(
           <div className={`flex flex-col p-4 bg-${getBg(each?.type)?.bg} rounded border`} key={each.id}>
             <div className="flex align-center pb-2.5">

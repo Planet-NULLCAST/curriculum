@@ -1,6 +1,9 @@
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import AchievementCategory from "../../component/layout/achievement/AchievementCategory";
 import AchievementList from "../../component/layout/achievement/AchievementList";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
 const achievements = [
   {
@@ -114,8 +117,25 @@ const achievements = [
 ];
 
 const Achievement = () => {
+  const [achievement , setAchievement] = useState(achievements)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    console.log(router.query.type)
+      setAchievement(achievements)
+      if(router.query.type){
+        const filtered = achievements.filter(each => each.type.toLowerCase() === router.query.type.toLowerCase())
+        console.log(filtered , "f")
+        console.log(achievement , "a")
+        setAchievement(filtered)
+      }
+  },[router.query.type])
   return (
     <div className="bg-gray-100 min-h-screen pb-5">
+       <Head>
+         <title>Achievement | Nullcast</title>
+       </Head>
       <SiteHeader />
       <div className="max-w-panel mx-auto lg:px-0 md:px-6 sm:px-3 mt-3.5">
         <div className="bg-white flex rounded border">
@@ -126,7 +146,7 @@ const Achievement = () => {
         </div>
         <div className="bg-white mt-5 rounded border">
           <AchievementCategory />
-          <AchievementList achievements={achievements} />
+          <AchievementList achievement={achievement}/>
         </div>
       </div>
     </div>
