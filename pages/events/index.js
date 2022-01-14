@@ -5,10 +5,11 @@ import EvListing from "../../component/layout/EventLayouts/EventListing";
 import SectionSwag from "../../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
-import EventService from "../../services/EventService"
-import { useState } from "react";
+import EventService from "../../services/EventService";
+import { useState, useEffect } from "react";
 import { homePageSchema, logoPath, url } from "../../seoschema/schema";
 import notify from "../../lib/notify";
+import moment from "moment";
 
 export async function getServerSideProps() {
   const limit = 10;
@@ -41,7 +42,7 @@ export async function getServerSideProps() {
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {}
     };
@@ -55,6 +56,33 @@ export default function EventListing({ events, count, limit }) {
     getNewEvents(count);
   };
 
+  // check event time with current
+
+  useEffect(() => {
+    eventsHandler(newEvents);
+  });
+
+  const eventsHandler = (events) => {
+    var today = new Date();
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var CurrentDateTime = date + " " + time;
+
+    const eventsUpdated = events.filter(function (event) {
+      return (
+        moment(event.event_time).format("LLL") >
+        moment(CurrentDateTime).format("LLL")
+      );
+    });
+    setNewEvents(eventsUpdated);
+  };
+
   const getNewEvents = async (clickNo) => {
     const postParams = {
       sort_field: "published_at",
@@ -66,12 +94,12 @@ export default function EventListing({ events, count, limit }) {
     };
     try {
       const responseEvents = await EventService.getLatestEvents(postParams);
-      if(responseEvents)
-      setNewEvents((prevValue) => {
-        return [...prevValue, ...responseEvents.events];
-      });
+      if (responseEvents)
+        setNewEvents((prevValue) => {
+          return [...prevValue, ...responseEvents.events];
+        });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
   return (
@@ -114,12 +142,12 @@ export default function EventListing({ events, count, limit }) {
       </Head>
       <SiteHeader />
       <EventHeader />
-      {events && <EventFeatured event={events[0]} />}
-      {events?.length > 0 ? (
+      {newEvents && <EventFeatured event={newEvents[0] || ""} />}
+      {newEvents?.length > 0 ? (
         <EvListing
-          events={newEvents}
+          events={newEvents.slice(1) || ""}
           currentCount={currentCount}
-          eventCount={count} 
+          eventCount={newEvents.count}
         />
       ) : (
         <div className="flex items-center justify-center m-9 font-semibold">
