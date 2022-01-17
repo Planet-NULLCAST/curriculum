@@ -1,6 +1,6 @@
 import SiteHeader from "../../../../component/layout/SiteHeader/SiteHeader";
 
-const followers = [
+const attendees = [
   {
     name: "Liam Olivia Anna",
     image: "/images/pic1.png"
@@ -55,7 +55,7 @@ const EventAttendies = () => {
       <div className="max-w-panel mx-auto lg:px-0 md:px-6 sm:px-3 mt-3.5 ">
         <h1 className="text-center">Event Attendies</h1>
         <div className="mt-4  max-w-sm mx-auto">
-          {followers?.map((data) => (
+          {attendees?.map((data) => (
             <div
               className="flex items-center py-2 md:px-16"
               key={data.name + data.image}
