@@ -112,14 +112,12 @@ async function changePassword(passwords, userCookie) {
 }
 
 async function logout() {
-  // console.log("logout");
   try {
     await axios.post(`${logoutUrl}`, {});
   } catch {}
   window.localStorage.removeItem("progress");
   sessionStorage.removeItem("userNullcast");
-  document.cookie = "userNullcast=''; Max-Age=0;";
-  // console.log(router);
+  document.cookie = "userNullcast=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   if (router.pathname === "/posts" || router.pathname === "/posts/write") {
     router.push("/");
   } else if (router.pathname !== "/login") {

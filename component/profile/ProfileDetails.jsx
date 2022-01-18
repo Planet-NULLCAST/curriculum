@@ -12,7 +12,7 @@ export default function ProfileDetails({ userData, userCurrentLogin }) {
             className={`rounded p-4 h-full text-gray-700 relative ${Profilestyles?.bg_red_110} overflow-auto`}
           >
             <div className="flex">
-              {`${userData.id}` === userCurrentLogin && (
+              {`${userData.id}` === `${userCurrentLogin}` && (
                 <Link href="/settings">
                   <a>
                     <img
