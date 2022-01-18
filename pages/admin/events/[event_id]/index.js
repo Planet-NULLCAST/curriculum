@@ -1,47 +1,5 @@
 import AdminEventSidebar from "../../../../component/admin/AdminEventSidebar";
-const attendees = [
-  {
-    name: "Liam Olivia Anna",
-    image: "/images/pic1.png"
-  },
-  {
-    name: "Noah Emma",
-    image: "/images/pic2.png"
-  },
-  {
-    name: "Oliver Ava",
-    image: "/images/pic1.png"
-  },
-  {
-    name: "William Sophia",
-    image: ""
-  },
-  {
-    name: "James Charlotte",
-    image: "/images/pic1.png"
-  },
-  {
-    name: "Benjamin Amel",
-    image: ""
-  },
-  {
-    name: "William Sophi",
-    image: "/images/pic2.png"
-  },
-  {
-    name: "James Charlotte",
-    image: ""
-  },
-  {
-    name: "Benjamin Amelia",
-    image: ""
-  },
-  {
-    name: "Oliver Eva",
-    image: "/images/pic1.png"
-  }
-];
-
+import AdminEventData from "../../../../component/admin/AdminEventData";
 import { getCookieValue } from "../../../../lib/cookie";
 import notify from "../../../../lib/notify";
 import EventService from "../../../../services/EventService";
@@ -114,42 +72,18 @@ export async function getServerSideProps(context) {
   }
 }
 
-const EventAttendies = ({ eventData }) => {
-  const shortName = (e) => {
-    var matches = e.match(/\b(\w)/g);
-    var acronym = matches.join("");
-    return acronym.substring(0, 2);
-  };
+const AdminEventDetails = ({ eventData }) => {
+  console.log(eventData);
   return (
     <div>
       <AdminEventSidebar eventData={eventData} />
       <main className="ml-64">
         <div className="max-w-4xl mx-auto my-4">
-          {attendees?.map((data) => (
-            <div
-              className="flex items-center py-2"
-              key={data.name + data.image}
-            >
-              {data?.image ? (
-                <div className="w-8 h-8 overflow-hidden rounded-full flex items-center justify-center text-white mr-3">
-                  <img
-                    src={data?.image}
-                    alt="img"
-                    className="w-full h-full"
-                  ></img>
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white mr-3">
-                  {shortName(data?.name)}
-                </div>
-              )}
-              <span className="text-sm font-semibold">{data?.name}</span>
-            </div>
-          ))}
+          <AdminEventData eventData={eventData} />
         </div>
       </main>
     </div>
   );
 };
 
-export default EventAttendies;
+export default AdminEventDetails;

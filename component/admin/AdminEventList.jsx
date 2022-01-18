@@ -37,7 +37,7 @@ function AdminEventList({ events, refresh }) {
               >
                 <div>
                   <div className="text-gray-900 text-xl hover:text-purple-600 font-semibold ">
-                    <Link href={`/e/${obj.slug}`}>{obj.title}</Link>
+                    <Link href={`/admin/events/${obj.id}`}>{obj.title}</Link>
                   </div>
                   <div className="flex items-center pt-1 text-xs ">
                     <div className={`text-gray-400 `}>

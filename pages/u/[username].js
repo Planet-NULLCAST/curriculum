@@ -48,9 +48,9 @@ export async function getServerSideProps(context) {
     } else {
       const data = await UserService.getUserByUsername(context.params.username);
       return {
-         props : {
-            userData : data?.data
-         }
+        props: {
+          userData: data?.data
+        }
       };
     }
   } catch (err) {
@@ -79,7 +79,7 @@ export default function Username({ userData, userCurrentLogin }) {
   const changeNav = (data) => {
     setCurrentNav(data);
   };
-
+  console.log(userData);
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
     const postParams = {
