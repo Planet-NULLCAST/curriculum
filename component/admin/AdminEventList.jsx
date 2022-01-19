@@ -48,6 +48,7 @@ function AdminEventList({ events, refresh }) {
                 </div>
                 <div className="flex ">
                   <Link href={`/e/${obj.slug}`}>
+                    <a target="_blank">
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
                     >
@@ -63,6 +64,7 @@ function AdminEventList({ events, refresh }) {
                         </span>
                       </>
                     </div>
+                    </a>
                   </Link>
                   {/* {obj.status === "published" && (
                     <div
