@@ -27,8 +27,8 @@ export default function EventFeatured({ event }) {
                       />
                     )}
                     <button>
-                      <img 
-                        src="/images/event-card.svg" 
+                      <img
+                        src="/images/event-card.svg"
                         alt="Event_Card_Icon"
                         width={19.94}
                         height={19.94} />
@@ -64,7 +64,8 @@ export default function EventFeatured({ event }) {
                 </span>
                 <span className={styles.location}>{event?.location}</span>
               </p>
-              <p>{`${event?.description}`.length > 180 ? `${event?.description}`.slice(0,180) + "..." : `${event?.description}`}</p>
+              <div className="codeClass font-light js "
+                dangerouslySetInnerHTML={{ __html: (`${event?.description}`.length > 180 ? `${event?.description}`.slice(0, 180) + "..." : `${event?.description}`) }} />
             </div>
           </Fade>
         </div>
