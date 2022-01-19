@@ -5,7 +5,6 @@ import Fade from "react-reveal/Fade";
 import Link from 'next/link'
 
 export default function SectionEvents({ events }) {
-  console.log(events);
 
   return (
     <section className={styles.section}>
