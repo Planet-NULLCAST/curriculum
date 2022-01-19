@@ -2,8 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
-// import '../../node_modules/react-quill/dist/quill.snow.css';
-
 
 export default function EventInfo({ eventDetails, setEventDetails, eventDetailsError, setEventDetailsError }) {
   const [fileName, setFileName] = useState("");
