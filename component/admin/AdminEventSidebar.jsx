@@ -18,7 +18,7 @@ const AdminEventSidebar = ({ eventData }) => {
       <ul>
         <Link href={`/admin/events/${router.query.event_id}/attendees`}>
           <a>
-            <li className="p-4 hover:bg-white">Attendies</li>
+            <li className="p-4 hover:bg-white">Attendees</li>
           </a>
         </Link>
       </ul>

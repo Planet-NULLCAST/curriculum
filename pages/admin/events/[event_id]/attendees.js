@@ -1,43 +1,74 @@
 import AdminEventSidebar from "../../../../component/admin/AdminEventSidebar";
+
 const attendees = [
   {
-    name: "Liam Olivia Anna",
+    firstName: "Liam",
+    lastName: "Anna",
+    email: "dummy@gmail.com",
+    id: 1,
     image: "/images/pic1.png"
   },
   {
-    name: "Noah Emma",
+    firstName: "Noah",
+    lastName: "Emma",
+    email: "dummy@gmail.com",
+    id: 2,
     image: "/images/pic2.png"
   },
   {
-    name: "Oliver Ava",
+    firstName: "Oliver",
+    lastName: "Ava",
+    email: "dummy@gmail.com",
+    id: 3,
     image: "/images/pic1.png"
   },
   {
-    name: "William Sophia",
+    firstName: "William",
+    lastName: "Sophia",
+    email: "dummy@gmail.com",
+    id: 4,
     image: ""
   },
   {
-    name: "James Charlotte",
+    firstName: "James",
+    lastName: "Charlotte",
+    email: "dummy@gmail.com",
+    id: 5,
     image: "/images/pic1.png"
   },
   {
-    name: "Benjamin Amel",
+    firstName: "Benjamin",
+    lastName: "Amel",
+    email: "dummy@gmail.com",
+    id: 6,
     image: ""
   },
   {
-    name: "William Sophi",
+    firstName: "William",
+    lastName: "Sophi",
+    email: "dummy@gmail.com",
+    id: 7,
     image: "/images/pic2.png"
   },
   {
-    name: "James Charlotte",
+    firstName: "James",
+    lastName: "Charlotte",
+    email: "dummy@gmail.com",
+    id: 8,
     image: ""
   },
   {
-    name: "Benjamin Amelia",
+    firstName: "Benjamin",
+    lastName: "Amelia",
+    email: "dummy@gmail.com",
+    id: 9,
     image: ""
   },
   {
-    name: "Oliver Eva",
+    firstName: "Oliver",
+    lastName: "Eva",
+    email: "dummy@gmail.com",
+    id: 10,
     image: "/images/pic1.png"
   }
 ];
@@ -115,37 +146,47 @@ export async function getServerSideProps(context) {
 }
 
 const EventAttendies = ({ eventData }) => {
-  const shortName = (e) => {
-    var matches = e.match(/\b(\w)/g);
-    var acronym = matches.join("");
-    return acronym.substring(0, 2);
-  };
   return (
     <div>
       <AdminEventSidebar eventData={eventData} />
       <main className="ml-64">
         <div className="max-w-4xl mx-auto my-4">
-          {attendees?.map((data) => (
-            <div
-              className="flex items-center py-2"
-              key={data.name + data.image}
-            >
-              {data?.image ? (
-                <div className="w-8 h-8 overflow-hidden rounded-full flex items-center justify-center text-white mr-3">
-                  <img
-                    src={data?.image}
-                    alt="img"
-                    className="w-full h-full"
-                  ></img>
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white mr-3">
-                  {shortName(data?.name)}
-                </div>
-              )}
-              <span className="text-sm font-semibold">{data?.name}</span>
-            </div>
-          ))}
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="border text-left px-8 py-4">Image</th>
+                <th className="border text-left px-8 py-4">FirstName</th>
+                <th className="border text-left px-8 py-4">LastName</th>
+                <th className="border text-left px-8 py-4">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {attendees.map((each) => {
+                return (
+                  <tr key={each?.id}>
+                    <td className="border px-8 py-4">
+                      {each?.image ? (
+                        <div className="w-8 h-8 overflow-hidden rounded-full flex items-center justify-center text-white mr-3">
+                          <img
+                            src={each?.image}
+                            alt="img"
+                            className="w-full h-full"
+                          ></img>
+                        </div>
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white mr-3">
+                          {`${each?.firstName[0]}${each?.lastName[0]}`}
+                        </div>
+                      )}
+                    </td>
+                    <td className="border px-8 py-4">{each?.firstName}</td>
+                    <td className="border px-8 py-4">{each?.lastName}</td>
+                    <td className="border px-8 py-4">{each?.email}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </main>
     </div>
