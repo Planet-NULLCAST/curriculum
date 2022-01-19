@@ -1,6 +1,5 @@
 import styles from "./Detail.module.scss";
 import EventDate from "../EventLayouts/EventDate";
-import renderHTML from 'react-render-html';
 
 export default function Detail({ event }) {
   const { meta_title, description, location, event_time } = event;
