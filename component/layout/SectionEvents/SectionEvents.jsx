@@ -2,10 +2,15 @@ import styles from "./SectionEvents.module.scss";
 import Image from "next/image";
 import moment from "moment";
 import Fade from "react-reveal/Fade";
+import Link from 'next/link'
 
 export default function SectionEvents({ events }) {
+  console.log(events);
+
   return (
     <section className={styles.section}>
+      <Link href = {`e/${events?.slug}`}>
+        <a>
       <div className="container">
         <Fade>
           <div className="sectionHeader mb-10 lg:mb-20 xl:mb-32">
@@ -20,7 +25,7 @@ export default function SectionEvents({ events }) {
         <div className={styles.event}>
           <figure>
             <Image
-              src={events?.banner_image ? events.banner_image : '/'}
+              src={events?.banner_image ? events.banner_image : "/"}
               alt=""
               width={978}
               height={539}
@@ -29,11 +34,16 @@ export default function SectionEvents({ events }) {
               <h3>
                 <span>{events?.title}</span>
               </h3>
-              <p>{events?.event_time && moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}</p>
+              <p>
+                {events?.event_time &&
+                  moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}
+              </p>
             </figcaption>
           </figure>
         </div>
       </div>
+      </a>
+      </Link>
     </section>
   );
 }
