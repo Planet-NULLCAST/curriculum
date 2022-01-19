@@ -47,6 +47,23 @@ function AdminEventList({ events, refresh }) {
                   </div>
                 </div>
                 <div className="flex ">
+                  <Link href={`/e/${obj.slug}`}>
+                    <div
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
+                    >
+                      <>
+                        <div
+                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogStyles.draftedDot}`}
+                        ></div>
+
+                        <span
+                          className={`capitalize  ${MyBlogStyles.draftedText} `}
+                        >
+                          {obj.status === "published" ? "View" : "Preview"}
+                        </span>
+                      </>
+                    </div>
+                  </Link>
                   {/* {obj.status === "published" && (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}

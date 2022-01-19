@@ -50,7 +50,7 @@ export async function getServerSideProps() {
 }
 
 export default function EventListing({ events, count, limit }) {
-  const [newEvents, setNewEvents] = useState(events);
+  const [newEvents, setNewEvents] = useState([]);
 
   const currentCount = (count) => {
     getNewEvents(count);
@@ -58,26 +58,16 @@ export default function EventListing({ events, count, limit }) {
 
   // check event time with current
   useEffect(() => {
-    eventsHandler(newEvents);
-  });
+    eventsHandler(events);
+  }, []);
 
   const eventsHandler = (events) => {
     var today = new Date();
-    var date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
-    var time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var CurrentDateTime = date + " " + time;
+    const CurrentDateTime = today.toISOString();
 
     const eventsUpdated = events.filter(function (event) {
-      return (
-        moment(event.event_time).format("LLL") >
-        moment(CurrentDateTime).format("LLL")
-      );
+      console.log(event.event_time > CurrentDateTime);
+      return event.event_time > CurrentDateTime;
     });
     setNewEvents(eventsUpdated);
   };
