@@ -169,7 +169,6 @@ export default function WriteNav({
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
-    console.log(currentPost.banner_image);
     const settingsData = {
       banner_image: currentPost.banner_image ? currentPost.banner_image : null,
       og_description: shortDes,
