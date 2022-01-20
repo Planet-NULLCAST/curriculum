@@ -219,7 +219,6 @@ export default function WriteNav({
       category: "posts",
       ContentType: imageFile.type
     };
-
     setLoading(true);
     try {
       const s3ImageUrl = await SharedService.uploadImage(imageFile, imageData);
