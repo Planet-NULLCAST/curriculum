@@ -169,6 +169,7 @@ export default function WriteNav({
     const shortDes = e.target.shortDescription.value || "";
     const metaTitle = e.target.metaTitle.value || "";
     const metaDes = e.target.metaDescription.value || "";
+    console.log(currentPost.banner_image);
     const settingsData = {
       banner_image: currentPost.banner_image ? currentPost.banner_image : null,
       og_description: shortDes,
@@ -221,11 +222,10 @@ export default function WriteNav({
     setLoading(true);
     try {
       const s3ImageUrl = await SharedService.uploadImage(imageFile, imageData);
-
       setCurrentPost((prevValue) => {
         return {
           ...prevValue,
-          bannerImage: s3ImageUrl
+          banner_image: s3ImageUrl
         };
       });
     } catch (err) {
@@ -244,7 +244,7 @@ export default function WriteNav({
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
-        bannerImage: "",
+        banner_image: "",
         imageUrl: "",
         image: ""
       };
@@ -392,9 +392,8 @@ export default function WriteNav({
                   </div>
                   <div className="flex flex-col p-5 mt-16 mb-24 h-calcSettings">
                     <div
-                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
-                        !currentPost.bannerImage && "cursor-pointer"
-                      }`}
+                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${!currentPost.banner_image && "cursor-pointer"
+                        }`}
                     >
                       {currentPost.banner_image ? (
                         <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
@@ -414,7 +413,7 @@ export default function WriteNav({
                               trigger={
                                 <div
                                   className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
-                                  // onClick={handleImageDelete}
+                                // onClick={handleImageDelete}
                                 >
                                   <Image
                                     src="/images/svgs/delwhite.svg"
@@ -431,7 +430,7 @@ export default function WriteNav({
                               buttonColor={"red"}
                               heading={"Are you sure"}
                               text="Are you sure you want to delete this image?"
-                              // secondaryText="This cannot be undone"
+                            // secondaryText="This cannot be undone"
                             />
                           </div>
                         </div>
@@ -447,7 +446,7 @@ export default function WriteNav({
                                 name="imageUpload"
                                 onInput={handleImage}
                                 ref={imgRef}
-                                // value={imageSrc}
+                              // value={imageSrc}
                               />
                             }
                             handleSubmit={handleImageUpload}
@@ -599,9 +598,8 @@ export default function WriteNav({
                   <div className="w-full flex mb-3">
                     <div className="w-1/2 pr-1">
                       <button
-                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
-                          loading ? "disabled:opacity-50" : ""
-                        }`}
+                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${loading ? "disabled:opacity-50" : ""
+                          }`}
                         type="submit"
                         disabled={loading}
                       >
