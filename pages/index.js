@@ -37,7 +37,6 @@ export async function getServerSideProps(context) {
       page: 1
     };
     const responseEvents = await EventService.getLatestEvents(eventParams);
-    console.log(responseEvents, "events");
     return {
       props: {
         posts: responsePost?.data?.posts || [],
