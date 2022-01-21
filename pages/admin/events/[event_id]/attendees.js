@@ -92,8 +92,6 @@ export async function getServerSideProps(context) {
         const eventData = await EventService.getEventById(
           context.params.event_id
         );
-        // removed roles from user data
-        // const skillsRes = await SkillService.getSkills();
         if (data.roles[0] === "admin") {
           return {
             props: {

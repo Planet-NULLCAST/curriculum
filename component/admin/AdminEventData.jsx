@@ -1,5 +1,4 @@
 const AdminEventData = ({ eventData }) => {
-  console.log(eventData.description);
 
   return (
     <div>

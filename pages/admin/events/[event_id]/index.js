@@ -73,7 +73,6 @@ export async function getServerSideProps(context) {
 }
 
 const AdminEventDetails = ({ eventData }) => {
-  console.log(eventData);
   return (
     <div>
       <AdminEventSidebar eventData={eventData} />
