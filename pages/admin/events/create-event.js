@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import Link from 'next/link'
 import EventInfo from "../../../component/admin/EventInfo";
 import OrganizerInfo from "../../../component/admin/OrganizerInfo";
 import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
@@ -247,6 +248,7 @@ const CreateEvent = ({ referer }) => {
   const router = useRouter();
   const [eventID, setEventID] = useState(router.query.id);
   const [isLoading, setIsLoading] = useState(false);
+  const [eSlug , setEslug] = useState("")
   useEffect(() => {
     (() => {
       eventID && getEvents(eventID);
@@ -356,8 +358,8 @@ const CreateEvent = ({ referer }) => {
       const data = await EventService.updateEvent(eventID, eventData);
       if (data) {
         setIsLoading(false);
+        setEslug(data.data.data.slug)
         notify(data.data.message);
-        // router.push("/admin/events");
       }
     } catch (err) {
       setIsLoading(false);
@@ -424,6 +426,15 @@ const CreateEvent = ({ referer }) => {
           >
             Cancel
           </button>
+          <Link href={`/e/${eSlug}`}>
+          {eSlug && <button
+            className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white mr-5 ${
+              isLoading && "opacity-50 cursor-not-allowed"
+            }`}
+          >
+            Preview
+          </button>}
+          </Link>
           <button
             className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white ${
               isLoading && "opacity-50 cursor-not-allowed"
