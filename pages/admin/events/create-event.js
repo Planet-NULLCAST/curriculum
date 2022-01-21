@@ -358,10 +358,8 @@ const CreateEvent = ({ referer }) => {
       const data = await EventService.updateEvent(eventID, eventData);
       if (data) {
         setIsLoading(false);
-        console.log(data.data.data.slug);
         setEslug(data.data.data.slug)
         notify(data.data.message);
-        // router.push("/admin/events");
       }
     } catch (err) {
       setIsLoading(false);
