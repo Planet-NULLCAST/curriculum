@@ -35,22 +35,23 @@ export async function getServerSideProps(context) {
         };
       } else {
         //user logout from user profile
-        const data = await UserService.getUserByUsername(context.params.username);
+        const data = await UserService.getUserByUsername(
+          context.params.username
+        );
         return {
-           props : {
-              userData : data?.data,
-              userCurrentLogin: 0
-           }
+          props: {
+            userData: data?.data,
+            userCurrentLogin: 0
+          }
         };
       }
     } else {
       const data = await UserService.getUserByUsername(context.params.username);
       return {
-         props : {
-            userData : data?.data,
-            userCurrentLogin: data.data.id
-
-         }
+        props: {
+          userData: data?.data,
+          userCurrentLogin: data.data.id
+        }
       };
     }
   } catch (err) {
@@ -80,7 +81,7 @@ export default function Username({ userData, userCurrentLogin }) {
   const changeNav = (data) => {
     setCurrentNav(data);
   };
-
+  console.log(userData);
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
     const postParams = {
