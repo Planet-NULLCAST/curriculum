@@ -260,7 +260,6 @@ const CreateEvent = ({ referer }) => {
       const finalData = data.data;
       const date = moment(finalData.event_time).format("YYYY-MM-DD");
       const time = moment(finalData?.event_time).format("LT").split(" ")[0]
-      console.log(date , time);
       setEventDetails({
         organizerImage: finalData.guest_image,
         organizerName: finalData.guest_name,
