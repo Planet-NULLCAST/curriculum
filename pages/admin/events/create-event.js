@@ -259,7 +259,8 @@ const CreateEvent = ({ referer }) => {
       const data = await EventService.getEventById(reqData);
       const finalData = data.data;
       const date = moment(finalData.event_time).format("YYYY-MM-DD");
-      const time = moment(finalData.event_time).format("HH:SS");
+      const time = moment(finalData?.event_time).format("LT").split(" ")[0]
+      console.log(date , time);
       setEventDetails({
         organizerImage: finalData.guest_image,
         organizerName: finalData.guest_name,
@@ -353,6 +354,7 @@ const CreateEvent = ({ referer }) => {
       meta_description: eventDetails.eventDescription,
       event_time: formatTime()
     };
+    if (validateForm(eventDetails, setEventDetailsError)) {
     try {
       setIsLoading(true);
       const data = await EventService.updateEvent(eventID, eventData);
@@ -365,7 +367,7 @@ const CreateEvent = ({ referer }) => {
       setIsLoading(false);
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
-    formatTime();
+  }
   };
 
   const clearEventHandler = (e) => {
