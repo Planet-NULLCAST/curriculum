@@ -1,11 +1,13 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import ModalBookGuestEvent from "../../component/popup/ModalBookGuestEvent";
 
-const ModalConfirm = ({
+const ModalBookEvent = ({
   trigger,
   handleSubmit,
   purpose,
+  event,
   text,
   secondaryText,
   heading,
@@ -41,26 +43,39 @@ const ModalConfirm = ({
           )}
 
           <div className="w-full flex mt-4 justify-center mb-3">
-            <button
-              className={`w-24 mr-2 capitalize border font-bold text-white hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${buttonColor === "red" &&
-                "border-red-500 hover:text-red-500 bg-red-500"
-                } ${buttonColor === "green" &&
-                "border-green-500 hover:text-green-500 bg-green-500"
-                }`}
-              type="button"
-              onClick={() => {
-                handleSubmit();
-                close();
-              }}
-            >
-              {purpose}
-            </button>
-            <button
+            <div
+              className="flex justify-center">
+              <ModalBookGuestEvent
+                trigger={
+                  <div
+                    className={`w-24 mr-2 capitalize border font-bold text-white hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${buttonColor === "red" &&
+                      "border-red-500 hover:text-red-500 bg-red-500"
+                      } ${buttonColor === "green" &&
+                      "border-green-500 hover:text-green-500 bg-green-500"
+                      }`}                  >
+                    {purpose}
+                  </div>
+                }
+                event={event}
+                onClose={close}
+                handleSubmit={() => {
+                  close();
+                  handleSubmit();
+                }}
+
+                purpose={"Book"}
+                buttonColor={"green"}
+                heading={"Book event"}
+                text="You are not Logged in please login or continue as a guest!"
+              // secondaryText="This cannot be undone"
+              />
+            </div>
+            <a
+              href="/login"
               className="w-24 ml-2 capitalize border border-black text-black hover:text-white bg-white font-bold hover:bg-black flex justify-center items-center h-10 duration-700 rounded text-sm outline-none"
-              onClick={close}
             >
-              Cancel
-            </button>
+              Login
+            </a>
           </div>
         </div>
       )}
@@ -68,4 +83,4 @@ const ModalConfirm = ({
   );
 };
 
-export default ModalConfirm;
+export default ModalBookEvent;
