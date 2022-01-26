@@ -37,7 +37,7 @@ function AdminEventList({ events, refresh }) {
               >
                 <div>
                   <div className="text-gray-900 text-xl hover:text-purple-600 font-semibold ">
-                    <Link href={`/events/${obj.id}`}>{obj.title}</Link>
+                    <Link href={`/admin/events/${obj.id}`}>{obj.title}</Link>
                   </div>
                   <div className="flex items-center pt-1 text-xs ">
                     <div className={`text-gray-400 `}>
@@ -47,6 +47,25 @@ function AdminEventList({ events, refresh }) {
                   </div>
                 </div>
                 <div className="flex ">
+                  <Link href={`/e/${obj.slug}`}>
+                    <a target="_blank">
+                    <div
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
+                    >
+                      <>
+                        <div
+                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogStyles.draftedDot}`}
+                        ></div>
+
+                        <span
+                          className={`capitalize  ${MyBlogStyles.draftedText} `}
+                        >
+                          {obj.status === "published" ? "View" : "Preview"}
+                        </span>
+                      </>
+                    </div>
+                    </a>
+                  </Link>
                   {/* {obj.status === "published" && (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}

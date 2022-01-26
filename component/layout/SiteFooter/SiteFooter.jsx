@@ -22,6 +22,7 @@ export default function SiteFooter() {
       const response = await SubscribeService.addSubscription(email);
       notify(response.data.message, "success");
     } catch (err) {
+      notify(err?.response?.data?.message)
       console.log(err.message, "error");
     }
   }

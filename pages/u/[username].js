@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
 import Navbar from "../../component/profile/Navbar";
 import { getCookieValue } from "../../lib/cookie";
 import Activity from "../../component/profile/Activity";
@@ -12,10 +11,8 @@ import LuckEgg from "../../component/profile/LuckEgg";
 import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import UserService from "../../services/UserService";
 import PostService from "../../services/PostService";
-import Cookies from "universal-cookie";
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
-import notify from "../../lib/notify";
 
 export async function getServerSideProps(context) {
   try {
@@ -29,7 +26,6 @@ export async function getServerSideProps(context) {
         const userId = cookie.id;
         const username = context.params.username;
 
-        // let isThisUserTheCurrentLoggedIn = false;
         const data = await UserService.getUserByUsername(username);
         return {
           props: {
@@ -38,18 +34,23 @@ export async function getServerSideProps(context) {
           }
         };
       } else {
+        //user logout from user profile
+        const data = await UserService.getUserByUsername(
+          context.params.username
+        );
         return {
-          redirect: {
-            permanent: false,
-            destination: "/404"
+          props: {
+            userData: data?.data,
+            userCurrentLogin: 0
           }
         };
       }
     } else {
+      const data = await UserService.getUserByUsername(context.params.username);
       return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
+        props: {
+          userData: data?.data,
+          userCurrentLogin: data.data.id
         }
       };
     }
@@ -66,6 +67,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Username({ userData, userCurrentLogin }) {
+  console.log(userCurrentLogin);
   const [currentNav, setCurrentNav] = useState("profile");
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
@@ -79,7 +81,7 @@ export default function Username({ userData, userCurrentLogin }) {
   const changeNav = (data) => {
     setCurrentNav(data);
   };
-
+  console.log(userData);
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
     const postParams = {

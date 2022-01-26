@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import Link from 'next/link'
 import EventInfo from "../../../component/admin/EventInfo";
 import OrganizerInfo from "../../../component/admin/OrganizerInfo";
 import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
@@ -30,7 +31,9 @@ export async function getServerSideProps(context) {
           return {
             props: {
               profileData: {},
-              referer: context.req.headers.referer ? context.req.headers.referer : ""
+              referer: context.req.headers.referer
+                ? context.req.headers.referer
+                : ""
             }
           };
         } else {
@@ -78,8 +81,7 @@ export async function getServerSideProps(context) {
 }
 
 export async function getImageUrl(eventData, eventId) {
-  console.log(eventData)
-  if(eventData?.banner_image?.name && eventData?.guest_image?.name){
+  if (eventData?.banner_image?.name && eventData?.guest_image?.name) {
     return Promise.all([
       SharedService.uploadImage(eventData.guest_image, {
         stage: "dev",
@@ -96,8 +98,7 @@ export async function getImageUrl(eventData, eventId) {
         ContentType: "image/png"
       })
     ]);
-  }
-  else if(eventData?.banner_image?.name){
+  } else if (eventData?.banner_image?.name) {
     try {
       const resp = await SharedService.uploadImage(eventData.banner_image, {
         stage: "dev",
@@ -105,30 +106,27 @@ export async function getImageUrl(eventData, eventId) {
         id: eventId,
         category: "events",
         ContentType: "image/png"
-      })
-      if(resp){
-        console.log("banner" , resp)
-        return {url : resp , type : "banner"}
+      });
+      if (resp) {
+        return { url: resp, type: "banner" };
       }
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
-  else if(eventData?.guest_image?.name) {
+  } else if (eventData?.guest_image?.name) {
     try {
-      const resp =  await SharedService.uploadImage(eventData.guest_image, {
+      const resp = await SharedService.uploadImage(eventData.guest_image, {
         stage: "dev",
         fileName: eventData.guest_image.name,
         id: eventId,
         category: "events",
         ContentType: "image/png"
-      })
-      if(resp) {
-        console.log("gueest" , resp)
-        return {url : resp , type : "guest"}
+      });
+      if (resp) {
+        return { url: resp, type: "guest" };
       }
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }
@@ -144,12 +142,14 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       organizerNameError: "Enter Organizer's Name"
     }));
   }
-  if(eventDetails.organizerImage){
+  if (eventDetails.organizerImage) {
     setEventDetailsError((prev) => ({ ...prev, organizerImageError: "" }));
-  }
-  else{
-    isValid = false
-    setEventDetailsError((prev) => ({ ...prev, organizerImageError: "Choose Organizer's Image" }));
+  } else {
+    isValid = false;
+    setEventDetailsError((prev) => ({
+      ...prev,
+      organizerImageError: "Choose Organizer's Image"
+    }));
   }
   if (eventDetails.tagLine.trim()) {
     setEventDetailsError((prev) => ({ ...prev, tagLineError: "" }));
@@ -206,16 +206,23 @@ const validateForm = (eventDetails, setEventDetailsError) => {
     }));
   }
   if (eventDetails.eventTime.trim()) {
-    if(eventDetails.eventDate && eventDetails.eventDate === new Date().toISOString().split('T')[0]){
-      if(new Date().getHours() + ":" + new Date().getMinutes() > eventDetails.eventTime){
-        isValid = false
-        setEventDetailsError(prev => ({...prev , eventTimeError : "Time has already passed"}))
+    if (
+      eventDetails.eventDate &&
+      eventDetails.eventDate === new Date().toISOString().split("T")[0]
+    ) {
+      if (
+        new Date().getHours() + ":" + new Date().getMinutes() >
+        eventDetails.eventTime
+      ) {
+        isValid = false;
+        setEventDetailsError((prev) => ({
+          ...prev,
+          eventTimeError: "Time has already passed"
+        }));
+      } else {
+        setEventDetailsError((prev) => ({ ...prev, eventTimeError: "" }));
       }
-      else {
-        setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
-      }
-    }
-    else{
+    } else {
       setEventDetailsError((prev) => ({ ...prev, eventTimeError: "" }));
     }
   } else {
@@ -225,21 +232,23 @@ const validateForm = (eventDetails, setEventDetailsError) => {
       eventTimeError: "Enter Event Time"
     }));
   }
-  if(eventDetails.eventImage){
+  if (eventDetails.eventImage) {
     setEventDetailsError((prev) => ({ ...prev, eventImageError: "" }));
-  }
-  else{
-    isValid = false
-    setEventDetailsError((prev) => ({ ...prev, eventImageError: "Choose a Banner Image" }));
+  } else {
+    isValid = false;
+    setEventDetailsError((prev) => ({
+      ...prev,
+      eventImageError: "Choose a Banner Image"
+    }));
   }
   return isValid;
 };
 
-
-const CreateEvent = ({referer}) => {
-  const router = useRouter()
+const CreateEvent = ({ referer }) => {
+  const router = useRouter();
   const [eventID, setEventID] = useState(router.query.id);
   const [isLoading, setIsLoading] = useState(false);
+  const [eSlug , setEslug] = useState("")
   useEffect(() => {
     (() => {
       eventID && getEvents(eventID);
@@ -249,7 +258,6 @@ const CreateEvent = ({referer}) => {
     try {
       const data = await EventService.getEventById(reqData);
       const finalData = data.data;
-      console.log(finalData)
       const date = moment(finalData.event_time).format("YYYY-MM-DD");
       const time = moment(finalData.event_time).format("HH:SS");
       setEventDetails({
@@ -265,7 +273,6 @@ const CreateEvent = ({referer}) => {
         eventImage: finalData.banner_image
       });
     } catch (err) {
-      console.log(err)
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
@@ -308,10 +315,12 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      meta_title: eventDetails.eventName,
       location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,
+      meta_description: eventDetails.eventDescription,
       event_time: formatTime()
     };
     if (validateForm(eventDetails, setEventDetailsError)) {
@@ -324,7 +333,7 @@ const CreateEvent = ({referer}) => {
           router.push("/admin/events");
         }
       } catch (err) {
-        setIsLoading(false)
+        setIsLoading(false);
         notify(err?.response?.data?.message ?? err?.message, "error");
       }
     }
@@ -336,22 +345,24 @@ const CreateEvent = ({referer}) => {
       guest_designation: eventDetails.tagLine,
       guest_image: eventDetails.organizerImage,
       title: eventDetails.eventName,
+      meta_title: eventDetails.eventName,
       location: eventDetails.eventLocation,
       registration_link: eventDetails.eventLink,
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,
+      meta_description: eventDetails.eventDescription,
       event_time: formatTime()
     };
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const data = await EventService.updateEvent(eventID, eventData);
-      if(data){
-        setIsLoading(false)
-      notify(data.data.message);
-      router.push("/admin/events");
+      if (data) {
+        setIsLoading(false);
+        setEslug(data.data.data.slug)
+        notify(data.data.message);
       }
     } catch (err) {
-      setIsLoading(false)
+      setIsLoading(false);
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
     formatTime();
@@ -359,30 +370,29 @@ const CreateEvent = ({referer}) => {
 
   const clearEventHandler = (e) => {
     const clearEventDetails = {
-    organizerImage: "",
-    organizerName: "",
-    tagLine: "",
-    eventName: "",
-    eventLocation: "",
-    eventDescription: "",
-    eventLink: "",
-    eventDate: "",
-    eventTime: "",
-    eventImage: ""
+      organizerImage: "",
+      organizerName: "",
+      tagLine: "",
+      eventName: "",
+      eventLocation: "",
+      eventDescription: "",
+      eventLink: "",
+      eventDate: "",
+      eventTime: "",
+      eventImage: ""
+    };
+    setEventDetails(clearEventDetails);
+    if (referer) {
+      router.back();
+    } else {
+      router.push("/admin/events");
     }
-    setEventDetails(clearEventDetails)
-    if(referer){
-      router.back()
-    }
-    else{
-      router.push('/admin/events')
-    }
-  }
-  
+  };
+
   return (
     <div className="bg-gray-100 min-h-full pb-5">
       <Head>
-          <title>Admin | Create Event | Nullcast</title>
+        <title>Admin | Create Event | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-white max-w-6xl mx-auto flex  mt-3.5">
@@ -416,6 +426,15 @@ const CreateEvent = ({referer}) => {
           >
             Cancel
           </button>
+          <Link href={`/e/${eSlug}`}>
+          {eSlug && <button
+            className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white mr-5 ${
+              isLoading && "opacity-50 cursor-not-allowed"
+            }`}
+          >
+            Preview
+          </button>}
+          </Link>
           <button
             className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white ${
               isLoading && "opacity-50 cursor-not-allowed"
