@@ -492,10 +492,11 @@ export default function SignUp({ referer }) {
                               termsClick(e);
                               setTermsValid(e.target.checked);
                             }}
+                            className="h-4 w-4 cursor-pointer "
                           />
                           <label
                             htmlFor="terms"
-                            className="ml-2 text-white"
+                            className="ml-2 text-white cursor-pointer select-none"
                           >
                             I agree to the{" "}
                             <a href="#" className="text-white cursor-pointer underline">
@@ -503,17 +504,18 @@ export default function SignUp({ referer }) {
                             </a>
                           </label>
                         </div>
-                        <div className="flex items-center text-xs mb-3">
+                        <div className="flex items-center text-xs mb-4 mt-3 cursor-pointer">
                           <input
                             type="checkbox"
                             id="updates"
                             name="updates"
                             value="updates"
                             onChange={()=>setNsletter(!nsletter)}
+                            className="h-4 w-4 cursor-pointer"
                           />
                           <label
                             htmlFor="updates"
-                            className="ml-2 text-white"
+                            className="ml-2 text-white cursor-pointer select-none"
                           >
                             Send me latest updates
                           </label>
