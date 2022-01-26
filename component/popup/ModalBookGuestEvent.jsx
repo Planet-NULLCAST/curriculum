@@ -209,8 +209,7 @@ const ModalBookGuestEvent = ({
             )
           }
         </div >
-      )
-      }
+      )}
     </Popup >
   );
 };
