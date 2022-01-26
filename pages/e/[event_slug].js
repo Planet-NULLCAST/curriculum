@@ -75,6 +75,10 @@ export default function BlogListing({ event }) {
 
   let pageUrl = locationUrl;
 
+  const eventBook = (event) => {
+    alert("s");
+  };
+
   return (
     <>
       <Head>
@@ -150,7 +154,14 @@ export default function BlogListing({ event }) {
       {viewShare && (
         <ShareEvent location={pageUrl} hideWindow={() => setViewShare(false)} />
       )}
-      <EventSpotlight showWindow={() => setViewShare(true)} data={event} />
+      <EventSpotlight
+        showWindow={() => setViewShare(true)}
+        data={event}
+        handleSubmit={() => {
+          eventBook();
+        }}
+        // handleSubmit={eventBook}
+      />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />

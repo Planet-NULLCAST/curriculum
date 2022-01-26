@@ -106,48 +106,52 @@ export default function BookEvent({ data, showShare, handleSubmit }) {
         </a>
       </Link>
 
-      {userId ? (
-        <div className="flex justify-center">
-          <button type="button"
-            onClick={() => {
-              if (bookStatus) {
-                bookEventUser();
-              }
-            }}
-            disabled={bookStatus ? "" : "disabled"}
-            className={`${styles.Book_Now} ${bookStatus ? "" : "cursor-not-allowed"}`} >
-            {isLoading && <LoadIcon color="#fff" height="33px" />}
+      {
+        userId ? (
+          <div className="flex justify-center">
+            <button type="button"
+              onClick={() => {
+                if (bookStatus) {
+                  bookEventUser();
+                }
+              }}
+              disabled={bookStatus ? "" : "disabled"}
+              className={`${styles.Book_Now} ${bookStatus ? "" : "cursor-not-allowed"}`} >
+              {isLoading && <LoadIcon color="#fff" height="33px" />}
 
-            {bookStatus ? "Book Event" : "Booked"}
-          </button>
-        </div>
-      ) : (
-        <div
-          className="flex justify-center">
-          <ModalBookGuestEvent
-            trigger={
-              <div
-                className={styles.Book_Now}
-              >
-                BOOK NOW
-              </div>
-            }
-            event={data}
-          />
-        </div>
-      )}
-      {open ? (
-        <div
-          className="flex justify-center">
-          <ModalBookEvent
-            setOpen={setOpen} open={open}
-          />
-        </div>
-      ) : (
-        <div>
-        </div>
-      )}
+              {bookStatus ? "Book Event" : "Booked"}
+            </button>
+          </div>
+        ) : (
+          <div
+            className="flex justify-center">
+            <ModalBookGuestEvent
+              trigger={
+                <div
+                  className={styles.Book_Now}
+                >
+                  BOOK NOW
+                </div>
+              }
+              event={data}
+            />
+          </div >
+        )
+      }
+      {
+        open ? (
+          <div
+            className="flex justify-center">
+            <ModalBookEvent
+              setOpen={setOpen} open={open}
+            />
+          </div>
+        ) : (
+          <div>
+          </div>
+        )
+      }
       <button className={styles.share} onClick={showShare}>SHARE EVENT</button>
-    </div>
+    </div >
   );
 }

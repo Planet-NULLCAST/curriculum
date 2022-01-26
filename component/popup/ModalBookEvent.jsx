@@ -39,4 +39,3 @@ const ModalBookEvent = ({
 };
 
 export default ModalBookEvent;
-

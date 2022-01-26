@@ -2,7 +2,7 @@ import BookEvent from "./BookEvent";
 import styles from "./EventSpotlight.module.scss";
 import GuestDetails from "./GuestDetails";
 
-export default function EventSpotlight({ data, showWindow }) {
+export default function EventSpotlight({ data, showWindow, handleSubmit }) {
   const {
     banner_image,
     guest_name,

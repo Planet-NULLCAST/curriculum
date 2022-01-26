@@ -8,7 +8,7 @@ import Fade from "react-reveal/Fade";
 import { getCookieValue } from "../lib/cookie";
 import { LoadIcon } from "../component/ButtonLoader/LoadIcon";
 import { signUp, emailVerification } from "../services/AuthService";
-import SubscribeService from '../services/SubscribeService'
+import SubscribeService from "../services/SubscribeService";
 
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
@@ -146,7 +146,7 @@ export default function SignUp({ referer }) {
   // Getting token from cookie
   const cookies = new Cookies();
   const userToken = cookies.get("token");
- 
+
   async function handleClick(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -159,111 +159,111 @@ export default function SignUp({ referer }) {
     if (!email) {
       setEmailValid(false);
     }
-    async function subscribeNewsletter(email){
-      try{
+    async function subscribeNewsletter(email) {
+      try {
         const response = await SubscribeService.addSubscription(email);
-        console.log(response)
-      }catch(err){
-        console.log(err)
+        console.log(response);
+      } catch (err) {
+        console.log(err);
       }
     }
-    async function sentEmailVarification(email){
-      try{
+    async function sentEmailVarification(email) {
+      try {
         const response = await emailVerification(email);
-        console.log(response)
+        console.log(response);
         notify(response.message);
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
     if (validEmail) {
       if (fName && password && email && username && terms) {
-          try {
-            const data = await signUp(email, password, fName, username);
-            email && sentEmailVarification(email)
-            // const newDate = new Date(moment().add(30, "days")).toUTCString();
-            // const expires = `; expires=${newDate}`;
-            // const userData = data.user;
-            // document.cookie = `userNullcast=${JSON.stringify(
-            //   userData
-            // )}${expires}`;
-            // localStorage.setItem("userNullcast", JSON.stringify(userData));
-            // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
-            
-            nsletter && subscribeNewsletter(email)
-            setIsLoading(false);
-            // notify(data.message);
-            // if (referer) {
-            //   router.back();
-            // } else {
-            //   // router.push("/");
-            // }
-          } catch (err) {
-            setIsLoading(false);
-            // const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
-            //console.log(errorMessage)
-            notify(err?.response?.data?.message || err?.message, 'error');
-          }
+        try {
+          const data = await signUp(email, password, fName, username);
+          email && sentEmailVarification(email);
+          // const newDate = new Date(moment().add(30, "days")).toUTCString();
+          // const expires = `; expires=${newDate}`;
+          // const userData = data.user;
+          // document.cookie = `userNullcast=${JSON.stringify(
+          //   userData
+          // )}${expires}`;
+          // localStorage.setItem("userNullcast", JSON.stringify(userData));
+          // sessionStorage.setItem("userNullcast", JSON.stringify(data.user));
 
-          // let progress = JSON.parse(
-          //   window.localStorage.getItem("progress")
-          // ) || [{ courseName: "", completedChapter: [] }];
-          // axios({
-          //   method: "post",
-          //   url: `${baseUrl}${enrolUrl}/progress`,
-          //   headers: {
-          //     "x-access-token": `${document.cookie}`
-          //   },
-          //   data: progress
-          // }).then((response) => {
-          //   // console.log(response);
-          // });
-          // axios({
-          //   method: "post",
-          //   url: `${baseUrl}/api/progress/all`,
-          //   headers: {
-          //     "x-access-token": `${document.cookie}`
-          //   }
-          // })
-          //   .then((response) => {
-          //     window.localStorage.setItem(
-          //       "progress",
-          //       JSON.stringify(response.data)
-          //     );
-          //   })
-          //   .catch((err) => {
-          //     console.log(err.message);
-          //   });
-          // console.log(referer , 'here')
+          nsletter && subscribeNewsletter(email);
+          setIsLoading(false);
+          // notify(data.message);
           // if (referer) {
           //   router.back();
           // } else {
-          //   router.push("/");
+          //   // router.push("/");
           // }
-      } else {
+        } catch (err) {
           setIsLoading(false);
-          if (!fName) {
-            setValidName("empty");
-          }
-          if (!password) {
-            setValidPassword("empty");
-          }
-          if (!email) {
-            setEmailValid(false);
-          }
-          if (!username) {
-            setValidUserName("empty");
-          }
-          if (!terms) {
-            setTermsValid(false);
+          // const errorMessage = err?.response?.data?.message.split('"')[1] === 'users_email_key' ? "email already exists" : "username not available"
+          //console.log(errorMessage)
+          notify(err?.response?.data?.message || err?.message, "error");
+        }
+
+        // let progress = JSON.parse(
+        //   window.localStorage.getItem("progress")
+        // ) || [{ courseName: "", completedChapter: [] }];
+        // axios({
+        //   method: "post",
+        //   url: `${baseUrl}${enrolUrl}/progress`,
+        //   headers: {
+        //     "x-access-token": `${document.cookie}`
+        //   },
+        //   data: progress
+        // }).then((response) => {
+        //   // console.log(response);
+        // });
+        // axios({
+        //   method: "post",
+        //   url: `${baseUrl}/api/progress/all`,
+        //   headers: {
+        //     "x-access-token": `${document.cookie}`
+        //   }
+        // })
+        //   .then((response) => {
+        //     window.localStorage.setItem(
+        //       "progress",
+        //       JSON.stringify(response.data)
+        //     );
+        //   })
+        //   .catch((err) => {
+        //     console.log(err.message);
+        //   });
+        // console.log(referer , 'here')
+        // if (referer) {
+        //   router.back();
+        // } else {
+        //   router.push("/");
+        // }
+      } else {
+        setIsLoading(false);
+        if (!fName) {
+          setValidName("empty");
+        }
+        if (!password) {
+          setValidPassword("empty");
+        }
+        if (!email) {
+          setEmailValid(false);
+        }
+        if (!username) {
+          setValidUserName("empty");
+        }
+        if (!terms) {
+          setTermsValid(false);
         }
         // setIsLoading(false);
       }
     }
   }
 
-  // * news letter subscription 
-  const [nsletter, setNsletter] = useState(false)
+  // * news letter subscription
+  const [nsletter, setNsletter] = useState(false);
   return (
     <div className="w-full min-h-screen bg-white flex">
       <Head>
@@ -493,12 +493,12 @@ export default function SignUp({ referer }) {
                               setTermsValid(e.target.checked);
                             }}
                           />
-                          <label
-                            htmlFor="terms"
-                            className="ml-2 text-white"
-                          >
+                          <label htmlFor="terms" className="ml-2 text-white">
                             I agree to the{" "}
-                            <a href="#" className="text-white cursor-pointer underline">
+                            <a
+                              href="#"
+                              className="text-white cursor-pointer underline"
+                            >
                               Terms and Conditions
                             </a>
                           </label>
@@ -509,12 +509,9 @@ export default function SignUp({ referer }) {
                             id="updates"
                             name="updates"
                             value="updates"
-                            onChange={()=>setNsletter(!nsletter)}
+                            onChange={() => setNsletter(!nsletter)}
                           />
-                          <label
-                            htmlFor="updates"
-                            className="ml-2 text-white"
-                          >
+                          <label htmlFor="updates" className="ml-2 text-white">
                             Send me latest updates
                           </label>
                         </div>
@@ -526,10 +523,11 @@ export default function SignUp({ referer }) {
                           </span>
                         )}
                         <button
-                          className={`submitButtons w-full flex items-center justify-center ${isLoading
+                          className={`submitButtons w-full flex items-center justify-center ${
+                            isLoading
                               ? "opacity-50 cursor-not-allowed"
                               : "hover:bg-transparent hover-text-pink-710"
-                            }`}
+                          }`}
                           type="submit"
                           disabled={
                             !validEmail ||
