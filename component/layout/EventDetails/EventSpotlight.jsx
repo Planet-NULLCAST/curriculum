@@ -8,21 +8,21 @@ export default function EventSpotlight({ data, showWindow }) {
     guest_name,
     guest_designation,
     guest_image,
-    guest_bio,
-    registration_link,
+    // guest_bio,
+    // registration_link,
   } = data;
-  const showsharebox = (e) => showshare(e.value)
+  // const showsharebox = (e) => showshare(e.value)
   return (
-      <section className={styles.section}>
-        <div className={styles.postWrap}>
-          <figure>{banner_image && <img src={banner_image} alt="Event Image" />}</figure>
-          <div className={styles.bookEvent}>
-            <BookEvent data={data} showShare={showWindow} />
-          </div>
-          <div className={styles.author}>
-            <GuestDetails name={guest_name} avatar={guest_image} desig={guest_designation} />
-          </div>
+    <section className={styles.section}>
+      <div className={styles.postWrap}>
+        <figure>{banner_image && <img src={banner_image} alt="Event Image" />}</figure>
+        <div className={styles.bookEvent}>
+          <BookEvent data={data} />
         </div>
-      </section>
+        <div className={styles.author}>
+          <GuestDetails name={guest_name} avatar={guest_image} desig={guest_designation} />
+        </div>
+      </div>
+    </section>
   );
 }
