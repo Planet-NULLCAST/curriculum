@@ -26,8 +26,7 @@ const ModalBookGuestEvent = ({
   async function subscribeNewsletter(email) {
     try {
       const response = await SubscribeService.addSubscription(email);
-    } catch (err) {
-    }
+    } catch (err) { }
   }
 
   function confirmEmail() {
