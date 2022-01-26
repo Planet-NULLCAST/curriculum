@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import notify from "../../lib/notify";
-import Link from "next/link";
 import EventService from "../../services/EventService";
 import ModalBookEvent from "../popup/ModalBookEvent";
 import SubscribeService from "../../services/SubscribeService";
@@ -12,7 +11,6 @@ import { fail } from "assert";
 
 const ModalBookGuestEvent = ({
   trigger,
-  purpose,
   event,
 }) => {
 
@@ -34,7 +32,7 @@ const ModalBookGuestEvent = ({
     var confemail = document.getElementById("confemail").value
     if (email === confemail) {
       setEmailValid(true);
-      setValidEmailName(email);
+      setValidEmailName(confemail);
     }
     else {
       setEmailValid(false);
@@ -54,9 +52,9 @@ const ModalBookGuestEvent = ({
           const data = await EventService.bookEvent(validEmailName, eventId, fName);
           nsletter && subscribeNewsletter(email);
           if (data) {
-            setIsLoading(false)
+            setIsLoading(false);
             setOpen(true);
-            notify(data.message);
+            // notify(data.message);
           }
         } catch (err) {
           setIsLoading(false);
@@ -123,11 +121,9 @@ const ModalBookGuestEvent = ({
               <div className={styles.body}>
                 <div className={styles.header}>Countinue as guest </div>
                 <div className={styles.login_text}>
-                  <Link href="/login">
-                    <a target="_blank">
-                      <span className={styles.login}>login</span>
-                    </a>
-                  </Link>
+                  <a href="/login">
+                    <span className={styles.login}>login</span>
+                  </a>
                   for better experiance
                 </div>
                 <Inputfield label="First Name"
@@ -180,13 +176,14 @@ const ModalBookGuestEvent = ({
                 </div>
                 <div className={styles.btnbox}>
                   <button className={`${styles.submit_btn} ${isLoading
-                    ? "opacity-50 cursor-not-allowed"
+                    ? "opacity-50 cursor-not-allowed flex items-center justify-center w-60"
                     : "hover:bg-transparent hover:border-black hover-text-pink-710 "
                     }`}
                     type="submit">
-                    {isLoading && <LoadIcon color="#fff" height="33px" />}
                     Submit
+                    {isLoading && <LoadIcon color="#fff" height="25px" />}
                   </button>
+
                 </div>
               </div>
             </div>
