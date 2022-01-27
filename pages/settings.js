@@ -1,4 +1,9 @@
-import { useState, useEffect } from "react";
+import React, {
+  CSSProperties,
+  FunctionComponent,
+  useState,
+  useEffect
+} from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,11 +16,13 @@ import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
 import Fade from "react-reveal/Fade";
-import CreatableSelect from "react-select/creatable";
+import CreatableSelect from "react-select";
 import SkillService from "../services/SkillService";
 import TagService from "../services/TagService";
 import notify from "../lib/notify";
 import SharedService from "../services/SharedService";
+
+import { CSSObject } from "@emotion/serialize";
 
 export async function getServerSideProps(context) {
   try {
@@ -68,6 +75,69 @@ export async function getServerSideProps(context) {
     };
   }
 }
+
+export const ClearIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref}
+      className="h-full "
+      style={{
+        display: "flex",
+        padding: "8px 10px",
+        fontSize: "18px",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          cursor: "pointer",
+          top: "0",
+          right: "0"
+        }}
+      >
+        &#10005;
+      </div>
+    </div>
+  );
+};
+
+export const DropdownIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref2, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref2}
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          height: "content",
+          cursor: "pointer",
+          alignItems: "center",
+          top: "0",
+          fontSize: "32px",
+          right: "0"
+        }}
+      >
+        &#x2304;
+      </div>
+    </div>
+  );
+};
 
 export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
@@ -151,14 +221,16 @@ export default function Settings({ profileData, _skills }) {
       const res = await TagService.getTags();
       // console.log("get tags response", res);
       if (res && res.length) {
-        const resTagOptions = res.sort((a, b) => (a.name > b.name) ? 1 : -1).map((tag) => {
-          return {
-            label: `${tag.name.toUpperCase()}`,
-            value: `${tag.name}`,
-            id: tag.id,
-            name: `${tag.name}`
-          };
-        });
+        const resTagOptions = res
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((tag) => {
+            return {
+              label: `${tag.name.toUpperCase()}`,
+              value: `${tag.name}`,
+              id: tag.id,
+              name: `${tag.name}`
+            };
+          });
         // setTagOptions;
         // console.log({ resTagOptions });
         setTagOptions(resTagOptions);
@@ -366,6 +438,19 @@ export default function Settings({ profileData, _skills }) {
     }
   };
 
+  const ClearIndicatorStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+
+    cursor: "pointer",
+    height: "100%"
+  });
+
+  const DropDownStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+    cursor: "pointer",
+    height: "100%"
+  });
+
   return (
     <>
       <SiteHeader userName={userName} />
@@ -519,12 +604,17 @@ export default function Settings({ profileData, _skills }) {
                 <label htmlFor="skills">Skills</label>
                 <CreatableSelect
                   options={tagOptions}
+                  components={{ ClearIndicator, DropdownIndicator }}
+                  styles={
+                    ({ clearIndicator: ClearIndicatorStyles },
+                    { dropdownIndicator: DropDownStyles })
+                  }
                   isMulti
                   className="basic-multi-select w-full mb-4 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                   classNamePrefix="Skills"
-                  clearValue={() => undefined}
+                  // clearValue={() => undefined}
                   placeholder="Skills"
-                  closeMenuOnSelect={false}
+                  // closeMenuOnSelect={false}
                   name="skills"
                   // id="skills"
                   value={profile?.skills?.map((skill) => {
