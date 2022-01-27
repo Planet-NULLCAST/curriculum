@@ -47,7 +47,6 @@ export default function SectionVideos() {
                   </div>
                 </figcaption> */}
 
-
               </figure>
             </div>
 
@@ -67,7 +66,6 @@ export default function SectionVideos() {
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-
                 >
                 </iframe>
                 <button
@@ -123,7 +121,6 @@ export default function SectionVideos() {
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen="true"
                 >
                 </iframe>
                 <button
@@ -138,7 +135,6 @@ export default function SectionVideos() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   > */}
-
                   {/* <path
                     d="M68.765 76.031a2.944 2.944 0 01-2.942-2.943V30.913a2.943 2.943 0 014.827-2.261l25.306 21.088a2.942 2.942 0 010 4.522L70.65 75.349a2.942 2.942 0 01-1.885.682zm2.944-38.837v29.612L89.476 52 71.71 37.194z"
                     fill="#fff"
