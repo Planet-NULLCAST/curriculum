@@ -242,7 +242,7 @@ export default function Login({ referer, verify }) {
                         id="email"
                         name="email"
                         type="text"
-                        //onBlur={(e) => emailValidator(e)}
+                        onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
                           setEmailValid(true)
                           // if (!validEmail) {
