@@ -20,7 +20,7 @@
   @apply flex justify-center items-center;
 }
 .image {
-  @apply mx-auto;
+  @apply mx-auto w-72 h-28;
 }
 .text1 {
   @apply text-center font-bold text-lg mt-5;
