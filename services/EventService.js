@@ -5,6 +5,7 @@ import {
   eventIdUrl,
   createEventUrl,
   eventSlugUrl,
+  bookEventUrl,
   getAllEventsUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
@@ -169,8 +170,46 @@ async function updateEvent(eventId, updatedData) {
   }
 }
 
+// book event
+async function bookEvent(email, eventId, full_name, userId) {
+  try {
+    if (userId) {
+      const { data } = await axios.post(
+        `${baseUrl}/${bookEventUrl}/?user_id=${userId}`,
+        {
+          "event_id": eventId,
+          "email": email,
+          "full_name": full_name
+        }
+      );
+      return data;
+    } else {
+      const { data } = await axios.post(`${baseUrl}/${bookEventUrl}/`, {
+        "event_id": eventId,
+        "email": email,
+        "full_name": full_name
+      });
+      return data;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getBookEventStatus(eventId) {
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/api/v1/event-attendee/${eventId}`
+    );
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
 const EventService = {
+  getBookEventStatus,
   getLatestEvents,
+  bookEvent,
   getEventById,
   getEventBySlug,
   createNewEvent,

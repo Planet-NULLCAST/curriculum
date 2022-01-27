@@ -63,15 +63,21 @@ export default function BlogListing({ event }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [viewShare, setViewShare] = useState(false);
-  const [locationUrl, setLocation] = useState('');
+  const [locationUrl, setLocation] = useState("");
 
   useEffect(() => {
     const locationUrl = window.location.href;
-    setLocation(locationUrl)
-    viewShare ? document.body.classList.add('overflow-hidden'): document.body.classList.remove('overflow-hidden')
-  }, [viewShare])
+    setLocation(locationUrl);
+    viewShare
+      ? document.body.classList.add("overflow-hidden")
+      : document.body.classList.remove("overflow-hidden");
+  }, [viewShare]);
 
   let pageUrl = locationUrl;
+
+  const eventBook = (event) => {
+    alert("s");
+  };
 
   return (
     <>
@@ -148,7 +154,14 @@ export default function BlogListing({ event }) {
       {viewShare && (
         <ShareEvent location={pageUrl} hideWindow={() => setViewShare(false)} />
       )}
-      <EventSpotlight showWindow={() => setViewShare(true)} data={event} />
+      <EventSpotlight
+        showWindow={() => setViewShare(true)}
+        data={event}
+        handleSubmit={() => {
+          eventBook();
+        }}
+        // handleSubmit={eventBook}
+      />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />
