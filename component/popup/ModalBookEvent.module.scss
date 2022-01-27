@@ -1,0 +1,32 @@
+.card {
+  @apply bg-white max-h-screen overflow-x-auto rounded-xl relative;
+  width: 484px;
+}
+.card::-webkit-scrollbar {
+  display: none;
+}
+.close {
+  @apply px-4 pt-2 absolute right-0 cursor-pointer;
+}
+.body {
+  @apply p-10;
+}
+.submit_btn {
+  @apply p-3 mt-10 text-white text-lg font-bold mx-auto self-center;
+  background-color: #f13e5d;
+  width: 281px;
+}
+.btnbox {
+  @apply flex justify-center items-center;
+}
+.image {
+  @apply mx-auto w-72 h-28;
+}
+.text1 {
+  @apply text-center font-bold text-lg mt-5;
+  font-family: "Open Sans";
+}
+.text2 {
+  @apply text-base font-semibold text-center mt-3;
+  font-family: "Open Sans";
+}
