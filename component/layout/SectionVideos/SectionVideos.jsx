@@ -47,7 +47,6 @@ export default function SectionVideos() {
                   </div>
                 </figcaption> */}
 
-
               </figure>
             </div>
 
