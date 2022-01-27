@@ -67,7 +67,6 @@ export default function SectionVideos() {
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
                 >
                 </iframe>
                 <button
@@ -123,7 +122,6 @@ export default function SectionVideos() {
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-
                 >
                 </iframe>
                 <button

@@ -153,9 +153,9 @@ const ModalBookGuestEvent = ({
                     }
                   }}
                 />
-                {validEmailName === "empty" && (
+                {!validEmail && (
                   <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                    please enter email address !
+                    Please enter email address
                   </span>
                 )}
                 <Inputfield label="Confirm Email"
@@ -165,6 +165,7 @@ const ModalBookGuestEvent = ({
                 />
                 <div className={styles.check}>
                   <input type="checkbox"
+                    className="cursor-pointer"
                     id="updates"
                     name="updates"
                     value="updates"
