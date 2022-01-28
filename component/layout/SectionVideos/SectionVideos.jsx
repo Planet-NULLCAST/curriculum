@@ -144,7 +144,6 @@ export default function SectionVideos() {
 
                     <h3>
                       IoT Communication Protocol? | Nullcast
-
                     </h3>
                   </div>
                 </figcaption>
@@ -189,7 +188,6 @@ export default function SectionVideos() {
                 </button> */}
                 <figcaption>
                   <div className={`${styles.caption1} ${thirdPlay ? "invisible" : "visible"}`} >
-
                     <h3>
                       What is Zapier? | Nullcast
                     </h3>
