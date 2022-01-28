@@ -11,7 +11,6 @@ export default function SectionVideos() {
   const [secondPlay, setSecondPlay] = useState(false);
   const [thirdPlay, setThirdPlay] = useState(false);
 
-
   const checkState1 = (e) => {
     // console.log(e.target.playerInfo.playerState);
     if (e.target.playerInfo.playerState === 1) {
@@ -49,7 +48,6 @@ export default function SectionVideos() {
       autoplay: 0
     }
   };
-
 
   return (
     <section className={styles.section}>
@@ -102,16 +100,10 @@ export default function SectionVideos() {
                       </h3>
                     </div>
                   </figcaption>
-
-
                 </div>
-
               </figure>
             </div>
-
-            <div className={styles.videoItem}
-
-            >
+            <div className={styles.videoItem}>
               <figure>
                 <YouTube
                   videoId="YP48OZtsOpU"
