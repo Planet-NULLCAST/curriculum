@@ -68,7 +68,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Username({ userData, userCurrentLogin }) {
-  console.log(userData);
   const [currentNav, setCurrentNav] = useState("profile");
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
@@ -82,7 +81,7 @@ export default function Username({ userData, userCurrentLogin }) {
   const changeNav = (data) => {
     setCurrentNav(data);
   };
-  console.log(userData);
+
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
     const postParams = {
