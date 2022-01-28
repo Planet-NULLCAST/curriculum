@@ -67,7 +67,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Username({ userData, userCurrentLogin }) {
-  console.log(userCurrentLogin);
+  console.log(userData);
   const [currentNav, setCurrentNav] = useState("profile");
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
@@ -124,6 +124,40 @@ export default function Username({ userData, userCurrentLogin }) {
     <div>
       <Head>
         <title> @{userData.user_name} | Nullcast</title>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              ...homePageSchema,
+              url: `${url}/${userData.user_name}`,
+              description: userData.meta_description
+            })
+          }}
+        ></script>
+        <meta
+          name="description"
+          content="nullcast is a series of events, blogs, podcasts and short videos for everything web related."
+        />
+        <link rel="canonical" href={`${url}/${userData.meta_title}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${userData.meta_title}`} />
+        <meta
+          property="og:description"
+          content="nullcast is a series of events, blogs, podcasts and short videos for everything web related."
+        />
+        <meta property="og:url" content={`${url}/${userData.meta_title}`} />
+        <meta property="og:image" content={logoPath} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${userData.meta_title}`} />
+        <meta
+          name="twitter:description"
+          content="nullcast is a series of events, blogs, podcasts and short videos for everything web related."
+        />
+        <meta name="twitter:url" content={`${url}/${userData.meta_title}`} />
+        <meta name="twitter:image" content={logoPath} />
+        <meta property="og:image:width" content="352" />
+        <meta property="og:image:height" content="212" />
       </Head>
       <SiteHeader />
       <div className="bg-gray-100 py-2 pb-6 px-6">
