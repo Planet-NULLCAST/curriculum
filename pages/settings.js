@@ -1,9 +1,4 @@
-import React, {
-  CSSProperties,
-  FunctionComponent,
-  useState,
-  useEffect
-} from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
@@ -18,8 +13,6 @@ import SkillService from "../services/SkillService";
 import TagService from "../services/TagService";
 import notify from "../lib/notify";
 import SharedService from "../services/SharedService";
-
-import { CSSObject } from "@emotion/serialize";
 
 export async function getServerSideProps(context) {
   try {
