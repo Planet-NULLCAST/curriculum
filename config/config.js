@@ -46,6 +46,7 @@ const logoutUrl = `${apiVerUrl}/logout`;
 const setVoteUrl = `${apiVerUrl}/post-vote`;
 const getVoteUrl = `${apiVerUrl}/post-votes`;
 const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
+const getYearlyActivities = `${apiVerUrl}/user-activities`;
 
 const configVars = {
   baseUrl,
@@ -94,6 +95,7 @@ const configVars = {
   changePasswordUrl,
   skillUrl,
   publishedPostsUrl,
+  getYearlyActivities,
   // publishedPostsCountUrl,
   logoutUrl
 };
