@@ -13,6 +13,7 @@ import UserService from "../../services/UserService";
 import PostService from "../../services/PostService";
 import Profilestyles from "../../styles/Profile.module.css";
 import SkillSet from "../../component/profile/SkillSet";
+import { homePageSchema, logoPath, url } from "../../seoschema/schema";
 
 export async function getServerSideProps(context) {
   try {
