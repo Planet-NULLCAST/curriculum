@@ -40,6 +40,7 @@
     "react-share": "^4.4.0",
     "react-slick": "^0.28.1",
     "react-toastify": "^7.0.4",
+    "react-youtube": "^7.14.0",
     "reactjs-popup": "^2.0.4",
     "remark": "^13.0.0",
     "remark-highlight.js": "^6.0.0",
