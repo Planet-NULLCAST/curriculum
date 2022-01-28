@@ -15,6 +15,70 @@ import Modal from "../modal/Modal";
 import notify from "../../lib/notify";
 import SharedService from "../../services/SharedService";
 
+
+export const ClearIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref}
+      className="h-full "
+      style={{
+        display: "flex",
+        padding: "8px 10px",
+        fontSize: "18px",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          cursor: "pointer",
+          top: "0",
+          right: "0"
+        }}
+      >
+        &#10005;
+      </div>
+    </div>
+  );
+};
+
+export const DropdownIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref2, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref2}
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          height: "content",
+          cursor: "pointer",
+          alignItems: "center",
+          top: "0",
+          fontSize: "32px",
+          right: "0"
+        }}
+      >
+        &#x2304;
+      </div>
+    </div>
+  );
+};
+
 export default function WriteNav({
   saveToDraft,
   submitForReview,
@@ -305,6 +369,20 @@ export default function WriteNav({
     }
   };
 
+
+  const ClearIndicatorStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+
+    cursor: "pointer",
+    height: "100%"
+  });
+
+  const DropDownStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+    cursor: "pointer",
+    height: "100%"
+  });
+
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
       <div className="flex flex-row justify-between items-center font-semibold h-full w-full px-5">
@@ -513,6 +591,11 @@ export default function WriteNav({
                         className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                         classNamePrefix="Tags"
                         clearValue={() => undefined}
+                        components={{ ClearIndicator, DropdownIndicator }}
+                        styles={
+                          ({ clearIndicator: ClearIndicatorStyles },
+                            { dropdownIndicator: DropDownStyles })
+                        }
                         placeholder="Tags"
                         closeMenuOnSelect={false}
                         name="tags"
