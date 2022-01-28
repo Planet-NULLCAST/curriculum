@@ -133,6 +133,8 @@ export default function BlogListing({ event }) {
         <meta property="og:type" content="events.event" />
         <meta property="og:title" content={meta_title} />
         <meta property="og:description" content={description} />
+        <meta name="twitter:data2" content="Blog" />
+        <meta name="twitter:site" content="@nullcast_io" />
         <meta property="og:url" content={`${url}/e/${slug}`} />
         <meta property="og:image" content={banner_image} />
         <meta property="event:start_time" content={event_time} />

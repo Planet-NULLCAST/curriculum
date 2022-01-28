@@ -6,16 +6,13 @@ import React, {
 } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
 import ImageCropper from "../component/popup/ImageCropper";
-import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
-import Fade from "react-reveal/Fade";
 import CreatableSelect from "react-select";
 import SkillService from "../services/SkillService";
 import TagService from "../services/TagService";
