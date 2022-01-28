@@ -37,9 +37,11 @@
 .checktext {
   @apply text-sm font-normal ml-3;
   font-family: "Open Sans";
+  cursor: pointer;
 }
 .check {
   margin-top: 10px;
+  cursor: pointer;
 }
 .submit_btn {
   @apply p-3 mt-10 text-white text-lg font-bold mx-auto self-center;
@@ -52,6 +54,7 @@
 .login {
   @apply cursor-pointer;
   color: #0048d9;
+  margin-right: 5px;
 }
 .close {
   @apply px-4 pt-2 absolute right-0 cursor-pointer;
