@@ -99,7 +99,6 @@ export default function Username({ userData, userCurrentLogin }) {
       status: "published"
     };
     const response = await PostService.getPostCount(UserId, postParams);
-    console.log(response.data.count, "count");
     setPostsCount(response.data.count);
   };
 
@@ -148,7 +147,9 @@ export default function Username({ userData, userCurrentLogin }) {
         <meta property="og:url" content={`${url}/${userData.meta_title}`} />
         <meta property="og:image" content={logoPath} />
 
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:data2" content="Userpage" />
+        <meta name="twitter:site" content="@nullcast_io" />
+        <meta name="twitter:card" content={`${userData.avatar}`} />
         <meta name="twitter:title" content={`${userData.meta_title}`} />
         <meta
           name="twitter:description"
