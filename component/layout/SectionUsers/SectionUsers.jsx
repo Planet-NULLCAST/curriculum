@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 export default class SimpleSlider extends Component {
   render() {
-    // console.log(this.props.user);
     const settings = {
       dots: false,
       arrows: false,
@@ -24,6 +23,7 @@ export default class SimpleSlider extends Component {
             <Slider {...settings}>
               {this.props.user.map((item, key) => (
                 <div key={key}>
+                  { item.user_name && 
                   <div className={styles.item}>
                     <div className={styles.icon}>
                       <Image
@@ -40,6 +40,7 @@ export default class SimpleSlider extends Component {
                       </Link>
                     </h4>
                   </div>
+                  }
                 </div>
               ))}
             </Slider>

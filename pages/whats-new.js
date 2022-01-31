@@ -13,31 +13,34 @@ import notify from "../lib/notify";
 export async function getServerSideProps(context) {
   try {
     let tag = context.query.tag;
+    console.log(tag)
     let searchArray = ["whats-new"];
-    if (tag) {
-      searchArray = ["whats-new", tag];
+    if (tag == undefined) {
+      // searchArray = ["whats-new", tag];
+      tag='whats-new'
     }
-    const { posts, count } = await PostService.getPostsByMultipleTags(
-      searchArray,
-      0
-    );
+    const status = 'published'
+    const {
+      data: { posts, count }
+    } = await PostService.getPostByTags(tag,status);
     return {
       props: {
         blogs: posts
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
-    
+    notify(err?.response?.data?.message ?? err?.message, "error");
+
     return {
       props: {
         blogs: []
       }
-    }
+    };
   }
 }
 
-export default function whatsNew({blogs}) {
+export default function whatsNew({ blogs }) {
+  console.log(blogs);
   return (
     <>
       <Head>
@@ -45,7 +48,7 @@ export default function whatsNew({blogs}) {
       </Head>
       <SiteHeader />
       <WhatsNewSpotlight />
-      { blogs?.length > 0 && <WhatsNewPosts blogs={blogs} />}
+      <WhatsNewPosts blogs={blogs} />
       <SectionSwag />
       <SiteFooter />
     </>

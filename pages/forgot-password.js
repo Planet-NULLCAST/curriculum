@@ -120,6 +120,11 @@ export default function forgotPassword() {
                       {isLoading && <LoadIcon color="#fff" height="23px" />}
                       Send Reset Mail
                     </button>
+                    <Link href="/login">
+                      <a className="text-white text-sm my-5">
+                        Remember your Password!! Login
+                      </a>
+                    </Link>
                   </form>
                 </div>
               </Fade>

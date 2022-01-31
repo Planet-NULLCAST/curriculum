@@ -4,23 +4,37 @@ import {
   allPostsUrl,
   postUrl,
   postsUrl,
+  getVoteUrl,
   s3Url,
+  postCount,
+  setVoteUrl,
   postUser,
+  getVoteTypeUrl,
   postBySlug,
   changeStatusUrl,
+  adminReviewUrl,
+  allPostUrl,
   tagUrl,
   adminUrl,
-  searchUrl,
-  publishedPostsCountUrl
+  searchUrl
+  // publishedPostsCountUrl
 } from "../config/config";
 import { getUrl } from "../lib/getUrl";
 
-async function getPostsByUserId(reqData) {
+async function getPostsByUsers(reqData) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${allPostsUrl}`, {
+    const response = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqData
     });
-    console.log(data);
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+//get all posts
+async function getAllPosts() {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${allPostUrl}`);
     return data;
   } catch (err) {
     throw err;
@@ -29,7 +43,6 @@ async function getPostsByUserId(reqData) {
 
 async function getPostById(postId) {
   try {
-    // console.log(postId);
     const { data } = await axios.get(`${baseUrl}/${postUrl}/${postId}`);
     return data;
   } catch (err) {
@@ -40,8 +53,8 @@ async function getPostById(postId) {
 
 async function getPostBySlug(slug) {
   try {
-    const response = await axios.get(`${baseUrl}/${postBySlug}/${slug}`);
-    return response;
+    const { data } = await axios.get(`${baseUrl}/${postBySlug}/${slug}`);
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -60,12 +73,11 @@ async function createPost(post) {
 }
 
 async function getLatestPosts(reqParams) {
-  let url = getUrl();
   try {
-    const res = await axios.get(`${url}/${postsUrl}`, {
+    const { data } = await axios.get(`${baseUrl}/${postsUrl}`, {
       params: reqParams
     });
-    return res.data.data;
+    return data;
   } catch (err) {
     console.log(err);
     throw err;
@@ -94,9 +106,25 @@ async function adminGetLatestPosts(reqParams) {
   }
 }
 
-async function updatePostById(post, postId) {
+async function updatePostById(postId, postDetails) {
   try {
-    const { data } = await axios.put(`${baseUrl}/${postUrl}/${postId}`, post);
+    const { data } = await axios.put(
+      `${baseUrl}/${postUrl}/${postId}`,
+      postDetails
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function adminReview(postId, postDetails) {
+  try {
+    const { data } = await axios.put(
+      `${baseUrl}/${adminReviewUrl}/${postId}`,
+      postDetails
+    );
     return data;
   } catch (err) {
     console.log(err);
@@ -118,61 +146,43 @@ async function deletePostById(userCookie, postId) {
   }
 }
 
-async function uploadImage(imageFile, imageData) {
-  // get url from s3url and send imagefile to that url
-  // console.log(imageData);
-  // console.log(s3Url);
+// async function changePostStatus(userCookie, postId, statusUpdate) {
+//   try {
+//     const { data } = await axios.post(
+//       `${baseUrl}/${changeStatusUrl}/${postId}`,
+//       statusUpdate,
+//       {
+//         headers: {
+//           "x-access-token": `${userCookie.accessToken}`
+//         }
+//       }
+//     );
+//     // console.log(data.message);
+//     return data.message;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// }
+
+async function getPostByTags(tagName, status , data) {
+  if(data){
+      const response = await axios.get(`${baseUrl}/${postsUrl}/${data?.tag}` , {
+        params : data
+      })
+      return response.data
+  }
+  else{
   try {
-    const response = await axios.post(
-      `${s3Url}/dev/s3-presigned-url`,
-      imageData
-    );
-    // console.log(response.data);
-    //put with imageFile
-    const uploadUrl = response.data;
-    const uploadResponse = await axios.put(uploadUrl, imageFile);
-    // console.log({ uploadResponse });
-    const imageUrl = uploadResponse.config.url.split("?")[0];
-    // console.log({ imageUrl });
-    return imageUrl;
+    const response = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
+      params: { status: status }
+    });
+    return response.data;
   } catch (err) {
     console.log(err);
     throw err;
   }
 }
-
-async function changePostStatus(userCookie, postId, statusUpdate) {
-  try {
-    const { data } = await axios.post(
-      `${baseUrl}/${changeStatusUrl}/${postId}`,
-      statusUpdate,
-      {
-        headers: {
-          "x-access-token": `${userCookie.accessToken}`
-        }
-      }
-    );
-    // console.log(data.message);
-    return data.message;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-
-async function getPostByTags(tagName, clickNo) {
-
-  const item = {
-    clickNo: clickNo
-  };
-  try {
-    const { data } = await axios.post(`${baseUrl}/${postUrl}/${tagName}`, item);
-    // console.log(data);
-    return data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
 }
 
 async function adminChangePostStatus(userCookie, postId, statusUpdate) {
@@ -194,18 +204,13 @@ async function adminChangePostStatus(userCookie, postId, statusUpdate) {
   }
 }
 
-const isAdmin = async (id, token) => {
-  let url = getUrl();
-
+const isAdmin = async (cookie) => {
   try {
-    const { data } = await axios.get(`${url}/${adminUrl}/me`, {
-      headers: {
-        "x-access-token": `${token}`
-      }
-    });
+    const data = await axios.get(`${baseUrl}/${adminUrl}/me`);
+    console.log(data, "data");
     return data;
   } catch (err) {
-    console.log("admin check err");
+    console.log(err, "admin check err");
     throw err;
   }
 };
@@ -226,18 +231,68 @@ async function getPostsByQuery(query, clickNo) {
 }
 
 /**
- * Api call for fetching all publlished posts of a user
+ * Api call for fetching all posts of a user
  * @param {String} username
  * @returns {Promise}
  */
-async function getPublishedPostsByUserId(userId, limit, clickNo) {
-  const url = getUrl();
+
+async function getUserPostsByUser(UserId, reqParams) {
   try {
-    const { data } = await axios.get(`${baseUrl}/${postUser}/${userId}`, {
-      params: {
-        limit: limit,
-        clickNo: clickNo
-      }
+    const res = await axios.get(`${baseUrl}/${postUser}/${UserId}`, {
+      params: reqParams
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+// async function getPublishedPostsCountByUserId(userId) {
+//   // console.log({ userId });
+//   const url = getUrl();
+
+//   try {
+//     const { data } = await axios.get(
+//       `${url}/${publishedPostsCountUrl}/${userId}`
+//     );
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// }
+
+/**
+ * Service to call updatePostVote Api
+ * @author JasirTp
+ * @param {String} postId
+ * @returns {Promise}
+ */
+async function getVotes(postId) {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getVoteUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function getVotesType(postId) {
+  try {
+    const { data } = await axios.get(`${baseUrl}/${getVoteTypeUrl}/${postId}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function setVotes(value, postId) {
+  try {
+    const { data } = await axios.post(`${baseUrl}/${setVoteUrl}/${postId}`, {
+      value: value
     });
     return data;
   } catch (err) {
@@ -246,42 +301,17 @@ async function getPublishedPostsByUserId(userId, limit, clickNo) {
   }
 }
 
-async function getPublishedPostsCountByUserId(userId) {
-  // console.log({ userId });
-  const url = getUrl();
-
-  try {
-    const { data } = await axios.get(
-      `${url}/${publishedPostsCountUrl}/${userId}`
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-
 /**
- * Service to call updatePostVote Api
- * @author sNkr-10
- * @param {String} type
- * @param {String} postId
- * @param {String} token
+ * Service to call PostCount Api
+ * @author JasirTp
+ * @param {String} userId
  * @returns {Promise}
  */
-async function setVotes(type, postId, token) {
-  const url = getUrl();
-
+async function getPostCount(userId, postDetails) {
   try {
-    const { data } = await axios.put(
-      `${url}/${postUrl}/vote/${postId}`,
-      { type: type },
-      {
-        headers: {
-          "x-access-token": `${token}`
-        }
-      }
-    );
+    const { data } = await axios.get(`${baseUrl}/${postCount}/${userId}`, {
+      params: postDetails
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -317,22 +347,25 @@ async function getPostsByMultipleTags(tags, clickNo) {
 
 const PostService = {
   getPostById,
-  getPostsByUserId,
+  getVotesType,
+  getPostsByUsers,
   getPostBySlug,
+  adminReview,
   createPost,
+  getPostCount,
   updatePostById,
   deletePostById,
-  uploadImage,
   getLatestPosts,
-  changePostStatus,
   getPostByTags,
   getPostsByQuery,
   adminChangePostStatus,
   adminGetLatestPosts,
+  getAllPosts,
   isAdmin,
-  getPublishedPostsByUserId,
-  getPublishedPostsCountByUserId,
+  getUserPostsByUser,
+  // getPublishedPostsCountByUserId,
   setVotes,
+  getVotes,
   getPostsByMultipleTags
 };
 

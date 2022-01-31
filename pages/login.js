@@ -15,33 +15,38 @@ import { getCookieValue } from "../lib/cookie";
 import notify from "../lib/notify";
 
 export async function getServerSideProps(context) {
+  const verify = context.query.verify;
   // console.log(context.req.headers.referer);
   try {
     if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(context.req.headers.cookie, "token");
+      const contextCookie = getCookieValue(context.req.headers.cookie, "userNullcast");
       if (contextCookie) {
         return {
           redirect: {
             permanent: false,
             destination: "/"
-          }
+          },
         };
       }
     }
     return {
       props: {
-        referer: context.req.headers.referer ? context.req.headers.referer : ""
+        referer: context.req.headers.referer ? context.req.headers.referer : "",
+        verify: verify || '',
       }
     };
   } catch (err) {
     console.log(err);
     return {
-      props: {}
+      props: {
+        verify: '',
+      }
     };
   }
 }
 
-export default function Login({ referer }) {
+export default function Login({ referer, verify }) {
+
   const router = useRouter();
   const [validEmail, setEmailValid] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
@@ -57,6 +62,11 @@ export default function Login({ referer }) {
       return !prevState;
     });
   };
+
+  if(verify !== '') {
+    notify(verify);
+  };
+
   const emailValidator = (e) => {
     let emailAddress = e.target.value;
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -108,6 +118,7 @@ export default function Login({ referer }) {
             userData
           )}${expires}`;
           localStorage.setItem("userNullcast", JSON.stringify(userData));
+          notify(`${data.message}`);
           // console.log(document.cookie);
 
           // let progress = JSON.parse(
@@ -144,10 +155,10 @@ export default function Login({ referer }) {
           // } else {
           //   router.push("/");
           // }
-          if (referer) {
-            router.back();
-          } else {
+          if (referer.split('/')[3] === "forgot-password" || referer.split('/')[3].includes("reset-password")) {
             router.push("/");
+          } else {
+            router.back();
           }
         } catch (err) {
           setIsLoading(false);
@@ -170,7 +181,7 @@ export default function Login({ referer }) {
       </Head>
       <Link href="/">
         <img
-          src="/images/nullcast.svg"
+          src="/images/logo.png"
           alt="logo"
           className="fixed left-5 lg:left-10 top-5 lg:top-10 z-50 cursor-pointer"
         ></img>
@@ -227,12 +238,11 @@ export default function Login({ referer }) {
                       </label>
                       <input
                         placeholder="Enter email"
-                        maxLength="30"
                         className={`inputStyle placeholder-gray-600 pr-3 ${Loginstyles.inputGreen}`}
                         id="email"
                         name="email"
                         type="text"
-                        //onBlur={(e) => emailValidator(e)}
+                        onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
                           setEmailValid(true)
                           // if (!validEmail) {
@@ -257,7 +267,6 @@ export default function Login({ referer }) {
                       <div className="relative w-full">
                         <input
                           placeholder="Enter password"
-                          maxLength="50"
                           className={`inputStyle placeholder-gray-600 w-full pr-10 ${Loginstyles.inputGreen}`}
                           id="password"
                           name="password"

@@ -81,7 +81,7 @@ console.log(obj1.b); // 2
 console.log(obj2.b); // undefined
 ```
 
-Here, `obj1` and `obj2` are of the same type, i.e., Object. `obj2` doesn't have the property `b`. Consider the case you want a property to have the same value accross all objects. In this case, let's say from now on, every object I create should have the property b with the value `2`. How will you solve the riddle? The answer is **`prototype`**.
+Here, `obj1` and `obj2` are of the same type, i.e., Object. `obj2` doesn't have the property `b`. Consider the case you want a property to have the same value across all objects. In this case, let's say from now on, every object I create should have the property `b` with the value `2`. How will you solve the riddle? The answer is **`prototype`**.
 
 ```js
 Object.prototype.b = 2;
@@ -115,9 +115,9 @@ console.log(human2.fullName()); // Daisy Johnson
 
 See? That's the magic of prototypes!. Now let's see what are `object prototypes`.
 
-## Javascript provided prototypes
+## JavaScript provided prototypes
 
-Well, to make life more easier, Javascript have provided us many life saver prototypes which helps us to achieve one-line codes. You see, Javascript is a heavily Object Oriented Programming Language. Everything in Javascript revolves around object. `Array`, `Date`, and even Functions are variants of Objects, with added prototypes and properties. Let's take a look at some of the useful ones
+Well, to make life more easier, JavaScript has provided us many life saver prototypes which helps us to achieve one-line codes. You see, JavaScript is a heavily Object Oriented Programming Language. Everything in JavaScript revolves around object. `Array`, `Date`, and even Functions are variants of Objects, with added prototypes and properties. Let's take a look at some of the useful ones
 
 - **`Array.prototype.push()`** - Takes 1 or more arguments, which will be pushed to the end of the array.
 
@@ -137,8 +137,8 @@ console.log(a); // [ 3, 2, 1 ]
 - **`Array.prototype.slice()`** - Takes two optional arguments start and end. Default value of start and end will be 0 and length of the array. Returns a new array with items along the start to end of original array. The original array is **kept intact**.
 
 ```js
-console.log(a.slice()); // [ 3, 2, 1 ]
-console.log(a.slice(0, 2)); // [ 3, 2 ]
+console.log(a.slice()); // [ 1, 2, 3 ]
+console.log(a.slice(0, 2)); // [ 1, 2 ]
 ```
 
 - **`Array.prototype.forEach()`** - Loops through the elements of the array, execute the callback function, which is provided as the argument, for the entire items of the array, one by one.
@@ -149,9 +149,9 @@ a.forEach((item) => {
 });
 /*
 Output- 
-3
-2
 1
+2
+3
 */
 ```
 
@@ -162,8 +162,8 @@ console.log(
     a.map(item => {
         return item * 10;
     })
-); // [ 30, 20, 10 ]
-console.log(a); // [ 3, 2, 1 ]
+); // [ 10, 20, 30 ]
+console.log(a); // [ 1, 2, 3 ]
 */
 ```
 
@@ -175,7 +175,7 @@ console.log(
         return item % 2 === 0; // filters even values
     })
 ); // [ 2 ]
-console.log(a); // [ 3, 2, 1 ]
+console.log(a); // [ 1, 2, 3 ]
 */
 ```
 
@@ -190,7 +190,7 @@ console.log(
                              third element of array as second argument*/
     })
 ); // 6
-console.log(a); // [ 3, 2, 1 ]
+console.log(a); // [ 1, 2, 3 ]
 */
 ```
 
@@ -200,8 +200,8 @@ So I hope you enjoyed this little section here. Take a break if you need warrior
 
 ## Complete the tasks below:
 
-- Create a new constructor function Student, which accepts name and departments as params and assign to the object
+- Create a new `constructor` function `Student`, which accepts `name` and `departments` as params and assign to the object
 
-- Declare a variable student of type Student, where name is Elon and 'department' is 'ME'
+- Declare a variable `student` of type `Student`, where `name` is Elon and `department` is 'ME'
 
-- Define a new prototype isCSEstudent for Student, which is a function returning a boolean value, which will be true if the student is from department 'CSE'
+- Define a new prototype `isCSEstudent` for `Student`, which is a `function` returning a boolean value, which will be `true` if the student is from department 'CSE'

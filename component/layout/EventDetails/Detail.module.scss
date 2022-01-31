@@ -1,0 +1,44 @@
+.detail__Wrap {
+  @apply pb-10 lg:pb-20 mx-auto;
+  max-width: 832px;
+
+  .title {
+    @apply font-bold text-40 text-center;
+    color: #454545;
+  }
+  .location__Wrap {
+    @apply flex justify-center font-bold text-18 my-8;
+
+    span {
+      @apply inline-block mr-5;
+    }
+
+    .icon {
+      @apply mr-2.5 my-auto;
+    }
+
+    .location {
+      @apply uppercase;
+    }
+
+  }
+  .event__counter {
+    @apply flex justify-center;
+  }
+  .content {
+    @apply my-8;
+
+    h4 {
+      font-weight: 800;
+      font-size: 25px;
+      color: #353535;
+      padding-bottom: 10px;
+    }
+
+    p {
+      @apply font-semibold text-18 text-justify;
+      color: #202020;
+      line-height: 33px;
+    }
+  }
+}

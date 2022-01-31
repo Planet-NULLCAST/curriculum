@@ -7,7 +7,7 @@ import moment from "moment";
 import Tags from "./Tags";
 
 export default function ListingItem(props) {
-  return props.blog.map((item, key) => (
+  return props.blog.slice(1)?.map((item, key) => (
     <div className={styles.listing__item} key={key}>
       <Fade>
         <a href={`/${item.slug}`}>
@@ -27,7 +27,7 @@ export default function ListingItem(props) {
         </a>
       </Fade>
       <div>
-        {item.tags.length > 0 ? (
+        {item.tags?.length > 0 ? (
           <Tags _tags={item.tags} />
         ) : (
           <div className="tags h-9"></div>
@@ -43,10 +43,7 @@ export default function ListingItem(props) {
           {/* <span> 5 Min Read</span> */}
         </p>
       </div>
-      <Details
-        username={item.user.username}
-        avatar={item.user.avatar}
-      />
+      <Details username={item.user.user_name} avatar={item.user.avatar} />
     </div>
   ));
 }

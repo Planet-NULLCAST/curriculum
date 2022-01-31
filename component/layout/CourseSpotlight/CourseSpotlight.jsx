@@ -1,10 +1,24 @@
 import styles from "./CourseSpotlight.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from 'next/router'
+import notify from "../../../lib/notify";
+import {enrollCourse} from "../../../services/CurriculamService"
 
 export default function CourseSpotlight({ contents }) {
   let bg = contents.bgimage;
-  // console.log(bg);
+  const {query : {courseName}} = useRouter()
+  
+
+  const enrollToCourse = async () => {
+    try {
+      await enrollCourse(courseName)
+    } catch (err) {
+      if(err?.response?.data?.message.split(" ")[0] !== "duplicate")
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  }
+
   return (
     <section
       className={`${styles.spotlight} ${contents.bgimage}`}
@@ -22,10 +36,10 @@ export default function CourseSpotlight({ contents }) {
               href={
                 contents.type === "courses"
                   ? "#courses"
-                  : "/curriculum/javascript/introduction"
+                  : `/curriculum/${courseName}/introduction`
               }
             >
-              <a className="btn btn--purple">
+              <a className="btn btn--purple" onClick={enrollToCourse}>
                 <span className="btn__text">{contents.buttonText}</span>
               </a>
             </Link>

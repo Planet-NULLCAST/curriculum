@@ -2,18 +2,17 @@ import styles from "./Profile.module.scss";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 
-export default function Profile({ onLogout, username }) {
+export default function Profile({ onLogout, userName }) {
 
   // Retrieving userdata from session storage which is in string format
   // const userData = JSON.parse(sessionStorage.getItem("userNullcast"));
 	const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-
   return (
     <div className={styles.userInfo}>
       <div className={styles.profile__icon}>
         <img
-          src={userCookie.avatar || "/images/svgs/avatar.svg"}
+          src={userCookie.avatar || "/images/dummy0.png"}
           alt="avatar"
           width="32"
           height="32"
@@ -22,10 +21,10 @@ export default function Profile({ onLogout, username }) {
       </div>
       <div className={styles.profile__dropdown}>
         <div className={styles.profile__details}>
-          <h4>{userCookie.full_name}</h4>
+          <h4>{userName ? userName : userCookie.full_name}</h4>
           <p>
             <img
-              src="/images/smallduck.svg"
+              src={userCookie.avatar || "/images/smallduck.svg"}
               alt="coin"
               height="18rem"
               width="18rem"

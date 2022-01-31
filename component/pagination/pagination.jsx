@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Styles from "./pagination.module.scss";
 
-export default function Pagination({ TotalCount, changePage, pageNum, limit }) {
+export default function Pagination({ TotalCount, changePage, pageNum, limit }) { 
   // pagenum is coming as string, so converting to number
   pageNum = +pageNum
   const [TotalPages, setTotalPages] = useState();
@@ -45,11 +45,13 @@ export default function Pagination({ TotalCount, changePage, pageNum, limit }) {
   const nextBut = () => {
     if (pageNo !== TotalPages) {
       setpageNo(pageNo + 1);
+      console.log(pageNo);
     }
   };
   const prevBut = () => {
     if (pageNo !== 1) {
       setpageNo(pageNo - 1);
+      console.log(pageNo);
     }
   };
   return (

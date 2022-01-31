@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import SiteHeader from "../component/layout/SiteHeader/SiteHeader";
 import UserService from "../services/UserService";
-import PostService from "../services/PostService";
 import Cookies from "universal-cookie";
 import { getCookieValue } from "../lib/cookie";
 import ImageCropper from "../component/popup/ImageCropper";
-import { toast } from "react-toastify";
 import styles from "../styles/Settings.module.scss";
 import ModalConfirm from "../component/popup/ModalConfirm";
-import CreatableSelect from "react-select/creatable";
+import CreatableSelect from "react-select";
 import SkillService from "../services/SkillService";
+import TagService from "../services/TagService";
 import notify from "../lib/notify";
+import SharedService from "../services/SharedService";
 
 export async function getServerSideProps(context) {
   try {
@@ -23,12 +23,17 @@ export async function getServerSideProps(context) {
       );
       if (contextCookie) {
         const cookie = JSON.parse(contextCookie);
-        const response = await UserService.getProfileByUserId(cookie);
-        const skillsRes = await SkillService.getSkills();
+        const username = cookie.user_name;
+        const { data } = await UserService.getUserByUsername(username);
+        // removed roles id dob from user data
+        delete data.roles;
+        delete data.id;
+        delete data.dob;
+        // const skillsRes = await SkillService.getSkills();
         return {
           props: {
-            profileData: response.data,
-            _skills: skillsRes
+            profileData: data
+            // _skills: skillsRes
           }
         };
       } else {
@@ -48,7 +53,7 @@ export async function getServerSideProps(context) {
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {
         profileData: []
@@ -61,16 +66,81 @@ export async function getServerSideProps(context) {
   }
 }
 
+export const ClearIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref}
+      className="h-full "
+      style={{
+        display: "flex",
+        padding: "8px 10px",
+        fontSize: "18px",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          cursor: "pointer",
+          top: "0",
+          right: "0"
+        }}
+      >
+        &#10005;
+      </div>
+    </div>
+  );
+};
+
+export const DropdownIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref2, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref2}
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          height: "content",
+          cursor: "pointer",
+          alignItems: "center",
+          top: "0",
+          fontSize: "32px",
+          right: "0"
+        }}
+      >
+        &#x2304;
+      </div>
+    </div>
+  );
+};
+
 export default function Settings({ profileData, _skills }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState(userCookie?.full_name);
   const [allSkills, setAllSkills] = useState(_skills);
+  const [tagOptions, setTagOptions] = useState([]);
   const [profile, setProfile] = useState({
-    fullName: "",
+    full_name: "",
     bio: "",
     avatar: "",
-    skills: [],
+    skills: profileData.skills || [],
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -78,7 +148,7 @@ export default function Settings({ profileData, _skills }) {
     website: ""
   });
   const [errors, setErrors] = useState({
-    fullName: "",
+    full_name: "",
     twitter: "",
     facebook: "",
     linkedin: "",
@@ -86,6 +156,9 @@ export default function Settings({ profileData, _skills }) {
     website: ""
   });
   const [image, setImage] = useState("");
+  useEffect(() => {
+    getSettingsTags();
+  }, []);
 
   useEffect(() => {
     setProfile({ ...profileData });
@@ -97,52 +170,130 @@ export default function Settings({ profileData, _skills }) {
 
   const updateProfile = async (newProfile) => {
     try {
+      const profileData = newProfile ? { ...newProfile } : { ...profile };
+      delete profileData.skills;
       const response = await UserService.updateProfileByUserId(
         userCookie,
-        newProfile ? newProfile : profile
+        profileData
       );
-      notify(response.message);
-      setLoading(false);
+      if (response) {
+        setUserName(response.data.full_name);
+        document.cookie = `userNullcast=${JSON.stringify({
+          ...userCookie,
+          full_name: response.data.full_name,
+          user_name: response.data.user_name,
+          avatar: response.data.avatar
+        })}`;
+        notify(response.message);
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
-      notify(err?.response?.data?.message, 'error');
+      notify(err?.response?.data?.message, "error");
     }
   };
   const handleSettings = (e) => {
     e.preventDefault();
-    if (profile.fullName) {
+    if (profile.full_name) {
       updateProfile();
     } else {
       setErrors((prevValue) => {
         return {
           ...prevValue,
-          fullName: "Required"
+          full_name: "Required"
         };
       });
     }
   };
 
-  const handleSkills = (e) => {
-    const newSkill = e
-      .filter((skill) => {
-        if (skill.__isNew__ === true) {
-          return skill;
+  async function getSettingsTags() {
+    try {
+      const res = await TagService.getTags();
+      // console.log("get tags response", res);
+      if (res && res.length) {
+        const resTagOptions = res
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((tag) => {
+            return {
+              label: `${tag.name.toUpperCase()}`,
+              value: `${tag.name}`,
+              id: tag.id,
+              name: `${tag.name}`
+            };
+          });
+        // setTagOptions;
+        // console.log({ resTagOptions });
+        setTagOptions(resTagOptions);
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  }
+
+  const handleSkills = async (e) => {
+    // console.log("handle skills", e);
+    if (e.length === 0) {
+      const res = await SkillService.deletePostSkills(userCookie);
+    }
+    const newTag = e
+      .filter((tag) => {
+        if (tag.__isNew__ === true) {
+          // console.log(tag);
+          return tag;
         }
       })
-      .map((fSkill) => fSkill.value);
-
-    SkillService.postSkills(userCookie, newSkill);
-    setProfile((prevValue) => {
-      return {
-        ...prevValue,
-        skills: e.map((i) => i.value)
-      };
-    });
+      .map((fTag) => fTag.value);
+    try {
+      if (newTag.length > 0) {
+        const res = await TagService.postTags(userCookie, newTag);
+        const arr = [{ tag_id: res.id }];
+        const response = await SkillService.postSaveSkills(userCookie, arr);
+        e.splice(-1, 1);
+        setProfile((prevValue) => {
+          return {
+            ...prevValue,
+            skills: [
+              ...e,
+              { value: res.name, id: res.id, name: res.name, label: res.name }
+            ]
+          };
+        });
+      } else {
+        // gets new added tag and closed tag using filter
+        const addTag = e.filter(
+          ({ id: id1 }) => !profile.skills.some(({ id: id2 }) => id2 === id1)
+        );
+        // const removeTag = profile.skills.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+        const removeTag = profile.skills.filter(
+          ({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1)
+        );
+        if (addTag.length) {
+          const arr = addTag.map(({ id }) => {
+            return { tag_id: id };
+          });
+          const res = await SkillService.postSaveSkills(userCookie, arr);
+        }
+        if (removeTag.length) {
+          const res = await SkillService.deletePostSkill(
+            userCookie,
+            removeTag[0].id
+          );
+        }
+        setProfile((prevValue) => {
+          return {
+            ...prevValue,
+            skills: [...e]
+          };
+        });
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
   };
 
   const handleErrors = (e) => {
     const { name, value } = e.target;
-    if (name === "fullName") {
+    if (name === "full_name") {
       if (value === "") {
         setErrors((prevValue) => {
           return {
@@ -216,7 +367,7 @@ export default function Settings({ profileData, _skills }) {
     if (image) {
       const imageData = {
         stage: "dev",
-        fileName: userCookie.username + ".png",
+        fileName: userCookie.user_name + ".png",
         id: userCookie.id,
         category: "profiles",
         ContentType: "image/png"
@@ -224,7 +375,7 @@ export default function Settings({ profileData, _skills }) {
       setLoading(true);
       notify("Uploading image in progress");
       try {
-        let s3ImageUrl = await PostService.uploadImage(image, imageData);
+        let s3ImageUrl = await SharedService.uploadImage(image, imageData);
         s3ImageUrl += "?bustcache=" + new Date().getTime();
         setImage(s3ImageUrl);
 
@@ -236,7 +387,7 @@ export default function Settings({ profileData, _skills }) {
         updateProfile({ ...profile, avatar: s3ImageUrl });
       } catch (error) {
         setLoading(false);
-        notify("Image upload failed", 'error');
+        notify("Image upload failed", "error");
       }
     }
 
@@ -277,9 +428,22 @@ export default function Settings({ profileData, _skills }) {
     }
   };
 
+  const ClearIndicatorStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+
+    cursor: "pointer",
+    height: "100%"
+  });
+
+  const DropDownStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+    cursor: "pointer",
+    height: "100%"
+  });
+
   return (
     <>
-      <SiteHeader />
+      <SiteHeader userName={userName} />
       <Head>
         <title>Settings</title>
       </Head>
@@ -341,7 +505,8 @@ export default function Settings({ profileData, _skills }) {
                       handleSubmit={uploadImage}
                     />
                     <img
-                      src={profile.avatar || "/images/svgs/avatar.svg"}
+                      key={image}
+                      src={image || "/images/svgs/avatar.svg"}
                       alt="profile"
                     />
                     <figcaption className="z-40">
@@ -367,7 +532,6 @@ export default function Settings({ profileData, _skills }) {
                     </figcaption>
                   </figure>
                 </div>
-
                 {/* {profile.avatar && (
                   <div>
                     <ModalConfirm
@@ -388,18 +552,17 @@ export default function Settings({ profileData, _skills }) {
                   </div>
                 )} */}
               </div>
-
               <form className="flex flex-wrap" onSubmit={handleSettings}>
                 <div className="w-full mb-4">
-                  <label htmlFor="fullName">Name</label>
+                  <label htmlFor="full_name">Name</label>
                   <input
                     type="text"
-                    id="fullName"
-                    name="fullName"
+                    id="full_name"
+                    name="full_name"
                     maxLength="30"
                     placeholder="Name"
                     onChange={(e) => {
-                      if (errors.fullName) {
+                      if (errors.full_name) {
                         handleErrors(e);
                       }
                       handleOnChange(e);
@@ -407,12 +570,12 @@ export default function Settings({ profileData, _skills }) {
                     onBlur={(e) => {
                       handleErrors(e);
                     }}
-                    value={profile.fullName}
+                    value={profile.full_name}
                   />
 
-                  {errors.fullName && errors.fullName !== "valid" && (
+                  {errors.full_name && errors.full_name !== "valid" && (
                     <p className="flex items-center font-semibold tracking-wide text-red-danger text-xs mt-1">
-                      {errors.fullName}
+                      {errors.full_name}
                     </p>
                   )}
                 </div>
@@ -430,27 +593,29 @@ export default function Settings({ profileData, _skills }) {
                 </div>
                 <label htmlFor="skills">Skills</label>
                 <CreatableSelect
-                  options={allSkills.map((a) => {
-                    return {
-                      label: `${a.name.toUpperCase()}`,
-                      value: `${a.name}`
-                    };
-                  })}
+                  options={tagOptions}
+                  components={{ ClearIndicator, DropdownIndicator }}
+                  styles={
+                    ({ clearIndicator: ClearIndicatorStyles },
+                    { dropdownIndicator: DropDownStyles })
+                  }
                   isMulti
-                  className="w-full mb-4"
+                  className="basic-multi-select w-full mb-4 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                   classNamePrefix="Skills"
-                  clearValue={() => undefined}
+                  // clearValue={() => undefined}
                   placeholder="Skills"
-                  closeMenuOnSelect={false}
+                  // closeMenuOnSelect={false}
                   name="skills"
-                  id="skills"
-                  value={profile.skills.map((a) => {
+                  // id="skills"
+                  value={profile?.skills?.map((skill) => {
                     return {
-                      label: `${a.toUpperCase()}`,
-                      value: `${a}`
+                      label: `${skill.name.toUpperCase()}`,
+                      value: `${skill.name}`,
+                      id: skill.id,
+                      name: `${skill.name}`
                     };
                   })}
-                  onChange={handleSkills}
+                  onChange={(e) => handleSkills(e)}
                 />
                 <div className="w-1/2 mb-4 pr-2">
                   <label htmlFor="twitter">Twitter Username</label>
@@ -525,7 +690,7 @@ export default function Settings({ profileData, _skills }) {
                   )}
                 </div>
                 <div className="w-1/2 mb-4 pl-2">
-                  <label htmlFor="github">Github Username</label>
+                  <label htmlFor="github">GitHub Username</label>
                   <input
                     id="github"
                     name="github"
@@ -576,7 +741,8 @@ export default function Settings({ profileData, _skills }) {
                   <button
                     disabled={
                       loading ||
-                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.full_name !== "" &&
+                        errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||
@@ -586,7 +752,8 @@ export default function Settings({ profileData, _skills }) {
                     }
                     className={`${
                       loading ||
-                      (errors.fullName !== "" && errors.fullName !== "valid") ||
+                      (errors.full_name !== "" &&
+                        errors.full_name !== "valid") ||
                       (errors.twitter !== "" && errors.twitter !== "valid") ||
                       (errors.facebook !== "" && errors.facebook !== "valid") ||
                       (errors.linkedin !== "" && errors.linkedin !== "valid") ||

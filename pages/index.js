@@ -9,41 +9,54 @@ import SectionUsers from "../component/layout/SectionUsers/SectionUsers";
 import Head from "next/head";
 import "../styles/Home.module.scss";
 import PostService from "../services/PostService";
+import EventService from "../services/EventService";
 import UserService from "../services/UserService";
 import { homePageSchema, logoPath, url } from "../seoschema/schema";
 import notify from "../lib/notify";
+import { addCourses } from "../courses/meta";
 
 export async function getServerSideProps(context) {
   try {
     const postParams = {
-      sort_field: "published_at",
+      // sort_field: "published_at",
       status: "published",
-      order: "ASC",
+      order: "DESC",
       limit: 4,
       page: 1,
-      with_table: "users"
+      sort_field: "featured"
+      // with_table: "users"
     };
     const userParams = {
       limit: 10
     };
-    const responsePost = await PostService.getLatestPosts(postParams);
-    // console.log(responsePost.posts[0].user);
-    const responseUser = await UserService.getLatestUsers(userParams);
-    // console.log(responseUser);
+    const responsePost = await PostService.getPostsByUsers(postParams);
+    const { data } = await UserService.getLatestUsers(userParams);
+    const eventParams = {
+      order: "ASC",
+      status: "published",
+      page: 1
+    };
+    const responseEvents = await EventService.getLatestEvents(eventParams);
     return {
       props: {
-        posts: responsePost.posts || [],
-        user: responseUser
+        posts: responsePost?.data?.posts || [],
+        user: data?.users || [],
+        events:
+          responseEvents?.events.filter(
+            (each) => each?.event_time > new Date().toISOString()
+          )[0] || []
+        // count: responseEvents.count,
+        // limit: responseEvents.limit
       }
     };
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
-    return { props: { blog: [] } };
+    notify(err?.response?.data?.message ?? err?.message, "error");
+    return { props: { posts: [], events: [], user: [] } };
   }
 }
+//addCourses()
+export default function Home({ posts, user, events }) {
 
-export default function Home({ posts, user }) {
-  // console.log(process.env.ENV, baseUrl, clientUrl);
   return (
     <div className="wrap">
       <Head>
@@ -78,12 +91,12 @@ export default function Home({ posts, user }) {
       </Head>
       <SiteHeader />
       <HomeSpotlight />
-      {posts && posts[0] && <SectionBlogs posts={posts} />}
+      {posts && <SectionBlogs posts={posts} />}
 
       <SectionVideos />
       {user && <SectionUsers user={user} />}
 
-      <SectionEvents />
+      {events && <SectionEvents events={events} />}
       <SectionSwag />
       <SiteFooter />
     </div>

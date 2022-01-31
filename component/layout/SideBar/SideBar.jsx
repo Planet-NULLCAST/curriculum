@@ -48,7 +48,7 @@ export default function SideBar({ onToggle, toggle, course, courseRef }) {
           {titles.map((title) => (
             <li
               key={title.chapterId}
-              className={`flex flex-row justify-between items-center text-center text-gray-700 border-l-4 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
+              className={`flex flex-row justify-between items-center  text-gray-700 border-l-4 border-gray-700 hover:border-purple-700 hover:text-purple-700 hover:bg-gray-100 p-4`}
             >
               <Link
                 href={`/curriculum/${course.courseUrl}/${title.chapterUrl}`}

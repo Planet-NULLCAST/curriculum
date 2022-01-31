@@ -1,102 +1,229 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import validateEmail from '../../../lib/validateEmail'
+import SubscribeService from '../../../services/SubscribeService'
+import notify from "../../../lib/notify";
 
 import styles from "./WhatsNewPosts.module.scss";
 
 export default function WhatsNewPosts({ blogs }) {
   const router = useRouter();
-
+  const [useremail, setUseremail] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState("");
+  const subscribe = () => {
+    const isValid = validateEmail(useremail);
+    setIsValidEmail(isValid);
+    document.cookie !== '' ? isValid && addsubscription(useremail) : notify('Please login for subscribe', 'error') ;
+  }
+  async function addsubscription(email) {
+    try {
+      const response = await SubscribeService.addSubscription(email);
+      notify(response.data.message, "success");
+    } catch (err) {
+      notify("user already subscribed", "error");
+    }
+  }
   const createMarkup = (value) => {
     return { __html: value };
   };
-
+  // const boxdata = [
+  //   {
+  //     head: "Set a Fallback Placeholder in Message Templates 📝",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "How To Choose A Headless CMS",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   },
+  //   {
+  //     head: "Front-End Boilerplates & Starter Kits",
+  //     content:
+  //       "This information is also super helpful for our support team should you run into an issue..."
+  //   }
+  // ];
+ 
   return (
     <div className={styles.wrapperHeader}>
       <section className={styles.header}>
         <ul>
-        <Link 
+          <Link
             href={{
-              pathname: `/whats-new`,
+              pathname: `/whats-new`
+              // query:{tag:'whats-new'}
             }}
           >
-            <li
-              style={{ background: !router.query.tag && "#f6e049" }}
-            >
+            <li style={{ background: !router.query.tag && "#f6e049" }}>
               All Post
             </li>
           </Link>
-          <Link 
+          <Link
             href={{
               pathname: `/whats-new`,
-              query: {tag:"fix"}
+              query: { tag: "fix" }
             }}
           >
-            <li
-              style={{ background: router.query.tag == "fix" && "#f6e049" }}
-            >
+            <li style={{ background: router.query.tag == "fix" && "#f6e049" }}>
               Fix
             </li>
           </Link>
-          <Link 
+          <Link
             href={{
               pathname: `/whats-new`,
-              query: {tag:"announcement"}
+              query: { tag: "announcement" }
             }}
           >
             <li
-              style={{ background: router.query.tag == "announcement" && "#f6e049" }}
+              style={{
+                background: router.query.tag == "announcement" && "#f6e049"
+              }}
             >
               Announcement
             </li>
           </Link>
-          <Link 
+          <Link
             href={{
               pathname: `/whats-new`,
-              query: {tag:"improvement"}
+              query: { tag: "improvement" }
             }}
           >
             <li
-              style={{ background: router.query.tag == "improvement" && "#f6e049" }}
+              style={{
+                background: router.query.tag == "improvement" && "#f6e049"
+              }}
             >
               Improvement
             </li>
           </Link>
         </ul>
       </section>
-      <section className={styles.content}>
-        {blogs.map((post, index) => (
-          <div
-            style={{ flexDirection: index % 2 != 0 ? "row-reverse" : "row" }}
-            className={styles.content__child}
-          >
-            <div
-              style={{
-                "--order": index % 2 == 0 ? 0 : 1
-              }}
-              className={styles.content__left}
-            >
-              <Link href={`/${post.slug}`}>
-                <h3>{post.title}</h3>
-              </Link>
-              <div dangerouslySetInnerHTML={createMarkup(post.html)} />
-              <Link href={`/${post.slug}`}>
-                <a className="btn btn--small mt-auto">
-                  <span className="btn__text">Learn more</span>
-                </a>
-              </Link>
+      {blogs[0] ? (
+        <>
+          <section>
+            <div className={styles.Container}>
+              <div className={styles.content__box}>
+                <div>
+                  <div
+                    style={{
+                      backgroundImage: `url(${blogs[0]?.banner_image})`
+                    }}
+                    className={styles.boximg}
+                  ></div>
+                  <div className={styles.boxheader}>{blogs[0]?.title}</div>
+                  <div className={styles.boxcontent}>
+                    <div
+                      dangerouslySetInnerHTML={createMarkup(blogs[0]?.html)}
+                    />
+                  </div>
+                  <Link href={`/${blogs[0]?.slug}`}>
+                    <a className="btn btn--small mt-auto">
+                      <span className="btn__text">Learn more</span>
+                    </a>
+                  </Link>
+                </div>
+              </div>
+              <div className={styles.sub_card}>
+                <img src="/images/whatsnewsubscription.png" alt="image" />
+                <div className={styles.sub_head}>
+                  Subscribe to <br /> Monthly Updates
+                </div>
+                <div className={styles.sub_text}>
+                  With tools to help you get your work done better. Subscribe
+                  and get Vitaly’s Smart Interface Design Checklists PDF — in
+                  your inbox. 🎁
+                </div>
+                <div>
+                {isValidEmail !== "" && isValidEmail === false && (
+                <p className="text-sm text-red-400 text-left  font-bold">
+                  Please enter a valid email
+                </p>
+              )}
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="enter your email"
+                    className={styles.sub_input}
+                    onChange={(e)=> setUseremail(e.target.value)}
+                  />
+             
+              
+                </div>
+                <button className="btn btn--small" type="submit" onClick={subscribe}>
+                  <span className="btn__text">Subscribe</span>
+                </button>
+              </div>
             </div>
-            <div
-              style={{
-                "--order": index % 2 != 0 ? 0 : 1
-              }}
-              className={styles.content__right}
-            >
-              <img src={post.bannerImage} alt="image" />
-            </div>
-          </div>
-        ))}
-      </section>
+          </section>
+          {/* <section className={styles.Container}>
+            {boxdata.map((obj) => {
+              return (
+                <div className={styles.rowbox}>
+                  <div className={styles.rowboxhead}>{obj.head}</div>
+                  <div className={styles.rowboxcontent}>{obj.content}</div>
+                  <button className="btn btn--small" type="submit">
+                    <span className="btn__text">Learn more</span>
+                  </button>
+                </div>
+              );
+            })}
+          </section> */}
+          <section className={styles.Container}>
+            {blogs.slice(1).map((post, index) => (
+              <div className={styles.content__box} key={index}>
+                <div
+                  style={{ backgroundImage: `url(${post.banner_image})` }}
+                  className={styles.boximg}
+                ></div>
+                <div className={styles.boxheader}>{post.title}</div>
+                <div className={styles.boxcontent}>
+                  <div dangerouslySetInnerHTML={createMarkup(post.html)} />
+                </div>
+                <Link href={`/${post.slug}`}>
+                  <a className="btn btn--small mt-auto">
+                    <span className="btn__text">Learn more</span>
+                  </a>
+                </Link>
+              </div>  
+
+              // <div
+              //   style={{ flexDirection: index % 2 != 0 ? "row-reverse" : "row" }}
+              //   className={styles.content__child}
+              // >
+              //    <img src={post.bannerImage} alt="image" />
+              //   <div
+              //     style={{
+              //       "--order": index % 2 == 0 ? 0 : 1
+              //     }}
+              //     className={styles.content__left}
+              //   >
+              //     <Link href={`/${post.slug}`}>
+              //       <h3>{post.title}</h3>
+              //     </Link>
+              //     <div dangerouslySetInnerHTML={createMarkup(post.html)} />
+              //     <Link href={`/${post.slug}`}>
+              //       <a className="btn btn--small mt-auto">
+              //         <span className="btn__text">Learn more</span>
+              //       </a>
+              //     </Link>
+              //   </div>
+              //   <div
+              //     style={{
+              //       "--order": index % 2 != 0 ? 0 : 1
+              //     }}
+              //     className={styles.content__right}
+              //   >
+
+              //   </div>
+              // </div>
+            ))}
+          </section>
+        </>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

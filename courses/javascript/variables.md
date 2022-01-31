@@ -56,7 +56,7 @@ To create a variable in JavaScript, we can use `var`, `let` and `const`.
 
 It's easy to get confused about the difference between `var`, `let` and `const`. No worries fellow developers, we got your back.
 
-It is important we understand the difference betweeen various scopes in `js`.
+It is important we understand the difference betweeen various scopes in js.
 
 ## Scopes
 
@@ -133,7 +133,7 @@ function letTest() {
 const varname1 = "some value";
 ```
 
-Variables declared using `const` is just like let. The only difference is that constants cannot be re-assigned.
+Variables declared using `const` is just like `let`. The only difference is that constants cannot be re-assigned.
 
 `const` cannot be redeclared in the same block too. But can be redeclared inside sub-blocks.
 
@@ -154,16 +154,16 @@ console.log(a); // 'something'
 
 ## Complete the tasks below:
 
-- Create a variable named a using const and initialize it with a value of 9
+- Create a variable named `a`, using `const` and initialize it with a value of 9
 
-- Create b variable using let with variable name a.
+- Create a variable using `let`, with variable name `b`.
 
-- Assign the variable b a value of 5.
+- Assign the variable `b`, a value of 5.
 
-- Then change the value of b to "Message".
+- Then change the value of `b` to "Message".
 
-- Create c variable using let with variable name a.
+- Create a variable using `let` with variable name `c`.
 
-- Assign the variable c a value of 7.
+- Assign the variable `c`, a value of 7.
 
-- Then change the value of c to "Something".
+- Then change the value of `c` to "Something".

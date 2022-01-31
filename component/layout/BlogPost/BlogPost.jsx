@@ -25,55 +25,73 @@ export default function BlogPost(props) {
    * @author sNkr-10
    */
   //posts having no votes field will have null as initial state for voteType and votes are created during createPost
-  const [voteType, setVoteType] = useState("");
-  useEffect(() => {
-    const votes = props.blog.votes?.find((item) => item.userId == props.userId);
-    if (votes) {
-      setVoteType(votes.type);
+  const [voteType, setVoteType] = useState();
+  const [voteCount, setVoteCount] = useState(0);
+
+  const getVoteCount = async () => {
+    try {
+      const response = await PostService.getVotes(props.blog.id);
+      if (response.data != null) {
+        setVoteCount(response.data.upvotes - response.data.downvotes);
+      }
+      return response;
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
-  }, [props.blog]);
-  const [voteCount, setVoteCount] = useState(
-    props.blog.votes.filter((item) => item.type == "up").length -
-      props.blog.votes.filter((item) => item.type == "down").length
-  );
+  };
+
+  const getVoteType = async () => {
+    try {
+      if (props.userId) {
+        const response = await PostService.getVotesType(props.blog.id);
+        console.log("e", response);
+        if (response.data != null) {
+          setVoteType(response?.data?.vote_kind);
+        }
+        return response;
+      }
+    } catch (err) {
+      console.log(err.message);
+      // this for temp need to change it from backend
+      if (err.message !== "Request failed with status code 500") {
+        notify(err?.response?.data?.message ?? err?.message, "error");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getVoteCount();
+    if (props.vote !== false) {
+      getVoteType();
+    }
+  }, []);
 
   /**
    * function triggered during upvotes/downvotes
    * @author sNkr-10
    * @returns {Promise}
    */
-  const setVotes = async (type) => {
+  const setVotes = async (value) => {
     try {
       if (props.userId) {
-        const response = await PostService.setVotes(
-          type,
-          props.blog._id,
-          props.token
-        );
-        if (response.posts != null) {
-          setVoteCount(
-            response.posts.votes.filter((item) => item.type == "up").length -
-              response.posts.votes.filter((item) => item.type == "down").length
-          );
-
-          setVoteType(
-            response.posts.votes.find((item) => item.userId == props.userId)
-              .type
-          );
+        const response = await PostService.setVotes(value, props.blog.id);
+        if (response.data != null) {
+          getVoteCount();
+          getVoteType();
         }
         return response;
       }
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
   const handleClick = (value) => {
     // Prevents users to vote their own posts.
-    if (props.userId != props.blog.primaryAuthor._id) {
+    if (props.userId != props.blog.user.id) {
       setVotes(value);
     }
-    !props.userId && notify("Please login for further actions", 'dark');
+    !props.userId && notify("Please login for further actions", "dark");
   };
 
   const [headings, setHeadings] = useState();
@@ -86,7 +104,6 @@ export default function BlogPost(props) {
         text: item.innerText
       };
     });
-    // console.log({ h2Tags });
     setHeadings(hTags);
     hljs.highlightAll();
   }, []);
@@ -127,7 +144,12 @@ export default function BlogPost(props) {
             <div className={styles.postHeader}>
               <div className={styles.wrapVote}>
                 <div className={styles.vote}>
-                  <a onClick={() => handleClick("up")} className="uo">
+                  <a
+                    onClick={() => {
+                      handleClick(1);
+                    }}
+                    className="up"
+                  >
                     <svg
                       width="37"
                       height="28"
@@ -142,7 +164,12 @@ export default function BlogPost(props) {
                     </svg>
                   </a>
                   <span className="count">{voteCount}</span>
-                  <a onClick={() => handleClick("down")} className="down">
+                  <a
+                    onClick={() => {
+                      handleClick(-1);
+                    }}
+                    className="down"
+                  >
                     <svg
                       width="37"
                       height="28"

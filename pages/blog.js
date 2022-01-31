@@ -14,23 +14,24 @@ export async function getServerSideProps() {
   const limit = 10; //should be 10
   // const filterWhatsNew = true;
   // const tagsArray = await TagService.getTags(filterWhatsNew);
-  
+
   try {
     const postParams = {
-      sort_field: "published_at",
-      order: "ASC",
+      sort_field: "featured",
+      order: "DESC",
+      status: "published",
       limit: limit,
-      page: 1,
-      with_table: "users, tags"
+      page: 1
+      // with_table: "users, tags"
     };
-    const responsePost = await PostService.getLatestPosts(postParams);
-    if (responsePost.data.length > 0) {
+    const { data } = await PostService.getPostsByUsers(postParams);
+    if (data.posts.length > 0) {
       return {
         props: {
-          blog: responsePost.data,
+          blog: data.posts,
           // tagsArray: tagsArray,
-          count: 2,
-          limit: limit
+          count: Number(data.count),
+          limit: limit,
         }
       };
     } else {
@@ -43,7 +44,7 @@ export async function getServerSideProps() {
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {}
     };
@@ -54,26 +55,27 @@ export default function BlogListing({ blog, count, limit }) {
   const tagsArray = [
     {
       count: 0,
-      status: 'enabled',
-      _id: '610299948fb9dadb439a392f',
-      name: 'css',
-      user_id: '610296398fb9dadb439a392c',
-      createdAt: '2021-07-29T12:05:40.984Z',
-      updatedAt: '2021-07-29T12:05:40.984Z',
+      status: "enabled",
+      _id: "610299948fb9dadb439a392f",
+      name: "css",
+      user_id: "610296398fb9dadb439a392c",
+      createdAt: "2021-07-29T12:05:40.984Z",
+      updatedAt: "2021-07-29T12:05:40.984Z",
       __v: 0
     },
     {
       count: 0,
-      status: 'enabled',
-      _id: '610299a78fb9dadb439a3930',
-      name: 'fix',
-      user_id: '610296398fb9dadb439a392c',
-      createdAt: '2021-07-29T12:05:59.672Z',
-      updatedAt: '2021-07-29T12:05:59.672Z',
+      status: "enabled",
+      _id: "610299a78fb9dadb439a3930",
+      name: "fix",
+      user_id: "610296398fb9dadb439a392c",
+      createdAt: "2021-07-29T12:05:59.672Z",
+      updatedAt: "2021-07-29T12:05:59.672Z",
       __v: 0
     }
   ];
   const [newBlogs, setNewBlogs] = useState(blog);
+
 
   const currentCount = (count) => {
     getNewPosts(count);
@@ -81,20 +83,20 @@ export default function BlogListing({ blog, count, limit }) {
 
   const getNewPosts = async (clickNo) => {
     const postParams = {
-      sort_field: "published_at",
-      order: "ASC",
+      // sort_field: "published_at",
+      order: "DESC",
+      status: "published",
       limit: limit,
-      page: 1,
-      with_table: "users, tags"
+      page: clickNo+1
+      // with_table: "users, tags"
     };
     try {
-      const responsePost = await PostService.getLatestPosts(postParams);
-  
+      const { data } = await PostService.getPostsByUsers(postParams);
       setNewBlogs((prevValue) => {
-        return [...prevValue, ...responsePost.data.blog];
+        return [...prevValue, ...data.posts];
       });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
   return (
@@ -144,6 +146,7 @@ export default function BlogListing({ blog, count, limit }) {
           tagsArray={tagsArray}
           currentCount={currentCount}
           blogCount={count}
+          limit = {limit}
         />
       ) : (
         <div className="flex items-center justify-center m-9 font-semibold">

@@ -1,0 +1,54 @@
+
+.guestDetails {
+  @apply flex flex-col items-center;
+
+  &:hover {
+      .guestDetails__icon {
+          svg {
+              transform: rotate(-90deg);
+          }
+          circle {
+              stroke-dasharray: 211 211;
+              opacity: 1;
+          }
+      }
+      .authorDetails__title {
+          background-size: 50px 1px;
+      }
+  }
+
+  circle {
+      stroke-dasharray: 0 211;
+      transition: all .5s cubic-bezier(.66,.22,.62,.78);
+      // opacity: 0;
+  }
+  &__icon {
+      @apply rounded-full overflow-hidden relative;
+      max-width: 100px;
+      max-height: 100px;
+      svg {
+          @apply absolute left-0 top-0 w-full h-auto;
+          transform: rotate(-90deg);
+          transition: all ease .3s;
+      }
+  }
+
+  &__title {
+      @apply font-extrabold mt-5;
+      font-size: 25px;
+      background-image: linear-gradient(#F13E5D, #F13E5D);
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      background-size: 0 1px;
+      transition: all ease .4s;
+      a:hover {
+          color: #F13E5D;
+      }
+  }
+
+  &__designation {
+    @apply font-bold text-base mt-2;
+    color: #717171;
+  }
+
+}

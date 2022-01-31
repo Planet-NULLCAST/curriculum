@@ -5,7 +5,6 @@ import moment from "moment";
 import styles from "./SectionRelated.module.scss";
 
 export default function SectionRelated({ title, posts }) {
-  posts?.splice(3)
   return (
     <section className={`${styles.section} py-10 lg:py-20`}>
       <div className="container container--post">
@@ -20,13 +19,13 @@ export default function SectionRelated({ title, posts }) {
           </span>
         </div>
         <div className={styles.relatedList}>
-          {posts?.length > 0 ? (
+          {posts?.count > 0 ? (
             posts.map((post) => (
-              <div className={styles.relatedItem} key={post._id}>
+              <div className={styles.relatedItem} key={posts.post_id}>
                 <figure>
-                  <Link href={`/${post.slug}`}>
+                  <Link href={`/${posts?.slug}`}>
                     <a>
-                      <img src={`${post.bannerImage}`} alt={`${post.title}`} />
+                      <img src={`${posts?.banner_image}`} alt={`${posts.title}`} />
                     </a>
                   </Link>
                 </figure>
@@ -35,18 +34,18 @@ export default function SectionRelated({ title, posts }) {
                     {moment(post.publishedAt).format("MMMM Do, YYYY")}
                   </p>
                   <h3>
-                    <Link href={`/${post.slug}`}>
+                    <Link href={`/${posts.slug}`}>
                       <a className="linkUnderline">
                         {/* 34 */}
-                        {post.title.length > 34
-                          ? post.title.substring(0, 34) + "..."
-                          : post.title}
+                        {posts.title.length > 34
+                          ? posts.title.substring(0, 34) + "..."
+                          : posts.title}
                       </a>
                     </Link>
                   </h3>
                   <AuthorDetails
-                    username={post.primaryAuthor.username}
-                    avatar={post.primaryAuthor.avatar}
+                    username={posts.user.user_name}
+                    avatar={posts.user.avatar}
                   />
                 </div>
               </div>

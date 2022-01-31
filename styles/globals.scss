@@ -13,6 +13,7 @@ html {
 
 body {
   font-family: "Open Sans", sans-serif !important;
+  cursor: url(../public/images/svgs/mouse-pointer-christmas.svg), auto;
 }
 
 .bg-pink-710 {
@@ -272,7 +273,7 @@ h3 {
 .basic-multi-select,
 .basic-single {
   .css-yk16xz-control {
-    background-color: #f3f4f5;
+    background-color: #fff;
     border: 0px;
     &:focus {
       outline: none;
@@ -295,7 +296,7 @@ h3 {
 }
 .postFilter {
   .css-yk16xz-control {
-    background-color: #e5e7eb !important;
+    background-color: #fff !important;
     height: 38px !important;
   }
 }
@@ -443,4 +444,13 @@ h3 {
     padding: 0 0.5rem;
     border: 1px solid #e5e7eb;
   }
+}
+.cursor {
+  height: 60px;
+  width: 60px;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  transition: transform 2.5s;
 }
