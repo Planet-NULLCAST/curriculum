@@ -50,7 +50,6 @@ export async function getServerSideProps() {
 }
 
 export default function EventListing({ events, count, limit }) {
-  console.log(events);
   const [newEvents, setNewEvents] = useState([]);
 
   const currentCount = (count) => {

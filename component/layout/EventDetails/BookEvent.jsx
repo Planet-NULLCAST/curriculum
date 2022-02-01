@@ -12,7 +12,6 @@ import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
 
 export default function BookEvent({ data, showShare }) {
   const { title, description, event_time, location, registration_link } = data;
-  console.log(event_time > new Date().toISOString());
   return (
     <div className={styles.Book_Wrap}>
       <p className={styles.Book_Title}>Date and Time</p>
