@@ -7,65 +7,63 @@ import { exit } from "process";
 
 export default function SectionVideos() {
 
-  const [firstPlay, setFirstPlay] = useState(false);
-  const [secondPlay, setSecondPlay] = useState(false);
-  const [thirdPlay, setThirdPlay] = useState(false);
+    const [firstPlay, setFirstPlay] = useState(false);
+    const [secondPlay, setSecondPlay] = useState(false);
+    const [thirdPlay, setThirdPlay] = useState(false);
 
-  const checkState1 = (e) => {
-    // console.log(e.target.playerInfo.playerState);
-    if (e.target.playerInfo.playerState === 1) {
-      setFirstPlay(true);
-    }
-    else {
-      setFirstPlay(false);
-    }
-  };
+    const checkState1 = (e) => {
+        // console.log(e.target.playerInfo.playerState);
+        if (e.target.playerInfo.playerState === 1) {
+            setFirstPlay(true);
+        }
+        else {
+            setFirstPlay(false);
+        }
+    };
 
-  const checkState2 = (e) => {
-    if (e.target.playerInfo.playerState === 1) {
-      setSecondPlay(true);
-    }
-    else {
-      setSecondPlay(false);
-    }
-  };
+    const checkState2 = (e) => {
+        if (e.target.playerInfo.playerState === 1) {
+            setSecondPlay(true);
+        }
+        else {
+            setSecondPlay(false);
+        }
+    };
 
-  const checkState3 = (e) => {
-    if (e.target.playerInfo.playerState === 1) {
-      setThirdPlay(true);
-    }
-    else {
-      setThirdPlay(false);
-    }
-  };
+    const checkState3 = (e) => {
+        if (e.target.playerInfo.playerState === 1) {
+            setThirdPlay(true);
+        }
+        else {
+            setThirdPlay(false);
+        }
+    };
 
 
 
-  const opts = {
-    height: 586,
-    width: 500,
-    playerVars: {
-      autoplay: 0
-    }
-  };
+    const opts = {
+        height: 586,
+        width: 500,
+        playerVars: {
+            autoplay: 0
+        }
+    };
 
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <Fade cascade>
-          <div className={styles.videoList}>
-            <div className={styles.videoItem}
-            >
-              <figure
-              >
-                <YouTube
-                  videoId="EL6F9h7UgUA"
-                  containerClassName="embed embed-youtube"
-                  onStateChange={(e) => checkState1(e)}
-                  opts={opts}
-                />
-                <div className={firstPlay ? "invisible" : "visible"}>
-                  {/* <button
+    return (
+        <section className={styles.section}>
+            <div className="container">
+                <Fade cascade>
+                    <div className={styles.videoList}>
+                        <div className={styles.videoItem} >
+                            <figure>
+                                <YouTube
+                                    videoId="EL6F9h7UgUA"
+                                    containerClassName="embed embed-youtube"
+                                    onStateChange={(e) => checkState1(e)}
+                                    opts={opts}
+                                />
+                                <div className={firstPlay ? "invisible" : "visible"}>
+                                    {/* <button
                     className={`${styles.play} ${modalIsOpen ? "invisible" : "visible"}`}>
                     <svg
                       onclick={() => setFirstPlay(true)}
@@ -92,26 +90,26 @@ export default function SectionVideos() {
                       />
                     </svg>
                   </button> */}
-                  <figcaption>
-                    <div className={`${styles.caption1} ${firstPlay ? "invisible" : "visible"}`} >
+                                    <figcaption>
+                                        <div className={`${styles.caption1} ${firstPlay ? "invisible" : "visible"}`} >
 
-                      <h3>
-                        What is (Simple Notification Service) SNS? | Nullcast
-                      </h3>
-                    </div>
-                  </figcaption>
-                </div>
-              </figure>
-            </div>
-            <div className={styles.videoItem}>
-              <figure>
-                <YouTube
-                  videoId="YP48OZtsOpU"
-                  containerClassName="embed embed-youtube"
-                  onStateChange={(e) => checkState2(e)}
-                  opts={opts}
-                />
-                {/* <button
+                                            <h3>
+                                                What is (Simple Notification Service) SNS? | Nullcast
+                                            </h3>
+                                        </div>
+                                    </figcaption>
+                                </div>
+                            </figure>
+                        </div>
+                        <div className={styles.videoItem}>
+                            <figure>
+                                <YouTube
+                                    videoId="YP48OZtsOpU"
+                                    containerClassName="embed embed-youtube"
+                                    onStateChange={(e) => checkState2(e)}
+                                    opts={opts}
+                                />
+                                {/* <button
                   className={styles.play}>
                   <svg
 
@@ -138,27 +136,27 @@ export default function SectionVideos() {
                     />
                   </svg>
                 </button> */}
-                <figcaption
-                  className={`${secondPlay ? "invisible" : "visible"}`}>
-                  <div className={`${styles.caption1} ${secondPlay ? "invisible" : "visible"}`} >
+                                <figcaption
+                                    className={`${secondPlay ? "invisible" : "visible"}`}>
+                                    <div className={`${styles.caption1} ${secondPlay ? "invisible" : "visible"}`} >
 
-                    <h3>
-                      IoT Communication Protocol? | Nullcast
-                    </h3>
-                  </div>
-                </figcaption>
-              </figure>
-            </div>
-            <div className={styles.videoItem}
-            >
-              <figure>
-                <YouTube
-                  videoId="XcSKzYaBV3c"
-                  containerClassName="embed embed-youtube"
-                  onStateChange={(e) => checkState3(e)}
-                  opts={opts}
-                />
-                {/* <button
+                                        <h3>
+                                            IoT Communication Protocol? | Nullcast
+                                        </h3>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div className={styles.videoItem}
+                        >
+                            <figure>
+                                <YouTube
+                                    videoId="XcSKzYaBV3c"
+                                    containerClassName="embed embed-youtube"
+                                    onStateChange={(e) => checkState3(e)}
+                                    opts={opts}
+                                />
+                                {/* <button
                   className={styles.play}>
                   <svg
                     onClick={() => {
@@ -186,18 +184,18 @@ export default function SectionVideos() {
                     />
                   </svg>
                 </button> */}
-                <figcaption>
-                  <div className={`${styles.caption1} ${thirdPlay ? "invisible" : "visible"}`} >
-                    <h3>
-                      What is Zapier? | Nullcast
-                    </h3>
-                  </div>
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </Fade>
-      </div >
-    </section >
-  );
+                                <figcaption>
+                                    <div className={`${styles.caption1} ${thirdPlay ? "invisible" : "visible"}`} >
+                                        <h3>
+                                            What is Zapier? | Nullcast
+                                        </h3>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </Fade>
+            </div >
+        </section >
+    );
 }
