@@ -5,13 +5,10 @@ import Fade from "react-reveal/Fade";
 import moment from "moment";
 
 export default function EventItems({ events }) {
-
-  function truncate(string, length){
-    if (string.length > length)
-        return string.substring(0,length)+'...';
-    else
-        return string;
-  };
+  function truncate(string, length) {
+    if (string.length > length) return string.substring(0, length) + "...";
+    else return string;
+  }
 
   return events.map((item, key) => (
     <div className={styles.listing__item} key={"Event_Item_" + key}>
@@ -42,10 +39,13 @@ export default function EventItems({ events }) {
         </a>
       </Fade>
       <div>
-        <h3>
+        <h3 className="flex items-center">
           <Link href={`/e/${item.slug}`}>
             <a>{truncate(item.title, 42)}</a>
           </Link>
+          <span className="bg-red-300 ml-4 border border-red-700 text-xs rounded p-1 text-red-700">
+            {item?.event_time < new Date().toISOString() ? "Ended" : ""}
+          </span>
         </h3>
 
         <p className={styles.time}>
@@ -62,7 +62,9 @@ export default function EventItems({ events }) {
           <span className={styles.icon}>
             <img src="/images/location-pin.svg" alt="location_Icon" />
           </span>
-          <span className={styles.location}>{truncate(item?.location,30)}</span>
+          <span className={styles.location}>
+            {truncate(item?.location, 30)}
+          </span>
         </p>
       </div>
     </div>

@@ -50,6 +50,7 @@ export async function getServerSideProps() {
 }
 
 export default function EventListing({ events, count, limit }) {
+  console.log(events);
   const [newEvents, setNewEvents] = useState([]);
 
   const currentCount = (count) => {
@@ -132,9 +133,9 @@ export default function EventListing({ events, count, limit }) {
       <SiteHeader />
       <EventHeader />
       {newEvents && <EventFeatured event={newEvents[0] || ""} />}
-      {newEvents?.length > 0 ? (
+      {newEvents && events?.length > 0 ? (
         <EvListing
-          events={newEvents.slice(1) || ""}
+          events={events.filter((each) => each.id !== newEvents[0]?.id) || ""}
           currentCount={currentCount}
           eventCount={newEvents.count}
         />
