@@ -121,7 +121,7 @@ async function updatePostById(postId, postDetails) {
 
 async function adminReview(postId, postDetails) {
   try {
-    const { data } = await axios.put(
+    const { data } = await axios.patch(
       `${baseUrl}/${adminReviewUrl}/${postId}`,
       postDetails
     );
@@ -165,24 +165,23 @@ async function deletePostById(userCookie, postId) {
 //   }
 // }
 
-async function getPostByTags(tagName, status , data) {
-  if(data){
-      const response = await axios.get(`${baseUrl}/${postsUrl}/${data?.tag}` , {
-        params : data
-      })
-      return response.data
-  }
-  else{
-  try {
-    const response = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
-      params: { status: status }
+async function getPostByTags(tagName, status, data) {
+  if (data) {
+    const response = await axios.get(`${baseUrl}/${postsUrl}/${data?.tag}`, {
+      params: data
     });
     return response.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
+  } else {
+    try {
+      const response = await axios.get(`${baseUrl}/${postsUrl}/${tagName}`, {
+        params: { status: status }
+      });
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
-}
 }
 
 async function adminChangePostStatus(userCookie, postId, statusUpdate) {
