@@ -112,13 +112,16 @@ const Admin = () => {
   async function getevents(reqData) {
     try {
       const data = await EventService.getLatestEvents(reqData);
-      if(data){
-      const { events, count } = data;
-      setEventdata({ events, count });
-      console.log(eventdata)
+      if (data) {
+        if (data.data) {
+          const { events, count } = data.data;
+          setEventdata((prev) => ({ ...prev, events: events, count: count }));
+        } else if (data.message === "Events not Found") {
+          setEventdata((prev) => ({ ...prev, events: [], count: 0 }));
+        }
       }
     } catch (err) {
-      console.log(err, 'error')
+      console.log(err, "error");
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
@@ -140,43 +143,15 @@ const Admin = () => {
   };
 
   /**
-   * Function to get posts when tag changes
-   * @param {*} tag new tag
-   * @author athulraj2002
-   */
-  const filterCategoryPosts = (tag, status) => {
-    const data = {
-      ...pagination,
-      tag: tag,
-      page: 1,
-      status: status
-      // skip: 0
-    };
-    setPagination((previousState) => {
-      return {
-        ...previousState,
-        tag: tag,
-        page: 1,
-        status: status
-        // skip: 0
-      };
-    });
-
-    setTimeout(() => {
-      getPostByTag(data.tag, data.status);
-    }, 100);
-  };
-
-  /**
    * Function to get posts when status changes
    * @param {*} status new status
    * @author athulraj2002
    */
 
   const filterStatusEvents = (status) => {
-    const data = { ...pagination, status: status, page: 1, limit:10 };
+    const data = { ...pagination, status: status, page: 1, limit: 10 };
     setPagination((previousState) => {
-      return { ...previousState, status: status, page: 1, limit:10 };
+      return { ...previousState, status: status, page: 1, limit: 10 };
     });
     setTimeout(() => {
       getevents(data);
@@ -198,9 +173,12 @@ const Admin = () => {
 
           {eventdata.events?.length ? (
             <div>
-              <AdminEventList events={eventdata.events} refresh={()=>{
-                getevents()
-              }} />
+              <AdminEventList
+                eventData={eventdata}
+                refresh={() => {
+                  getevents(pagination);
+                }}
+              />
 
               <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}

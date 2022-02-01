@@ -6,8 +6,26 @@ import EventService from "../../services/EventService";
 import MyBlogStyles from "../../styles/MyBlogs.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
-function AdminEventList({ events, refresh }) {
+function AdminEventList({ eventData, refresh }) {
   const router = useRouter();
+
+  const adminEventStatus = async (eventId, type) => {
+    try {
+      const newUpdatedEvent = {
+        status: type
+      };
+      const response = await EventService.adminReviewEvent(
+        eventId,
+        newUpdatedEvent
+      );
+      if (response) {
+        refresh();
+      }
+    } catch (err) {
+      notify(err?.response?.data?.message ?? err?.message, "error");
+    }
+  };
+
   async function deletevents(eventid) {
     try {
       const data = await EventService.deleteEvent(eventid);
@@ -28,8 +46,8 @@ function AdminEventList({ events, refresh }) {
   return (
     <div>
       <div className="w-full mt-4 bg-white py-5 rounded border shadow-sm overflow-y-auto height_list">
-        {events &&
-          events.map((obj, index) => {
+        {eventData?.events &&
+          eventData.events.map((obj, index) => {
             return (
               <div
                 key={index}
@@ -49,23 +67,82 @@ function AdminEventList({ events, refresh }) {
                 <div className="flex ">
                   <Link href={`/e/${obj.slug}`}>
                     <a target="_blank">
-                    <div
-                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
-                    >
-                      <>
-                        <div
-                          className={`w-2 h-2 mr-2 rounded-full  ${MyBlogStyles.draftedDot}`}
-                        ></div>
+                      <div
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer  ${MyBlogStyles.draftedBg}`}
+                      >
+                        <>
+                          <div
+                            className={`w-2 h-2 mr-2 rounded-full  ${MyBlogStyles.draftedDot}`}
+                          ></div>
 
-                        <span
-                          className={`capitalize  ${MyBlogStyles.draftedText} `}
-                        >
-                          {obj.status === "published" ? "View" : "Preview"}
-                        </span>
-                      </>
-                    </div>
+                          <span
+                            className={`capitalize  ${MyBlogStyles.draftedText} `}
+                          >
+                            {obj.status === "published" ? "View" : "Preview"}
+                          </span>
+                        </>
+                      </div>
                     </a>
                   </Link>
+
+                  {obj.status == "published" ? (
+                    <div
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}
+                    >
+                      <span
+                        className={`capitalize ${MyBlogStyles.publishedText} `}
+                      >
+                        Published
+                      </span>
+                    </div>
+                  ) : obj.status == "rejected" ? (
+                    <div
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 
+                 ${MyBlogStyles.dangerBg}`}
+                    >
+                      <span
+                        className={`capitalize  ${MyBlogStyles.dangerText}`}
+                      >
+                        Rejected
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <div
+                        onClick={() => adminEventStatus(obj.id, "rejected")}
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500
+                     ${MyBlogStyles.dangerBg}`}
+                      >
+                        <span
+                          className={`capitalize  ${MyBlogStyles.dangerText}`}
+                        >
+                          Reject
+                        </span>
+                      </div>
+                      <div
+                        onClick={() => adminEventStatus(obj.id, "published")}
+                        className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.successBg} `}
+                      >
+                        <span
+                          className={`capitalize ${MyBlogStyles.successText} `}
+                        >
+                          Publish
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {obj.status == "published" && (
+                    <div
+                      onClick={() => adminEventStatus(obj.id, "pending")}
+                      className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.warningBg} `}
+                    >
+                      <span
+                        className={`capitalize ${MyBlogStyles.warningText} `}
+                      >
+                        Unpublish
+                      </span>
+                    </div>
+                  )}
                   {/* {obj.status === "published" && (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}
