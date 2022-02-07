@@ -13,6 +13,7 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
+const adminEventReviewUrl = `${apiVerUrl}/admin/event`;
 const eventIdUrl = `${apiVerUrl}/event`;
 const eventSlugUrl = `${apiVerUrl}/event-by-slug`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
@@ -67,6 +68,7 @@ const configVars = {
   loginUrl,
   userUrl,
   verificationMail,
+  adminEventReviewUrl,
   clientUrl,
   s3Url,
   authUrl,

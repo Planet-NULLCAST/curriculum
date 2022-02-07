@@ -6,7 +6,8 @@ import {
   createEventUrl,
   eventSlugUrl,
   bookEventUrl,
-  getAllEventsUrl
+  getAllEventsUrl,
+  adminEventReviewUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
 import { getUrl } from "../lib/getUrl";
@@ -17,7 +18,7 @@ async function getLatestEvents(reqParams) {
     const res = await axios.get(`${url}/${eventsUrl}`, {
       params: reqParams
     });
-    return res.data.data;
+    return res.data;
   } catch (err) {
     throw err;
   }
@@ -107,12 +108,10 @@ async function getEventByStatus(req) {
 }
 
 async function updateEvent(eventId, updatedData) {
-  console.log(updatedData);
   if (updatedData?.guest_name) {
     try {
       const res = await getImageUrl(updatedData, eventId);
       if (res) {
-        console.log(res);
         if (typeof res === "object" && !res.url) {
           const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
@@ -181,7 +180,9 @@ async function adminReviewEvent(eventId, adminReviewdData) {
     if (response) {
       return response.data;
     }
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }
 
 // book event
