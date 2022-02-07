@@ -453,7 +453,7 @@ export default function SignUp({ referer }) {
                             />
                             <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                               <img
-                                src={hidePassword ? "/images/eyecross.svg" : "/images/eye.svg"}
+                                src={showPassword ? "/images/eyecross.svg" : "/images/eye.svg"}
                                 className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700 focus-visible:outline-none"
                                 onClick={(e) => eyeClick(e)}
                               ></img>
