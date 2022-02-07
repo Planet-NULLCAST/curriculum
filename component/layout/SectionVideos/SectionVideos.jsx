@@ -43,7 +43,7 @@ export default function SectionVideos() {
 
   const opts = {
     height: 586,
-    width: 500,
+    width: "100%",
     playerVars: {
       autoplay: 0
     }
