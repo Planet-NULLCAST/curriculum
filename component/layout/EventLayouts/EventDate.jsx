@@ -20,12 +20,6 @@ export default function EventDate({ eventDate }) {
       var d = moment.duration(then);
       if(d._data.days <= 0 && d._data.hours <= 0 && d._data.minutes <= 0 && d._data.seconds <= 0){
         clearInterval(id)
-        if(router.pathname === '/events'){
-            router.reload()
-        }else{
-        router.push('/events')
-        notify('the event is already finished')
-        }
       }
       if (now <= dateOfEvent) setCount(d._data);
     }, 1000);
