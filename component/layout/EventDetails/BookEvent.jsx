@@ -97,11 +97,19 @@ export default function BookEvent({ data, showShare, handleSubmit }) {
         </span>
         <span className="time">{moment(event_time).format("LT")}</span>
       </div>
-      <Link href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${event_time}&details=For+details,+Visit+this+link+:+${registration_link}&location=${location}&sf=true&output=xml`}>
-        <a target="_blank" className={styles.calender} rel="nofollow">
-          <span className={styles.icon}>
-            +
-          </span>
+      <Link
+        href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${event_time}&details=For+details,+Visit+this+link+:+${registration_link}&location=${location}&sf=true&output=xml`}
+      >
+        <a
+          target="_blank"
+          className={`${styles.calender} ${
+            event_time > new Date().toISOString()
+              ? ""
+              : "pointer-events-none cursor-not-allowed"
+          }`}
+          rel="nofollow"
+        >
+          <span className={styles.icon}>+</span>
           <span className={styles.location}>ADD TO CALENDER</span>
         </a>
       </Link>
@@ -116,10 +124,13 @@ export default function BookEvent({ data, showShare, handleSubmit }) {
                 }
               }}
               disabled={bookStatus ? "" : "disabled"}
-              className={`${styles.Book_Now} ${bookStatus ? "" : "cursor-not-allowed"}`} >
+              className={`${styles.Book_Now} ${
+                event_time > new Date().toISOString()
+                  ? ""
+                  : `${styles.ended} cursor-not-allowed pointer-events-none`
+              } ${bookStatus ? "" : "cursor-not-allowed"}`} >
               {isLoading && <LoadIcon color="#fff" height="33px" />}
-
-              {bookStatus ? "Book Event" : "Booked"}
+              {event_time > new Date().toISOString() ? `${bookStatus ? "BOOK NOW" : "Booked"}` : `EVENT ENDED !`}
             </button>
           </div>
         ) : (

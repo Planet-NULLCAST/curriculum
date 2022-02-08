@@ -29,14 +29,16 @@ export default function SectionEvents({ events }) {
                   width={978}
                   height={539}
                 />
-                <figcaption>
-                  <h3>
-                    <span>{events?.title}</span>
-                  </h3>
-                  <p>
-                    {events?.event_time &&
-                      moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}
-                  </p>
+                <figcaption style={{ backgroundColor: "#000000a6" }}>
+                  <div >
+                    <h3>
+                      <span>{events?.title}</span>
+                    </h3>
+                    <p>
+                      {events?.event_time &&
+                        moment(events?.event_time).format("MMMM Do YYYY, h:mm a")}
+                    </p>
+                  </div>
                 </figcaption>
               </figure>
             </div>

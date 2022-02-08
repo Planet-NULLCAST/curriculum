@@ -43,9 +43,9 @@ export default function EventItems({ events }) {
           <Link href={`/e/${item.slug}`}>
             <a>{truncate(item.title, 42)}</a>
           </Link>
-          <span className="bg-red-300 ml-4 border border-red-700 text-xs rounded p-1 text-red-700">
-            {item?.event_time < new Date().toISOString() ? "Ended" : ""}
-          </span>
+          {item?.event_time < new Date().toISOString() && <span className="bg-red-300 ml-4 border border-red-700 text-xs rounded p-1 text-red-700">
+            {"Ended"}
+          </span>}
         </h3>
 
         <p className={styles.time}>
