@@ -202,7 +202,7 @@ export default function Username({ userData, userCurrentLogin }) {
             <SkillSet userData={userData} />
             {currentNav === "profile" && (
               <>
-                {/* <Activity /> */}
+                <Activity userId={userData.id} />
                 <BlogList
                   posts={newBlogs}
                   getNewPostsWithCount={getNewPostsWithCount}
