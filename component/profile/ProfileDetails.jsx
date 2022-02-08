@@ -21,7 +21,6 @@ export default function ProfileDetails({ userData, userCurrentLogin , isFollowin
   const unFollowUser = async (id) => {
       const resp = await UserService.removeFollower(id)
       if(resp){
-        console.log(resp)
         const checkIfFollowed = await UserService.isFollwed(id)
         if(checkIfFollowed){
           setIsFollowing(false)
