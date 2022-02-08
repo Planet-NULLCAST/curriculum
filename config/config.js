@@ -47,6 +47,9 @@ const setVoteUrl = `${apiVerUrl}/post-vote`;
 const getVoteUrl = `${apiVerUrl}/post-votes`;
 const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 const getYearlyActivities = `${apiVerUrl}/user-activities`;
+const getFollowersUrl = `${apiVerUrl}/followers`
+const addorRemoveFollowers = `${apiVerUrl}/follow`
+const isFollwing = `${apiVerUrl}/follower`
 const leaderBoardUrl = `${apiVerUrl}/leader-board`;
 
 const configVars = {
@@ -98,6 +101,9 @@ const configVars = {
   skillUrl,
   publishedPostsUrl,
   getYearlyActivities,
+  getFollowersUrl,
+  addorRemoveFollowers,
+  isFollwing,
   // publishedPostsCountUrl,
   logoutUrl
 };
