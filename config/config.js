@@ -46,8 +46,10 @@ const logoutUrl = `${apiVerUrl}/logout`;
 const setVoteUrl = `${apiVerUrl}/post-vote`;
 const getVoteUrl = `${apiVerUrl}/post-votes`;
 const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
+const leaderBoardUrl = `${apiVerUrl}/leader-board`;
 
 const configVars = {
+  leaderBoardUrl,
   baseUrl,
   bookEventUrl,
   allPostUrl,
