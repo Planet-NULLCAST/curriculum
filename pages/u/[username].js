@@ -88,7 +88,6 @@ export default function Username({ userData, userCurrentLogin }) {
       status: "published"
     };
     const response = await PostService.getUserPostsByUser(UserId, postParams);
-    console.log(response.data.posts, "error");
     setNewBlogs(response.data.posts);
     setPostsLimit(response.data.limit);
   };
