@@ -24,12 +24,13 @@ export async function getServerSideProps() {
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(postParams);
-    if (responseEvents.data.count > 0) {
+    console.log(responseEvents?.count , "here");
+    if (responseEvents?.count > 0) {
       return {
         props: {
-          events: responseEvents.data.events,
-          count: responseEvents.data.count,
-          limit: responseEvents.data.limit
+          events: responseEvents.events,
+          count: responseEvents.count,
+          limit: responseEvents.limit
         }
       };
     } else {
@@ -42,6 +43,7 @@ export async function getServerSideProps() {
       };
     }
   } catch (err) {
+    console.log(err , "error");
     notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {}
@@ -51,7 +53,7 @@ export async function getServerSideProps() {
 
 export default function EventListing({ events, count, limit }) {
   const [newEvents, setNewEvents] = useState([]);
-
+  console.log(events);
   const currentCount = (count) => {
     getNewEvents(count);
   };
@@ -64,11 +66,11 @@ export default function EventListing({ events, count, limit }) {
   const eventsHandler = (events) => {
     var today = new Date();
     const CurrentDateTime = today.toISOString();
-
-    const eventsUpdated = events.filter(function (event) {
+    const eventsUpdated = events?.filter(function (event) {
       console.log(event.event_time > CurrentDateTime);
       return event.event_time > CurrentDateTime;
     });
+    console.log(eventsUpdated);
     setNewEvents(eventsUpdated);
   };
 
@@ -134,7 +136,7 @@ export default function EventListing({ events, count, limit }) {
       {newEvents && <EventFeatured event={newEvents[0] || ""} />}
       {newEvents && events?.length > 0 ? (
         <EvListing
-          events={events.filter((each) => each.id !== newEvents[0]?.id) || ""}
+          events={events?.filter((each) => each.id !== newEvents[0]?.id) || ""}
           currentCount={currentCount}
           eventCount={newEvents.count}
         />
