@@ -132,9 +132,9 @@ export default function EventListing({ events, count, limit }) {
       <SiteHeader />
       <EventHeader />
       {newEvents && <EventFeatured event={newEvents[0] || ""} />}
-      {newEvents?.length > 0 ? (
+      {newEvents && events?.length > 0 ? (
         <EvListing
-          events={newEvents.slice(1) || ""}
+          events={events.filter((each) => each.id !== newEvents[0]?.id) || ""}
           currentCount={currentCount}
           eventCount={newEvents.count}
         />

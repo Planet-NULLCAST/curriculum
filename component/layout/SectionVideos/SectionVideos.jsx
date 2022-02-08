@@ -43,7 +43,7 @@ export default function SectionVideos() {
 
   const opts = {
     height: 586,
-    width: 500,
+    width: "100%",
     playerVars: {
       autoplay: 0
     }
@@ -54,10 +54,8 @@ export default function SectionVideos() {
       <div className="container">
         <Fade cascade>
           <div className={styles.videoList}>
-            <div className={styles.videoItem}
-            >
-              <figure
-              >
+            <div className={styles.videoItem} >
+              <figure>
                 <YouTube
                   videoId="EL6F9h7UgUA"
                   containerClassName="embed embed-youtube"
@@ -186,8 +184,8 @@ export default function SectionVideos() {
                     />
                   </svg>
                 </button> */}
-                <figcaption>
-                  <div className={`${styles.caption1} ${thirdPlay ? "invisible" : "visible"}`} >
+                <figcaption
+                  className={`${thirdPlay ? "invisible" : "visible"}`}>                                    <div className={`${styles.caption1} ${thirdPlay ? "invisible" : "visible"}`} >
                     <h3>
                       What is Zapier? | Nullcast
                     </h3>

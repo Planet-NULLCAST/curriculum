@@ -17,7 +17,7 @@ export default function EventSpotlight({ data, showWindow, handleSubmit }) {
       <div className={styles.postWrap}>
         <figure>{banner_image && <img src={banner_image} alt="Event Image" />}</figure>
         <div className={styles.bookEvent}>
-          <BookEvent data={data} />
+          <BookEvent data={data} showShare={showWindow} />
         </div>
         <div className={styles.author}>
           <GuestDetails name={guest_name} avatar={guest_image} desig={guest_designation} />
