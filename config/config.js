@@ -16,6 +16,7 @@ const eventsUrl = `${apiVerUrl}/events`;
 const eventIdUrl = `${apiVerUrl}/event`;
 const eventSlugUrl = `${apiVerUrl}/event-by-slug`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
+const eventRequestUrl = `${apiVerUrl}/event`
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -86,6 +87,7 @@ const configVars = {
   createEventUrl,
   eventIdUrl,
   changeStatusUrl,
+  eventRequestUrl,
   createEventUrl,
   subscribeUrl,
   editorUrl,
