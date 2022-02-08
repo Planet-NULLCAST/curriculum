@@ -119,7 +119,6 @@ const Admin = () => {
         setEventdata((prev) => ({ ...prev, events: [], count: 0 }));
       }
     } catch (err) {
-      console.log(err, "error");
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
