@@ -37,7 +37,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
       <div className="flex items-center">
         <div className="relative">
           <img
-            src={`${eventDetails.organizerImage ? eventDetails.organizerImage.name ? image : eventDetails.organizerImage
+            src={`${eventDetails?.organizerImage ? eventDetails.organizerImage.name ? image : eventDetails.organizerImage
                 : "/images/svgs/avatar.svg"
               }`}
             onClick={() => ref.current.click()}
@@ -60,7 +60,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
               />
             </label>
             {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.organizerImageError}
+                          {eventDetailsError?.organizerImageError}
                         </span>}
           </div>
         </div>
@@ -77,7 +77,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
               className="bg-gray-100 p-4 rounded border-grayBorder border-2"
               name="organizer name"
               placeholder="Organizer Name"
-              value={eventDetails.organizerName}
+              value={eventDetails?.organizerName}
               onBlur={(e) => organizerNameValidation(e)}
               onChange={(e) =>
                 setEventDetails((prev) => ({
@@ -87,7 +87,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
               }
             />
             {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-              {eventDetailsError.organizerNameError}
+              {eventDetailsError?.organizerNameError}
             </span>}
           </div>
           <div className="flex flex-col">
@@ -99,7 +99,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
               className="bg-gray-100 p-4 rounded border-grayBorder border-2"
               name="Tag Line"
               placeholder="Tag here"
-              value={eventDetails.tagLine}
+              value={eventDetails?.tagLine}
               onBlur={(e) => organizerDesignationValidation(e)}
               onChange={(e) =>
                 setEventDetails((prev) => ({
@@ -109,7 +109,7 @@ const OrganizerInfo = ({ eventDetails, setEventDetails, eventDetailsError, setEv
               }
             />
             {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-              {eventDetailsError.tagLineError}
+              {eventDetailsError?.tagLineError}
             </span>}
           </div>
         </div>

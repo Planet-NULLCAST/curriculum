@@ -7,7 +7,8 @@ import {
   eventSlugUrl,
   bookEventUrl,
   getAllEventsUrl,
-  adminEventReviewUrl
+  adminEventReviewUrl,
+  eventRequestUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
 import { getUrl } from "../lib/getUrl";
@@ -70,7 +71,8 @@ async function createNewEvent(userCookie, eventData) {
       location: eventData.location,
       registration_link: eventData.registration_link,
       description: eventData.description,
-      event_time: eventData.event_time
+      event_time: eventData.event_time,
+      status: eventData.status
     });
     if (response) {
       const res = await getImageUrl(eventData, response.data.data.id);
@@ -221,6 +223,37 @@ async function getBookEventStatus(eventId) {
     throw err;
   }
 }
+
+// request event
+async function requestEvent(eventData) {
+  try {
+    let response = await axios.post(`${baseUrl}/${eventRequestUrl}`, {
+      guest_name: eventData.guest_name,
+      guest_designation: eventData.guest_designation,
+      title: eventData.title,
+      location: eventData.location,
+      registration_link: eventData.registration_link,
+      description: eventData.description,
+      event_time: eventData.event_time,
+      status: eventData.status
+    });
+    if (response) {
+      const res = await getImageUrl(eventData, response.data.data.id);
+
+      response = await axios.put(
+        `${baseUrl}/api/v1/event/${response.data.data.id}`,
+        {
+          guest_image: res[0],
+          banner_image: res[1]
+        }
+      );
+      return response;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
 const EventService = {
   getBookEventStatus,
   getLatestEvents,
@@ -233,7 +266,8 @@ const EventService = {
   adminReviewEvent,
   deleteEvent,
   getEventByStatus,
-  updateEvent
+  updateEvent,
+  requestEvent
 };
 
 export default EventService;
