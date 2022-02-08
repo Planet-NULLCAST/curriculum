@@ -89,11 +89,11 @@ const Admin = () => {
     // optionstag: "",
     status: "",
     tag: "",
-    order: "DESC",
+    order: "DESC"
     // fieldName: "updatedAt"
   });
   const [loaded, setLoaded] = useState(false);
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState("");
 
   //   effects
   useEffect(() => {
@@ -115,14 +115,14 @@ const Admin = () => {
       const data = await PostService.getPostsByUsers(reqData);
       const { posts, count } = data.data;
       setPostData({ posts, count });
-    } catch (err) { 
+    } catch (err) {
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
-  async function getPostByTag(tagName, status , newData) {
+  async function getPostByTag(tagName, status, newData) {
     try {
-      const data = await PostService.getPostByTags(tagName, status , newData);
+      const data = await PostService.getPostByTags(tagName, status, newData);
       const { posts, count } = data.data;
       setPostData({ posts, count });
     } catch (err) {
@@ -141,16 +141,15 @@ const Admin = () => {
       ...pagination,
       page,
       limit,
-      sort_field: 'updated_at',
-      order: 'DESC',
+      sort_field: "updated_at",
+      order: "DESC",
       skip: page == 1 ? 0 : (page - 1) * 10
     };
     setPagination(data);
-    if(data?.tag){
-      getPostByTag(null , null , data);
-    }
-    else{
-      getPosts(data , "from page");
+    if (data?.tag) {
+      getPostByTag(null, null, data);
+    } else {
+      getPosts(data, "from page");
     }
   };
 
@@ -163,8 +162,8 @@ const Admin = () => {
     const data = {
       ...pagination,
       tag: tag,
-      sort_field: 'updated_at',
-      order: 'DESC',
+      sort_field: "updated_at",
+      order: "DESC",
       page: 1,
       status: status
       // skip: 0
@@ -180,10 +179,8 @@ const Admin = () => {
     });
 
     setTimeout(() => {
-     if(data?.tag)
-      getPostByTag(data.tag, data.status);
-    else  
-      getPosts(data)
+      if (data?.tag) getPostByTag(data.tag, data.status);
+      else getPosts(data);
     }, 100);
   };
 
@@ -193,17 +190,21 @@ const Admin = () => {
    * @author athulraj2002
    */
   const filterStatusPosts = (status) => {
-    setStatus(status)
-    const data = { ...pagination, status: status, page: 1,    sort_field: 'updated_at',
-    order: 'DESC', };
+    setStatus(status);
+    const data = {
+      ...pagination,
+      status: status,
+      page: 1,
+      sort_field: "updated_at",
+      order: "DESC"
+    };
     setPagination((previousState) => {
       return { ...previousState, status: status, page: 1 };
     });
     setTimeout(() => {
-      if(data?.tag){
-      getPostByTag(data.tag, data.status);
-      }
-      else{
+      if (data?.tag) {
+        getPostByTag(data.tag, data.status);
+      } else {
         getPosts(data);
       }
     }, 100);
@@ -217,7 +218,7 @@ const Admin = () => {
       <div className="bg-gray-100 px-3 md:px-6 min-h-screen-top">
         <div className="max-w-panel pt-15px">
           <AdminNavbar
-            changeTag={(tag) => filterCategoryPosts(tag,status)}
+            changeTag={(tag) => filterCategoryPosts(tag, status)}
             changeStatus={(status) => filterStatusPosts(status)}
           />
 

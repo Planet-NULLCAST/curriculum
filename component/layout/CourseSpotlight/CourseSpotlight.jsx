@@ -1,23 +1,26 @@
 import styles from "./CourseSpotlight.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import notify from "../../../lib/notify";
-import {enrollCourse} from "../../../services/CurriculamService"
+import { enrollCourse } from "../../../services/CurriculamService";
 
 export default function CourseSpotlight({ contents }) {
   let bg = contents.bgimage;
-  const {query : {courseName}} = useRouter()
-  
+  const {
+    query: { courseName }
+  } = useRouter();
 
   const enrollToCourse = async () => {
-    try {
-      await enrollCourse(courseName)
-    } catch (err) {
-      if(err?.response?.data?.message.split(" ")[0] !== "duplicate")
-      notify(err?.response?.data?.message ?? err?.message, "error");
+    if (courseName) {
+      try {
+        await enrollCourse(courseName);
+      } catch (err) {
+        if (err?.response?.data?.message.split(" ")[0] !== "duplicate")
+          notify(err?.response?.data?.message ?? err?.message, "error");
+      }
     }
-  }
+  };
 
   return (
     <section
@@ -29,7 +32,9 @@ export default function CourseSpotlight({ contents }) {
           <div className="md:w-5/12 text-center md:text-left md:py-10 md:p-0 mb-5 md:m-0">
             <h2>{contents.title}</h2>
             <div className="mb-10">
-              <h3 className="font-semibold text-lg mb-2">{contents.subtitle}</h3>
+              <h3 className="font-semibold text-lg mb-2">
+                {contents.subtitle}
+              </h3>
               <p className="text-lg">{contents.description}</p>
             </div>
             <Link

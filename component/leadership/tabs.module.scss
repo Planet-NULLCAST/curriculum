@@ -1,0 +1,27 @@
+.table {
+  @apply w-full border-collapse;
+  font-family: "Open Sans";
+}
+.t_row {
+  th {
+    @apply px-6 py-3 text-base text-left font-semibold;
+    color: #1b1b1b;
+  }
+}
+.t_body {
+  @apply px-6 text-left text-base font-bold border;
+  height: 0px;
+  td {
+    @apply px-6 text-left py-3 text-base font-bold;
+    align-items: center;
+  }
+}
+.uimage {
+  @apply mr-9 ml-8;
+}
+.duckbg {
+  background: linear-gradient(64.8deg, #ff6666 37.25%, #e62e6b 113.5%);
+  width: 26px;
+  height: 26px;
+  @apply rounded-full flex justify-center items-center;
+}

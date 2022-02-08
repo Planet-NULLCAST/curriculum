@@ -116,7 +116,7 @@ async function updateEvent(eventId, updatedData) {
       if (res) {
         console.log(res);
         if (typeof res === "object" && !res.url) {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, guest_image: res[0], banner_image: res[1] }
           );
@@ -124,7 +124,7 @@ async function updateEvent(eventId, updatedData) {
             return response;
           }
         } else if (res.type === "guest") {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, guest_image: res.url }
           );
@@ -132,7 +132,7 @@ async function updateEvent(eventId, updatedData) {
             return response;
           }
         } else if (res.type === "banner") {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, banner_image: res.url }
           );
@@ -142,7 +142,7 @@ async function updateEvent(eventId, updatedData) {
         }
       } else {
         try {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             updatedData
           );
@@ -159,7 +159,7 @@ async function updateEvent(eventId, updatedData) {
     }
   } else {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${baseUrl}/${createEventUrl}/${eventId}`,
         updatedData
       );
@@ -170,6 +170,20 @@ async function updateEvent(eventId, updatedData) {
       throw error;
     }
   }
+}
+
+//admin review event
+
+async function adminReviewEvent(eventId, adminReviewdData) {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/${adminEventReviewUrl}/${eventId}`,
+      adminReviewdData
+    );
+    if (response) {
+      return response.data;
+    }
+  } catch (error) {}
 }
 
 // book event
@@ -248,6 +262,7 @@ const EventService = {
   createNewEvent,
   getAllEvents,
   getAllEventsSlug,
+  adminReviewEvent,
   deleteEvent,
   getEventByStatus,
   updateEvent,

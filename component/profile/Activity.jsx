@@ -1,17 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import Profilestyles from "../../styles/Profile.module.css";
 import Select from "react-select";
+import ActivityService from "../../services/ActivityService";
+import axios from "axios";
 // import styles from './blogs.module.scss'
 
-export default function Activity() {
+function getYearAgo(getTodayDate) {
+  var lastYear = new Date();
+  var dd = lastYear.getDate();
+  var mm = lastYear.getMonth() + 1; //January is not 0!
+  var yyyy = lastYear.getFullYear(getTodayDate) - 1;
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+  lastYear = yyyy + "-" + mm + "-" + dd;
+  return lastYear;
+}
 
+export default function Activity({ userId }) {
   const optionsCategory = [
-    { label: "2021", value: "2021" },
-    { label: "2020", value: "2020" },
-    { label: "2019", value: "2019" },
+    { label: new Date().getFullYear(), value: new Date().getFullYear() },
+    {
+      label: new Date().getFullYear() - 1,
+      value: new Date().getFullYear() - 1
+    },
+    { label: new Date().getFullYear() - 2, value: new Date().getFullYear() - 2 }
   ];
+
+  const [selectedYear, setSelectedYear] = React.useState(null);
+  const [values, setValues] = useState(null);
+
+  React.useEffect(() => {
+    (async () => {
+      const { data } = await ActivityService.getYearlyActivity(
+        userId,
+        selectedYear
+      );
+      if (data) {
+        setValues(
+          data.map((each) => ({ ...each, date: each.date.split("T")[0] }))
+        );
+      }
+    })();
+  }, [selectedYear]);
+
+  const handleChange = (item) => {
+    setSelectedYear(item.value);
+  };
 
   return (
     <div className="bg-white shadow-sm rounded p-4 mt-4 h-72 flex flex-col justify-between">
@@ -22,41 +62,30 @@ export default function Activity() {
           <img src="/images/arrowDown.svg" className="ml-2"></img>
         </div> */}
         <Select
-            options={optionsCategory}
-            isMulti={false}
-            className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${Profilestyles.min_w_6rem}`}
-            classNamePrefix="Year"
-            clearValue={() => undefined}
-            placeholder="Year"
-            // closeMenuOnSelect={false}
-          />
+          options={optionsCategory}
+          value={selectedYear ? { label: selectedYear } : ""}
+          isMulti={false}
+          className={`basic-single postFilter m-0 outline-none focus:outline-none text-sm bg-gray-200 border rounded px-0 cursor-pointer mr-4 ${Profilestyles.min_w_6rem}`}
+          classNamePrefix="Year"
+          clearValue={() => undefined}
+          onChange={handleChange}
+          placeholder="Year"
+          // closeMenuOnSelect={false}
+        />
       </div>
       <div className="overflow-x-auto pb-3">
         <CalendarHeatmap
-          startDate={new Date("2020-12-31")}
-          endDate={new Date("2021-12-31")}
-          values={[
-            { date: "2021-01-01", count: 1 },
-            { date: "2021-01-03", count: 2 },
-            { date: "2021-01-31", count: 3 },
-            { date: "2021-02-12", count: 4 },
-            { date: "2021-02-23", count: 5 },
-            { date: "2021-02-28", count: 4 },
-            { date: "2021-03-06", count: 2 },
-            { date: "2021-03-12", count: 3 },
-            { date: "2021-04-01", count: 1 },
-            { date: "2021-05-03", count: 4 },
-            { date: "2021-05-06", count: 5 },
-            { date: "2021-05-12", count: 2 },
-            { date: "2021-05-01", count: 3 },
-            { date: "2021-06-03", count: 4 },
-            { date: "2021-06-06", count: 5 },
-            { date: "2021-07-12", count: 2 },
-            { date: "2021-08-01", count: 1 },
-            { date: "2021-09-03", count: 4 },
-            { date: "2021-09-06", count: 3 },
-            { date: "2021-10-12", count: 2 }
-          ]}
+          startDate={
+            !selectedYear
+              ? getYearAgo(new Date().toISOString().split("T")[0])
+              : `${selectedYear}-01-01`
+          }
+          endDate={
+            !selectedYear
+              ? new Date().toISOString().split("T")[0]
+              : `${selectedYear}-12-31`
+          }
+          values={values || []}
           gutterSize={4}
           classForValue={(value) => {
             if (!value) {
