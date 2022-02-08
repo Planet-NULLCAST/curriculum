@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
         posts: responsePost?.data?.posts || [],
         user: data?.users || [],
         events:
-          responseEvents?.data?.events.filter(
+          responseEvents?.events.filter(
             (each) => each?.event_time > new Date().toISOString()
           )[0] || []
         // count: responseEvents.count,
@@ -56,6 +56,7 @@ export async function getServerSideProps(context) {
 }
 //addCourses()
 export default function Home({ posts, user, events }) {
+  console.log(events , "index");
   return (
     <div className="wrap">
       <Head>
