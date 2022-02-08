@@ -72,7 +72,7 @@ export default function Username({ userData, userCurrentLogin }) {
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
   const [postsLimit, setPostsLimit] = useState();
-  const [followDetails , setFollowDetails] = useState();
+  const [followDetails , setFollowDetails] = useState(null);
   const[isFollowing , setIsFollowing] = useState(null)
 
 
@@ -103,7 +103,7 @@ export default function Username({ userData, userCurrentLogin }) {
     }
     const response = await UserService.getUserFollowers(userData.id , params)
     if(response?.followers?.length > 0){
-        setFollowDetails(prev => ({...prev , followers : [...prev.followers , ...response?.followers] ,  followerscount: response.followerscount, followingcount: response.followingcount}))
+        setFollowDetails(prev => ({...prev , followers : [...response?.followers] ,  followerscount: response.followerscount, followingcount: response.followingcount}))
       }
       else {
         setFollowDetails(response)
