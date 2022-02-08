@@ -242,7 +242,7 @@ export default function Login({ referer, verify }) {
                         id="email"
                         name="email"
                         type="text"
-                        //onBlur={(e) => emailValidator(e)}
+                        onBlur={(e) => emailValidator(e)}
                         onChange={(e) => {
                           setEmailValid(true)
                           // if (!validEmail) {
@@ -280,7 +280,7 @@ export default function Login({ referer, verify }) {
                         />
                         <div className="flex justify-center items-center items h-full absolute right-0 top-0 w-10">
                           <img
-                            src="/images/eye.svg"
+                            src={hidePassword ? "/images/eyecross.svg" : "/images/eye.svg"}
                             className="w-1/2 cursor-pointer opacity-50 hover:opacity-100 duration-700"
                             onClick={(e) => eyeClick(e)}
                           ></img>

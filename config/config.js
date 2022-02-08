@@ -34,6 +34,7 @@ const createTagUrl = `${apiVerUrl}/tag`;
 const postCount = `${apiVerUrl}/posts-count`;
 const allPostUrl = `${apiVerUrl}/posts-url`;
 const getAllEventsUrl = `${apiVerUrl}/events-url`;
+const bookEventUrl = `${apiVerUrl}/event-registration`;
 const skillUrl = "api/skills";
 const searchUrl = "api/search";
 const forgotPasswordUrl = `${apiVerUrl}/recovery`;
@@ -48,9 +49,12 @@ const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
 const getFollowersUrl = `${apiVerUrl}/followers`
 const addorRemoveFollowers = `${apiVerUrl}/follow`
 const isFollwing = `${apiVerUrl}/follower`
+const leaderBoardUrl = `${apiVerUrl}/leader-board`;
 
 const configVars = {
+  leaderBoardUrl,
   baseUrl,
+  bookEventUrl,
   allPostUrl,
   getUsersUrl,
   getAllEventsUrl,

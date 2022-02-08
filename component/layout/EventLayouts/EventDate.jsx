@@ -1,21 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import styles from "./EventDate.module.scss";
+import { useRouter } from 'next/router'
+import notify from "../../../lib/notify";
 
 export default function EventDate({ eventDate }) {
+  const router = useRouter()
   const [count, setCount] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0,
+    seconds: 0
   });
   const countDown = useCallback(() => {
-    setInterval(() => {
+    const id = setInterval(() => {
       const now = new Date();
       const dateOfEvent = new Date(eventDate);
       const then = moment(eventDate).diff(now);
       var d = moment.duration(then);
-      if(now <= dateOfEvent) setCount(d._data);
+      if(d._data.days <= 0 && d._data.hours <= 0 && d._data.minutes <= 0 && d._data.seconds <= 0){
+        clearInterval(id)
+      }
+      if (now <= dateOfEvent) setCount(d._data);
     }, 1000);
   }, [eventDate]);
 

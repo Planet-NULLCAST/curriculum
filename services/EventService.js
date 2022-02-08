@@ -5,6 +5,7 @@ import {
   eventIdUrl,
   createEventUrl,
   eventSlugUrl,
+  bookEventUrl,
   getAllEventsUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
@@ -113,7 +114,7 @@ async function updateEvent(eventId, updatedData) {
       if (res) {
         console.log(res);
         if (typeof res === "object" && !res.url) {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, guest_image: res[0], banner_image: res[1] }
           );
@@ -121,7 +122,7 @@ async function updateEvent(eventId, updatedData) {
             return response;
           }
         } else if (res.type === "guest") {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, guest_image: res.url }
           );
@@ -129,7 +130,7 @@ async function updateEvent(eventId, updatedData) {
             return response;
           }
         } else if (res.type === "banner") {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             { ...updatedData, banner_image: res.url }
           );
@@ -139,7 +140,7 @@ async function updateEvent(eventId, updatedData) {
         }
       } else {
         try {
-          const response = await axios.put(
+          const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
             updatedData
           );
@@ -156,7 +157,7 @@ async function updateEvent(eventId, updatedData) {
     }
   } else {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${baseUrl}/${createEventUrl}/${eventId}`,
         updatedData
       );
@@ -169,13 +170,66 @@ async function updateEvent(eventId, updatedData) {
   }
 }
 
+//admin review event
+
+async function adminReviewEvent(eventId, adminReviewdData) {
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/${adminEventReviewUrl}/${eventId}`,
+      adminReviewdData
+    );
+    if (response) {
+      return response.data;
+    }
+  } catch (error) {}
+}
+
+// book event
+async function bookEvent(email, eventId, full_name, userId) {
+  try {
+    if (userId) {
+      const { data } = await axios.post(
+        `${baseUrl}/${bookEventUrl}/?user_id=${userId}`,
+        {
+          "event_id": eventId,
+          "email": email,
+          "full_name": full_name
+        }
+      );
+      return data;
+    } else {
+      const { data } = await axios.post(`${baseUrl}/${bookEventUrl}/`, {
+        "event_id": eventId,
+        "email": email,
+        "full_name": full_name
+      });
+      return data;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getBookEventStatus(eventId) {
+  try {
+    const { data } = await axios.get(
+      `${baseUrl}/api/v1/event-attendee/${eventId}`
+    );
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
 const EventService = {
+  getBookEventStatus,
   getLatestEvents,
+  bookEvent,
   getEventById,
   getEventBySlug,
   createNewEvent,
   getAllEvents,
   getAllEventsSlug,
+  adminReviewEvent,
   deleteEvent,
   getEventByStatus,
   updateEvent

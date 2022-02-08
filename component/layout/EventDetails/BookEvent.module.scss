@@ -2,7 +2,7 @@
   @apply h-auto px-8 py-9;
   width: 100%;
   background: #242424;
-  color: #FFFFFF;
+  color: #ffffff;
 
   @screen lg {
     width: 283px;
@@ -14,7 +14,7 @@
 
   .Book_Date_Wrap {
     @apply flex font-bold text-sm gap-x-3 mb-4;
-    color: #AAAAAA;
+    color: #aaaaaa;
   }
 
   .calender {
@@ -34,9 +34,16 @@
     @apply w-full flex justify-center items-center text-lg font-extrabold mb-6;
     height: 3.75rem;
     border-radius: 10px;
-    background: #5D18F0;
+    background: #5d18f0;
     &:hover {
       background: blueviolet;
+    }
+  }
+
+  .ended {
+    background-color: rgba(241, 62, 93);
+    &:hover {
+      background-color: rgba(241, 62, 93);
     }
   }
 

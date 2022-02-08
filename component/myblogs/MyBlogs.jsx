@@ -24,7 +24,6 @@ export default function MyBlogs({ posts, fetchPosts }) {
       notify(err?.response?.data?.message ?? err?.message, 'error');
     }
   }
-  // console.log('deletePost' ,postId);
 
   return (
     <div

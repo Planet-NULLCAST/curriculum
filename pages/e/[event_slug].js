@@ -63,10 +63,22 @@ export default function BlogListing({ event }) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
   const [viewShare, setViewShare] = useState(false);
-  let pageUrl = registration_link;
+  const [locationUrl, setLocation] = useState("");
+
   useEffect(() => {
-    viewShare ? document.body.classList.add('overflow-hidden'): document.body.classList.remove('overflow-hidden')
-  }, [viewShare])
+    const locationUrl = window.location.href;
+    setLocation(locationUrl);
+    viewShare
+      ? document.body.classList.add("overflow-hidden")
+      : document.body.classList.remove("overflow-hidden");
+  }, [viewShare]);
+
+  let pageUrl = locationUrl;
+
+  const eventBook = (event) => {
+    alert("s");
+  };
+
   return (
     <>
       <Head>
@@ -121,6 +133,8 @@ export default function BlogListing({ event }) {
         <meta property="og:type" content="events.event" />
         <meta property="og:title" content={meta_title} />
         <meta property="og:description" content={description} />
+        <meta name="twitter:data2" content="Blog" />
+        <meta name="twitter:site" content="@nullcast_io" />
         <meta property="og:url" content={`${url}/e/${slug}`} />
         <meta property="og:image" content={banner_image} />
         <meta property="event:start_time" content={event_time} />
@@ -142,7 +156,14 @@ export default function BlogListing({ event }) {
       {viewShare && (
         <ShareEvent location={pageUrl} hideWindow={() => setViewShare(false)} />
       )}
-      <EventSpotlight showWindow={() => setViewShare(true)} data={event} />
+      <EventSpotlight
+        showWindow={() => setViewShare(true)}
+        data={event}
+        handleSubmit={() => {
+          eventBook();
+        }}
+        // handleSubmit={eventBook}
+      />
       <Detail event={event} />
       <SectionSwag />
       <SiteFooter />

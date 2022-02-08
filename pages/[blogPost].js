@@ -21,12 +21,12 @@ export async function getServerSideProps(context) {
   try {
     const slug = context.params.blogPost;
     const response = await PostService.getPostBySlug(slug);
-    const tagName = response.data.tags[0].name; 
-    const { data }  = await PostService.getPostByTags(tagName);
+    const tagName = response.data.tags[0].name;
+    const { data } = await PostService.getPostByTags(tagName);
     return {
       props: {
         blog: response.data,
-        relatedPosts: data.posts,
+        relatedPosts: data.posts
       }
     };
   } catch (err) {
@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function BlogListing({ blog , relatedPosts }) {
+export default function BlogListing({ blog, relatedPosts }) {
   // console.log("bloga", relatedPosts, 'error');
   const [postsCount, setPostsCount] = useState(0);
   const {
@@ -58,15 +58,15 @@ export default function BlogListing({ blog , relatedPosts }) {
   // const {}
   const cookies = new Cookies();
   const userCookie = cookies.get("userNullcast");
-  
+
   useEffect(() => {
     getUserPostCount();
-}, []);
+  }, []);
 
   const getUserPostCount = async () => {
     const UserId = blog.user.id;
     const postParams = {
-      status: "published",
+      status: "published"
     };
     const response = await PostService.getPostCount(UserId, postParams);
     setPostsCount(response.data.count);
@@ -129,7 +129,8 @@ export default function BlogListing({ blog , relatedPosts }) {
         <meta property="article:published_time" content={blog.published_at} />
         <meta property="article:modified_time" content={blog.updatedAt} />
         <meta property="article:tag" content={blog.tags[0]} />
-
+        <meta name="twitter:data2" content="Events" />
+        <meta name="twitter:site" content="@nullcast_io" />
         <meta name="twitter:card" content={blog.banner_image} />
         <meta name="twitter:title" content={blog.title} />
         <meta name="twitter:description" content={blog.metaDescription} />
@@ -152,7 +153,7 @@ export default function BlogListing({ blog , relatedPosts }) {
         blog={blog}
         html={html}
       />
-      <SectionAuthor primaryAuthor={user}  postCount={postsCount} />
+      <SectionAuthor primaryAuthor={user} postCount={postsCount} />
       <SectionRelated title="Related Blogs" posts={relatedPosts} />
       <SectionSwag />
       <SiteFooter />

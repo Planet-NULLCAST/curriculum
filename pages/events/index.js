@@ -5,10 +5,11 @@ import EvListing from "../../component/layout/EventLayouts/EventListing";
 import SectionSwag from "../../component/layout/SectionSwag/SectionSwag";
 import SiteFooter from "../../component/layout/SiteFooter/SiteFooter";
 import Head from "next/head";
-import EventService from "../../services/EventService"
-import { useState } from "react";
+import EventService from "../../services/EventService";
+import { useState, useEffect } from "react";
 import { homePageSchema, logoPath, url } from "../../seoschema/schema";
 import notify from "../../lib/notify";
+import moment from "moment";
 
 export async function getServerSideProps() {
   const limit = 10;
@@ -41,7 +42,7 @@ export async function getServerSideProps() {
       };
     }
   } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, 'error');
+    notify(err?.response?.data?.message ?? err?.message, "error");
     return {
       props: {}
     };
@@ -49,10 +50,26 @@ export async function getServerSideProps() {
 }
 
 export default function EventListing({ events, count, limit }) {
-  const [newEvents, setNewEvents] = useState(events);
+  const [newEvents, setNewEvents] = useState([]);
 
   const currentCount = (count) => {
     getNewEvents(count);
+  };
+
+  // check event time with current
+  useEffect(() => {
+    eventsHandler(events);
+  }, []);
+
+  const eventsHandler = (events) => {
+    var today = new Date();
+    const CurrentDateTime = today.toISOString();
+
+    const eventsUpdated = events.filter(function (event) {
+      console.log(event.event_time > CurrentDateTime);
+      return event.event_time > CurrentDateTime;
+    });
+    setNewEvents(eventsUpdated);
   };
 
   const getNewEvents = async (clickNo) => {
@@ -66,12 +83,12 @@ export default function EventListing({ events, count, limit }) {
     };
     try {
       const responseEvents = await EventService.getLatestEvents(postParams);
-      if(responseEvents)
-      setNewEvents((prevValue) => {
-        return [...prevValue, ...responseEvents.events];
-      });
+      if (responseEvents)
+        setNewEvents((prevValue) => {
+          return [...prevValue, ...responseEvents.events];
+        });
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
   return (
@@ -114,12 +131,12 @@ export default function EventListing({ events, count, limit }) {
       </Head>
       <SiteHeader />
       <EventHeader />
-      {events && <EventFeatured event={events[0]} />}
-      {events?.length > 0 ? (
+      {newEvents && <EventFeatured event={newEvents[0] || ""} />}
+      {newEvents && events?.length > 0 ? (
         <EvListing
-          events={newEvents}
+          events={events.filter((each) => each.id !== newEvents[0]?.id) || ""}
           currentCount={currentCount}
-          eventCount={count} 
+          eventCount={newEvents.count}
         />
       ) : (
         <div className="flex items-center justify-center m-9 font-semibold">

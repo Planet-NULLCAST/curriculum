@@ -15,6 +15,70 @@ import Modal from "../modal/Modal";
 import notify from "../../lib/notify";
 import SharedService from "../../services/SharedService";
 
+
+export const ClearIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref}
+      className="h-full "
+      style={{
+        display: "flex",
+        padding: "8px 10px",
+        fontSize: "18px",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          cursor: "pointer",
+          top: "0",
+          right: "0"
+        }}
+      >
+        &#10005;
+      </div>
+    </div>
+  );
+};
+
+export const DropdownIndicator = (props) => {
+  const {
+    getStyles,
+    innerProps: { ref2, ...restInnerProps }
+  } = props;
+  return (
+    <div
+      {...restInnerProps}
+      ref={ref2}
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        boxSizing: "border-box"
+      }}
+    >
+      <div
+        style={{
+          height: "content",
+          cursor: "pointer",
+          alignItems: "center",
+          top: "0",
+          fontSize: "32px",
+          right: "0"
+        }}
+      >
+        &#x2304;
+      </div>
+    </div>
+  );
+};
+
 export default function WriteNav({
   saveToDraft,
   submitForReview,
@@ -175,7 +239,6 @@ export default function WriteNav({
       meta_title: metaTitle,
       meta_description: metaDes,
       slug: postUrl,
-      mobiledoc: currentPost.mobiledoc
     };
     if (settingsData.slug === "") {
       delete settingsData.slug;
@@ -222,11 +285,10 @@ export default function WriteNav({
     setLoading(true);
     try {
       const s3ImageUrl = await SharedService.uploadImage(imageFile, imageData);
-
       setCurrentPost((prevValue) => {
         return {
           ...prevValue,
-          bannerImage: s3ImageUrl
+          banner_image: s3ImageUrl
         };
       });
     } catch (err) {
@@ -245,7 +307,7 @@ export default function WriteNav({
     setCurrentPost((prevValue) => {
       return {
         ...prevValue,
-        bannerImage: "",
+        banner_image: "",
         imageUrl: "",
         image: ""
       };
@@ -306,6 +368,20 @@ export default function WriteNav({
       reader.readAsDataURL(files[0]);
     }
   };
+
+
+  const ClearIndicatorStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+
+    cursor: "pointer",
+    height: "100%"
+  });
+
+  const DropDownStyles = (ClearIndicatorProps) => ({
+    // positon: 'absaloute',
+    cursor: "pointer",
+    height: "100%"
+  });
 
   return (
     <div className="bg-white flex flex-row items-center rounded shadow-sm h-sub-nav">
@@ -393,9 +469,8 @@ export default function WriteNav({
                   </div>
                   <div className="flex flex-col p-5 mt-16 mb-24 h-calcSettings">
                     <div
-                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${
-                        !currentPost.bannerImage && "cursor-pointer"
-                      }`}
+                      className={`h-24 min-h-24 border border-dashed border-gray-400 rounded overflow-hidden relative ${!currentPost.banner_image && "cursor-pointer"
+                        }`}
                     >
                       {currentPost.banner_image ? (
                         <div className="w-full h-full flex justify-center items-center overflow-hidden relative hoverPreview">
@@ -415,7 +490,7 @@ export default function WriteNav({
                               trigger={
                                 <div
                                   className="w-10 h-10 flex items-center justify-center bg-red-500 cursor-pointer rounded"
-                                  // onClick={handleImageDelete}
+                                // onClick={handleImageDelete}
                                 >
                                   <Image
                                     src="/images/svgs/delwhite.svg"
@@ -432,7 +507,7 @@ export default function WriteNav({
                               buttonColor={"red"}
                               heading={"Are you sure"}
                               text="Are you sure you want to delete this image?"
-                              // secondaryText="This cannot be undone"
+                            // secondaryText="This cannot be undone"
                             />
                           </div>
                         </div>
@@ -448,7 +523,7 @@ export default function WriteNav({
                                 name="imageUpload"
                                 onInput={handleImage}
                                 ref={imgRef}
-                                // value={imageSrc}
+                              // value={imageSrc}
                               />
                             }
                             handleSubmit={handleImageUpload}
@@ -516,6 +591,11 @@ export default function WriteNav({
                         className="basic-multi-select w-full m-0 outline-none focus:outline-none focus:bg-white focus:text-black focus:border-black text-sm bg-gray-100 border rounded px-0 cursor-pointer"
                         classNamePrefix="Tags"
                         clearValue={() => undefined}
+                        components={{ ClearIndicator, DropdownIndicator }}
+                        styles={
+                          ({ clearIndicator: ClearIndicatorStyles },
+                            { dropdownIndicator: DropDownStyles })
+                        }
                         placeholder="Tags"
                         closeMenuOnSelect={false}
                         name="tags"
@@ -600,9 +680,8 @@ export default function WriteNav({
                   <div className="w-full flex mb-3">
                     <div className="w-1/2 pr-1">
                       <button
-                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${
-                          loading ? "disabled:opacity-50" : ""
-                        }`}
+                        className={`w-full border border-black text-white hover:text-black bg-black hover:bg-white flex justify-center items-center h-10 duration-700 rounded text-sm outline-none ${loading ? "disabled:opacity-50" : ""
+                          }`}
                         type="submit"
                         disabled={loading}
                       >

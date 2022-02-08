@@ -150,10 +150,9 @@ export default function Write({
         TARGET
       );
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
-
 
   async function updatePostById(updateData, newPostId) {
     try {
@@ -162,7 +161,7 @@ export default function Write({
         notify(res?.message);
       }
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
@@ -178,39 +177,53 @@ export default function Write({
       if (postId) {
         //updatePost
         const newUpdatedPost = {
-          status: 'drafted',
+          status: "drafted",
           title: title,
-          mobiledoc: newMobiledoc,
+          mobiledoc: newMobiledoc
         };
-        updatePostById(postId, newUpdatedPost); 
-        notify();  
+        updatePostById(postId, newUpdatedPost);
+        notify();
       }
     }, 500);
-    
   };
 
   async function submitForReview() {
     iframeRef.current.contentWindow.postMessage({ msg: "savePost" }, TARGET);
     setTimeout(() => {
-    //change status to "pending" if submitted for review
-    const newMobiledoc = postElement?.current.scratch;
-    const title = postElement?.current.titleScratch || "[Untitled]";
-    try {
-      const statusUpdate = {
-        status: "pending",
-        title: title,
-        mobiledoc: newMobiledoc,
-      };
-      updatePostById(postId,statusUpdate);
-    } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
-    }
-  }, 500);
+      //change status to "pending" if submitted for review
+      const newMobiledoc = postElement?.current.scratch;
+      const title = postElement?.current.titleScratch || "[Untitled]";
+      try {
+        const statusUpdate = {
+          status: "pending",
+          title: title,
+          mobiledoc: newMobiledoc
+        };
+        updatePostById(postId, statusUpdate);
+      } catch (err) {
+        notify(err?.response?.data?.message ?? err?.message, "error");
+      }
+    }, 500);
   }
 
   const getSettings = async (settingsData) => {
+    const newMobiledoc = postElement?.current?.scratch;
+    const title = postElement?.current?.titleScratch || "[Untitled]";
+
+    const settingsParam = {
+      banner_image: settingsData.banner_image,
+      og_description: settingsData.og_description,
+      meta_title: settingsData.meta_title,
+      meta_description: settingsData.meta_description,
+      slug: settingsData.slug,
+      title: title,
+      mobiledoc: newMobiledoc
+    };
+    if (settingsParam.slug === "") {
+      delete settingsParam.slug;
+    }
     if (postId) {
-      updatePostById(postId,settingsData);
+      updatePostById(postId, settingsParam);
     }
   };
 

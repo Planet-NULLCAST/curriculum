@@ -14,7 +14,7 @@ export default function AdminBlogsList({ posts, updated }) {
    * @param {*} blog
    * @author athulraj2002
    * @returns null
-   * 
+   *
    */
   async function updatePostById(updateData, newPostId) {
     try {
@@ -24,18 +24,18 @@ export default function AdminBlogsList({ posts, updated }) {
       }
       updated();
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
 
   const approveBlog = async (blog) => {
     try {
       const newUpdatedPost = {
-        status: 'published',
+        status: "published"
       };
       updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
@@ -48,22 +48,22 @@ export default function AdminBlogsList({ posts, updated }) {
   const rejectBlog = async (blog) => {
     try {
       const newUpdatedPost = {
-        status: 'rejected',
+        status: "rejected"
       };
       updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
   };
 
-  const unpublishBlog = async (blog) => {
+  const unPublishBlog = async (blog) => {
     try {
       const newUpdatedPost = {
-        status: 'pending',
+        status: "pending"
       };
       updatePostById(blog.id, newUpdatedPost);
     } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, 'error');
+      notify(err?.response?.data?.message ?? err?.message, "error");
     }
     // console.log(response);
   };
@@ -97,13 +97,37 @@ export default function AdminBlogsList({ posts, updated }) {
                     {moment(item.updated_at).format("LL")}
                     {" - "}
                     <Link href={`/u/${item.user.user_name}`}>
-                      <a className="text-blue-500">
-                        {item.user.user_name}
-                      </a>
+                      <a className="text-blue-500">{item.user.user_name}</a>
                     </Link>
                   </div>
                 </div>
                 <div className="flex items-center">
+                  <div
+                    className={`flex items-center w-32 justify-center rounded-full h-8 mr-3 ${
+                      item.status === "approved" && MyBlogsstyles.successBg
+                    } ${item.status === "pending" && MyBlogStyles.warningBg} ${
+                      item.status === "drafted" && MyBlogStyles.draftedBg
+                    } ${
+                      item.status === "published" && MyBlogStyles.publishedBg
+                    } ${item.status === "rejected" && MyBlogStyles.dangerBg}`}
+                  >
+                    <span
+                      className={`capitalize  ${
+                        item.status === "approved" && MyBlogStyles.successText
+                      } ${
+                        item.status === "pending" && MyBlogStyles.warningText
+                      } ${
+                        item.status === "drafted" && MyBlogStyles.draftedText
+                      } ${
+                        item.status === "published" &&
+                        MyBlogStyles.publishedText
+                      } ${
+                        item.status === "rejected" && MyBlogStyles.dangerText
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
                   <Link
                     href={
                       item.status === "published"
@@ -127,6 +151,7 @@ export default function AdminBlogsList({ posts, updated }) {
                       </>
                     </div>
                   </Link>
+
                   {item.status == "published" ? (
                     <div
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3  ${MyBlogStyles.publishedBg} `}
@@ -175,7 +200,7 @@ export default function AdminBlogsList({ posts, updated }) {
                   )}
                   {item.status == "published" && (
                     <div
-                      onClick={() => unpublishBlog(item)}
+                      onClick={() => unPublishBlog(item)}
                       className={`flex items-center w-28 justify-center rounded-full h-8 mr-3 cursor-pointer hover:opacity-50 duration-500 ${MyBlogStyles.warningBg} `}
                     >
                       <span
