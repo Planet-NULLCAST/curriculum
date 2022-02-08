@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function SkillSet({ userData }) {
-  console.log(userData)
   const [showTenPlus, setShowTenPlus] = useState(false);
 
   return (

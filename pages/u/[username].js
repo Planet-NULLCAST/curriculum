@@ -102,23 +102,20 @@ export default function Username({ userData, userCurrentLogin }) {
       page : page+1,
     }
     const response = await UserService.getUserFollowers(userData.id , params)
-    if(response){
-      if(followDetails?.followers){
-        console.log(response)
-        setFollowDetails(prev => ({...prev , followers : [...prev.followers , ...response?.followers]}))
+    if(response?.followers?.length > 0){
+        setFollowDetails(prev => ({...prev , followers : [...prev.followers , ...response?.followers] ,  followerscount: response.followerscount, followingcount: response.followingcount}))
       }
       else {
         setFollowDetails(response)
       }
     }
-  }
+
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
     const postParams = {
       status: "published"
     };
     const response = await PostService.getUserPostsByUser(UserId, postParams);
-    console.log(response.data.posts);
     setNewBlogs(response.data.posts);
     setPostsLimit(response.data.limit);
   };

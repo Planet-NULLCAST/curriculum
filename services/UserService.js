@@ -64,7 +64,6 @@ async function followUser(follwedId){
      const {data} = await axios.post(`${baseUrl}/${addorRemoveFollowers}` , {
        following_id : follwedId
      })
-     console.log(data)
      return data.data
    } catch (error) {
      throw error
@@ -76,7 +75,6 @@ async function isFollwed(id){
     const {data} = await axios.get(`${baseUrl}/${isFollwing}/${id}`)
     return data?.data
   } catch (error) {
-    console.log(error?.response?.data)
     if(error?.response?.data?.message === "You are neither following nor followed by this user"){
         return error?.response?.data
     }
@@ -89,7 +87,6 @@ async function isFollwed(id){
 async function removeFollower(id){
   try {
     const {data} = await axios.delete(`${baseUrl}/${addorRemoveFollowers}/${id}`)
-    console.log(data)
     return data
   } catch (error) {
     throw error

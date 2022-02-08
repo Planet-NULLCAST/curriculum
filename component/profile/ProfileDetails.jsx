@@ -6,7 +6,6 @@ import UserService from '../../services/UserService'
 
 
 export default function ProfileDetails({ userData, userCurrentLogin , isFollowing , setIsFollowing , getFollowerList }) {
-  console.log({ userData, userCurrentLogin  })
 
   const followUser = async (id) => {
      const resp = await UserService.followUser(id)

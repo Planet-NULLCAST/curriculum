@@ -10,7 +10,6 @@ export default function FollowersList({followDetails , getFollowerList}) {
     var acronym = matches.join("");
     return acronym.substring(0, 2);
   };
-  console.log(followDetails)
 
   const getNextFollowers = (e) => {
     let newPageNo = pageNo+1
