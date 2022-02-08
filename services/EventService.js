@@ -238,7 +238,7 @@ async function requestEvent(eventData) {
     });
     if (response) {
       const res = await getImageUrl(eventData, response.data.data.id);
-      console.log(res);
+
       response = await axios.put(
         `${baseUrl}/api/v1/event/${response.data.data.id}`,
         {
