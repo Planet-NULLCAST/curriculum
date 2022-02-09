@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - development
 
 jobs:
   build:
@@ -19,4 +19,27 @@ jobs:
       - run: yarn install
       - name: Build
         run: yarn build
+
+  deploy:
+    name: Deploy to test server
+    on:
+      push:
+        branches:
+          - development
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to server to Git pull
+        uses: MrSquaare/ssh-setup-action@v1
+        with:
+          host: ${{ secrets.DEV_SSH_HOST }}
+          private-key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+      - name: Pull the latest code
+        run: cd curriculum && git pull
+      - name: Restart the PM2 process
+        run: pm2 restart nullf
+
+
+
 
