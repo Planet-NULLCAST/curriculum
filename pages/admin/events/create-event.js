@@ -329,7 +329,7 @@ const CreateEvent = ({ referer }) => {
         const data = await EventService.createNewEvent(userCookie, eventData);
         if (data) {
           setIsLoading(false);
-          notify(data.data.message);
+          notify("Event Cretated Successfully");
           router.push("/admin/events");
         }
       } catch (err) {
