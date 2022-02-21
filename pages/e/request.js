@@ -230,7 +230,7 @@ const Request = () => {
         const data = await EventService.requestEvent(eventData);
         if (data) {
           setIsLoading(false);
-          notify(data.data.message);
+          notify("Event Requested for review");
         }
       } catch (err) {
         setIsLoading(false);

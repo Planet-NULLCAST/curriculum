@@ -240,7 +240,7 @@ async function requestEvent(eventData) {
     if (response) {
       const res = await getImageUrl(eventData, response.data.data.id);
 
-      response = await axios.put(
+      response = await axios.patch(
         `${baseUrl}/api/v1/event/${response.data.data.id}`,
         {
           guest_image: res[0],
