@@ -155,7 +155,7 @@ export default function Login({ referer, verify }) {
           // } else {
           //   router.push("/");
           // }
-          if (referer.split('/')[3] === "forgot-password" || referer.split('/')[3].includes("reset-password")) {
+          if (!referer || referer.split('/')[3] === "forgot-password" || referer.split('/')[3].includes("reset-password")) {
             router.push("/");
           } else {
             router.back();
