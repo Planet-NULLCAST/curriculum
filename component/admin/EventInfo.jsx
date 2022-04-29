@@ -106,7 +106,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event name"
             placeholder="Enter Event Name"
-            value={eventDetails.eventName}
+            value={eventDetails?.eventName}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -116,7 +116,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             onBlur={(e) => eventNameValidation(e)}
           />
           {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-            {eventDetailsError.eventNameError}
+            {eventDetailsError?.eventNameError}
           </span>}
         </div>
         <div className="flex flex-col w-full ml-3">
@@ -131,7 +131,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event location"
             placeholder="Paste location here"
-            value={eventDetails.eventLocation}
+            value={eventDetails?.eventLocation}
             onBlur={(e) => eventLocationValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
@@ -141,7 +141,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             }
           />
           {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-            {eventDetailsError.eventLocationError}
+            {eventDetailsError?.eventLocationError}
           </span>}
         </div>
       </div>
@@ -159,10 +159,10 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
           }
 
           }
-          value={eventDetails.eventDescription}
+          value={eventDetails?.eventDescription}
         />
         {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-          {eventDetailsError.eventDescriptionError}
+          {eventDetailsError?.eventDescriptionError}
         </span>}
       </div>
       <div className="flex flex-col w-full mb-4">
@@ -174,14 +174,14 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
           className="bg-gray-100 p-4 rounded border-grayBorder border-2"
           name="event link"
           placeholder="Link Here"
-          value={eventDetails.eventLink}
+          value={eventDetails?.eventLink}
           onBlur={(e) => eventLinkValidation(e)}
           onChange={(e) =>
             setEventDetails((prev) => ({ ...prev, eventLink: e.target.value }))
           }
         />
         {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-          {eventDetailsError.eventLinkError}
+          {eventDetailsError?.eventLinkError}
         </span>}
       </div>
       <div className="flex justify-center item-center mb-5">
@@ -195,7 +195,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             min={new Date().toISOString().split('T')[0]}
             name="event date"
             placeholder="choose"
-            value={eventDetails.eventDate}
+            value={eventDetails?.eventDate}
             onBlur={(e) => eventDateValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
@@ -205,7 +205,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             }
           />
           {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-            {eventDetailsError.eventDateError}
+            {eventDetailsError?.eventDateError}
           </span>}
         </div>
         <div className="flex flex-col w-full ml-3">
@@ -217,7 +217,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
             name="event time"
             placeholder="choose"
-            value={eventDetails.eventTime}
+            value={eventDetails?.eventTime}
             onBlur={(e) => eventTimeValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
@@ -227,7 +227,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
             }
           />
           {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-            {eventDetailsError.eventTimeError}
+            {eventDetailsError?.eventTimeError}
           </span>}
         </div>
       </div>
@@ -249,7 +249,7 @@ export default function EventInfo({ eventDetails, setEventDetails, eventDetailsE
         </label>
       </div>
       {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-        {eventDetailsError.eventImageError}
+        {eventDetailsError?.eventImageError}
       </span>}
     </div>
   );

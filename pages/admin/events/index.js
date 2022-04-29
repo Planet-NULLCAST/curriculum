@@ -112,13 +112,13 @@ const Admin = () => {
   async function getevents(reqData) {
     try {
       const data = await EventService.getLatestEvents(reqData);
-      if(data){
-      const { events, count } = data;
-      setEventdata({ events, count });
-      console.log(eventdata)
+      if (data.data) {
+        const { events, count } = data.data;
+        setEventdata((prev) => ({ ...prev, events, count }));
+      } else if (data.message === "Events not Found") {
+        setEventdata((prev) => ({ ...prev, events: [], count: 0 }));
       }
     } catch (err) {
-      console.log(err, 'error')
       notify(err?.response?.data?.message ?? err?.message, "error");
     }
   }
@@ -174,9 +174,9 @@ const Admin = () => {
    */
 
   const filterStatusEvents = (status) => {
-    const data = { ...pagination, status: status, page: 1, limit:10 };
+    const data = { ...pagination, status: status, page: 1, limit: 10 };
     setPagination((previousState) => {
-      return { ...previousState, status: status, page: 1, limit:10 };
+      return { ...previousState, status: status, page: 1, limit: 10 };
     });
     setTimeout(() => {
       getevents(data);
@@ -198,9 +198,12 @@ const Admin = () => {
 
           {eventdata.events?.length ? (
             <div>
-              <AdminEventList events={eventdata.events} refresh={()=>{
-                getevents()
-              }} />
+              <AdminEventList
+                events={eventdata.events}
+                refresh={() => {
+                  getevents(pagination);
+                }}
+              />
 
               <div
                 className={`fixed bottom-0 left-0 z-10 w-full flex justify-center items-center px-6 ${MyBlogsstyles.navigation}`}

@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
         return {
           props: {
             userData: data.data,
-            userCurrentLogin: userId
+            userCurrentLogin: userId,
           }
         };
       } else {
@@ -72,15 +72,43 @@ export default function Username({ userData, userCurrentLogin }) {
   const [newBlogs, setNewBlogs] = useState();
   const [postsCount, setPostsCount] = useState();
   const [postsLimit, setPostsLimit] = useState();
+  const [followDetails , setFollowDetails] = useState(null);
+  const[isFollowing , setIsFollowing] = useState(null)
+
 
   useEffect(() => {
     getPublishedUserPosts();
     getUserPostCount();
+    getFollowerList();
+    checkIfFollowed(userData?.id)
   }, []);
 
   const changeNav = (data) => {
     setCurrentNav(data);
   };
+
+  const checkIfFollowed = async (id) => {
+    const resp = await UserService.isFollwed(id)
+    if(resp?.is_follower){
+      setIsFollowing(resp.is_follower)
+    } 
+    else{
+      setIsFollowing(false)
+    }
+  }
+
+  const getFollowerList = async (page = 0) => {
+    const params = {
+      page : page+1,
+    }
+    const response = await UserService.getUserFollowers(userData.id , params)
+    if(response?.followers?.length > 0){
+        setFollowDetails(prev => ({...prev , followers : [...response?.followers] ,  followerscount: response.followerscount, followingcount: response.followingcount}))
+      }
+      else {
+        setFollowDetails(response)
+      }
+    }
 
   const getPublishedUserPosts = async () => {
     const UserId = userData.id;
@@ -88,7 +116,6 @@ export default function Username({ userData, userCurrentLogin }) {
       status: "published"
     };
     const response = await PostService.getUserPostsByUser(UserId, postParams);
-    console.log(response.data.posts, "error");
     setNewBlogs(response.data.posts);
     setPostsLimit(response.data.limit);
   };
@@ -168,11 +195,14 @@ export default function Username({ userData, userCurrentLogin }) {
             <ProfileDetails
               userData={userData}
               userCurrentLogin={userCurrentLogin}
+              isFollowing={isFollowing}
+              setIsFollowing={setIsFollowing}
+              getFollowerList = {getFollowerList}
             />
             <SkillSet userData={userData} />
             {currentNav === "profile" && (
               <>
-                {/* <Activity /> */}
+                <Activity userId={userData.id} />
                 <BlogList
                   posts={newBlogs}
                   getNewPostsWithCount={getNewPostsWithCount}
@@ -185,8 +215,8 @@ export default function Username({ userData, userCurrentLogin }) {
           <div
             className={`bg-white shadow-sm rounded lg:w-1/4 w-full mt-3 lg:mt-0 lg:ml-4 p-3 overflow-auto ${Profilestyles.h_max_40rem}`}
           >
-            <Count postsCount={postsCount} />
-            <FollowersList />
+            {followDetails && <Count postsCount={postsCount} followDetails = {followDetails} />}
+            {followDetails && <FollowersList followDetails = {followDetails} getFollowerList = {getFollowerList}/>}
           </div>
         </div>
       </div>

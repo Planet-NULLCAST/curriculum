@@ -24,12 +24,12 @@ export async function getServerSideProps() {
       with_table: "users, tags"
     };
     const responseEvents = await EventService.getLatestEvents(postParams);
-    if (responseEvents.count > 0) {
+    if (responseEvents.data.count > 0) {
       return {
         props: {
-          events: responseEvents.events,
-          count: responseEvents.count,
-          limit: responseEvents.limit
+          events: responseEvents.data.events,
+          count: responseEvents.data.count,
+          limit: responseEvents.data.limit
         }
       };
     } else {

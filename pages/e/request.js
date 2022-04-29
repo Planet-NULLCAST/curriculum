@@ -1,84 +1,13 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import SiteHeader from "../../component/layout/SiteHeader/SiteHeader";
 import Head from "next/head";
-import Link from 'next/link'
-import EventInfo from "../../../component/admin/EventInfo";
-import OrganizerInfo from "../../../component/admin/OrganizerInfo";
-import { LoadIcon } from "../../../component/ButtonLoader/LoadIcon";
-import UserService from "../../../services/UserService";
-import SiteHeader from "../../../component/layout/SiteHeader/SiteHeader";
-import EventService from "../../../services/EventService";
+import OrganizerInfo from "../../component/admin/OrganizerInfo";
+import EventInfo from "../../component/admin/EventInfo";
 import moment from "moment";
+import notify from "../../lib/notify";
 import Cookies from "universal-cookie";
-import notify from "../../../lib/notify";
-import { useRouter } from "next/router";
-import SharedService from "../../../services/SharedService";
-import { getCookieValue } from "../../../lib/cookie";
-
-export async function getServerSideProps(context) {
-  try {
-    if (context.req.headers.cookie) {
-      const contextCookie = getCookieValue(
-        context.req.headers.cookie,
-        "userNullcast"
-      );
-      if (contextCookie) {
-        const cookie = JSON.parse(contextCookie);
-        const username = cookie.user_name;
-        const { data } = await UserService.getUserByUsername(username);
-        // removed roles from user data
-        // const skillsRes = await SkillService.getSkills();
-        if (data.roles[0] === "admin") {
-          return {
-            props: {
-              profileData: {},
-              referer: context.req.headers.referer
-                ? context.req.headers.referer
-                : ""
-            }
-          };
-        } else {
-          return {
-            props: {
-              profileData: {}
-            },
-            redirect: {
-              permanent: false,
-              destination: "/"
-            }
-          };
-        }
-      } else {
-        return {
-          props: {
-            profileData: {}
-          },
-          redirect: {
-            permanent: false,
-            destination: "/"
-          }
-        };
-      }
-    } else {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/"
-        }
-      };
-    }
-  } catch (err) {
-    notify(err?.response?.data?.message ?? err?.message, "error");
-    return {
-      props: {
-        profileData: {}
-      },
-      redirect: {
-        permanent: false,
-        destination: "/"
-      }
-    };
-  }
-}
+import { LoadIcon } from "../../component/ButtonLoader/LoadIcon";
+import EventService from "../../services/EventService";
 
 export async function getImageUrl(eventData, eventId) {
   if (eventData?.banner_image?.name && eventData?.guest_image?.name) {
@@ -244,41 +173,8 @@ const validateForm = (eventDetails, setEventDetailsError) => {
   return isValid;
 };
 
-const CreateEvent = ({ referer }) => {
-  const router = useRouter();
-  const [eventID, setEventID] = useState(router.query.id);
-  const [isLoading, setIsLoading] = useState(false);
-  const [eSlug , setEslug] = useState("")
-  useEffect(() => {
-    (() => {
-      eventID && getEvents(eventID);
-    })();
-  }, []);
-  async function getEvents(reqData) {
-    try {
-      const data = await EventService.getEventById(reqData);
-      const finalData = data.data;
-      const date = moment(finalData.event_time).format("YYYY-MM-DD");
-      const time = moment(finalData?.event_time).format("LT").split(" ")[0]
-      setEventDetails({
-        organizerImage: finalData.guest_image,
-        organizerName: finalData.guest_name,
-        tagLine: finalData.guest_designation,
-        eventName: finalData.title,
-        eventLocation: finalData.location,
-        eventDescription: finalData.description,
-        eventLink: finalData.registration_link,
-        eventDate: date,
-        eventTime: time,
-        eventImage: finalData.banner_image
-      });
-    } catch (err) {
-      notify(err?.response?.data?.message ?? err?.message, "error");
-    }
-  }
-  const cookies = new Cookies();
-  const userCookie = cookies.get("userNullcast");
-  const [eventDetails, setEventDetails] = useState({
+const Request = () => {
+  const [eventDetails, setEventDetails] = React.useState({
     organizerImage: "",
     organizerName: "",
     tagLine: "",
@@ -290,7 +186,7 @@ const CreateEvent = ({ referer }) => {
     eventTime: "",
     eventImage: ""
   });
-  const [eventDetailsError, setEventDetailsError] = useState({
+  const [eventDetailsError, setEventDetailsError] = React.useState({
     organizerImageError: "",
     organizerNameError: "",
     tagLineError: "",
@@ -302,6 +198,10 @@ const CreateEvent = ({ referer }) => {
     eventTimeError: "",
     eventImageError: ""
   });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userNullcast");
+
   const formatTime = () => {
     let isoDate = moment(
       `${eventDetails.eventDate} ${eventDetails.eventTime}`
@@ -309,7 +209,7 @@ const CreateEvent = ({ referer }) => {
     return isoDate;
   };
 
-  const createEventHandler = async (e) => {
+  const requestEventHandler = async (e) => {
     const eventData = {
       guest_name: eventDetails.organizerName,
       guest_designation: eventDetails.tagLine,
@@ -321,16 +221,16 @@ const CreateEvent = ({ referer }) => {
       banner_image: eventDetails.eventImage,
       description: eventDetails.eventDescription,
       meta_description: eventDetails.eventDescription,
+      status: "pending",
       event_time: formatTime()
     };
     if (validateForm(eventDetails, setEventDetailsError)) {
       try {
         setIsLoading(true);
-        const data = await EventService.createNewEvent(userCookie, eventData);
+        const data = await EventService.requestEvent(eventData);
         if (data) {
           setIsLoading(false);
-          notify("Event Cretated Successfully");
-          router.push("/admin/events");
+          notify("Event Requested for review");
         }
       } catch (err) {
         setIsLoading(false);
@@ -339,73 +239,22 @@ const CreateEvent = ({ referer }) => {
     }
   };
 
-  const createUpdateHandler = async (e) => {
-    const eventData = {
-      guest_name: eventDetails.organizerName,
-      guest_designation: eventDetails.tagLine,
-      guest_image: eventDetails.organizerImage,
-      title: eventDetails.eventName,
-      meta_title: eventDetails.eventName,
-      location: eventDetails.eventLocation,
-      registration_link: eventDetails.eventLink,
-      banner_image: eventDetails.eventImage,
-      description: eventDetails.eventDescription,
-      meta_description: eventDetails.eventDescription,
-      event_time: formatTime()
-    };
-    if (validateForm(eventDetails, setEventDetailsError)) {
-    try {
-      setIsLoading(true);
-      const data = await EventService.updateEvent(eventID, eventData);
-      if (data) {
-        setIsLoading(false);
-        setEslug(data.data.data.slug)
-        notify(data.data.message);
-      }
-    } catch (err) {
-      setIsLoading(false);
-      notify(err?.response?.data?.message ?? err?.message, "error");
-    }
-  }
-  };
-
-  const clearEventHandler = (e) => {
-    const clearEventDetails = {
-      organizerImage: "",
-      organizerName: "",
-      tagLine: "",
-      eventName: "",
-      eventLocation: "",
-      eventDescription: "",
-      eventLink: "",
-      eventDate: "",
-      eventTime: "",
-      eventImage: ""
-    };
-    setEventDetails(clearEventDetails);
-    if (referer) {
-      router.back();
-    } else {
-      router.push("/admin/events");
-    }
-  };
-
   return (
-    <div className="bg-gray-100 min-h-full pb-5">
+    <div className="bg-gray-100 min-h-screen">
       <Head>
-        <title>Admin | Create Event | Nullcast</title>
+        <title>Request | Events | Nullcast</title>
       </Head>
       <SiteHeader />
       <div className="bg-white max-w-6xl mx-auto flex  mt-3.5">
         <div className="px-4">
-          <p className="font-bold text-sm rounded py-4">Create Event</p>
+          <p className="font-bold text-sm rounded py-4">Event Request</p>
           <div className="h-1 bg-black rounded-t"></div>
         </div>
       </div>
       <div className="bg-white max-w-4xl m-auto mt-5 rounded border ">
         <div>
           <h1 className="font-bold text-xl mx-10 pt-8 pb-5">
-            Create New Event
+            Request New Event
           </h1>
         </div>
         <OrganizerInfo
@@ -427,26 +276,15 @@ const CreateEvent = ({ referer }) => {
           >
             Cancel
           </button>
-          <Link href={`/e/${eSlug}`}>
-          {eSlug && <button
-            className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white mr-5 ${
-              isLoading && "opacity-50 cursor-not-allowed"
-            }`}
-          >
-            Preview
-          </button>}
-          </Link>
           <button
             className={`border-2 flex items-center border-black bg-black px-8 py-2 rounded text-white ${
               isLoading && "opacity-50 cursor-not-allowed"
             }`}
-            onClick={(e) =>
-              eventID ? createUpdateHandler(e) : createEventHandler(e)
-            }
+            onClick={(e) => requestEventHandler(e)}
             type="button"
           >
             {isLoading && <LoadIcon color="#fff" height="23px" />}
-            {eventID ? "Update" : "Create"}
+            {"Request"}
           </button>
         </div>
       </div>
@@ -454,4 +292,4 @@ const CreateEvent = ({ referer }) => {
   );
 };
 
-export default CreateEvent;
+export default Request;

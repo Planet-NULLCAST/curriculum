@@ -19,7 +19,7 @@ export default function SkillSet({ userData }) {
                   index < 10 && (
                     <div
                       className={`px-5 h-7 rounded flex justify-center items-center mr-2 text-sm mb-2 font-semibold	${Profilestyles?.skillCard}`}
-                      key={skill}
+                      key={skill?.id}
                     >
                       {skill?.name?.toUpperCase()}
                     </div>
