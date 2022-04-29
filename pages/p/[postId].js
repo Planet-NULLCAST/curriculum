@@ -55,11 +55,12 @@ export async function getServerSideProps(context) {
         };
       }
     } else {
-      // console.log("else");
+      const response = await PostService.getPostById(postId);
+
       return {
-        redirect: {
-          permanent: false,
-          destination: "/404"
+        props: {
+          posts: response.data,
+          count: 0
         }
       };
     }
