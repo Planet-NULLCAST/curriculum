@@ -1,9 +1,8 @@
 ---
-title: "Introduction To Javascript"
-subheading: "Hello World!"
+title: "Hello World"
 next: "variables"
 prev: "introduction"
-contentOnly: false
+contentOnly: true
 testCase: [
 			{
 				id: 1,
@@ -35,10 +34,12 @@ console.log("hi");
 </script>
 </body>
 ```
+
 <br/>
 
 But HTML5 introduces 2 attributes that help us to define when we want to execute our code.
 <br/><br/>
+
 #### i. [`defer`](https://www.w3schools.com/tags/att_script_defer.asp)
 
 It is used to tell the browser to only execute the code when the browser is fully parsed and you can put in any section of HTML and it will not block HTML parsing.
@@ -54,6 +55,7 @@ console.log("hi");
 ...
 </body>
 ```
+
 <br/>
 
 #### ii. [`async`](https://www.w3schools.com/tags/att_script_async.asp)
@@ -92,4 +94,8 @@ The attributes discussed above are also applicable with this.
 
 ## Complete the task below:
 
-- Add `console.log("Hello World!")` to code editor.
+- Print hello world using console.
+- print hello world using alert.
+- print hello world using document.write
+- print hello world using getElementById
+- print hello world using getElementByClassName

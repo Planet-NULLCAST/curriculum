@@ -3,39 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Comparisons"
 next: "prototypes"
 prev: "arithmetic-operators"
-contentOnly: false
-testCase: [
-    {
-        id: 1,
-        case: ["true"],
-        hint: "True",
-        isCorrect: false
-    },
-    {
-        id: 2,
-        case: ["false"],
-        hint: "False",
-        isCorrect: false
-    },
-    {
-        id: 3,
-        case: ["true"],
-        hint: "True",
-        isCorrect: false
-    },
-    {
-        id: 4,
-        case: ["false"],
-        hint: "False",
-        isCorrect: false
-    },
-    {
-        id: 5,
-        case: ["false"],
-        hint: "False",
-        isCorrect: false
-    },
-]
+contentOnly: true
 ---
 
 We know many comparison operators from maths.
@@ -57,16 +25,16 @@ All comparison operators return a boolean value:
 ### Example
 
 ```javascript
-alert( 2 > 1 );  // true (correct)
-alert( 2 == 1 ); // false (wrong)
-alert( 2 != 1 ); // true (correct)
+alert(2 > 1); // true (correct)
+alert(2 == 1); // false (wrong)
+alert(2 != 1); // true (correct)
 ```
 
 A comparison result can be assigned to a variable, just like any value:
 
 ```javascript
 let result = 5 > 4; // assign the result of the comparison
-alert( result ); // true
+alert(result); // true
 ```
 
 ## String Comparison
@@ -95,9 +63,9 @@ In the example above, for comparison, string '2' is typecasted to number 2 and t
 The value undefined shouldn’t be compared to other values:
 
 ```javascript
-alert( undefined > 0 ); // false (1)
-alert( undefined < 0 ); // false (2)
-alert( undefined == 0 ); // false (3)
+alert(undefined > 0); // false (1)
+alert(undefined < 0); // false (2)
+alert(undefined == 0); // false (3)
 ```
 
 We get these results because:
@@ -111,8 +79,10 @@ We get these results because:
 
 What will be the result for these expressions?
 
-- 5 > 4
-- "apple" > "pineapple"
-- "2" > "12"
-- "2" > 12
-- 5 > undefined
+- Use all the methods in chapter one to display the output of below comparisons [refer here..](hello-world)
+
+  - 5 > 4
+  - "apple" > "pineapple"
+  - "2" > "12"
+  - "2" > 12
+  - 5 > undefined

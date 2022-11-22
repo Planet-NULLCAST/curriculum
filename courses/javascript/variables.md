@@ -3,51 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Variables"
 next: "datatypes"
 prev: "hello-world"
-contentOnly: false
-testCase: [
-			{
-				id: 1,
-				case: ["const a = 9;", "const a = 9"],
-				hint: "Create a variable a using const.",
-				isCorrect: false
-			},
-			{
-				id: 2,
-				case: ["let b;", "let b"],
-				hint: "Create a variable a using let.",
-				isCorrect: false
-			},
-			{
-				id: 3,
-				case: ["b = 5;", "b = 5"],
-				hint: "Assign 5 to b using =.",
-				isCorrect: false
-			},
-			{
-				id: 4,
-				case: ["b = 'Message';", "b = 'Message'"],
-				hint: "Assign 'Message' to b using =.",
-				isCorrect: false
-			},
-			{
-				id: 5,
-				case: ["var c;", "var c"],
-				hint: "Create a variable a using var.",
-				isCorrect: false
-			},
-			{
-				id: 6,
-				case: ["c = 7;", "c = 7"],
-				hint: "Assign 7 to c using =.",
-				isCorrect: false
-			},
-			{
-				id: 7,
-				case: ["c = 'Something';", "c = 'Something'"],
-				hint: "Assign 'Something' to c using =.",
-				isCorrect: false
-			}
-		]
+contentOnly: true
 ---
 
 A variable is a “named storage” for data. We can use variables to store goodies, visitors, and other data.
@@ -167,3 +123,5 @@ console.log(a); // 'something'
 - Assign the variable `c`, a value of 7.
 
 - Then change the value of `c` to "Something".
+
+- Print all these varibales using the previous methods. [refer here..](hello-world)
