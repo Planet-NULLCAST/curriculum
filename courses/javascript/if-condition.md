@@ -3,33 +3,7 @@ title: "Introduction To Javascript"
 subheading: "If Condition"
 next: "arithmetic-operators"
 prev: "logical-operators"
-contentOnly: false
-testCase: [
-			{
-				id: 1,
-				case: ["let a = 5;", "let a = 5"],
-				hint: "a should have value of 5",
-				isCorrect: false
-			},
-			{
-				id: 2,
-				case: ["if (a === 5) {"],
-				hint: "use if syntax to check a's value as 5",
-				isCorrect: false
-			},
-			{
-				id: 3,
-				case: ["console.log(true);","console.log(true)"],
-				hint: "use console.log to print true",
-				isCorrect: false
-			},
-			{
-				id: 4,
-				case: ["}"],
-				hint: "use closing curly braces } ",
-				isCorrect: false
-			}
-		]
+contentOnly: true
 ---
 
 The `if(...)` statement evaluates a condition in parentheses and, if the result is `true`, executes a block of code.
@@ -56,10 +30,25 @@ if (year == 2021) {
 
 ## Complete the tasks below:
 
-- Create a variable `a` of type let with value 5
+![](/courseassets/checkpositive.png)
 
-- Check whether `a` equals 5
+- Create a program to find a number is positive or negative
 
-- If `a` equals 5, print `true` in console
+![](/courseassets/largest.png)
 
-- Use closing curly braces
+- Create a Program to find the largest of Two numbers
+
+![](/courseassets/largestthree.png)
+
+- Create a Program to find the largest of Three numbers
+
+![](/courseassets/oddoreven.png)
+
+- Create a Program to find a number is odd or even
+
+![](/courseassets/comparison.png)
+
+- Create a Program to alert
+  - when first number greater than second number return 1
+  - when first number less than second number return -1
+  - when both are equal return 0
