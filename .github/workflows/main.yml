@@ -1,0 +1,45 @@
+name: curriculum-main
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm install -g yarn
+      - run: yarn install
+      - name: Build
+        run: yarn build
+
+  deploy:
+    name: Deploy to test server
+    on:
+      push:
+        branches:
+          - development
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to server to Git pull
+        uses: MrSquaare/ssh-setup-action@v1
+        with:
+          host: ${{ secrets.DEV_SSH_HOST }}
+          private-key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+      - name: Pull the latest code
+        run: cd curriculum && git pull
+      - name: Restart the PM2 process
+        run: pm2 restart nullf
+
+
+
+
