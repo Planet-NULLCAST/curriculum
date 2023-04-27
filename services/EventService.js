@@ -6,7 +6,9 @@ import {
   createEventUrl,
   eventSlugUrl,
   bookEventUrl,
-  getAllEventsUrl
+  getAllEventsUrl,
+  adminEventReviewUrl,
+  eventRequestUrl
 } from "../config/config";
 import { getImageUrl } from "../pages/admin/events/create-event";
 import { getUrl } from "../lib/getUrl";
@@ -17,7 +19,7 @@ async function getLatestEvents(reqParams) {
     const res = await axios.get(`${url}/${eventsUrl}`, {
       params: reqParams
     });
-    return res.data.data;
+    return res.data;
   } catch (err) {
     throw err;
   }
@@ -69,7 +71,8 @@ async function createNewEvent(userCookie, eventData) {
       location: eventData.location,
       registration_link: eventData.registration_link,
       description: eventData.description,
-      event_time: eventData.event_time
+      event_time: eventData.event_time,
+      status: eventData.status
     });
     if (response) {
       const res = await getImageUrl(eventData, response.data.data.id);
@@ -107,12 +110,10 @@ async function getEventByStatus(req) {
 }
 
 async function updateEvent(eventId, updatedData) {
-  console.log(updatedData);
   if (updatedData?.guest_name) {
     try {
       const res = await getImageUrl(updatedData, eventId);
       if (res) {
-        console.log(res);
         if (typeof res === "object" && !res.url) {
           const response = await axios.patch(
             `${baseUrl}/${createEventUrl}/${eventId}`,
@@ -181,7 +182,9 @@ async function adminReviewEvent(eventId, adminReviewdData) {
     if (response) {
       return response.data;
     }
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }
 
 // book event
@@ -220,6 +223,37 @@ async function getBookEventStatus(eventId) {
     throw err;
   }
 }
+
+// request event
+async function requestEvent(eventData) {
+  try {
+    let response = await axios.post(`${baseUrl}/${eventRequestUrl}`, {
+      guest_name: eventData.guest_name,
+      guest_designation: eventData.guest_designation,
+      title: eventData.title,
+      location: eventData.location,
+      registration_link: eventData.registration_link,
+      description: eventData.description,
+      event_time: eventData.event_time,
+      status: eventData.status
+    });
+    if (response) {
+      const res = await getImageUrl(eventData, response.data.data.id);
+
+      response = await axios.patch(
+        `${baseUrl}/api/v1/event/${response.data.data.id}`,
+        {
+          guest_image: res[0],
+          banner_image: res[1]
+        }
+      );
+      return response;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
 const EventService = {
   getBookEventStatus,
   getLatestEvents,
@@ -232,7 +266,8 @@ const EventService = {
   adminReviewEvent,
   deleteEvent,
   getEventByStatus,
-  updateEvent
+  updateEvent,
+  requestEvent
 };
 
 export default EventService;

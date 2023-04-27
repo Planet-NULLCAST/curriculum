@@ -3,33 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Arithmetic Operators"
 next: "prototypes"
 prev: "if-condition"
-contentOnly: false
-testCase: [
-			{
-				id: 1,
-				case: ["let a = 5, b = 2;", "let a = 5, b = 2",let a = 5; let b = 2;],
-				hint: "a should have a value of 5 and b should have a value of 2",
-				isCorrect: false
-			},
-			{
-				id: 2,
-				case: ['let result = a + b;',"let result = a + b"],
-				hint: "result should have the value after performing ADD on a and b",
-				isCorrect: false
-			},
-			{
-				id: 3,
-				case: ["result = a * b;", "result = a * b"],
-				hint: "result should have the value after performing Multiplication on a and b",
-				isCorrect: false
-			},
-			{
-				id: 4,
-				case: ["result = a % b;", "result = a % b"],
-				hint: "result should have the value after performing Remainder on a and b",
-				isCorrect: false
-			}
-		]
+contentOnly: true
 ---
 
 We know many operators from school. They are things like addition `+`, multiplication `*`, subtraction `-`, and so on.
@@ -120,10 +94,6 @@ console.log(5 % 2); // 1, a remainder of 5 divided by 2
 
 ## Complete the tasks below:
 
-- Create two variables `a` and `b` and assign values 5 and 2 respectively.
+![](../../public/courseassets/calculations.png)
 
-- Perform an addition operation on `a` and `b` and assign the value to a variable `result`.
-
-- Perform a multiplication operation on `a` and `b` and assign the value to a variable `result`.
-
-- Perform a modulus operation on `a` and `b` and assign the value to a variable `result`.
+Create an HTML form for arithmetic calculations.

@@ -13,9 +13,11 @@ const postsUrl = `${apiVerUrl}/posts`;
 const allPostsUrl = "api/posts";
 const postUser = `${apiVerUrl}/posts-by-user`;
 const eventsUrl = `${apiVerUrl}/events`;
+const adminEventReviewUrl = `${apiVerUrl}/admin/event`;
 const eventIdUrl = `${apiVerUrl}/event`;
 const eventSlugUrl = `${apiVerUrl}/event-by-slug`;
 const createEventUrl = `${apiVerUrl}/admin/event`;
+const eventRequestUrl = `${apiVerUrl}/event`
 const changeStatusUrl = "api/user/post";
 const subscribeUrl = "api/subscribe";
 const loginUrl = `${apiVerUrl}/signin`;
@@ -46,8 +48,14 @@ const logoutUrl = `${apiVerUrl}/logout`;
 const setVoteUrl = `${apiVerUrl}/post-vote`;
 const getVoteUrl = `${apiVerUrl}/post-votes`;
 const getVoteTypeUrl = `${apiVerUrl}/post-vote-by-user`;
+const getYearlyActivities = `${apiVerUrl}/user-activities`;
+const getFollowersUrl = `${apiVerUrl}/followers`
+const addorRemoveFollowers = `${apiVerUrl}/follow`
+const isFollwing = `${apiVerUrl}/follower`
+const leaderBoardUrl = `${apiVerUrl}/leader-board`;
 
 const configVars = {
+  leaderBoardUrl,
   baseUrl,
   bookEventUrl,
   allPostUrl,
@@ -67,6 +75,7 @@ const configVars = {
   loginUrl,
   userUrl,
   verificationMail,
+  adminEventReviewUrl,
   clientUrl,
   s3Url,
   authUrl,
@@ -80,6 +89,7 @@ const configVars = {
   createEventUrl,
   eventIdUrl,
   changeStatusUrl,
+  eventRequestUrl,
   createEventUrl,
   subscribeUrl,
   editorUrl,
@@ -94,6 +104,10 @@ const configVars = {
   changePasswordUrl,
   skillUrl,
   publishedPostsUrl,
+  getYearlyActivities,
+  getFollowersUrl,
+  addorRemoveFollowers,
+  isFollwing,
   // publishedPostsCountUrl,
   logoutUrl
 };

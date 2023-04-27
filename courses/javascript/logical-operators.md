@@ -3,33 +3,7 @@ title: "Introduction To Javascript"
 subheading: "Logical Operators"
 next: "if-condition"
 prev: "variables"
-contentOnly: false
-testCase: [
-			{
-				id: 1,
-				case: ["let a = true, b = false;", "let a = true, b = false"],
-				hint: "a should have a value of true and b should have a value of false",
-				isCorrect: false
-			},
-			{
-				id: 2,
-				case: ['let result = a && b;',"let result = a && b"],
-				hint: "result should have the value after performing AND on a and b",
-				isCorrect: false
-			},
-			{
-				id: 3,
-				case: ["result = a || b;", "result = a || b"],
-				hint: "result should have the value after performing OR on a and b",
-				isCorrect: false
-			},
-			{
-				id: 4,
-				case: ["result = !a;", "result = !a"],
-				hint: "result should have the value after performing NOT on a",
-				isCorrect: false
-			}
-		]
+contentOnly: true
 ---
 
 There are four logical operators in JavaScript: `||` (OR), `&&` (AND), `!` (NOT), `??` (Nullish Coalescing).
@@ -107,6 +81,7 @@ console.log(!0); // true
 
 ## Complete the tasks below:
 
+- Use all the methods in chapter one to display the output of below comparisons [refer here..](hello-world)
 - Create two variables `a` and `b` and assign values `true` and `false` respectively.
 
 - Perform an AND operation on `a`and `b` and assign the value to a variable `result`.
